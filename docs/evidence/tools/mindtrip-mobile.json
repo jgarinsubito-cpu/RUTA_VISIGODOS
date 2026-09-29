@@ -1,0 +1,1 @@
+{"viewport":{"width":390,"height":844},"steps":[{"name":"09-mobile-home","url":"https://mindtrip.ai/","wait":5000,"limit":1200},{"name":"10-mobile-menu","click":"button:has-text('Menú')","wait":1500,"limit":4000}]}

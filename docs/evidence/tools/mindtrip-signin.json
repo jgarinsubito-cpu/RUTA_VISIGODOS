@@ -1,0 +1,1 @@
+{"steps":[{"name":"07-home-signin-entry","url":"https://mindtrip.ai/","wait":4000,"limit":1200},{"name":"08-signin-dialog","click":"button:has-text('Iniciar sesión')","wait":4000,"limit":6000}]}

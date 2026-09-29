@@ -1,0 +1,1 @@
+{"steps":[{"name":"04-chat","url":"https://mindtrip.ai/chat","wait":12000},{"name":"05-chat-wait","wait":20000},{"name":"06-saved","url":"https://mindtrip.ai/saved?tab=collections","wait":10000}]}

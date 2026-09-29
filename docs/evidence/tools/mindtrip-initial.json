@@ -1,0 +1,1 @@
+{"steps":[{"name":"01-homepage","url":"https://mindtrip.ai/"},{"name":"02-home","url":"https://mindtrip.ai/home?search=trip","wait":7000},{"name":"03-inspiration","url":"https://mindtrip.ai/inspiration","wait":6000}]}

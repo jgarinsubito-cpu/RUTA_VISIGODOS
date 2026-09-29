@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — Urbs Regia palette (PLAN.md, "Visual direction").
+ * Use via Tailwind utilities: bg-ivory, text-ink, border-stone, bg-olive, text-gold, font-display…
+ */
+:root {
+  --ivory: #f7f5ef;
+  --surface: #ffffff;
+  --surface-muted: #efebe1;
+  --stone: #e5e0d5;
+  --ink: #292a25;
+  --ink-muted: #5c5d55;
+  /* Darkened from #988a38 so 11px gold labels meet WCAG AA (≥ 4.5:1 on white, ivory and muted surfaces). */
+  --gold: #766a22;
+  --olive: #665d27;
+  --olive-hover: #4f4819;
+  --on-olive: #ffffff;
+  --gold-soft: #f1ecd6;
+  --warn: #8a4b0f;
+  --warn-soft: #fbefd9;
+  --danger: #9b2c2c;
+  --ok: #3f6212;
+  --ok-soft: #ecf3de;
+  /* Modal backdrop: always dims, never lightens (ink inverts in dark mode). */
+  --scrim: rgb(20 20 16 / 0.45);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ivory: #161612;
+    --surface: #20201b;
+    --surface-muted: #2a2a23;
+    --stone: #3a392f;
+    --ink: #f1eee4;
+    --ink-muted: #b9b6a8;
+    --gold: #c9b760;
+    --olive: #c9b760;
+    --olive-hover: #ddcd7d;
+    --on-olive: #1b1a12;
+    --gold-soft: #2f2c18;
+    --warn: #f0b36a;
+    --warn-soft: #3a2a14;
+    --danger: #f19999;
+    --ok: #b5d67c;
+    --ok-soft: #26301a;
+    --scrim: rgb(0 0 0 / 0.6);
+  }
+}
+
+@theme inline {
+  --color-ivory: var(--ivory);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-stone: var(--stone);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-gold: var(--gold);
+  --color-olive: var(--olive);
+  --color-olive-hover: var(--olive-hover);
+  --color-on-olive: var(--on-olive);
+  --color-gold-soft: var(--gold-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-scrim: var(--scrim);
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), Georgia, serif;
+}
+
+html {
+  background: var(--ivory);
+}
+
+body {
+  background: var(--ivory);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+}
+
+/* In the base layer so component utilities (e.g. a composer's focus-within ring) can refine it. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+}
+
+/* While a place sheet is open (useSheetFlag), lift the toast above the sheet's Guardar / Añadir bar. */
+body[data-sheet] [data-toast-region] {
+  bottom: calc(7rem + env(safe-area-inset-bottom));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
