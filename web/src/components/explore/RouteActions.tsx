@@ -4,10 +4,10 @@
  * review dialog (ProposalReview); the trip only changes if the visitor accepts there.
  */
 import Link from "next/link";
-import { getRoute } from "@/data/catalog";
+import { getRoute } from "@/data/content";
 import { proposeFromRoute } from "@/domain/planner";
 import { actions, getAppState, useAppState } from "@/state/store";
-import { IconChat, IconTrip } from "@/components/shell/icons";
+import { IconChat, IconHeadphones, IconTrip } from "@/components/shell/icons";
 import { assistantHref } from "./AskComposer";
 
 export function RouteActions({ routeId }: { routeId: string }) {
@@ -35,7 +35,7 @@ export function RouteActions({ routeId }: { routeId: string }) {
           onClick={adapt}
           disabled={pending}
           aria-describedby={`route-adapt-help-${route.id}`}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-olive px-5 text-sm font-semibold text-on-olive shadow-sm hover:bg-olive-hover disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex min-h-11 items-center justify-center gap-2 btn-primary rounded-full px-5 text-sm font-semibold disabled:cursor-not-allowed"
         >
           <IconTrip width={18} height={18} />
           Adaptar esta ruta
@@ -46,6 +46,13 @@ export function RouteActions({ routeId }: { routeId: string }) {
         >
           <IconChat width={18} height={18} />
           Preguntar sobre esta ruta
+        </Link>
+        <Link
+          href={`/rutas/${route.slug}/recorrido`}
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-stone bg-surface px-5 text-sm font-semibold text-ink hover:bg-surface-muted"
+        >
+          <IconHeadphones width={18} height={18} />
+          Recorrido guiado
         </Link>
       </div>
       <p id={`route-adapt-help-${route.id}`} className="text-xs text-ink-muted">

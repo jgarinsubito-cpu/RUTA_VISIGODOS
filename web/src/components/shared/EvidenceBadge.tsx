@@ -18,15 +18,16 @@ export const EVIDENCE_DESCRIPTION: Record<EvidenceLevel, string> = {
   T: "Relato transmitido por la tradición, sin respaldo documental.",
 };
 
+/** Monochrome on purpose: the glyph shape, letter and label carry the level, not colour. */
 const TONE: Record<EvidenceLevel, string> = {
-  D: "border-ok/40 bg-ok-soft text-ok",
-  I: "border-gold/50 bg-gold-soft text-ink",
-  H: "border-warn/40 bg-warn-soft text-warn",
-  T: "border-stone bg-surface-muted text-ink-muted",
+  D: "border-stone text-ink",
+  I: "border-stone text-ink",
+  H: "border-stone text-ink",
+  T: "border-stone text-ink",
 };
 
 function Glyph({ level }: { level: EvidenceLevel }) {
-  const common = { "aria-hidden": true, viewBox: "0 0 12 12", width: 12, height: 12, focusable: false } as const;
+  const common = { "aria-hidden": true, viewBox: "0 0 12 12", width: 14, height: 14, focusable: false } as const;
   switch (level) {
     case "D": // filled circle with check
       return (
@@ -78,7 +79,7 @@ export function EvidenceBadge({
   return (
     <span className={`inline-flex max-w-full flex-wrap items-center gap-x-1.5 gap-y-0.5 ${className}`}>
       <span
-        className={`inline-flex shrink-0 items-center gap-1 rounded-md border px-1.5 py-0.5 text-[11px] font-semibold leading-4 ${TONE[level]}`}
+        className={`inline-flex shrink-0 items-center gap-1 rounded-md border px-2 py-0.5 text-caption font-semibold ${TONE[level]}`}
       >
         <Glyph level={level} />
         <span aria-hidden="true">{level}</span>
@@ -87,7 +88,7 @@ export function EvidenceBadge({
           {EVIDENCE_LABEL[level]}
         </span>
       </span>
-      {attribution && <span className="text-xs text-ink-muted">según {attribution}</span>}
+      {attribution && <span className="text-caption text-ink-muted">según {attribution}</span>}
     </span>
   );
 }
@@ -95,7 +96,7 @@ export function EvidenceBadge({
 /** Collapsible legend explaining the four levels. */
 export function EvidenceLegend({ className = "" }: { className?: string }) {
   return (
-    <details className={`rounded-xl border border-stone bg-surface-muted px-4 text-sm ${className}`}>
+    <details className={`rounded-xl border border-stone px-4 text-sm ${className}`}>
       <summary className="flex min-h-11 cursor-pointer items-center font-medium">¿Qué significan las etiquetas?</summary>
       <dl className="grid gap-2 pb-3">
         {(Object.keys(EVIDENCE_LABEL) as EvidenceLevel[]).map((lvl) => (

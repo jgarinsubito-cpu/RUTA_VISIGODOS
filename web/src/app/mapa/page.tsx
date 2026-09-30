@@ -8,14 +8,14 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { Site } from "@/domain/types";
-import { SITES } from "@/data/catalog";
+import { SITES } from "@/data/content";
 import { actions, useAppState } from "@/state/store";
 import { IconInfo } from "@/components/shell/icons";
 import { DemoBadge } from "@/components/shared/DemoBadge";
 import { SiteCard } from "@/components/shared/SiteCard";
 import { PlacePanel } from "@/components/place/PlacePanel";
 import { MapView } from "@/components/map";
-import { PlaceSheet } from "@/components/tripview/PlaceSheet";
+import { PlaceSheet } from "@/components/place/PlaceSheet";
 import { ViewToggle, type ViewMode } from "@/components/tripview/ViewToggle";
 import { DESKTOP_QUERY, useMediaQuery } from "@/lib/useMediaQuery";
 
@@ -47,7 +47,7 @@ function FilterChips({
   counts: Record<Filter, number>;
 }) {
   return (
-    <div role="group" aria-label="Filtrar lugares" className="relative -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 lg:mx-0 lg:flex-wrap lg:px-0">
+    <div role="group" aria-label="Filtrar lugares" className="flex flex-wrap gap-2">
       {FILTERS.map((f) => {
         const active = value === f.id;
         return (
@@ -56,9 +56,9 @@ function FilterChips({
             type="button"
             aria-pressed={active}
             onClick={() => onChange(f.id)}
-            className={`inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full border px-4 text-sm ${
+            className={`inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-sm ${
               active
-                ? "border-olive bg-olive font-semibold text-on-olive"
+                ? "border-primary bg-primary font-semibold text-on-primary"
                 : "border-stone bg-surface font-medium text-ink hover:bg-surface-muted"
             }`}
           >
@@ -92,7 +92,7 @@ function ResultList({
       <div className="rounded-2xl border border-dashed border-stone bg-surface p-6 text-center text-sm text-ink-muted">
         <p>{EMPTY_TEXT[filter]}</p>
         {filter === "trip" && (
-          <Link href="/rutas" className="mt-2 inline-flex min-h-11 items-center font-semibold text-olive underline-offset-2 hover:underline">
+          <Link href="/rutas" className="mt-2 inline-flex min-h-11 items-center font-semibold text-primary underline-offset-2 hover:underline">
             Ver rutas propuestas
           </Link>
         )}
@@ -103,7 +103,7 @@ function ResultList({
     <ul aria-label="Resultados" className={`grid gap-3 ${className}`}>
       {sites.map((site) => (
         <li key={site.id}>
-          <SiteCard site={site} onSelect={onSelect} selected={selectedSiteId === site.id} />
+          <SiteCard site={site} variant="compact" className="w-full" onSelect={onSelect} selected={selectedSiteId === site.id} />
         </li>
       ))}
     </ul>
@@ -140,6 +140,13 @@ export default function MapaPage() {
   const close = () => actions.selectSite(null);
   const selected = selectedSiteId && SITES.some((s) => s.id === selectedSiteId) ? selectedSiteId : null;
 
+  const resultCount = (
+    <p aria-live="polite" className="text-xs text-ink-muted">
+      {results.length === 1 ? "1 lugar" : `${results.length} lugares`}
+      {approximate && " · algunas ubicaciones son aproximadas"}
+    </p>
+  );
+
   const header = (
     <header className="flex flex-col gap-3 px-4 pb-3 pt-5 lg:px-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -147,10 +154,14 @@ export default function MapaPage() {
         <DemoBadge />
       </div>
       <FilterChips value={filter} onChange={setFilter} counts={counts} />
-      <p aria-live="polite" className="text-xs text-ink-muted">
-        {results.length === 1 ? "1 lugar" : `${results.length} lugares`}
-        {approximate && " · algunas ubicaciones son aproximadas"}
-      </p>
+      {isDesktop ? (
+        resultCount
+      ) : (
+        <div className="flex items-center justify-between gap-3">
+          {resultCount}
+          <ViewToggle value={view} onChange={setView} label="Ver lugares como mapa o lista" />
+        </div>
+      )}
     </header>
   );
 
@@ -181,9 +192,9 @@ export default function MapaPage() {
         </aside>
         <section aria-label="Mapa de lugares" className="relative min-h-0">
           {map}
-          <p className="pointer-events-none absolute bottom-3 left-3 z-[500] flex max-w-sm items-start gap-1.5 rounded-xl bg-surface/95 px-3 py-2 text-xs text-ink-muted shadow-sm">
+          <p className="pointer-events-none absolute bottom-3 left-3 z-[500] flex max-w-sm items-start gap-1.5 rounded-xl bg-surface/95 px-3 py-2 text-xs text-ink-muted">
             <IconInfo width={14} height={14} className="mt-px shrink-0" />
-            Marcadores cuadrados: patrimonio no visigodo. Números: paradas de tu viaje.
+            Marcadores cuadrados: patrimonio no visigodo. Números: paradas de tu viaje. Círculos con cifra: varios lugares; tócalos para acercar.
           </p>
         </section>
       </div>
@@ -191,18 +202,15 @@ export default function MapaPage() {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className={view === "map" ? "flex h-[calc(100dvh-var(--mobile-nav)-env(safe-area-inset-bottom))] flex-col md:h-dvh" : "flex flex-col"}>
       {header}
-      <div className="flex items-center justify-end px-4 pb-3">
-        <ViewToggle value={view} onChange={setView} label="Ver lugares como mapa o lista" />
-      </div>
       {view === "map" ? (
-        <section aria-label="Mapa de lugares" className="flex flex-col gap-2 px-4 pb-4">
-          <div className="h-[calc(100dvh-19rem)] min-h-72 overflow-hidden rounded-2xl border border-stone bg-surface-muted shadow-sm">
-            {map}
-          </div>
+        // The map takes the height left, so the legend stays visible above the bottom navigation.
+        <section aria-label="Mapa de lugares" className="flex min-h-0 flex-1 flex-col gap-2 px-4 pb-3">
+          <div className="min-h-64 flex-1 overflow-hidden rounded-2xl border border-stone bg-surface-muted">{map}</div>
           <p className="text-xs text-ink-muted">
-            Toca un marcador para ver su ficha. Cuadrados: patrimonio no visigodo. Números: paradas de tu viaje.
+            Toca un marcador para ver su ficha. Cuadrados: patrimonio no visigodo. Números: paradas de tu viaje. Círculos con
+            cifra: varios lugares juntos.
           </p>
         </section>
       ) : (
@@ -210,7 +218,7 @@ export default function MapaPage() {
           <ResultList sites={results} filter={filter} selectedSiteId={selected} onSelect={select} className="sm:grid-cols-2" />
         </div>
       )}
-      {selected && <PlaceSheet key={selected} siteId={selected} onClose={close} />}
+      {selected && <PlaceSheet key={selected} variant="bottom" siteId={selected} onClose={close} />}
     </div>
   );
 }

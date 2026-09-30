@@ -4,14 +4,14 @@
  * Bottom sheet on mobile, centered dialog from md. Focus trapped; Escape cancels; focus returns.
  */
 import { useId, useRef } from "react";
-import type { ItineraryProposal, SiteId, TripContext } from "@/domain/types";
-import type { PlannerProposal } from "@/domain/planner";
-import { getSite } from "@/data/catalog";
+import type { ItineraryProposal, SiteId, StopWarning, TripContext } from "@/domain/types";
+import { getSite } from "@/data/content";
+import { describeSharedWarning, groupWarnings, warningKey } from "@/domain/warnings";
 import { TRANSPORT_LABEL } from "@/lib/labels";
 import { actions, useAppState } from "@/state/store";
 import { useFocusTrap } from "@/lib/useFocusTrap";
 import { IconClose, IconInfo } from "@/components/shell/icons";
-import { TripTimeline, type StopMark } from "./TripTimeline";
+import { TripTimeline, type StopMark, type WarningMark } from "./TripTimeline";
 
 function siteNames(ids: SiteId[]) {
   return ids.map((id) => getSite(id)?.name ?? id).join(", ");
@@ -27,6 +27,30 @@ function marksFor(p: ItineraryProposal) {
     else if (beforeArrival.has(s.siteId) && beforeArrival.get(s.siteId) !== s.arrival) after[s.siteId] = "changed";
   }
   return { before, after };
+}
+
+/** Warnings that appear or disappear for stops present on both sides. */
+function warningMarks(p: ItineraryProposal) {
+  const keys = (warnings: StopWarning[]) => new Set(warnings.map(warningKey));
+  const before = new Map(p.before.map((s) => [s.siteId, keys(s.warnings)]));
+  const after = new Map(p.after.map((s) => [s.siteId, keys(s.warnings)]));
+  return {
+    before: (id: SiteId, w: StopWarning): WarningMark | undefined =>
+      after.has(id) && !after.get(id)!.has(warningKey(w)) ? "gone" : undefined,
+    after: (id: SiteId, w: StopWarning): WarningMark | undefined =>
+      before.has(id) && !before.get(id)!.has(warningKey(w)) ? "new" : undefined,
+  };
+}
+
+/** Same stops in the same order at the same times: only settings or warnings differ. */
+function sameStops(p: ItineraryProposal): boolean {
+  return (
+    p.before.length === p.after.length &&
+    p.after.every((s, i) => {
+      const b = p.before[i];
+      return b.siteId === s.siteId && b.arrival === s.arrival && b.departure === s.departure;
+    })
+  );
 }
 
 const PROFILE_LABEL: Record<TripContext["profile"], string> = {
@@ -49,10 +73,6 @@ function contextChanges(before: TripContext, after: TripContext): string[] {
   if (before.profile !== after.profile) out.push(`Perfil: ${PROFILE_LABEL[after.profile] ?? after.profile}`);
   if (before.area !== after.area) out.push(`Zona: ${after.area}`);
   return out;
-}
-
-function proposalContext(p: ItineraryProposal, fallback: TripContext): TripContext {
-  return (p as Partial<PlannerProposal>).context ?? fallback;
 }
 
 function accept() {
@@ -79,8 +99,14 @@ export function ProposalReview() {
   const single = proposal.added.length === 1 ? proposal.added[0] : undefined;
   const canSaveForLater = !proposal.ok && single !== undefined && !savedSiteIds.includes(single);
   const marks = marksFor(proposal);
-  const nextContext = proposalContext(proposal, tripContext);
+  const wMarks = warningMarks(proposal);
+  const unchangedStops = sameStops(proposal);
+  const nextContext = proposal.context;
   const settingChanges = contextChanges(tripContext, nextContext);
+  // Trip-wide warnings are listed once under "Ten en cuenta" instead of on every stop.
+  const beforeGroups = groupWarnings(proposal.before);
+  const afterGroups = groupWarnings(proposal.after);
+  const notes = [...proposal.warnings, ...afterGroups.shared.map(describeSharedWarning)];
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center md:items-center md:p-6">
@@ -147,6 +173,12 @@ export function ProposalReview() {
                       <span className="font-semibold">Se quita:</span> {siteNames(proposal.removed)}
                     </li>
                   )}
+                  {unchangedStops && proposal.before.length > 0 && (
+                    <li>
+                      <span className="font-semibold">Paradas:</span> sin cambios de orden ni de hora. Cambian solo los avisos
+                      marcados como <span className="font-semibold text-warn">Nuevo</span>.
+                    </li>
+                  )}
                 </ul>
               )}
 
@@ -162,6 +194,8 @@ export function ProposalReview() {
                       stops={proposal.before}
                       transport={tripContext.transport}
                       marks={marks.before}
+                      warningMark={wMarks.before}
+                      hiddenCodes={beforeGroups.hiddenCodes}
                       compact
                       aria-label="Viaje antes del cambio"
                     />
@@ -180,6 +214,8 @@ export function ProposalReview() {
                       stops={proposal.after}
                       transport={nextContext.transport}
                       marks={marks.after}
+                      warningMark={wMarks.after}
+                      hiddenCodes={afterGroups.hiddenCodes}
                       compact
                       aria-label="Viaje después del cambio"
                     />
@@ -187,14 +223,14 @@ export function ProposalReview() {
                 </section>
               </div>
 
-              {proposal.warnings.length > 0 && (
+              {notes.length > 0 && (
                 <section aria-labelledby={`${titleId}-warn`} className="rounded-xl border border-warn/40 bg-warn-soft p-4">
                   <h3 id={`${titleId}-warn`} className="flex items-center gap-1.5 text-sm font-semibold text-warn">
                     <IconInfo width={16} height={16} />
                     Ten en cuenta
                   </h3>
                   <ul className="mt-1.5 list-disc pl-5 text-sm text-ink">
-                    {proposal.warnings.map((w) => (
+                    {notes.map((w) => (
                       <li key={w}>{w}</li>
                     ))}
                   </ul>
@@ -217,7 +253,7 @@ export function ProposalReview() {
               <button
                 type="button"
                 onClick={accept}
-                className="min-h-11 rounded-full bg-olive px-5 text-sm font-semibold text-on-olive hover:bg-olive-hover"
+                className="btn-primary min-h-11 rounded-full px-5 text-sm font-semibold"
               >
                 Aceptar cambio
               </button>
@@ -240,7 +276,7 @@ export function ProposalReview() {
                 type="button"
                 data-autofocus
                 onClick={() => actions.dismissProposal()}
-                className="min-h-11 rounded-full bg-olive px-5 text-sm font-semibold text-on-olive hover:bg-olive-hover"
+                className="min-h-11 rounded-full bg-primary px-5 text-sm font-semibold text-on-primary hover:bg-primary-hover"
               >
                 Entendido
               </button>

@@ -44,7 +44,7 @@ export function Composer({
   return (
     <div className="border-t border-stone bg-ivory px-3 pb-2 pt-2 md:px-6 md:pb-3">
       <form onSubmit={submit} className="mx-auto w-full max-w-3xl">
-        <div className="flex items-end gap-2 rounded-3xl border border-stone bg-surface p-1.5 pl-4 shadow-sm focus-within:border-gold focus-within:ring-2 focus-within:ring-gold/40">
+        <div className="flex items-end gap-2 rounded-3xl border border-stone bg-surface p-1.5 pl-4 focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/40">
           <label htmlFor={id} className="sr-only">
             Tu pregunta para el asistente
           </label>
@@ -65,13 +65,13 @@ export function Composer({
             type="submit"
             disabled={!canSend}
             aria-label={sending ? "Enviando pregunta…" : "Enviar pregunta"}
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-olive text-on-olive hover:bg-olive-hover disabled:cursor-not-allowed disabled:opacity-50"
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-primary text-on-primary hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
           >
             <IconSend />
           </button>
         </div>
-        <p id={`${id}-hint`} className="mt-1.5 text-center text-[11px] leading-snug text-ink-muted">
-          El asistente solo usa fuentes aprobadas y puede equivocarse. Comprueba horarios antes de ir.
+        <p id={`${id}-hint`} className="mt-1.5 text-center text-xs leading-snug text-ink-muted">
+          Puede equivocarse. Comprueba horarios antes de ir.
           <span className="sr-only"> Pulsa Intro para enviar y Mayúsculas más Intro para una nueva línea.</span>
         </p>
       </form>

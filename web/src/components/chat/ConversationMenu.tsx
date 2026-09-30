@@ -90,7 +90,7 @@ export function ConversationMenu() {
 
           {recent.length > 0 && (
             <div className="border-t border-stone pt-1">
-              <p className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wider text-ink-muted">
+              <p className="px-3 pb-1 pt-2 text-2xs font-semibold uppercase tracking-wider text-ink-muted">
                 Chats recientes en este dispositivo
               </p>
               <ul className="max-h-64 overflow-y-auto">
@@ -103,7 +103,7 @@ export function ConversationMenu() {
                         actions.openConversation(c.id);
                         close();
                       }}
-                      className={`${item} ${c.id === activeId ? "bg-gold-soft font-semibold text-ink" : "text-ink-muted hover:bg-surface-muted hover:text-ink"}`}
+                      className={`${item} ${c.id === activeId ? "bg-surface-muted font-semibold text-ink" : "text-ink-muted hover:bg-surface-muted hover:text-ink"}`}
                     >
                       <IconChat width={16} height={16} className="shrink-0" />
                       <span className="truncate">{c.title}</span>

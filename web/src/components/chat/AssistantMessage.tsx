@@ -5,15 +5,17 @@
  */
 import Link from "next/link";
 import type { AssistantAnswer, Citation, SiteId } from "@/domain/types";
-import { getPublishedClaim, getRoute, getSite } from "@/data/catalog";
-import { formatClock, proposeAdd, proposeFromRoute } from "@/domain/planner";
+import { getPublishedClaim, getRoute, getSite } from "@/data/content";
+import { proposeAdd, proposeFromRoute, routeMinutes } from "@/domain/planner";
+import { formatClock } from "@/domain/time";
 import { formatDuration, TRANSPORT_LABEL } from "@/lib/labels";
 import { actions, getAppState, useAppState } from "@/state/store";
-import { IconInfo, IconPin, IconPlus, IconRoute, IconTrip } from "@/components/shell/icons";
+import { IconInfo, IconPlus, IconRoute, IconTrip } from "@/components/shell/icons";
 import { DemoBadge } from "@/components/shared/DemoBadge";
-import { EvidenceBadge } from "@/components/shared/EvidenceBadge";
+import { Carousel } from "@/components/shared/Carousel";
+import { ClaimBody } from "@/components/shared/Claim";
 import { SiteCard } from "@/components/shared/SiteCard";
-import { paragraphs, parseInline } from "./format";
+import { mergePlaceNames, paragraphs, parseInline } from "./format";
 
 const FAILED = "No se pudo calcular el cambio en tu viaje. Inténtalo de nuevo.";
 
@@ -34,11 +36,10 @@ function PlaceChip({ siteId, selected }: { siteId: SiteId; selected: boolean }) 
       type="button"
       onClick={() => actions.selectSite(siteId)}
       aria-pressed={selected}
-      className={`mx-0.5 inline-flex min-h-8 items-center gap-1 rounded-full border px-2.5 py-0.5 align-baseline text-sm font-semibold text-ink hover:bg-gold-soft ${
-        selected ? "border-olive bg-gold-soft" : "border-gold/50 bg-surface"
+      className={`inline font-semibold text-ink underline decoration-1 underline-offset-4 hover:decoration-2 ${
+        selected ? "decoration-ink decoration-2" : "decoration-ink/40"
       }`}
     >
-      <IconPin width={14} height={14} className="shrink-0 text-gold" />
       {site.name}
       <span className="sr-only"> (ver ficha del lugar)</span>
     </button>
@@ -47,10 +48,10 @@ function PlaceChip({ siteId, selected }: { siteId: SiteId; selected: boolean }) 
 
 function AnswerText({ text, selectedSiteId }: { text: string; selectedSiteId: SiteId | null }) {
   return (
-    <div className="flex flex-col gap-3 text-[15px] leading-relaxed text-ink">
+    <div className="flex flex-col gap-3 text-body leading-relaxed text-ink">
       {paragraphs(text).map((p, i) => (
         <p key={i} className="whitespace-pre-line">
-          {parseInline(p).map((part, j) =>
+          {mergePlaceNames(parseInline(p), (id) => getSite(id)?.name).map((part, j) =>
             part.type === "text" ? (
               <span key={j}>{part.value}</span>
             ) : (
@@ -94,13 +95,7 @@ function Sources({ citations }: { citations: Citation[] }) {
           <ol className="flex flex-col gap-2 border-t border-stone px-4 py-3">
             {live.map((claim) => (
               <li key={claim.id} className="flex flex-col gap-1 rounded-lg bg-surface-muted p-3">
-                <EvidenceBadge level={claim.evidence} attribution={claim.evidence === "I" ? claim.attribution : undefined} />
-                <p className="text-sm text-ink">{claim.text}</p>
-                <p className="text-xs text-ink-muted">
-                  Fuente: {claim.source.title}
-                  {claim.source.page ? ` · p. ${claim.source.page}` : ""}
-                </p>
-                <p className="text-[11px] text-ink-muted">Ref. {claim.id}</p>
+                <ClaimBody claim={claim} />
               </li>
             ))}
           </ol>
@@ -116,7 +111,7 @@ function SuggestedAction({ action }: { action: NonNullable<AssistantAnswer["sugg
   const pending = useAppState((s) => s.pendingProposal !== null);
   const box = "flex flex-col gap-2 rounded-xl border border-stone bg-surface p-3 sm:flex-row sm:items-center sm:justify-between";
   const primary =
-    "inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-olive px-5 text-sm font-semibold text-on-olive hover:bg-olive-hover disabled:opacity-60";
+    "inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-on-primary hover:bg-primary-hover disabled:opacity-60";
 
   if (action.type === "add-stop") {
     const site = getSite(action.siteId);
@@ -129,7 +124,7 @@ function SuggestedAction({ action }: { action: NonNullable<AssistantAnswer["sugg
             <IconTrip width={18} height={18} />
             {site.name} ya está en tu viaje · {formatClock(stop.visitStart ?? stop.arrival)}
           </p>
-          <Link href="/mi-viaje" className="inline-flex min-h-11 items-center text-sm font-semibold text-olive underline-offset-2 hover:underline">
+          <Link href="/mi-viaje" className="inline-flex min-h-11 items-center text-sm font-semibold text-primary underline-offset-2 hover:underline">
             Ver en Mi viaje
           </Link>
         </div>
@@ -164,7 +159,7 @@ function SuggestedAction({ action }: { action: NonNullable<AssistantAnswer["sugg
           <IconTrip width={18} height={18} className="shrink-0" />
           Tu viaje ya sigue la ruta «{route.name}»
         </p>
-        <Link href="/mi-viaje" className="inline-flex min-h-11 items-center text-sm font-semibold text-olive underline-offset-2 hover:underline">
+        <Link href="/mi-viaje" className="inline-flex min-h-11 items-center text-sm font-semibold text-primary underline-offset-2 hover:underline">
           Ver en Mi viaje
         </Link>
       </div>
@@ -174,11 +169,11 @@ function SuggestedAction({ action }: { action: NonNullable<AssistantAnswer["sugg
     <div className={box}>
       <div className="flex min-w-0 flex-col gap-1">
         <p className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink">
-          <IconRoute width={18} height={18} className="shrink-0 text-gold" />
+          <IconRoute width={18} height={18} className="shrink-0 text-accent" />
           Ruta «{route.name}»
         </p>
         <p className="text-xs text-ink-muted">
-          {route.stopIds.length} paradas · unas {formatDuration(route.estimatedMinutes)} · {TRANSPORT_LABEL[route.transport]}
+          {route.stopIds.length} paradas · unas {formatDuration(routeMinutes(route))} · {TRANSPORT_LABEL[route.transport]}
           {stops.length > 0 ? " · sustituye las paradas actuales" : ""}
         </p>
         {route.demo && <DemoBadge className="self-start" />}
@@ -216,7 +211,7 @@ export function AssistantMessage({
     <div className="flex gap-3">
       <span
         aria-hidden="true"
-        className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-olive font-display text-xs text-on-olive"
+        className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary font-display text-xs text-on-primary"
       >
         RV
       </span>
@@ -226,7 +221,7 @@ export function AssistantMessage({
           <div className="flex flex-col gap-2 rounded-xl border border-dashed border-warn/50 bg-warn-soft p-4">
             <p className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-warn">
               <IconInfo width={16} height={16} />
-              No consta en las fuentes aprobadas
+              No consta en las fuentes
             </p>
             <AnswerText text={text} selectedSiteId={selectedSiteId} />
           </div>
@@ -235,32 +230,23 @@ export function AssistantMessage({
         )}
 
         {sites.length > 0 && (
-          <section aria-label="Lugares mencionados" className="-mx-1">
-            <ul className="flex snap-x gap-3 overflow-x-auto px-1 pb-2">
-              {sites.map((site) => (
-                <li key={site.id} className="shrink-0 snap-start">
-                  <SiteCard
-                    site={site}
-                    variant="compact"
-                    selected={site.id === selectedSiteId}
-                    onSelect={(id) => actions.selectSite(id)}
-                  />
-                </li>
-              ))}
-            </ul>
-          </section>
+          <Carousel label="Lugares mencionados">
+            {sites.map((site) => (
+              <li key={site.id} className="shrink-0 snap-start">
+                <SiteCard
+                  site={site}
+                  variant="compact"
+                  selected={site.id === selectedSiteId}
+                  onSelect={(id) => actions.selectSite(id)}
+                />
+              </li>
+            ))}
+          </Carousel>
         )}
 
         {answer && <Sources citations={answer.citations} />}
         {answer?.suggestedAction && <SuggestedAction action={answer.suggestedAction} />}
 
-        {answer && (
-          <p className="text-[11px] text-ink-muted">
-            {answer.provider === "local"
-              ? "Respuesta local de demostración"
-              : "Respuesta redactada con IA a partir de fuentes aprobadas"}
-          </p>
-        )}
 
         {latest && answer && answer.suggestedPrompts.length > 0 && (
           <div>
@@ -272,7 +258,7 @@ export function AssistantMessage({
                     type="button"
                     disabled={sending}
                     onClick={() => onPrompt(p)}
-                    className="min-h-11 rounded-full border border-stone bg-surface px-4 text-left text-sm text-ink hover:border-gold hover:bg-gold-soft disabled:opacity-60"
+                    className="min-h-11 rounded-full border border-stone bg-surface px-4 text-left text-sm text-ink hover:border-ink/40 hover:bg-surface-muted disabled:opacity-60"
                   >
                     {p}
                   </button>

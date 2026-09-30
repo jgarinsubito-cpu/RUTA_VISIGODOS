@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { SITES, getSite } from "@/data/catalog";
+import { SITES, getSite } from "@/data/content";
 import type { AssistantAnswer, AssistantRequest, Site } from "@/domain/types";
 import { POST } from "@/app/api/assistant/route";
 import { createTokenBucket } from "@/lib/rateLimit";

@@ -30,7 +30,7 @@ export function ViewToggle({
             aria-pressed={active}
             onClick={() => onChange(id)}
             className={`inline-flex min-h-11 items-center gap-1.5 rounded-full px-4 text-sm ${
-              active ? "bg-olive font-semibold text-on-olive" : "font-medium text-ink-muted hover:bg-surface-muted"
+              active ? "bg-primary font-semibold text-on-primary" : "font-medium text-ink-muted hover:bg-surface-muted"
             }`}
           >
             <Icon width={18} height={18} />

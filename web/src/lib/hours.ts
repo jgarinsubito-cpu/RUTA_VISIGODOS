@@ -3,30 +3,9 @@
  * Pure helpers; the HoursLabel component renders their output.
  */
 import type { AccessInfo, OpeningInfo, TimeWindow } from "@/domain/types";
+import { isoWeekday, WEEKDAY_LONG, WEEKDAY_SHORT, WEEKDAYS, type Weekday } from "@/domain/time";
 
-export type Weekday = 1 | 2 | 3 | 4 | 5 | 6 | 7;
-
-const WEEKDAYS: Weekday[] = [1, 2, 3, 4, 5, 6, 7];
-
-export const WEEKDAY_SHORT: Record<Weekday, string> = {
-  1: "Lun",
-  2: "Mar",
-  3: "Mié",
-  4: "Jue",
-  5: "Vie",
-  6: "Sáb",
-  7: "Dom",
-};
-
-export const WEEKDAY_LONG: Record<Weekday, string> = {
-  1: "lunes",
-  2: "martes",
-  3: "miércoles",
-  4: "jueves",
-  5: "viernes",
-  6: "sábado",
-  7: "domingo",
-};
+export { isoWeekday, WEEKDAY_LONG, WEEKDAY_SHORT, type Weekday };
 
 export type HoursTone = OpeningInfo["status"];
 
@@ -54,13 +33,6 @@ export function hoursStatusLabel(info: OpeningInfo): string {
 
 export function formatWindows(windows: TimeWindow[]): string {
   return windows.map((w) => `${w.open}–${w.close}`).join(" y ");
-}
-
-/** ISO weekday (1 = Monday) for a YYYY-MM-DD date, independent of the device timezone. */
-export function isoWeekday(date: string): Weekday {
-  const [y, m, d] = date.split("-").map(Number);
-  const day = new Date(Date.UTC(y, m - 1, d)).getUTCDay();
-  return (((day + 6) % 7) + 1) as Weekday;
 }
 
 /** Weekly schedule grouped into consecutive days with identical windows. Empty when unknown. */
@@ -92,9 +64,15 @@ export function weeklyRows(info: OpeningInfo): HoursRow[] {
 export function dayHoursText(info: OpeningInfo, date: string): string {
   if (info.status === "unknown") return "Sin verificar";
   if (info.alwaysOpen) return "Acceso libre";
-  const windows = info.weekly?.[isoWeekday(date)];
-  if (!info.weekly) return "Sin datos";
+  const weekday = isoWeekday(date);
+  if (!info.weekly || weekday === null) return "Sin datos";
+  const windows = info.weekly[weekday];
   return windows && windows.length > 0 ? formatWindows(windows) : "Cerrado";
+}
+
+function dayLabel(date: string): string {
+  const weekday = isoWeekday(date);
+  return weekday ? `${WEEKDAY_LONG[weekday]} ${formatShortDate(date)}` : formatShortDate(date);
 }
 
 export interface HoursDescription {
@@ -111,7 +89,7 @@ export function describeHours(info: OpeningInfo, date?: string | null): HoursDes
     tone: info.status,
     statusLabel: hoursStatusLabel(info),
     rows: weeklyRows(info),
-    day: date ? { label: `${WEEKDAY_LONG[isoWeekday(date)]} ${formatShortDate(date)}`, text: dayHoursText(info, date) } : undefined,
+    day: date ? { label: dayLabel(date), text: dayHoursText(info, date) } : undefined,
     note: info.note,
   };
 }

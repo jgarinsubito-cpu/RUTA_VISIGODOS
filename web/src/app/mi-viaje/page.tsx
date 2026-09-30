@@ -5,14 +5,15 @@
  */
 import Link from "next/link";
 import { useId, useState } from "react";
-import { getSite } from "@/data/catalog";
+import { getRoute, getSite } from "@/data/content";
 import { actions, useAppState } from "@/state/store";
 import { formatShortDate } from "@/lib/hours";
-import { IconChat, IconInfo, IconMap, IconRoute, IconSpark } from "@/components/shell/icons";
+import { IconChat, IconHeadphones, IconInfo, IconMap, IconRoute } from "@/components/shell/icons";
 import { DemoBadge } from "@/components/shared/DemoBadge";
-import { TripTimeline } from "@/components/trip/TripTimeline";
+import { groupWarnings } from "@/domain/warnings";
+import { SharedWarnings, TripTimeline } from "@/components/trip/TripTimeline";
 import { MapView } from "@/components/map";
-import { TripContextForm } from "@/components/tripview/TripContextForm";
+import { focusTripDate, TripContextForm } from "@/components/tripview/TripContextForm";
 import { StopActions } from "@/components/tripview/StopActions";
 import { TripStatus, TripTotals, TripWarnings } from "@/components/tripview/TripSummary";
 import { ViewToggle, type ViewMode } from "@/components/tripview/ViewToggle";
@@ -24,7 +25,7 @@ const secondaryBtn =
 function EmptyTrip() {
   return (
     <section className="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-stone bg-surface px-6 py-10 text-center">
-      <span aria-hidden="true" className="grid h-14 w-14 place-items-center rounded-full bg-gold-soft text-gold">
+      <span aria-hidden="true" className="grid h-14 w-14 place-items-center rounded-full bg-surface-muted text-accent">
         <IconRoute width={28} height={28} />
       </span>
       <h2 className="font-display text-2xl text-ink">Tu viaje está vacío</h2>
@@ -35,7 +36,7 @@ function EmptyTrip() {
       <div className="flex flex-col gap-2 sm:flex-row">
         <Link
           href="/rutas"
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-olive px-5 text-sm font-semibold text-on-olive hover:bg-olive-hover"
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-on-primary hover:bg-primary-hover"
         >
           <IconRoute width={18} height={18} />
           Ver rutas propuestas
@@ -45,7 +46,7 @@ function EmptyTrip() {
           Planificar con el asistente
         </Link>
       </div>
-      <Link href="/guardados" className="min-h-11 content-center text-sm font-semibold text-olive underline-offset-2 hover:underline">
+      <Link href="/guardados" className="min-h-11 content-center text-sm font-semibold text-primary underline-offset-2 hover:underline">
         Añadir desde Guardados
       </Link>
     </section>
@@ -63,22 +64,24 @@ export default function MiViajePage() {
   const headingId = useId();
 
   const stopIds = trip.stops.map((s) => s.siteId);
+  const tourRoute = trip.sourceRouteId ? getRoute(trip.sourceRouteId) : undefined;
   const hasStops = stopIds.length > 0;
   const showList = isDesktop || view === "list";
   const showMap = isDesktop || view === "map";
   const approximate = stopIds.some((id) => getSite(id)?.coordinates.approximate);
   const formKey = `${JSON.stringify(trip.context)}|${JSON.stringify(storedContext)}`;
+  const warningGroups = groupWarnings(trip.stops);
+  const needsDate = warningGroups.shared.some((w) => w.code === "no-date");
 
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-5 md:px-8 md:py-8">
       <header className="flex flex-col gap-2">
-        <p className="text-[11px] font-semibold uppercase tracking-wider text-gold">Mi viaje</p>
         <h1 id={headingId} className="font-display text-3xl leading-tight text-ink md:text-4xl">
           {trip.context.date ? `Tu visita del ${formatShortDate(trip.context.date)}` : "Tu visita a la ruta visigoda"}
         </h1>
-        <div className="flex flex-wrap items-center gap-2">
-          <DemoBadge />
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
           {hasStops && <TripStatus trip={trip} />}
+          <DemoBadge />
         </div>
       </header>
 
@@ -105,7 +108,18 @@ export default function MiViajePage() {
             {showList && (
               <section aria-label="Itinerario" className="flex min-w-0 flex-col gap-4">
                 <h2 className="hidden text-sm font-semibold text-ink lg:block">Paradas</h2>
+                <SharedWarnings
+                  warnings={warningGroups.shared}
+                  action={
+                    needsDate ? (
+                      <button type="button" onClick={focusTripDate} className={`${secondaryBtn} shrink-0`}>
+                        Elegir fecha
+                      </button>
+                    ) : undefined
+                  }
+                />
                 <TripTimeline
+                  hiddenCodes={warningGroups.hiddenCodes}
                   stops={trip.stops}
                   transport={trip.context.transport}
                   selectedSiteId={selectedSiteId}
@@ -115,13 +129,13 @@ export default function MiViajePage() {
                   )}
                   aria-label="Paradas del viaje en orden"
                 />
-                <TripWarnings trip={trip} headingId={`${headingId}-warnings`} />
+                <TripWarnings trip={trip} />
               </section>
             )}
 
             {showMap && (
               <section aria-label="Mapa del viaje" className="flex min-w-0 flex-col gap-2 lg:sticky lg:top-6 lg:self-start">
-                <div className="h-[60dvh] min-h-72 overflow-hidden rounded-2xl border border-stone bg-surface-muted shadow-sm lg:h-[70dvh]">
+                <div className="h-[60dvh] min-h-72 overflow-hidden rounded-2xl border border-stone bg-surface-muted lg:h-[70dvh]">
                   <MapView
                     siteIds={stopIds}
                     tripSiteIds={stopIds}
@@ -146,7 +160,7 @@ export default function MiViajePage() {
       <footer className="flex flex-col gap-3 border-t border-stone pt-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
         <p className="flex items-center gap-1.5 text-xs text-ink-muted">
           <IconInfo width={14} height={14} className="shrink-0" />
-          Guardado en este dispositivo · revisión {trip.revision}
+          Guardado en este dispositivo
         </p>
         <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
           {canUndo && (
@@ -158,11 +172,11 @@ export default function MiViajePage() {
             <IconChat width={18} height={18} />
             Preguntar al asistente sobre mi viaje
           </Link>
-          {hasStops && (
-            <button type="button" disabled className={`${secondaryBtn} cursor-not-allowed opacity-60`}>
-              <IconSpark width={18} height={18} />
-              Iniciar visita (próximamente)
-            </button>
+          {hasStops && tourRoute && (
+            <Link href={`/rutas/${tourRoute.slug}/recorrido`} className={secondaryBtn}>
+              <IconHeadphones width={18} height={18} />
+              Recorrido guiado
+            </Link>
           )}
         </div>
       </footer>

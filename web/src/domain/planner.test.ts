@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { getRoute, getSite } from "@/data/catalog";
+import { getRoute, getSite } from "@/data/content";
 import {
   applyProposal,
+  BUFFER_MINUTES,
   emptyTrip,
+  estimateRoute,
   formatClock,
   isoWeekday,
   parseClock,
@@ -11,16 +13,22 @@ import {
   proposeMove,
   proposeRemove,
   reschedule,
+  routeMinutes,
   schedule,
   WARN_ACCESS,
   WARN_EXAMPLE_HOURS,
   WARN_NO_DATE,
+  WARN_TRAVEL_ESTIMATE,
   WARN_UNKNOWN_HOURS,
   type PlannerOptions,
   type PlannerProposal,
 } from "./planner";
 import { estimateTravelMinutes } from "./travel";
-import type { Site, Trip, TripContext } from "./types";
+import type { Site, Trip, TripContext, TripStop } from "./types";
+import { describeWarning, groupWarnings } from "./warnings";
+
+/** What the visitor reads for a stop's warnings. */
+const texts = (stop: TripStop) => stop.warnings.map((w) => describeWarning(w, getSite(stop.siteId)?.name ?? stop.siteId));
 
 const SR = "site-san-roman";
 const CRISTO = "site-cristo-luz";
@@ -124,7 +132,7 @@ describe("schedule", () => {
     expect(b.departure).toBe(b.arrival + 30);
     // Demo hours are examples: stops stay provisional.
     expect(a.status).toBe("provisional");
-    expect(a.warnings).toContain(WARN_EXAMPLE_HOURS);
+    expect(texts(a)).toContain(WARN_EXAMPLE_HOURS);
   });
 
   it("schedules verified hours as 'scheduled' without warnings", () => {
@@ -165,26 +173,26 @@ describe("schedule", () => {
     expect(stop.arrival).toBe(parseClock("15:00"));
     expect(stop.visitStart).toBe(parseClock("16:00"));
     expect(stop.status).toBe("provisional");
-    expect(stop.warnings).toContain("Espera hasta las 16:00 (abriría a esa hora según el horario de ejemplo)");
+    expect(texts(stop)).toContain("Espera hasta las 16:00 (abriría a esa hora según el horario de ejemplo)");
     const onTime = schedule(["fx-museum"], ctx(), fixtures).stops[0];
     expect(onTime.visitStart).toBe(onTime.arrival);
     const early = schedule(["fx-museum"], ctx({ startTime: "09:00" }), fixtures).stops[0];
-    expect(early.warnings).toEqual(["Espera hasta las 10:00 (abre a esa hora)"]);
+    expect(texts(early)).toEqual(["Espera hasta las 10:00 (abre a esa hora)"]);
     expect(early.status).toBe("provisional");
   });
 
   it("explains when the visit does not fit before closing", () => {
-    const r = schedule([SR], ctx({ date: SUNDAY, startTime: "14:00" }));
+    const r = schedule([SR], ctx({ date: SUNDAY, startTime: "14:30" }));
     expect(r.ok).toBe(false);
     expect(r.reason).toBe(
-      "Según el horario de ejemplo (no verificado), Museo de los Concilios y de la Cultura Visigoda cerraría a las 14:30 y no daría tiempo a la visita",
+      "Según el horario de ejemplo (no verificado), Museo de los Concilios y de la Cultura Visigoda cerraría a las 15:00 y no daría tiempo a la visita",
     );
   });
 
   it("explains when the site is already closed on arrival", () => {
-    const r = schedule([SR], ctx({ date: SUNDAY, startTime: "15:00" }));
+    const r = schedule([SR], ctx({ date: SUNDAY, startTime: "15:30" }));
     expect(r.ok).toBe(false);
-    expect(r.reason).toContain("cerraría a las 14:30");
+    expect(r.reason).toContain("cerraría a las 15:00");
   });
 
   it("rejects plans ending after endTime", () => {
@@ -197,7 +205,7 @@ describe("schedule", () => {
     const r = schedule([SR], ctx({ date: null, startTime: "08:00" }));
     expect(r.ok).toBe(true);
     expect(r.stops[0].status).toBe("provisional");
-    expect(r.stops[0].warnings).toContain(WARN_NO_DATE);
+    expect(texts(r.stops[0])).toContain(WARN_NO_DATE);
     expect(r.stops[0].arrival).toBe(parseClock("08:00"));
   });
 
@@ -205,7 +213,7 @@ describe("schedule", () => {
     const r = schedule([VEGA], ctx());
     expect(r.ok).toBe(true);
     expect(r.stops[0].status).toBe("provisional");
-    expect(r.stops[0].warnings).toContain(WARN_UNKNOWN_HOURS);
+    expect(texts(r.stops[0])).toContain(WARN_UNKNOWN_HOURS);
   });
 
   it("treats alwaysOpen sites as open at any time", () => {
@@ -225,8 +233,8 @@ describe("schedule", () => {
     const r = schedule([SR], ctx({ stepFreeRequired: true }));
     expect(r.ok).toBe(true);
     expect(r.stops[0].status).toBe("provisional");
-    expect(r.stops[0].warnings).toContain(WARN_ACCESS);
-    expect(schedule([SR], ctx()).stops[0].warnings).not.toContain(WARN_ACCESS);
+    expect(texts(r.stops[0])).toContain(WARN_ACCESS);
+    expect(texts(schedule([SR], ctx()).stops[0])).not.toContain(WARN_ACCESS);
   });
 
   it("rejects walking legs over 6 km and suggests the car", () => {
@@ -295,11 +303,11 @@ describe("proposals", () => {
   });
 
   it("proposeMove revalidates the remainder", () => {
-    const trip = tripWith([SR, VEGA], ctx({ date: SUNDAY, startTime: "13:00" }));
+    const trip = tripWith([SR, VEGA], ctx({ date: SUNDAY, startTime: "13:30" }));
     const p = proposeMove(trip, VEGA, 0);
     expect(p.after.map((s) => s.siteId)).toEqual([VEGA, SR]);
     expect(p.ok).toBe(false);
-    expect(p.reason).toContain("cerraría a las 14:30");
+    expect(p.reason).toContain("cerraría a las 15:00");
     const back = proposeMove(trip, SR, 5);
     expect(back.after.map((s) => s.siteId)).toEqual([VEGA, SR]);
   });
@@ -342,5 +350,44 @@ describe("proposals", () => {
     if ("error" in applied) throw new Error(applied.error);
     expect(applied.context.startTime).toBe("16:00");
     expect(formatClock(applied.stops[0].arrival)).toBe("16:00");
+  });
+});
+
+describe("structured warnings", () => {
+  it("keeps the failing stop's warning structured and the reason worded from it", () => {
+    const r = schedule([SR], ctx({ date: MONDAY }));
+    expect(r.stops[0].warnings).toContainEqual({ code: "closed-day", weekday: 1, verified: false });
+    expect(r.reason).toBe(describeWarning({ code: "closed-day", weekday: 1, verified: false }, getSite(SR)!.name));
+  });
+
+  it("keeps proposal warnings trip-wide instead of repeating each stop's", () => {
+    const p = proposeFromRoute(emptyTrip(ctx({ date: null })), getRoute("route-capital")!);
+    expect(p.warnings).toEqual([WARN_TRAVEL_ESTIMATE]);
+  });
+
+  it("says 'choose a date' once for the trip and hoists data notes only when every stop has them", () => {
+    const { stops } = schedule([SR, CRISTO, VEGA], ctx({ date: null }));
+    const groups = groupWarnings(stops);
+    expect(groups.shared.map((w) => w.code)).toEqual(["no-date"]);
+    const exampleOnly = schedule([SR, CRISTO], ctx({ date: null })).stops;
+    expect(groupWarnings(exampleOnly).shared.map((w) => w.code)).toEqual(["no-date", "example-hours"]);
+  });
+});
+
+describe("route estimate", () => {
+  it("comes from the scheduler: visits, travel legs and buffers", () => {
+    const route = getRoute("route-capital")!;
+    const { minutes, stops } = estimateRoute(route);
+    const visits = route.stopIds.reduce((sum, id) => sum + getSite(id)!.visitMinutes, 0);
+    const travel = stops.reduce((sum, s) => sum + s.travelMinutesFromPrevious, 0);
+    expect(minutes).toBe(visits + travel + BUFFER_MINUTES * (stops.length - 1));
+    expect(routeMinutes(route)).toBe(minutes);
+  });
+
+  it("matches the trip the route produces when no opening wait applies", () => {
+    const route = getRoute("route-capital")!;
+    const p = proposeFromRoute(emptyTrip(ctx({ date: null })), route);
+    const span = p.after[p.after.length - 1].departure - p.after[0].arrival;
+    expect(span).toBe(routeMinutes(route));
   });
 });

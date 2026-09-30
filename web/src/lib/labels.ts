@@ -1,5 +1,5 @@
 /** Shared Spanish labels and small formatters for UI text. */
-import type { SiteKind, TransportMode } from "@/domain/types";
+import type { AccessNeed, SiteKind, TransportMode, TravelGroup, TravelPace } from "@/domain/types";
 
 export const KIND_LABEL: Record<SiteKind, string> = {
   museum: "Museo",
@@ -13,6 +13,37 @@ export const TRANSPORT_LABEL: Record<TransportMode, string> = {
   walk: "A pie",
   car: "En coche",
 };
+
+export const PACE_LABEL: Record<TravelPace, { label: string; hint: string }> = {
+  relaxed: { label: "Tranquilo", hint: "Pocas paradas y tiempo de sobra" },
+  balanced: { label: "Equilibrado", hint: "Lo esencial sin prisas" },
+  full: { label: "Intenso", hint: "Aprovechar al máximo el día" },
+};
+
+export const GROUP_LABEL: Record<TravelGroup, string> = {
+  solo: "Solo",
+  couple: "En pareja",
+  family: "Con niños",
+  friends: "Con amigos",
+  seniors: "Con personas mayores",
+};
+
+/** Access needs as visitors would say them, with what the app does about each. */
+export const ACCESS_NEED_LABEL: Record<AccessNeed, { label: string; effect: string }> = {
+  wheelchair: { label: "Silla de ruedas", effect: "Marcamos las paradas sin acceso sin escalones verificado." },
+  "reduced-mobility": { label: "Movilidad reducida", effect: "Marcamos las paradas sin acceso sin escalones verificado." },
+  stroller: { label: "Carrito de bebé", effect: "Marcamos las paradas sin acceso sin escalones verificado." },
+  "avoid-slopes": { label: "Evitar cuestas", effect: "Te avisamos cuando una ruta a pie tiene cuestas o no sabemos sus pendientes." },
+  "rest-stops": { label: "Descansos frecuentes", effect: "El asistente propone menos paradas y más tiempo." },
+  "low-vision": { label: "Baja visión", effect: "Puedes activar el texto grande; el asistente lo tiene en cuenta." },
+  hearing: { label: "Sordera o hipoacusia", effect: "Toda narración tiene su texto; el asistente lo recuerda." },
+  quiet: { label: "Lugares tranquilos", effect: "El asistente lo tiene en cuenta al recomendar." },
+};
+
+/** "arqueología" -> "Arqueología". */
+export function themeLabel(theme: string): string {
+  return theme.charAt(0).toUpperCase() + theme.slice(1);
+}
 
 /** 45 -> "45 min", 60 -> "1 h", 210 -> "3 h 30 min". */
 export function formatDuration(minutes: number): string {

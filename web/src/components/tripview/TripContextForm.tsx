@@ -6,11 +6,12 @@
  */
 import { useId, useState } from "react";
 import type { TransportMode, TripContext } from "@/domain/types";
-import { parseClock } from "@/domain/planner";
+import { parseClock } from "@/domain/time";
 import { formatShortDate } from "@/lib/hours";
 import { TRANSPORT_LABEL } from "@/lib/labels";
 import { actions } from "@/state/store";
 import { IconInfo } from "@/components/shell/icons";
+import { DayPicker, TimeSelect } from "@/components/shared/DateTimeFields";
 import { requestContextChange, sameContext } from "./proposals";
 
 export function contextSummary(ctx: TripContext): string {
@@ -27,13 +28,27 @@ export function contextSummary(ctx: TripContext): string {
 
 const TIME_RE = /^\d{2}:\d{2}$/;
 
+/** One form per page: stable ids so other controls (e.g. "Elegir fecha") can open it. */
+const FORM_ID = "tu-dia";
+const DATE_ID = "tu-dia-fecha";
+
+/** Open the "Tu día" form and move focus to its date choice. */
+export function focusTripDate() {
+  const details = document.getElementById(FORM_ID);
+  if (details instanceof HTMLDetailsElement) details.open = true;
+  requestAnimationFrame(() => {
+    const input = document.getElementById(DATE_ID);
+    input?.closest("fieldset")?.scrollIntoView({ block: "center" });
+    input?.focus({ preventScroll: true });
+  });
+}
+
 function validate(d: TripContext): string | null {
   if (!TIME_RE.test(d.startTime) || !TIME_RE.test(d.endTime)) return "Indica la hora de inicio y la de fin.";
   if (parseClock(d.endTime) <= parseClock(d.startTime)) return "La hora de fin debe ser posterior a la de inicio.";
   return null;
 }
 
-const field = "min-h-11 w-full rounded-xl border border-stone bg-surface px-3 text-sm text-ink";
 const label = "text-xs font-semibold uppercase tracking-wider text-ink-muted";
 
 export interface TripContextFormProps {
@@ -59,15 +74,16 @@ export function TripContextForm({ tripContext, storedContext, hasStops, pending 
 
   return (
     <details
+      id={FORM_ID}
       open={diverged || undefined}
-      className="group rounded-2xl border border-stone bg-surface shadow-sm [&_summary::-webkit-details-marker]:hidden"
+      className="group rounded-2xl border border-stone bg-surface [&_summary::-webkit-details-marker]:hidden"
     >
       <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 rounded-2xl px-4 py-2.5">
         <span className="min-w-0">
           <span className="block text-xs font-semibold uppercase tracking-wider text-ink-muted">Tu día</span>
           <span className="block text-sm font-medium text-ink">{contextSummary(tripContext)}</span>
         </span>
-        <span className="shrink-0 rounded-full border border-stone px-3 py-1 text-sm font-semibold text-olive">
+        <span className="shrink-0 rounded-full border border-stone px-3 py-1 text-sm font-semibold text-primary">
           <span className="group-open:hidden">Ajustar</span>
           <span className="hidden group-open:inline">Ocultar</span>
         </span>
@@ -96,43 +112,26 @@ export function TripContextForm({ tripContext, storedContext, hasStops, pending 
           </div>
         )}
 
-        <div className="grid gap-3 sm:grid-cols-3">
-          <div className="flex flex-col gap-1">
-            <label htmlFor={`${id}-date`} className={label}>
-              Fecha
-            </label>
-            <input
-              id={`${id}-date`}
-              type="date"
-              value={draft.date ?? ""}
-              onChange={(e) => patch({ date: e.target.value || null })}
-              className={field}
-            />
-          </div>
+        <DayPicker value={draft.date} onChange={(date) => patch({ date })} focusId={DATE_ID} />
+        <p className="-mt-2 text-xs text-ink-muted">Con fecha comprobamos los horarios de cada parada.</p>
+
+        <div className="grid grid-cols-2 gap-3 sm:max-w-md">
           <div className="flex flex-col gap-1">
             <label htmlFor={`${id}-start`} className={label}>
-              Hora de inicio
+              Desde
             </label>
-            <input
-              id={`${id}-start`}
-              type="time"
-              value={draft.startTime}
-              onChange={(e) => patch({ startTime: e.target.value })}
-              className={field}
-            />
+            <TimeSelect id={`${id}-start`} value={draft.startTime} onChange={(startTime) => patch({ startTime })} />
           </div>
           <div className="flex flex-col gap-1">
             <label htmlFor={`${id}-end`} className={label}>
-              Hora de fin
+              Hasta
             </label>
-            <input
+            <TimeSelect
               id={`${id}-end`}
-              type="time"
               value={draft.endTime}
-              onChange={(e) => patch({ endTime: e.target.value })}
-              aria-invalid={error ? true : undefined}
-              aria-describedby={error ? `${id}-error` : undefined}
-              className={field}
+              onChange={(endTime) => patch({ endTime })}
+              invalid={Boolean(error)}
+              describedBy={error ? `${id}-error` : undefined}
             />
           </div>
         </div>
@@ -144,7 +143,7 @@ export function TripContextForm({ tripContext, storedContext, hasStops, pending 
               {(Object.keys(TRANSPORT_LABEL) as TransportMode[]).map((mode) => (
                 <label
                   key={mode}
-                  className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-stone px-4 text-sm text-ink has-[:checked]:border-olive has-[:checked]:bg-gold-soft has-[:checked]:font-semibold has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-olive"
+                  className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-stone px-4 text-sm text-ink hover:border-ink/40 has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:font-semibold has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ink"
                 >
                   <input
                     type="radio"
@@ -152,7 +151,7 @@ export function TripContextForm({ tripContext, storedContext, hasStops, pending 
                     value={mode}
                     checked={draft.transport === mode}
                     onChange={() => patch({ transport: mode })}
-                    className="h-4 w-4 accent-olive"
+                    className="sr-only"
                   />
                   {TRANSPORT_LABEL[mode]}
                 </label>
@@ -165,7 +164,7 @@ export function TripContextForm({ tripContext, storedContext, hasStops, pending 
               type="checkbox"
               checked={draft.stepFreeRequired}
               onChange={(e) => patch({ stepFreeRequired: e.target.checked })}
-              className="h-5 w-5 accent-olive"
+              className="h-5 w-5 accent-primary"
             />
             Necesito acceso sin escalones
           </label>
@@ -197,7 +196,7 @@ export function TripContextForm({ tripContext, storedContext, hasStops, pending 
             <button
               type="submit"
               disabled={!changed || !!error || pending}
-              className="min-h-11 rounded-full bg-olive px-5 text-sm font-semibold text-on-olive hover:bg-olive-hover disabled:opacity-60"
+              className="min-h-11 rounded-full bg-primary px-5 text-sm font-semibold text-on-primary hover:bg-primary-hover disabled:opacity-60"
             >
               {hasStops ? "Aplicar y revisar" : "Aplicar"}
             </button>

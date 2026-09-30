@@ -3,14 +3,17 @@
  * Segmented trip-context pill (Mindtrip "Dónde | Cuándo | Quién | Presupuesto", adapted to
  * Dónde | Cuándo | Quién | Transporte). Each segment opens a non-modal popover that edits the
  * stored context through actions.setContext. The parent decides what happens on close.
+ * Below `sm` the four segments collapse into a one-line summary that expands on demand, so the
+ * conversation keeps the screen.
  */
 import { useId, useRef, useState, type ReactNode, type RefObject } from "react";
 import type { TransportMode, TripContext, VisitorProfile } from "@/domain/types";
-import { parseClock } from "@/domain/planner";
+import { parseClock } from "@/domain/time";
 import { TRANSPORT_LABEL } from "@/lib/labels";
 import { actions } from "@/state/store";
-import { IconInfo } from "@/components/shell/icons";
-import { AREAS, PROFILE_HINT, PROFILE_LABEL, whenLabel, whoLabel } from "./format";
+import { IconChevronDown, IconInfo } from "@/components/shell/icons";
+import { DayPicker, TimeSelect } from "@/components/shared/DateTimeFields";
+import { AREAS, contextLine, PROFILE_HINT, PROFILE_LABEL, whenLabel, whoLabel } from "./format";
 import { usePopover } from "./usePopover";
 
 export type Segment = "where" | "when" | "who" | "transport";
@@ -24,9 +27,8 @@ const SEGMENT_LABEL: Record<Segment, string> = {
 
 const TIME_RE = /^\d{2}:\d{2}$/;
 const fieldLabel = "text-xs font-semibold uppercase tracking-wider text-ink-muted";
-const field = "min-h-11 w-full rounded-xl border border-stone bg-surface px-3 text-base text-ink";
 const optionRow =
-  "flex min-h-11 cursor-pointer items-start gap-3 rounded-xl border border-stone px-3 py-2.5 text-sm text-ink has-[:checked]:border-olive has-[:checked]:bg-gold-soft has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-gold";
+  "flex min-h-11 cursor-pointer items-start gap-3 rounded-xl border border-stone px-3 py-2.5 text-sm text-ink has-[:checked]:border-primary has-[:checked]:bg-surface-muted has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-accent";
 
 function Options<T extends string>({
   legend,
@@ -52,7 +54,7 @@ function Options<T extends string>({
             value={o.value}
             checked={value === o.value}
             onChange={() => onChange(o.value)}
-            className="mt-0.5 h-4 w-4 shrink-0 accent-olive"
+            className="mt-0.5 h-4 w-4 shrink-0 accent-primary"
           />
           <span className="flex flex-col">
             <span className="font-semibold">{o.label}</span>
@@ -83,61 +85,35 @@ function WhenFields({ context }: { context: TripContext }) {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-col gap-1">
-        <label htmlFor={`${id}-date`} className={fieldLabel}>
-          Fecha de la visita
-        </label>
-        <div className="flex gap-2">
-          <input
-            id={`${id}-date`}
-            type="date"
-            value={context.date ?? ""}
-            onChange={(e) => actions.setContext({ date: /^\d{4}-\d{2}-\d{2}$/.test(e.target.value) ? e.target.value : null })}
-            className={field}
-          />
-          {context.date && (
-            <button
-              type="button"
-              onClick={() => actions.setContext({ date: null })}
-              className="min-h-11 shrink-0 rounded-xl border border-stone px-3 text-sm font-semibold text-ink hover:bg-surface-muted"
-            >
-              Quitar
-            </button>
-          )}
-        </div>
-        <p className="text-xs text-ink-muted">Sin fecha no se pueden comprobar horarios.</p>
-      </div>
+      <DayPicker value={context.date} onChange={(date) => actions.setContext({ date })} legend="Fecha de la visita" />
+      <p className="-mt-2 text-xs text-ink-muted">Sin fecha no se pueden comprobar horarios.</p>
       <div className="grid grid-cols-2 gap-2">
         <div className="flex flex-col gap-1">
           <label htmlFor={`${id}-start`} className={fieldLabel}>
             Desde
           </label>
-          <input
+          <TimeSelect
             id={`${id}-start`}
-            type="time"
             value={start}
-            onChange={(e) => {
-              setStart(e.target.value);
-              commit(e.target.value, end);
+            onChange={(v) => {
+              setStart(v);
+              commit(v, end);
             }}
-            className={field}
           />
         </div>
         <div className="flex flex-col gap-1">
           <label htmlFor={`${id}-end`} className={fieldLabel}>
             Hasta
           </label>
-          <input
+          <TimeSelect
             id={`${id}-end`}
-            type="time"
             value={end}
-            onChange={(e) => {
-              setEnd(e.target.value);
-              commit(start, e.target.value);
+            onChange={(v) => {
+              setEnd(v);
+              commit(start, v);
             }}
-            aria-invalid={error ? true : undefined}
-            aria-describedby={error ? `${id}-error` : undefined}
-            className={field}
+            invalid={Boolean(error)}
+            describedBy={error ? `${id}-error` : undefined}
           />
         </div>
       </div>
@@ -189,7 +165,7 @@ function SegmentBody({ segment, context }: { segment: Segment; context: TripCont
               type="checkbox"
               checked={context.stepFreeRequired}
               onChange={(e) => actions.setContext({ stepFreeRequired: e.target.checked })}
-              className="h-5 w-5 shrink-0 accent-olive"
+              className="h-5 w-5 shrink-0 accent-primary"
             />
             Necesito acceso sin escalones
           </label>
@@ -262,7 +238,7 @@ function Popover({
             onClose();
             triggerRef.current?.focus();
           }}
-          className="min-h-11 rounded-full bg-olive px-5 text-sm font-semibold text-on-olive hover:bg-olive-hover"
+          className="min-h-11 rounded-full bg-primary px-5 text-sm font-semibold text-on-primary hover:bg-primary-hover"
         >
           Listo
         </button>
@@ -289,13 +265,42 @@ export function ContextPill({
   const transport = useRef<HTMLButtonElement>(null);
   const refs: Record<Segment, RefObject<HTMLButtonElement | null>> = { where, when, who, transport };
   const segments = Object.keys(SEGMENT_LABEL) as Segment[];
+  const [expanded, setExpanded] = useState(false);
+  // An open segment always needs its trigger on screen (the popover is anchored below it).
+  const showSegments = expanded || open !== null;
+  const gridId = `${baseId}-segments`;
 
   return (
     <div className={`relative min-w-0 ${className}`}>
+      <button
+        type="button"
+        aria-expanded={showSegments}
+        aria-controls={gridId}
+        onClick={() => {
+          if (showSegments) onOpenChange(null);
+          setExpanded(!showSegments);
+        }}
+        className={`flex min-h-11 w-full items-center gap-2 rounded-full border border-stone bg-surface px-4 text-left sm:hidden ${
+          showSegments ? "mb-2" : ""
+        }`}
+      >
+        <span className="min-w-0 flex-1 truncate text-sm text-ink">
+          <span className="sr-only">Preferencias de tu visita: </span>
+          {contextLine(context)}
+        </span>
+        <span className="shrink-0 text-xs font-semibold text-ink-muted">{showSegments ? "Ocultar" : "Cambiar"}</span>
+        <IconChevronDown
+          width={16}
+          height={16}
+          aria-hidden="true"
+          className={`shrink-0 text-ink-muted motion-safe:transition-transform ${showSegments ? "rotate-180" : ""}`}
+        />
+      </button>
       <div
+        id={gridId}
         role="group"
         aria-label="Preferencias de tu visita"
-        className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-stone bg-stone shadow-sm sm:flex sm:gap-0 sm:overflow-x-auto sm:rounded-full sm:bg-surface [scrollbar-width:none]"
+        className={`${showSegments ? "grid" : "hidden"} grid-cols-2 gap-px overflow-hidden rounded-2xl border border-stone bg-stone sm:flex sm:gap-0 sm:overflow-x-auto sm:rounded-full sm:bg-surface [scrollbar-width:none]`}
       >
         {segments.map((segment, i) => {
           const value = segmentValue(segment, context);
@@ -312,10 +317,10 @@ export function ContextPill({
               className={`flex min-h-11 min-w-0 flex-col justify-center px-4 py-1 text-left leading-tight focus-visible:outline-offset-[-2px] sm:shrink-0 ${
                 i > 0 ? "sm:border-l sm:border-stone" : ""
               } ${i === 0 ? "sm:rounded-l-full" : ""} ${i === segments.length - 1 ? "sm:rounded-r-full" : ""} ${
-                expanded ? "bg-gold-soft" : "bg-surface hover:bg-surface-muted"
+                expanded ? "bg-surface-muted" : "bg-surface hover:bg-surface-muted"
               }`}
             >
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-muted">{SEGMENT_LABEL[segment]}</span>
+              <span className="text-2xs font-semibold uppercase tracking-wider text-ink-muted">{SEGMENT_LABEL[segment]}</span>
               <span className="truncate text-sm font-medium text-ink sm:overflow-visible sm:whitespace-nowrap">{value}</span>
             </button>
           );

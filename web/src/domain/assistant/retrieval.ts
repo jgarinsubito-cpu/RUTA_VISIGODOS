@@ -2,21 +2,9 @@
  * Site resolution and claim retrieval. Retrieval reads ONLY PUBLISHED_CLAIMS: drafts, review and
  * superseded records never reach the assistant (PLAN.md, assistant step 2).
  */
-import { PUBLISHED_CLAIMS, SITES } from "@/data/catalog";
+import { PUBLISHED_CLAIMS, SITES } from "@/data/content";
 import type { Site, SiteId, ValidatedClaim } from "@/domain/types";
 import { GENERIC_TERMS, STOPWORDS, hasPhrase, normalize, stem, tokens, unique } from "./text";
-
-/** Hand-written aliases (normalized). Names and distinctive slug fragments are added automatically. */
-const SITE_ALIASES: Record<SiteId, string[]> = {
-  "site-san-roman": [
-    "san roman", "museo de los concilios", "museo visigodo", "museo de la cultura visigoda",
-    "museo de san roman",
-  ],
-  "site-vega-baja": ["vega baja", "la vega"],
-  "site-cristo-luz": ["cristo de la luz", "mezquita del cristo", "bab al mardum"],
-  "site-guarrazar": ["guarrazar", "huerta de guarrazar", "tesoro de guarrazar", "coronas votivas"],
-  "site-castillo-guadamur": ["castillo de guadamur", "castillo"],
-};
 
 /** Slug fragments too generic to identify a single site on their own. */
 const GENERIC_SLUG_WORDS = new Set([
@@ -27,7 +15,8 @@ function aliasesFor(site: Site): string[] {
   const fragments = site.slug
     .split("-")
     .filter((w) => w.length >= 5 && !GENERIC_SLUG_WORDS.has(w));
-  return unique([normalize(site.name), site.slug.replace(/-/g, " "), ...fragments, ...(SITE_ALIASES[site.id] ?? [])]);
+  // Names and distinctive slug words are automatic; Site.aliases adds what visitors also say.
+  return unique([normalize(site.name), site.slug.replace(/-/g, " "), ...fragments, ...(site.aliases ?? []).map(normalize)]);
 }
 
 export interface ResolvedSites {

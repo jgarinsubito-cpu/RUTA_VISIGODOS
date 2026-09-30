@@ -3,7 +3,11 @@
  * key and is the fallback whenever the model fails. Heritage text is built only from retrieved
  * published claims, phrased by evidence level; operational text only from catalog records.
  */
-import { ROUTES, SITES, claimsForSite, getRoute, getSite, storiesForSite } from "@/data/catalog";
+import { ROUTES, SHOWCASE, SITES, claimsForSite, getSite, storiesForSite } from "@/data/content";
+import { routeMinutes } from "@/domain/planner";
+import { needsStepFree, routeInterestScore } from "@/domain/recommend";
+import { ACCESS_NEED_LABEL } from "@/lib/labels";
+import { parseClockStrict } from "@/domain/time";
 import type {
   AssistantAnswer,
   AssistantRequest,
@@ -79,9 +83,9 @@ function siteRef(site: Site): string {
   return site.visigothic ? `[[${site.id}]]` : `[[${site.id}]] (patrimonio no visigodo)`;
 }
 
-function joinList(items: string[]): string {
+function joinList(items: string[], conjunction = "y"): string {
   if (items.length <= 1) return items.join("");
-  return `${items.slice(0, -1).join(", ")} y ${items[items.length - 1]}`;
+  return `${items.slice(0, -1).join(", ")} ${conjunction} ${items[items.length - 1]}`;
 }
 
 function placeSentence(siteIds: SiteId[]): string {
@@ -144,10 +148,14 @@ function abstainPart({ sites }: ComposeInput, lead = ABSTAIN_LEAD): Part {
       };
     }
   }
+  const examples = SHOWCASE.assistantExamples.filter((e) => getSite(e.siteId));
   return {
-    text: `${lead}\n\nPuedo contarte lo que sí recogen las fichas aprobadas, por ejemplo cómo apareció el Tesoro de Guarrazar ([[site-guarrazar]]) o por qué Toledo fue sede de la corte visigoda ([[site-san-roman]]).`,
+    text:
+      examples.length > 0
+        ? `${lead}\n\nPuedo contarte lo que sí recogen las fichas aprobadas, por ejemplo ${joinList(examples.map((e) => `${e.topic} ([[${e.siteId}]])`), "o")}.`
+        : lead,
     citations: [],
-    placeIds: ["site-guarrazar", "site-san-roman"],
+    placeIds: examples.map((e) => e.siteId),
     abstained: true,
   };
 }
@@ -161,10 +169,8 @@ const UNSUPPORTED_OPERATIONS: { keywords: string[]; label: string }[] = [
   { keywords: ["autobus*", "tren", "taxi"], label: "transporte público" },
 ];
 
-function clockToMinutes(value: string): number | null {
-  const m = /^(\d{1,2}):(\d{2})$/.exec(value);
-  return m ? Number(m[1]) * 60 + Number(m[2]) : null;
-}
+/** Time a "medio día / una mañana / una tarde" request leaves for visits. */
+const HALF_DAY_MINUTES = 240;
 
 function hoursHonesty(stops: Site[]): string {
   const example = stops.some((s) => s.hours.status === "example");
@@ -175,12 +181,31 @@ function hoursHonesty(stops: Site[]): string {
   return "";
 }
 
+/**
+ * The curated route that best fits the request: its keywords in the message, the places the
+ * message names among its stops, and the chosen area. Ties keep catalog order.
+ */
 function chooseRoute({ req, sites }: ComposeInput): Route {
-  const tesoroHint =
-    keywordHits(req.message, ["tesoro*", "guarrazar", "guadamur", "corona*", "castillo", "coche"]).length > 0 ||
-    sites.mentioned.some((s) => s.locality === "Guadamur") ||
-    req.context.area === "Guadamur";
-  return getRoute(tesoroHint ? "route-tesoro" : "route-capital") ?? ROUTES[0];
+  const mentioned = new Set(sites.mentioned.map((s) => s.id));
+  const score = (route: Route) => {
+    const stops = route.stopIds.map(getSite).filter((s): s is Site => Boolean(s));
+    let points = keywordHits(req.message, route.keywords ?? []).length * 2;
+    // The visitor's interests tip the balance, never over what the message asks for.
+    points += Math.min(routeInterestScore(route, getSite, req.preferences), 1);
+    points += route.stopIds.filter((id) => mentioned.has(id)).length * 2;
+    if (req.context.area !== "Toledo y Guadamur" && stops.some((s) => s.locality === req.context.area)) points += 1;
+    return points;
+  };
+  let best = ROUTES[0];
+  let bestScore = -1;
+  for (const route of ROUTES) {
+    const points = score(route);
+    if (points > bestScore) {
+      best = route;
+      bestScore = points;
+    }
+  }
+  return best;
 }
 
 function planPart(input: ComposeInput): Part {
@@ -189,16 +214,17 @@ function planPart(input: ComposeInput): Part {
   const stops = route.stopIds.map(getSite).filter((s): s is Site => Boolean(s));
   const family = req.context.profile === "family";
   const how = route.transport === "car" ? "combinando visita a pie y trayecto en coche" : "a pie";
+  const minutes = routeMinutes(route);
   const paragraphs: string[] = [
-    `${family ? "Para una salida en familia te propongo" : "Te propongo"} la ruta «${route.name}»: unos ${durationLabel(route.estimatedMinutes)} ${how}. Paradas: ${joinList(stops.map(siteRef))}.`,
+    `${family ? "Para una salida en familia te propongo" : "Te propongo"} la ruta «${route.name}»: unos ${durationLabel(minutes)} ${how}. Paradas: ${joinList(stops.map(siteRef))}.`,
   ];
 
   const notes: string[] = [];
-  const start = clockToMinutes(req.context.startTime);
-  const end = clockToMinutes(req.context.endTime);
+  const start = parseClockStrict(req.context.startTime);
+  const end = parseClockStrict(req.context.endTime);
   const halfDay = keywordHits(req.message, ["medio dia", "una manana", "una tarde"]).length > 0;
-  const available = halfDay ? 240 : start !== null && end !== null ? end - start : null;
-  if (available !== null && available > 0 && route.estimatedMinutes > available) {
+  const available = halfDay ? HALF_DAY_MINUTES : start !== null && end !== null ? end - start : null;
+  if (available !== null && available > 0 && minutes > available) {
     notes.push(`Puede quedarse justa para el tiempo disponible (${durationLabel(available)}); el planificador te avisará si algo no encaja.`);
   }
   if (route.transport === "car" && req.context.transport === "walk") {
@@ -207,8 +233,21 @@ function planPart(input: ComposeInput): Part {
   if (route.limitations.length > 0) notes.push(`A tener en cuenta: ${route.limitations.join("; ").toLowerCase()}.`);
   const honesty = hoursHonesty(stops);
   if (honesty) notes.push(honesty);
-  if (req.context.stepFreeRequired) {
+  const needs = req.preferences?.accessNeeds ?? [];
+  if (req.context.stepFreeRequired || needsStepFree(needs)) {
     notes.push("Has indicado que necesitas acceso sin escalones: la accesibilidad de estas paradas está sin verificar.");
+  }
+  if (needs.includes("avoid-slopes") && route.transport === "walk") {
+    notes.push("Has pedido evitar cuestas: no tenemos datos verificados de pendientes en este recorrido a pie.");
+  }
+  if (needs.includes("rest-stops") || req.preferences?.pace === "relaxed") {
+    notes.push("Para ir con calma, puedes quedarte con menos paradas: el planificador recalcula las horas al quitar una.");
+  }
+  const otherNeeds = needs.filter((n) => ["low-vision", "hearing", "quiet"].includes(n));
+  if (otherNeeds.length > 0) {
+    notes.push(
+      `También tenemos en cuenta: ${otherNeeds.map((n) => ACCESS_NEED_LABEL[n].label.toLowerCase()).join(", ")}; no hay datos verificados de estas paradas para ello.`,
+    );
   }
   if (family) {
     const story = stops.flatMap((s) => storiesForSite(s.id)).find((s) => s.audience === "family");
@@ -274,15 +313,15 @@ function travelPart(input: ComposeInput): Part {
   if (sites.all.length > 0) return siteTravelPart(input, unsupported);
   if (unsupported.length > 0) {
     return {
-      text: `No consta en los datos disponibles información sobre ${joinList(unsupported)}; consulta la web oficial de cada lugar.\n\nLo que sí puedo darte son duraciones de visita, horarios de ejemplo (no verificados) y las rutas de demostración, por ejemplo «La capital de un reino» por Toledo.`,
+      text: `No consta en los datos disponibles información sobre ${joinList(unsupported)}; consulta la web oficial de cada lugar.\n\nLo que sí puedo darte son duraciones de visita, horarios de ejemplo (no verificados) y las rutas de demostración${ROUTES[0] ? `, por ejemplo «${ROUTES[0].name}»` : ""}.`,
       citations: [],
       placeIds: [],
       abstained: true,
     };
   }
-  const [capital, tesoro] = [getRoute("route-capital"), getRoute("route-tesoro")];
+  const routes = ROUTES.map((r) => `«${r.name}» (${r.transport === "car" ? "en coche" : "a pie"}, unos ${durationLabel(routeMinutes(r))})`);
   return {
-    text: `Puedo ayudarte a organizar la visita con dos rutas de demostración: «${capital?.name}» (a pie por Toledo, unos ${durationLabel(capital?.estimatedMinutes ?? 0)}) y «${tesoro?.name}» (en coche hasta Guadamur, unos ${durationLabel(tesoro?.estimatedMinutes ?? 0)}).\n\nTambién puedo decirte cuánto dura la visita a cada lugar y sus horarios de ejemplo (no verificados). Dime cuánto tiempo tienes o qué te interesa.`,
+    text: `Puedo ayudarte a organizar la visita con ${routes.length === 1 ? "una ruta" : `${routes.length} rutas`} de demostración: ${joinList(routes)}.\n\nTambién puedo decirte cuánto dura la visita a cada lugar y sus horarios de ejemplo (no verificados). Dime cuánto tiempo tienes o qué te interesa.`,
     citations: [],
     placeIds: [],
     abstained: false,
@@ -291,29 +330,14 @@ function travelPart(input: ComposeInput): Part {
 
 /* ---------- Suggested prompts ---------- */
 
-const SITE_PROMPTS: Record<SiteId, string[]> = {
-  "site-san-roman": ["¿Por qué Toledo fue la capital del reino visigodo?", "¿Qué eran los concilios de Toledo?", "¿Cuánto dura la visita al museo de San Román?"],
-  "site-vega-baja": ["¿Qué se ha encontrado en la Vega Baja?", "¿Estaba en la Vega Baja el palacio de los reyes?", "¿Cómo visito la Vega Baja?"],
-  "site-cristo-luz": ["¿Es visigodo el Cristo de la Luz?", "¿De dónde vienen sus capiteles?", "¿Qué horario tiene el Cristo de la Luz?"],
-  "site-guarrazar": ["¿Dónde están hoy las coronas de Guarrazar?", "¿Qué rey aparece en las coronas?", "¿Cómo llego a Guarrazar?"],
-  "site-castillo-guadamur": ["¿De qué época es el castillo de Guadamur?", "Planifica la ruta del tesoro en coche", "¿Qué es el Tesoro de Guarrazar?"],
-};
-
-const GENERAL_PROMPTS = [
-  "Planifica medio día en Toledo",
-  "¿Qué es el Tesoro de Guarrazar?",
-  "¿Por qué Toledo fue la capital del reino visigodo?",
-  "Planifica la ruta del tesoro en coche",
-];
-
 export function suggestedPromptsFor(input: ComposeInput, planned = false): string[] {
   const { req, sites } = input;
   const pool: string[] = [];
   if (planned) pool.push("¿Qué horarios tienen estas paradas?");
   if (req.context.profile === "family") pool.push("Plan con niños por Toledo");
   const primary = sites.all[0] ?? (planned ? undefined : SITES.find((s) => req.tripSiteIds.includes(s.id)));
-  if (primary) pool.push(...(SITE_PROMPTS[primary.id] ?? []));
-  pool.push(...GENERAL_PROMPTS);
+  if (primary) pool.push(...(primary.suggestedPrompts ?? []));
+  pool.push(...SHOWCASE.generalPrompts);
   const asked = normalize(req.message);
   return unique(pool).filter((p) => normalize(p) !== asked).slice(0, 3);
 }

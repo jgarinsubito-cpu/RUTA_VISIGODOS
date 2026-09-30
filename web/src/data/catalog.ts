@@ -4,27 +4,56 @@
  * The approved FM-01…FM-10 records, licensed imagery and verified operational data have not been
  * supplied yet (PLAN.md, "Evidence and assumptions"). Everything here is a demo fixture:
  *  - every record has `demo: true` and the UI must show it;
- *  - opening hours have status "example" and must never be presented as live;
+ *  - opening hours have status "example" and must never be presented as live (where they come
+ *    from a public source, that source is noted but the hours are still unverified);
  *  - coordinates are approximate;
  *  - claims cite a placeholder source until Urbs Regia validation.
- * Replace this module with the staged-import repository once approved data exists.
+ * Replace this module with the staged-import repository once approved data exists. App code
+ * reads it only through ./content (a test enforces this), so the swap touches one module.
  */
-import type { Route, Site, Story, ValidatedClaim } from "@/domain/types";
+import type { OpeningInfo, Route, Showcase, Site, SourceRef, Story, ValidatedClaim } from "@/domain/types";
 
 export const DEMO_SOURCE = { title: "Ficha de demostración — pendiente de validación (Urbs Regia)" };
 
-const museumHours = {
-  status: "example" as const,
-  note: "Horario de ejemplo, no verificado. Consulta la web oficial antes de ir.",
+/*
+ * Practical data (hours, addresses, phones, websites) was taken from the places' own and tourism
+ * websites on 29/09/2026. It is NOT verified: hours keep status "example" and the UI says so.
+ * Descriptions are our own short summaries of public sources (listed in `sources`); they are not
+ * evidence claims, so history still comes only from published claims.
+ * Photos: Wikimedia Commons, free licences, author and licence shown with each image.
+ */
+const CONSULTED = "consultado el 29/09/2026";
+
+const SAN_ROMAN_HOURS: OpeningInfo = {
+  status: "example",
+  note: `Horario publicado por el museo (${CONSULTED}), no verificado. Cierra los lunes y algunos festivos.`,
   weekly: {
-    2: [{ open: "10:00", close: "14:30" }, { open: "16:00", close: "18:30" }],
-    3: [{ open: "10:00", close: "14:30" }, { open: "16:00", close: "18:30" }],
-    4: [{ open: "10:00", close: "14:30" }, { open: "16:00", close: "18:30" }],
-    5: [{ open: "10:00", close: "14:30" }, { open: "16:00", close: "18:30" }],
-    6: [{ open: "10:00", close: "18:30" }],
-    7: [{ open: "10:00", close: "14:30" }],
+    2: [{ open: "10:00", close: "14:00" }, { open: "16:00", close: "18:00" }],
+    3: [{ open: "10:00", close: "14:00" }, { open: "16:00", close: "18:00" }],
+    4: [{ open: "10:00", close: "14:00" }, { open: "16:00", close: "18:00" }],
+    5: [{ open: "10:00", close: "14:00" }, { open: "16:00", close: "18:00" }],
+    6: [{ open: "10:00", close: "14:00" }, { open: "16:00", close: "18:00" }],
+    7: [{ open: "09:00", close: "15:00" }],
   },
 };
+
+const everyDay = (open: string, close: string) =>
+  Object.fromEntries([1, 2, 3, 4, 5, 6, 7].map((d) => [d, [{ open, close }]])) as OpeningInfo["weekly"];
+
+/** Monuments of the Toledo Monumental tourist wristband share one seasonal schedule. */
+const TOLEDO_MONUMENTAL_HOURS: OpeningInfo = {
+  status: "example",
+  note: `Horario de temporada (1 mar – 15 oct) publicado por Toledo Monumental (${CONSULTED}); en invierno cierra a las 17:45. No verificado.`,
+  weekly: everyDay("10:00", "18:45"),
+};
+
+const outdoors = (note: string): OpeningInfo => ({ status: "example", alwaysOpen: true, note });
+
+const commons = (file: string) => `https://commons.wikimedia.org/wiki/File:${file}`;
+const wikipedia = (title: string, page: string): SourceRef => ({
+  title: `Wikipedia: ${title}`,
+  url: `https://es.wikipedia.org/wiki/${page}`,
+});
 
 export const SITES: Site[] = [
   {
@@ -37,14 +66,38 @@ export const SITES: Site[] = [
     tagline: "La corte visigoda contada desde la iglesia de San Román",
     summary:
       "Instalado en la antigua iglesia de San Román, en la parte alta de la ciudad, reúne piezas de época visigoda de Toledo y su entorno. Es el punto de partida natural para entender la ciudad como sede regia.",
-    coordinates: { lat: 39.8594, lng: -4.0272, approximate: true },
+    coordinates: { lat: 39.8583, lng: -4.0269, approximate: true },
     visitMinutes: 60,
-    hours: museumHours,
+    hours: SAN_ROMAN_HOURS,
     access: { status: "unknown", note: "Accesibilidad pendiente de verificación." },
     themes: ["capital", "museos", "arte"],
     claimIds: ["claim-toledo-sede", "claim-san-roman-museo", "claim-concilios"],
     storyIds: ["story-concilios"],
-    imageTone: "linear-gradient(135deg,#7a6a2e 0%,#b9a25a 55%,#e8dcb5 100%)",
+    imageTone: "ochre",
+    image: {
+      src: "/images/places/san-roman.jpg",
+      width: 1920,
+      height: 2880,
+      alt: "Puerta de herradura de ladrillo de la iglesia de San Román, entrada del museo",
+      author: "Fedoce1",
+      license: "CC BY-SA 4.0",
+      sourceUrl: commons("Museo_de_los_Concilios_y_la_Cultura_Visigoda_(Iglesia_de_San_Román)_--_01.jpg"),
+      focus: "50% 45%",
+    },
+    category: "Museo",
+    address: "Calle San Román, s/n, 45002 Toledo",
+    phone: "+34 925 22 78 72",
+    officialUrl: "https://cultura.castillalamancha.es/museos/nuestros-museos/museo-de-los-concilios",
+    sources: [
+      { title: "Portal de Cultura de Castilla-La Mancha: Museo de los Concilios", url: "https://cultura.castillalamancha.es/museos/nuestros-museos/museo-de-los-concilios" },
+      wikipedia("Museo de los Concilios y de la Cultura Visigoda", "Museo_de_los_Concilios_y_de_la_Cultura_Visigoda"),
+    ],
+    aliases: ["san roman", "museo de los concilios", "museo visigodo", "museo de la cultura visigoda", "museo de san roman"],
+    suggestedPrompts: [
+      "¿Por qué Toledo fue la capital del reino visigodo?",
+      "¿Qué eran los concilios de Toledo?",
+      "¿Cuánto dura la visita al museo de San Román?",
+    ],
     demo: true,
   },
   {
@@ -64,7 +117,23 @@ export const SITES: Site[] = [
     themes: ["capital", "arqueología", "paisaje"],
     claimIds: ["claim-vega-baja-ocupacion", "claim-vega-baja-palatino"],
     storyIds: ["story-vega-baja"],
-    imageTone: "linear-gradient(135deg,#4f5a3a 0%,#8f9a64 55%,#d9dcb8 100%)",
+    imageTone: "moss",
+    image: {
+      src: "/images/places/vega-baja.jpg",
+      width: 1920,
+      height: 1280,
+      alt: "Explanada de la Vega Baja con zonas de excavación señalizadas",
+      author: "Carlos Delgado",
+      license: "CC BY-SA 3.0 ES",
+      sourceUrl: commons("Yacimiento_arqueológico_de_la_Vega_Baja_de_Toledo.jpg"),
+    },
+    category: "Yacimiento arqueológico",
+    aliases: ["vega baja", "la vega"],
+    suggestedPrompts: [
+      "¿Qué se ha encontrado en la Vega Baja?",
+      "¿Estaba en la Vega Baja el palacio de los reyes?",
+      "¿Cómo visito la Vega Baja?",
+    ],
     demo: true,
   },
   {
@@ -77,14 +146,33 @@ export const SITES: Site[] = [
     tagline: "Mezquita del siglo X con posibles materiales reaprovechados",
     summary:
       "Pequeña mezquita de época califal, posteriormente iglesia. No es un edificio visigodo, pero se suele relacionar con la ruta por los materiales anteriores que se han identificado en su construcción.",
-    coordinates: { lat: 39.8621, lng: -4.0239, approximate: true },
+    coordinates: { lat: 39.8606, lng: -4.0243, approximate: true },
     visitMinutes: 30,
-    hours: museumHours,
+    hours: TOLEDO_MONUMENTAL_HOURS,
     access: { status: "unknown" },
     themes: ["capital", "arquitectura"],
     claimIds: ["claim-cristo-luz-fecha", "claim-cristo-luz-capiteles"],
     storyIds: [],
-    imageTone: "linear-gradient(135deg,#8a4b2a 0%,#c98a5a 55%,#efd6bd 100%)",
+    imageTone: "terracotta",
+    image: {
+      src: "/images/places/cristo-luz.jpg",
+      width: 1920,
+      height: 1536,
+      alt: "Fachada de ladrillo de la mezquita del Cristo de la Luz con arcos entrecruzados",
+      author: "Fernando",
+      license: "CC BY-SA 4.0",
+      sourceUrl: commons("Cristo_de_la_Luz_2025_Façade.jpg"),
+    },
+    category: "Mezquita",
+    address: "Calle Cristo de la Luz, 22, 45002 Toledo",
+    officialUrl: "https://toledomonumental.com/",
+    sources: [{ title: "Toledo Monumental", url: "https://toledomonumental.com/" }, wikipedia("Cristo de la Luz", "Cristo_de_la_Luz")],
+    aliases: ["cristo de la luz", "mezquita del cristo", "bab al mardum"],
+    suggestedPrompts: [
+      "¿Es visigodo el Cristo de la Luz?",
+      "¿De dónde vienen sus capiteles?",
+      "¿Qué horario tiene el Cristo de la Luz?",
+    ],
     demo: true,
   },
   {
@@ -99,12 +187,30 @@ export const SITES: Site[] = [
       "Paraje de Guadamur donde en 1858 se halló el llamado Tesoro de Guarrazar, un conjunto de coronas y cruces votivas de oro. Hoy las piezas se conservan en varios museos; la visita es al territorio del hallazgo.",
     coordinates: { lat: 39.7995, lng: -4.1575, approximate: true },
     visitMinutes: 40,
-    hours: { status: "example", alwaysOpen: true, note: "Espacio exterior. Condiciones de acceso no verificadas." },
+    hours: outdoors("Espacio exterior. Condiciones de acceso no verificadas."),
     access: { status: "unknown", note: "Terreno rural; accesibilidad sin verificar." },
     themes: ["tesoro", "paisaje", "territorio"],
     claimIds: ["claim-guarrazar-hallazgo", "claim-guarrazar-recesvinto", "claim-guarrazar-museos"],
     storyIds: ["story-guarrazar"],
-    imageTone: "linear-gradient(135deg,#6b5a1f 0%,#c4a53f 50%,#f1e2a6 100%)",
+    imageTone: "ochre",
+    image: {
+      src: "/images/places/guarrazar.jpg",
+      width: 1920,
+      height: 2570,
+      alt: "Lámina en color con las coronas y cruces votivas de oro del tesoro de Guarrazar",
+      caption: "Lámina del siglo XIX con las piezas del tesoro; no muestra el paraje.",
+      author: "Teófilo Rufflé, según dibujo de Francisco Aznar y García",
+      license: "Dominio público",
+      sourceUrl: commons("Toledo._Guadamur._Coronas_y_cruces_visigodas_de_Guarrazar_-_Teófilo_Rufflé.jpg"),
+      focus: "50% 42%",
+    },
+    category: "Paraje del hallazgo",
+    aliases: ["guarrazar", "huerta de guarrazar", "tesoro de guarrazar", "coronas votivas"],
+    suggestedPrompts: [
+      "¿Dónde están hoy las coronas de Guarrazar?",
+      "¿Qué rey aparece en las coronas?",
+      "¿Cómo llego a Guarrazar?",
+    ],
     demo: true,
   },
   {
@@ -117,14 +223,392 @@ export const SITES: Site[] = [
     tagline: "Patrimonio local no visigodo, junto a la ruta del tesoro",
     summary:
       "Castillo bajomedieval que domina la localidad. No pertenece a la época visigoda; se incluye como patrimonio local cercano para completar la visita a Guadamur.",
-    coordinates: { lat: 39.8129, lng: -4.1469, approximate: true },
+    coordinates: { lat: 39.8102, lng: -4.1463, approximate: true },
     visitMinutes: 45,
     hours: { status: "unknown", note: "Régimen de visitas pendiente de verificación." },
     access: { status: "unknown" },
     themes: ["territorio", "patrimonio local"],
     claimIds: ["claim-castillo-no-visigodo"],
     storyIds: [],
-    imageTone: "linear-gradient(135deg,#5a5147 0%,#9a8d7b 55%,#e2dbcf 100%)",
+    imageTone: "stone",
+    image: {
+      src: "/images/places/castillo-guadamur.jpg",
+      width: 569,
+      height: 372,
+      alt: "Castillo de Guadamur, con su torre del homenaje almenada sobre los pinos",
+      author: "Pedro Antonio Alonso",
+      license: "CC BY-SA 3.0 ES",
+      sourceUrl: commons("Castillo2011.jpg"),
+    },
+    category: "Castillo",
+    sources: [wikipedia("Castillo de Guadamur", "Castillo_de_Guadamur")],
+    aliases: ["castillo de guadamur", "castillo"],
+    suggestedPrompts: [
+      "¿De qué época es el castillo de Guadamur?",
+      "Planifica la ruta del tesoro en coche",
+      "¿Qué es el Tesoro de Guarrazar?",
+    ],
+    demo: true,
+  },
+  {
+    id: "site-alcazar",
+    slug: "alcazar-de-toledo",
+    name: "Alcázar de Toledo",
+    locality: "Toledo",
+    kind: "museum",
+    visigothic: false,
+    tagline: "Fortaleza en lo más alto de la ciudad, hoy Museo del Ejército",
+    summary:
+      "Gran edificio cuadrangular con cuatro torres que domina el perfil de Toledo desde una de sus partes más altas. Alberga el Museo del Ejército.",
+    coordinates: { lat: 39.8581, lng: -4.0206, approximate: true },
+    visitMinutes: 90,
+    hours: {
+      status: "example",
+      note: `Horario publicado por el museo (${CONSULTED}), no verificado. Cierra los lunes; último acceso 30 min antes del cierre.`,
+      weekly: { 2: [{ open: "10:00", close: "17:00" }], 3: [{ open: "10:00", close: "17:00" }], 4: [{ open: "10:00", close: "17:00" }], 5: [{ open: "10:00", close: "17:00" }], 6: [{ open: "10:00", close: "17:00" }], 7: [{ open: "10:00", close: "17:00" }] },
+    },
+    access: { status: "unknown" },
+    themes: ["museos", "arquitectura"],
+    claimIds: [],
+    storyIds: [],
+    imageTone: "stone",
+    image: {
+      src: "/images/places/alcazar.jpg",
+      width: 1920,
+      height: 1280,
+      alt: "El Alcázar de Toledo con sus torres de chapitel sobre los tejados de la ciudad",
+      author: "Fernando",
+      license: "CC BY-SA 4.0",
+      sourceUrl: commons("FP_Toledo_Alcazar_2025_-_Views.jpg"),
+    },
+    category: "Fortaleza · Museo del Ejército",
+    address: "Calle de la Unión, s/n, 45001 Toledo",
+    phone: "+34 925 23 88 00",
+    officialUrl: "https://ejercito.defensa.gob.es/museo/",
+    sources: [
+      { title: "Museo del Ejército: Prepara tu visita", url: "https://ejercito.defensa.gob.es/museo/visitas/prepara_visita/" },
+      wikipedia("Alcázar de Toledo", "Alcázar_de_Toledo"),
+    ],
+    demo: true,
+  },
+  {
+    id: "site-catedral",
+    slug: "catedral-de-toledo",
+    name: "Catedral Primada de Toledo",
+    locality: "Toledo",
+    kind: "monument",
+    visigothic: false,
+    tagline: "La gran catedral gótica de Santa María",
+    summary:
+      "Templo gótico cuya construcción comenzó en 1226, en tiempos de Fernando III, y cuyas últimas bóvedas góticas se cerraron en 1493. La visita cultural entra por la Puerta Llana.",
+    coordinates: { lat: 39.8571, lng: -4.0239, approximate: true },
+    visitMinutes: 90,
+    hours: {
+      status: "example",
+      note: `Horario de la visita cultural publicado por la catedral (${CONSULTED}), no verificado. Último acceso 30 min antes del cierre.`,
+      weekly: { ...everyDay("10:00", "18:30"), 7: [{ open: "14:00", close: "18:30" }] },
+    },
+    access: { status: "unknown" },
+    themes: ["arquitectura", "arte"],
+    claimIds: [],
+    storyIds: [],
+    imageTone: "stone",
+    image: {
+      src: "/images/places/catedral.jpg",
+      width: 1920,
+      height: 1686,
+      alt: "Torre y fachada gótica de la catedral de Toledo",
+      author: "Michal Osmenda",
+      license: "CC BY 2.0",
+      sourceUrl: commons("Cathedral_of_Toledo_(7079311505).jpg"),
+    },
+    category: "Catedral",
+    address: "Calle Cardenal Cisneros, 1, 45002 Toledo",
+    phone: "+34 925 22 22 41",
+    officialUrl: "https://www.catedralprimada.es/",
+    sources: [
+      { title: "Catedral Primada de Toledo: horarios y tarifas", url: "https://www.catedralprimada.es/es/info/museos/horarios-y-tarifas" },
+      wikipedia("Catedral de Toledo", "Catedral_de_Toledo"),
+    ],
+    demo: true,
+  },
+  {
+    id: "site-san-juan-reyes",
+    slug: "san-juan-de-los-reyes",
+    name: "Monasterio de San Juan de los Reyes",
+    locality: "Toledo",
+    kind: "monument",
+    visigothic: false,
+    tagline: "El monasterio de los Reyes Católicos, en gótico isabelino",
+    summary:
+      "Monasterio franciscano construido bajo el patrocinio de Isabel I de Castilla, en conmemoración de la batalla de Toro y del nacimiento del príncipe Juan. Es una de las muestras más valiosas del gótico isabelino.",
+    coordinates: { lat: 39.8577, lng: -4.0316, approximate: true },
+    visitMinutes: 45,
+    hours: TOLEDO_MONUMENTAL_HOURS,
+    access: { status: "unknown" },
+    themes: ["arquitectura", "arte"],
+    claimIds: [],
+    storyIds: [],
+    imageTone: "stone",
+    image: {
+      src: "/images/places/san-juan-reyes.jpg",
+      width: 1920,
+      height: 1519,
+      alt: "Interior de la iglesia del monasterio de San Juan de los Reyes con bóvedas góticas",
+      author: "Querubin Saldaña Sanchez",
+      license: "CC BY-SA 3.0",
+      sourceUrl: commons("Iglesia_del_monasterio_de_San_Juan_de_los_Reyes,_Toledo,_España.jpg"),
+    },
+    category: "Monasterio",
+    address: "Calle Reyes Católicos, 17, 45002 Toledo",
+    officialUrl: "https://www.sanjuandelosreyes.org/",
+    sources: [
+      { title: "San Juan de los Reyes: el monumento", url: "https://www.sanjuandelosreyes.org/monumento/" },
+      wikipedia("Monasterio de San Juan de los Reyes", "Monasterio_de_San_Juan_de_los_Reyes"),
+    ],
+    demo: true,
+  },
+  {
+    id: "site-santa-maria-blanca",
+    slug: "santa-maria-la-blanca",
+    name: "Sinagoga de Santa María la Blanca",
+    locality: "Toledo",
+    kind: "monument",
+    visigothic: false,
+    tagline: "Sinagoga del siglo XII de arcos de herradura blancos",
+    summary:
+      "Construida hacia 1180 como sinagoga, fue convertida en iglesia tras el pogromo de 1391. Hoy no tiene culto y se visita como monumento; sus naves de arcos de herradura son una de las imágenes más conocidas de Toledo.",
+    coordinates: { lat: 39.8569, lng: -4.0304, approximate: true },
+    visitMinutes: 25,
+    hours: TOLEDO_MONUMENTAL_HOURS,
+    access: { status: "unknown" },
+    themes: ["arquitectura"],
+    claimIds: [],
+    storyIds: [],
+    imageTone: "stone",
+    image: {
+      src: "/images/places/santa-maria-blanca.jpg",
+      width: 1920,
+      height: 1280,
+      alt: "Naves de Santa María la Blanca con arcos de herradura blancos sobre pilares",
+      author: "Fernando",
+      license: "CC BY-SA 4.0",
+      sourceUrl: commons("Santa_María_la_Blanca_-_Arcos.jpg"),
+    },
+    category: "Sinagoga",
+    address: "Calle Reyes Católicos, 4, 45002 Toledo",
+    officialUrl: "https://toledomonumental.com/",
+    sources: [
+      { title: "Toledo Monumental: Santa María la Blanca", url: "https://toledomonumental.com/en/monument-santa-maria-la-blanca-synagogue/" },
+      wikipedia("Santa María la Blanca (Toledo)", "Santa_María_la_Blanca_(Toledo)"),
+    ],
+    demo: true,
+  },
+  {
+    id: "site-transito",
+    slug: "sinagoga-del-transito",
+    name: "Sinagoga del Tránsito · Museo Sefardí",
+    locality: "Toledo",
+    kind: "museum",
+    visigothic: false,
+    tagline: "Sinagoga mudéjar del siglo XIV, hoy Museo Sefardí",
+    summary:
+      "Levantada en el siglo XIV bajo el mecenazgo de Samuel ha-Leví, en tiempos de Pedro I. Destacan la armadura de madera y los frisos de yeso policromado de su sala de oración. Acoge el Museo Sefardí.",
+    coordinates: { lat: 39.8557, lng: -4.0294, approximate: true },
+    visitMinutes: 60,
+    hours: {
+      status: "example",
+      note: `Horario de 1 mar a 31 oct publicado por el museo (${CONSULTED}), no verificado; de noviembre a febrero cierra a las 18:00 de martes a sábado. Cierra los lunes.`,
+      weekly: { 2: [{ open: "09:30", close: "19:30" }], 3: [{ open: "09:30", close: "19:30" }], 4: [{ open: "09:30", close: "19:30" }], 5: [{ open: "09:30", close: "19:30" }], 6: [{ open: "09:30", close: "19:30" }], 7: [{ open: "10:00", close: "15:00" }] },
+    },
+    access: { status: "unknown" },
+    themes: ["museos", "arquitectura", "arte"],
+    claimIds: [],
+    storyIds: [],
+    imageTone: "umber",
+    image: {
+      src: "/images/places/transito.jpg",
+      width: 1920,
+      height: 1272,
+      alt: "Sala de oración de la sinagoga del Tránsito con yeserías y armadura de madera",
+      author: "Selbymay",
+      license: "CC BY-SA 3.0",
+      sourceUrl: commons("Toledo_-_Sinagoga_El_Transito_01.jpg"),
+    },
+    category: "Sinagoga · Museo Sefardí",
+    address: "Calle Samuel Leví, 2, 45002 Toledo",
+    phone: "+34 925 22 37 80",
+    officialUrl: "https://www.cultura.gob.es/msefardi/",
+    sources: [
+      { title: "Museo Sefardí: horario", url: "https://www.cultura.gob.es/msefardi/en/visita/horario.html" },
+      wikipedia("Sinagoga del Tránsito", "Sinagoga_del_Tránsito"),
+    ],
+    demo: true,
+  },
+  {
+    id: "site-santo-tome",
+    slug: "iglesia-de-santo-tome",
+    name: "Iglesia de Santo Tomé",
+    locality: "Toledo",
+    kind: "monument",
+    visigothic: false,
+    tagline: "La torre mudéjar y El entierro del señor de Orgaz",
+    summary:
+      "Iglesia del centro histórico citada ya en el siglo XII, construida sobre el solar de una mezquita anterior. En ella se expone El entierro del señor de Orgaz, de El Greco.",
+    coordinates: { lat: 39.8568, lng: -4.0281, approximate: true },
+    visitMinutes: 25,
+    hours: TOLEDO_MONUMENTAL_HOURS,
+    access: { status: "unknown" },
+    themes: ["arte", "arquitectura"],
+    claimIds: [],
+    storyIds: [],
+    imageTone: "umber",
+    image: {
+      src: "/images/places/santo-tome.jpg",
+      width: 1181,
+      height: 1739,
+      alt: "Torre mudéjar de ladrillo de la iglesia de Santo Tomé",
+      author: "EmDee",
+      license: "CC BY-SA 3.0",
+      sourceUrl: commons("Tolède_-_clocher_de_Santo_Tomé.JPG"),
+      focus: "50% 30%",
+    },
+    category: "Iglesia",
+    address: "Plaza del Conde, 4, 45002 Toledo",
+    officialUrl: "https://toledomonumental.com/",
+    sources: [{ title: "Toledo Monumental", url: "https://toledomonumental.com/" }, wikipedia("Iglesia de Santo Tomé (Toledo)", "Iglesia_de_Santo_Tomé_(Toledo)")],
+    demo: true,
+  },
+  {
+    id: "site-mirador-valle",
+    slug: "mirador-del-valle",
+    name: "Mirador del Valle",
+    locality: "Toledo",
+    kind: "landscape",
+    visigothic: false,
+    tagline: "La vista de Toledo entera desde la otra orilla del Tajo",
+    summary:
+      "Mirador junto a la carretera de circunvalación, en la orilla sur del Tajo, desde el que se ve el casco histórico con la catedral y el Alcázar. Es un espacio al aire libre.",
+    coordinates: { lat: 39.8508, lng: -4.0197, approximate: true },
+    visitMinutes: 20,
+    hours: outdoors("Espacio exterior. Condiciones de acceso no verificadas."),
+    access: { status: "unknown", note: "Junto a la carretera; accesibilidad sin verificar." },
+    themes: ["paisaje"],
+    claimIds: [],
+    storyIds: [],
+    imageTone: "slate",
+    image: {
+      src: "/images/places/mirador-valle.jpg",
+      width: 1920,
+      height: 1440,
+      alt: "Vista del casco histórico de Toledo desde el mirador del Valle, con la catedral y el Alcázar",
+      author: "Esperanza Candel",
+      license: "CC BY-SA 3.0 ES",
+      sourceUrl: commons("Vista_de_Toledo_desde_el_mirador_del_Valle_01.jpg"),
+      focus: "60% 45%",
+    },
+    category: "Mirador",
+    address: "Carretera de Circunvalación, s/n, 45004 Toledo",
+    demo: true,
+  },
+  {
+    id: "site-puente-san-martin",
+    slug: "puente-de-san-martin",
+    name: "Puente de San Martín",
+    locality: "Toledo",
+    kind: "monument",
+    visigothic: false,
+    tagline: "Puente medieval sobre el Tajo, al oeste de la ciudad",
+    summary:
+      "Puente medieval de piedra que cruza el Tajo por el oeste del casco histórico, cerca de San Juan de los Reyes. Se recorre a pie.",
+    coordinates: { lat: 39.8566, lng: -4.0342, approximate: true },
+    visitMinutes: 20,
+    hours: outdoors("Espacio exterior. Condiciones de acceso no verificadas."),
+    access: { status: "unknown" },
+    themes: ["paisaje", "arquitectura"],
+    claimIds: [],
+    storyIds: [],
+    imageTone: "moss",
+    image: {
+      src: "/images/places/puente-san-martin.jpg",
+      width: 1024,
+      height: 666,
+      alt: "El puente de San Martín con sus arcos de piedra sobre el río Tajo",
+      author: "Arturormk",
+      license: "CC BY-SA 3.0 ES",
+      sourceUrl: commons("Puente_de_San_Martín_(Toledo)_2011-05-27.jpg"),
+    },
+    category: "Puente medieval",
+    sources: [wikipedia("Puente de San Martín (Toledo)", "Puente_de_San_Martín_(Toledo)")],
+    demo: true,
+  },
+  {
+    id: "site-puerta-bisagra",
+    slug: "puerta-de-bisagra",
+    name: "Puerta Nueva de Bisagra",
+    locality: "Toledo",
+    kind: "monument",
+    visigothic: false,
+    tagline: "La gran puerta monumental de la muralla norte",
+    summary:
+      "Puerta monumental de la muralla de Toledo, en el lado norte de la ciudad histórica, con un gran escudo imperial en su fachada exterior.",
+    coordinates: { lat: 39.8625, lng: -4.0252, approximate: true },
+    visitMinutes: 15,
+    hours: outdoors("Espacio exterior. Condiciones de acceso no verificadas."),
+    access: { status: "unknown" },
+    themes: ["arquitectura"],
+    claimIds: [],
+    storyIds: [],
+    imageTone: "stone",
+    image: {
+      src: "/images/places/puerta-bisagra.jpg",
+      width: 1920,
+      height: 1440,
+      alt: "Puerta Nueva de Bisagra con sus torreones y el escudo imperial",
+      author: "Bernard Gagnon",
+      license: "CC BY-SA 3.0",
+      sourceUrl: commons("Puerta_Nueva_de_Bisagra,_Toledo.jpg"),
+    },
+    category: "Puerta monumental",
+    sources: [wikipedia("Puerta Nueva de Bisagra", "Puerta_Nueva_de_Bisagra")],
+    demo: true,
+  },
+  {
+    id: "site-santa-cruz",
+    slug: "museo-de-santa-cruz",
+    name: "Museo de Santa Cruz",
+    locality: "Toledo",
+    kind: "museum",
+    visigothic: false,
+    tagline: "Un hospital renacentista con pinturas de El Greco",
+    summary:
+      "Museo instalado en el antiguo Hospital de Santa Cruz. Su principal atractivo es un valioso conjunto de pinturas de El Greco.",
+    coordinates: { lat: 39.8601, lng: -4.0206, approximate: true },
+    visitMinutes: 60,
+    hours: {
+      status: "example",
+      note: `Horario publicado por el museo (${CONSULTED}), no verificado.`,
+      weekly: { ...everyDay("10:00", "18:00"), 7: [{ open: "09:00", close: "15:00" }] },
+    },
+    access: { status: "unknown" },
+    themes: ["museos", "arte"],
+    claimIds: [],
+    storyIds: [],
+    imageTone: "umber",
+    image: {
+      src: "/images/places/santa-cruz.jpg",
+      width: 1920,
+      height: 1280,
+      alt: "Galería del Museo de Santa Cruz con techo de madera y obras expuestas",
+      author: "Fernando",
+      license: "CC BY-SA 4.0",
+      sourceUrl: commons("FP_Toledo_2025_-_Santa_Cruz_Museum_-_Gallery.jpg"),
+    },
+    category: "Museo",
+    address: "Calle Miguel de Cervantes, 3, 45001 Toledo",
+    phone: "+34 925 22 14 02",
+    officialUrl: "https://cultura.castillalamancha.es/museos/nuestros-museos/museo-de-santa-cruz",
+    sources: [wikipedia("Museo de Santa Cruz", "Museo_de_Santa_Cruz")],
     demo: true,
   },
 ];
@@ -287,8 +771,8 @@ export const ROUTES: Route[] = [
     summary:
       "Un recorrido a pie por la Toledo visigoda: el museo de San Román, materiales reaprovechados en el Cristo de la Luz y la Vega Baja junto al Tajo.",
     stopIds: ["site-san-roman", "site-cristo-luz", "site-vega-baja"],
-    estimatedMinutes: 210,
     transport: "walk",
+    keywords: ["capital", "corte", "concilio*", "casco", "a pie", "andando", "caminando"],
     limitations: ["Cuestas pronunciadas en el casco histórico", "Horarios y accesos sin verificar (demo)"],
     demo: true,
   },
@@ -300,37 +784,29 @@ export const ROUTES: Route[] = [
     summary:
       "Empieza en el museo de Toledo para entender el contexto y continúa en coche hasta Guadamur, donde apareció el Tesoro de Guarrazar.",
     stopIds: ["site-san-roman", "site-guarrazar", "site-castillo-guadamur"],
-    estimatedMinutes: 240,
     transport: "car",
+    keywords: ["tesoro*", "guarrazar", "guadamur", "corona*", "castillo", "coche"],
     limitations: ["Requiere vehículo", "Terreno rural en Guarrazar", "Horarios y accesos sin verificar (demo)"],
     demo: true,
   },
 ];
 
-/**
- * Only published claims may reach visitors or the assistant (PLAN.md, assistant step 2). CLAIMS is
- * already published-only; the filter guards against a non-published record being added here.
- */
-export const PUBLISHED_CLAIMS = CLAIMS.filter((c) => c.status === "published");
-
-export function getSite(id: string): Site | undefined {
-  return SITES.find((s) => s.id === id);
-}
-export function getSiteBySlug(slug: string): Site | undefined {
-  return SITES.find((s) => s.slug === slug);
-}
-export function getRoute(id: string): Route | undefined {
-  return ROUTES.find((r) => r.id === id);
-}
-export function getRouteBySlug(slug: string): Route | undefined {
-  return ROUTES.find((r) => r.slug === slug);
-}
-export function getPublishedClaim(id: string): ValidatedClaim | undefined {
-  return PUBLISHED_CLAIMS.find((c) => c.id === id);
-}
-export function claimsForSite(siteId: string): ValidatedClaim[] {
-  return PUBLISHED_CLAIMS.filter((c) => c.siteId === siteId);
-}
-export function storiesForSite(siteId: string): Story[] {
-  return STORIES.filter((s) => s.siteId === siteId);
-}
+export const SHOWCASE: Showcase = {
+  heroSiteId: "site-san-roman",
+  starterPrompts: [
+    "Medio día en Toledo a pie",
+    "¿Qué es el Tesoro de Guarrazar?",
+    "¿Por qué Toledo fue capital visigoda?",
+    "Plan en familia con coche",
+  ],
+  generalPrompts: [
+    "Planifica medio día en Toledo",
+    "¿Qué es el Tesoro de Guarrazar?",
+    "¿Por qué Toledo fue la capital del reino visigodo?",
+    "Planifica la ruta del tesoro en coche",
+  ],
+  assistantExamples: [
+    { siteId: "site-guarrazar", topic: "cómo apareció el Tesoro de Guarrazar" },
+    { siteId: "site-san-roman", topic: "por qué Toledo fue sede de la corte visigoda" },
+  ],
+};

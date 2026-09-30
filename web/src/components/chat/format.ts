@@ -1,6 +1,6 @@
 /** Pure helpers for the assistant workspace (text parsing, context labels, request building). */
-import type { AssistantAnswer, AssistantRequest, ChatMessage, SiteId, TripContext, VisitorProfile } from "@/domain/types";
-import { getPublishedClaim } from "@/data/catalog";
+import type { AssistantAnswer, AssistantRequest, ChatMessage, SiteId, TripContext, VisitorProfile, VisitorPreferences } from "@/domain/types";
+import { getPublishedClaim } from "@/data/content";
 import { formatShortDate } from "@/lib/hours";
 import { TRANSPORT_LABEL } from "@/lib/labels";
 
@@ -20,6 +20,28 @@ export function parseInline(text: string): TextPart[] {
   }
   if (last < text.length) parts.push({ type: "text", value: text.slice(last) });
   return parts;
+}
+
+/**
+ * When the text right before a place token already names the place ("…la Huerta de Guarrazar
+ * [[site-guarrazar]]"), drop that name from the text so the link carries it and it is not repeated.
+ */
+export function mergePlaceNames(parts: TextPart[], nameOf: (id: SiteId) => string | undefined): TextPart[] {
+  const out: TextPart[] = [];
+  for (const part of parts) {
+    const prev = out[out.length - 1];
+    const name = part.type === "place" ? nameOf(part.siteId) : undefined;
+    if (part.type === "place" && name && prev?.type === "text") {
+      const trimmed = prev.value.replace(/\s+$/, "");
+      if (trimmed.toLowerCase().endsWith(name.toLowerCase())) {
+        const rest = trimmed.slice(0, trimmed.length - name.length);
+        if (rest) out[out.length - 1] = { type: "text", value: rest };
+        else out.pop();
+      }
+    }
+    out.push(part);
+  }
+  return out;
 }
 
 /** Paragraphs are separated by blank lines; empty ones are dropped. */
@@ -86,7 +108,10 @@ export function buildRequest(
   context: TripContext,
   selectedSiteId: SiteId | null,
   tripSiteIds: SiteId[],
+  preferences?: VisitorPreferences,
 ): AssistantRequest {
+  const hasPreferences =
+    preferences && (preferences.interests.length > 0 || preferences.pace || preferences.group || preferences.accessNeeds.length > 0);
   return {
     message,
     history: previous
@@ -97,6 +122,7 @@ export function buildRequest(
     context,
     selectedSiteId,
     tripSiteIds,
+    ...(hasPreferences ? { preferences } : {}),
   };
 }
 

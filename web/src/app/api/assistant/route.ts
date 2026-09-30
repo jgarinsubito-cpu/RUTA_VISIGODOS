@@ -4,7 +4,7 @@
  */
 import { z } from "zod";
 import { answerQuestion } from "@/domain/assistant";
-import type { AssistantRequest } from "@/domain/types";
+import { ACCESS_NEEDS, TRIP_AREAS, type AssistantRequest } from "@/domain/types";
 import { createTokenBucket } from "@/lib/rateLimit";
 
 export const runtime = "nodejs";
@@ -18,7 +18,7 @@ const RequestSchema = z.object({
     .max(20)
     .default([]),
   context: z.object({
-    area: z.enum(["Toledo", "Guadamur", "Toledo y Guadamur"]),
+    area: z.enum(TRIP_AREAS),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable(),
     startTime: clock,
     endTime: clock,
@@ -28,6 +28,14 @@ const RequestSchema = z.object({
   }),
   selectedSiteId: z.string().max(100).nullable().optional(),
   tripSiteIds: z.array(z.string().max(100)).max(50).default([]),
+  preferences: z
+    .object({
+      interests: z.array(z.string().max(40)).max(20),
+      pace: z.enum(["relaxed", "balanced", "full"]).nullable(),
+      group: z.enum(["solo", "couple", "family", "friends", "seniors"]).nullable(),
+      accessNeeds: z.array(z.enum(ACCESS_NEEDS)).max(ACCESS_NEEDS.length),
+    })
+    .optional(),
 });
 
 function badRequest(error: string, issues?: unknown) {
@@ -39,10 +47,19 @@ const MAX_BODY_BYTES = 96 * 1024;
 
 /** Model calls per client: bursts of 8, then one every 7.5 s (8 per minute). */
 const modelBucket = createTokenBucket({ capacity: 8, refillPerSecond: 8 / 60 });
+/**
+ * Model calls for the whole instance (60 per minute). Client keys come from headers a caller can
+ * forge when no proxy overwrites them, so this cap bounds the paid path whatever the key says.
+ */
+const globalBucket = createTokenBucket({ capacity: 60, refillPerSecond: 1 });
 
+/**
+ * The hop the nearest proxy saw (last X-Forwarded-For entry): entries to its left are whatever
+ * the client sent. Only meaningful behind a proxy; the global cap covers direct exposure.
+ */
 function clientKey(request: Request): string {
-  const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-  return forwarded || request.headers.get("x-real-ip") || "anonymous";
+  const hops = request.headers.get("x-forwarded-for")?.split(",").map((h) => h.trim()).filter(Boolean) ?? [];
+  return hops.at(-1) || request.headers.get("x-real-ip") || "anonymous";
 }
 
 function tooLarge() {
@@ -75,6 +92,6 @@ export async function POST(request: Request) {
   const req: AssistantRequest = parsed.data;
   const key = clientKey(request);
   // Over the limit the visitor still gets the deterministic local answer.
-  const answer = await answerQuestion(req, { allowModel: () => modelBucket(key) });
+  const answer = await answerQuestion(req, { allowModel: () => modelBucket(key) && globalBucket("all") });
   return Response.json(answer, { headers: { "Cache-Control": "no-store" } });
 }

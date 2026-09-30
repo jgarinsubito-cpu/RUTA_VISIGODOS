@@ -1,49 +1,74 @@
 @import "tailwindcss";
 
 /*
- * Design tokens — Urbs Regia palette (PLAN.md, "Visual direction").
- * Use via Tailwind utilities: bg-ivory, text-ink, border-stone, bg-olive, text-gold, font-display…
+ * Design tokens — minimal and neutral. Warm off-white page, white cards, soft grey borders,
+ * near-black ink; one solid ink colour for primary actions and selection. Treasure colours
+ * (oro, granate) appear only in the brand mark and small status marks.
+ *   ivory = page, surface = cards, surface-muted = soft fill, stone = borders,
+ *   primary = solid actions and selection (ink), accent = warm label colour (eyebrows, links).
+ * Type scale (see @theme): text-2xs 11px (eyebrows, nav labels only), text-caption 13px,
+ * text-body 15px (reading text), text-lead 17px, text-display / text-display-lg (headlines).
  */
 :root {
-  --ivory: #f7f5ef;
+  --ivory: #f3f2ee;
   --surface: #ffffff;
-  --surface-muted: #efebe1;
-  --stone: #e5e0d5;
-  --ink: #292a25;
-  --ink-muted: #5c5d55;
-  /* Darkened from #988a38 so 11px gold labels meet WCAG AA (≥ 4.5:1 on white, ivory and muted surfaces). */
-  --gold: #766a22;
-  --olive: #665d27;
-  --olive-hover: #4f4819;
-  --on-olive: #ffffff;
-  --gold-soft: #f1ecd6;
-  --warn: #8a4b0f;
-  --warn-soft: #fbefd9;
+  --surface-muted: #e9e7e1;
+  --stone: #d3d0c8;
+  --ink: #111111;
+  /* 8:1 on the page, 9:1 on cards. */
+  --ink-muted: #4a4945;
+  /* Warm label colour (eyebrows, links): 5.5:1 on the page. */
+  --accent: #7a6232;
+  --primary: #171717;
+  --primary-hover: #3a3a3a;
+  --on-primary: #ffffff;
+  /* Text on photographs (always light: photos sit under a dark gradient in both modes). */
+  --on-photo: #ffffff;
+  --accent-soft: #f4efe4;
+  --warn: #8a5300;
+  --warn-soft: #fbf4e6;
   --danger: #9b2c2c;
   --ok: #3f6212;
-  --ok-soft: #ecf3de;
+  --ok-soft: #eef4e4;
+  /* Brand marks only. */
+  --oro: #b98d2e;
+  --granate: #9b2335;
+  --shadow: rgb(23 23 23 / 0.08);
   /* Modal backdrop: always dims, never lightens (ink inverts in dark mode). */
-  --scrim: rgb(20 20 16 / 0.45);
+  --scrim: rgb(10 10 10 / 0.45);
+  /* Height of the mobile bottom navigation (above the safe area). */
+  --mobile-nav: 3.5rem;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* Photo placeholders (Site.imageTone): shown while a photo loads or when there is none. */
+  --tone-ochre: linear-gradient(135deg, #7a6a2e 0%, #b9a25a 55%, #e8dcb5 100%);
+  --tone-moss: linear-gradient(135deg, #4f5a3a 0%, #8f9a64 55%, #d9dcb8 100%);
+  --tone-terracotta: linear-gradient(135deg, #8a4b2a 0%, #c98a5a 55%, #efd6bd 100%);
+  --tone-umber: linear-gradient(135deg, #6a5238 0%, #b08e62 55%, #ecdcc1 100%);
+  --tone-stone: linear-gradient(135deg, #6b6457 0%, #aea593 55%, #e8e2d4 100%);
+  --tone-slate: linear-gradient(135deg, #4d5b6b 0%, #8e9fae 55%, #dde4e8 100%);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --ivory: #161612;
-    --surface: #20201b;
-    --surface-muted: #2a2a23;
-    --stone: #3a392f;
-    --ink: #f1eee4;
-    --ink-muted: #b9b6a8;
-    --gold: #c9b760;
-    --olive: #c9b760;
-    --olive-hover: #ddcd7d;
-    --on-olive: #1b1a12;
-    --gold-soft: #2f2c18;
-    --warn: #f0b36a;
-    --warn-soft: #3a2a14;
+    --ivory: #0a0a0a;
+    --surface: #1a1a1a;
+    --surface-muted: #262626;
+    --stone: #3d3d3d;
+    --ink: #f5f5f5;
+    --ink-muted: #b8b8b8;
+    --accent: #cbb488;
+    --primary: #ededed;
+    --primary-hover: #ffffff;
+    --on-primary: #111111;
+    --accent-soft: #23211c;
+    --warn: #e0a560;
+    --warn-soft: #251e14;
     --danger: #f19999;
     --ok: #b5d67c;
-    --ok-soft: #26301a;
+    --ok-soft: #1f2618;
+    --oro: #d4b25e;
+    --granate: #f09aa6;
+    --shadow: rgb(0 0 0 / 0.5);
     --scrim: rgb(0 0 0 / 0.6);
   }
 }
@@ -55,50 +80,203 @@
   --color-stone: var(--stone);
   --color-ink: var(--ink);
   --color-ink-muted: var(--ink-muted);
-  --color-gold: var(--gold);
-  --color-olive: var(--olive);
-  --color-olive-hover: var(--olive-hover);
-  --color-on-olive: var(--on-olive);
-  --color-gold-soft: var(--gold-soft);
+  --color-accent: var(--accent);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+  --color-on-photo: var(--on-photo);
+  --color-accent-soft: var(--accent-soft);
   --color-warn: var(--warn);
   --color-warn-soft: var(--warn-soft);
   --color-danger: var(--danger);
   --color-ok: var(--ok);
   --color-ok-soft: var(--ok-soft);
   --color-scrim: var(--scrim);
+  --color-oro: var(--oro);
+  --color-granate: var(--granate);
   --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-playfair), Georgia, serif;
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.125rem;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.5rem;
+  --text-lead: 1.0625rem;
+  --text-lead--line-height: 1.65;
+  --text-display: 2.6rem;
+  --text-display--line-height: 1.04;
+  --text-display-lg: 4rem;
+  --text-display-lg--line-height: 1.04;
 }
 
 html {
   background: var(--ivory);
+  /* Native controls (selects, date popups, scrollbars) follow the app theme. */
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+/* "Texto más grande" (account screen): every rem-based size scales with the root. */
+html[data-text-size="large"] {
+  font-size: 112.5%;
 }
 
 body {
   background: var(--ivory);
   color: var(--ink);
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 /* In the base layer so component utilities (e.g. a composer's focus-within ring) can refine it. */
 @layer base {
   :focus-visible {
-    outline: 2px solid var(--gold);
+    outline: 2px solid var(--ink);
     outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Primary action: solid ink (white in dark mode). */
+  .btn-primary {
+    background: var(--primary);
+    color: var(--on-primary);
+    transition:
+      background-color 160ms var(--ease-out),
+      transform 160ms var(--ease-out);
+  }
+  .btn-primary:hover {
+    background: var(--primary-hover);
+  }
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+  .btn-primary:disabled {
+    opacity: 0.5;
+  }
+
+  /* Staggered entrance for lists: set --i on each item. */
+  .rise {
+    animation: rise 520ms var(--ease-out) both;
+    animation-delay: calc(min(var(--i, 0), 8) * 50ms);
+  }
+}
+
+.heart-pop {
+  animation: heart-pop 380ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.slide-in-right {
+  animation: slide-in-right 380ms var(--ease-out) both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes heart-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/*
+ * Route transitions (React <ViewTransition>, see AppShell and the place photo morph).
+ * The old page fades out quickly, the new one fades in with a small rise.
+ */
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-old(.page-out) {
+  animation: 140ms ease-in both vt-fade reverse;
+}
+::view-transition-new(.page-in) {
+  animation:
+    220ms ease-out 100ms both vt-fade,
+    360ms var(--ease-out) both vt-rise;
+}
+::view-transition-group(.place-morph) {
+  animation-duration: 420ms;
+  animation-timing-function: var(--ease-out);
+}
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes vt-rise {
+  from {
+    translate: 0 8px;
+  }
+  to {
+    translate: 0 0;
   }
 }
 
 /* While a place sheet is open (useSheetFlag), lift the toast above the sheet's Guardar / Añadir bar. */
 body[data-sheet] [data-toast-region] {
-  bottom: calc(7rem + env(safe-area-inset-bottom));
+  bottom: calc(var(--mobile-nav) + 3.5rem + env(safe-area-inset-bottom));
 }
 
+/* Reduced motion: the system setting, or "Menos animaciones" on the account screen. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
     transition-duration: 0.01ms !important;
   }
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+html[data-motion="reduce"] *,
+html[data-motion="reduce"] *::before,
+html[data-motion="reduce"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  animation-delay: 0s !important;
+  transition-duration: 0.01ms !important;
+}
+html[data-motion="reduce"]::view-transition-old(*),
+html[data-motion="reduce"]::view-transition-new(*),
+html[data-motion="reduce"]::view-transition-group(*) {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
 }

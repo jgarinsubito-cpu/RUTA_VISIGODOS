@@ -1,7 +1,0 @@
-- alert
-- region "Notifications"
-- dialog "Verificación adicional":
-  - heading "Verificación adicional" [level=2]
-  - paragraph: Ayúdanos a mantener la seguridad de nuestra plataforma. Por favor, completa el proceso de verificación para continuar.
-  - button "Close":
-    - img

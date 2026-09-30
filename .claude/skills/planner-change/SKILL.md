@@ -9,8 +9,10 @@ The planner (`web/src/domain/planner.ts`) is deterministic and pure: no React, s
 
 ## Invariants
 
-- Every change is a proposal (`propose*` → `PlannerProposal`) and is applied only by `applyProposal`, which rejects stale revisions and invalid proposals.
-- Hard failures (`ok: false`, with a Spanish reason naming the site): closed day, visit not fitting an opening window, ending after `context.endTime`, a walking leg over `MAX_WALK_KM`, duplicate or unknown sites.
+- Every change is a proposal (`propose*` → `ItineraryProposal`, carrying the resulting `context` and optional `routeId`) and is applied only by `applyProposal`, which rejects stale revisions and invalid proposals.
+- Stop warnings are structured (`StopWarning` in types.ts); `domain/warnings.ts` renders the Spanish text and groups trip-wide ones (`groupWarnings`). Proposal `warnings` hold trip-wide notes only. A new warning needs a code, a sentence in `describeWarning` and a case in `state/persisted.ts`'s schema.
+- Route durations come from `estimateRoute` (same scheduler, no date); never store them in data.
+- Hard failures (`ok: false`, with a Spanish reason naming the site, worded by `describeWarning`): closed day, visit not fitting an opening window, ending after `context.endTime`, a walking leg over `MAX_WALK_KM`, duplicate or unknown sites.
 - Unverified data makes a stop `provisional` with a warning, never "verified": no date, `example`/`unknown` hours, unverified step-free access.
 - Weekdays come from the `YYYY-MM-DD` calendar date (`isoWeekday`), independent of the device's time zone and DST.
 - Travel times are estimates behind `TravelTimeProvider` (travel.ts) until a real routing provider is chosen.

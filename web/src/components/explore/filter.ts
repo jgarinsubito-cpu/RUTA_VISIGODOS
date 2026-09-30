@@ -1,9 +1,9 @@
 /** Pure filtering for the Explorar home: locality, theme chip and accent-insensitive search. */
-import type { Route, Site } from "@/domain/types";
+import { LOCALITIES, type Route, type Site } from "@/domain/types";
 
 export type LocalityFilter = "Todos" | Site["locality"];
 
-export const LOCALITY_OPTIONS: LocalityFilter[] = ["Todos", "Toledo", "Guadamur"];
+export const LOCALITY_OPTIONS: LocalityFilter[] = ["Todos", ...LOCALITIES];
 
 /** Curated chip order; only themes present in the catalog are shown. */
 export const THEME_ORDER = ["capital", "tesoro", "arqueología", "paisaje", "museos", "arquitectura", "arte", "territorio"];
@@ -39,7 +39,7 @@ export function siteMatches(site: Site, f: ExploreFilters): boolean {
   return textMatches([site.name, site.tagline, site.locality, ...site.themes], f.query);
 }
 
-export function filterSites(sites: Site[], f: ExploreFilters): Site[] {
+export function filterSites(sites: readonly Site[], f: ExploreFilters): Site[] {
   return sites.filter((s) => siteMatches(s, f));
 }
 
@@ -47,7 +47,7 @@ export function filterSites(sites: Site[], f: ExploreFilters): Site[] {
  * A route is shown when it passes through the chosen locality and either its own text or one of
  * its stops matches the theme/search.
  */
-export function filterRoutes(routes: Route[], sites: Site[], f: ExploreFilters): Route[] {
+export function filterRoutes(routes: readonly Route[], sites: readonly Site[], f: ExploreFilters): Route[] {
   return routes.filter((route) => {
     const stops = route.stopIds.map((id) => sites.find((s) => s.id === id)).filter((s) => s !== undefined);
     if (f.locality !== "Todos" && !stops.some((s) => s.locality === f.locality)) return false;
@@ -61,7 +61,7 @@ export function filterRoutes(routes: Route[], sites: Site[], f: ExploreFilters):
 }
 
 /** Curated themes that at least one catalog site actually has, in chip order. */
-export function availableThemes(sites: Site[]): string[] {
+export function availableThemes(sites: readonly Site[]): string[] {
   const present = new Set(sites.flatMap((s) => s.themes));
   return THEME_ORDER.filter((t) => present.has(t));
 }

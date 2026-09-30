@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { CLAIMS, PUBLISHED_CLAIMS, SITES } from "@/data/catalog";
+import { CLAIMS } from "@/data/catalog";
+import { PUBLISHED_CLAIMS, SITES } from "@/data/content";
 import { EDITORIAL_CLAIMS } from "@/data/editorial";
 import type { AssistantAnswer, AssistantRequest, TripContext } from "@/domain/types";
 import { POST } from "@/app/api/assistant/route";
@@ -44,6 +45,7 @@ function expectWellFormed(a: AssistantAnswer) {
 
 beforeEach(() => {
   vi.stubEnv("ANTHROPIC_API_KEY", "");
+  vi.stubEnv("DEEPSEEK_API_KEY", "");
 });
 afterEach(() => {
   vi.unstubAllEnvs();

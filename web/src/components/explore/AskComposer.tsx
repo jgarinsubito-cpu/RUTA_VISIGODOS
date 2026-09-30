@@ -5,14 +5,11 @@
  */
 import { useRouter } from "next/navigation";
 import { useId, useState, type FormEvent } from "react";
-import { IconChat, IconSend } from "@/components/shell/icons";
+import { IconSend } from "@/components/shell/icons";
 import { markAskHandoff } from "@/components/chat/askHandoff";
+import { SHOWCASE } from "@/data/content";
 
-const SUGGESTIONS = [
-  "¿Por qué Toledo fue capital visigoda?",
-  "¿Dónde apareció el Tesoro de Guarrazar?",
-  "Planifica una mañana a pie por Toledo",
-];
+const SUGGESTIONS = SHOWCASE.starterPrompts.slice(0, 3);
 
 export function assistantHref(text: string): string {
   const q = text.trim();
@@ -37,14 +34,10 @@ export function AskComposer() {
   }
 
   return (
-    <section aria-labelledby={headingId} className="rounded-2xl border border-stone bg-surface p-4 shadow-sm md:p-5">
-      <h2 id={headingId} className="flex items-center gap-2 text-base font-semibold text-ink">
-        <IconChat className="text-gold" />
+    <section aria-labelledby={headingId} className="rounded-3xl border border-stone bg-surface p-5 md:p-6">
+      <h2 id={headingId} className="font-display text-2xl text-ink">
         Preguntar al asistente
       </h2>
-      <p className="mt-1 text-sm text-ink-muted">
-        Responde con fuentes y nivel de evidencia. Si no consta en las fichas, te lo dirá.
-      </p>
       <form onSubmit={onSubmit} className="mt-3 flex items-end gap-2">
         <label htmlFor={inputId} className="sr-only">
           Tu pregunta para el asistente
@@ -57,11 +50,11 @@ export function AskComposer() {
           placeholder="Pregunta sobre la ruta o tu viaje…"
           enterKeyHint="send"
           autoComplete="off"
-          className="min-h-11 min-w-0 flex-1 rounded-full border border-stone bg-ivory px-4 text-base text-ink placeholder:text-ink-muted"
+          className="min-h-12 min-w-0 flex-1 rounded-full border border-stone bg-ivory px-5 text-base text-ink transition-colors placeholder:text-ink-muted focus:border-ink focus:outline-none"
         />
         <button
           type="submit"
-          className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-olive text-on-olive hover:bg-olive-hover"
+          className="btn-primary grid h-12 w-12 shrink-0 place-items-center rounded-full"
           aria-label={text.trim() ? "Enviar pregunta al asistente" : "Abrir el asistente"}
         >
           <IconSend />
@@ -73,7 +66,7 @@ export function AskComposer() {
             <button
               type="button"
               onClick={() => ask(s)}
-              className="min-h-11 rounded-full border border-stone bg-surface px-3.5 text-left text-sm text-ink hover:bg-surface-muted"
+              className="min-h-11 rounded-full border border-stone px-4 text-left text-sm text-ink transition-colors hover:bg-surface-muted"
             >
               {s}
             </button>

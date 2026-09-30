@@ -1,9 +1,11 @@
 /**
  * Assistant orchestration: route -> resolve sites -> retrieve published claims -> compose -> validate.
- * The local composer always runs; Claude is tried only when configured and never blocks an answer.
+ * The local composer always runs; a model (Claude, else DeepSeek) is tried only when configured and
+ * never blocks an answer.
  */
 import type { AssistantAnswer, AssistantRequest } from "@/domain/types";
 import { answerWithAnthropic, anthropicEnabled } from "./anthropic";
+import { answerWithDeepSeek, deepseekEnabled } from "./deepseek";
 import { type ComposeInput, composeLocal } from "./compose-local";
 import { resolveSites, retrieveClaims } from "./retrieval";
 import { classifyIntent } from "./router";
@@ -36,11 +38,13 @@ export async function answerQuestion(req: AssistantRequest, options: AnswerOptio
   const local = validateAnswer(composeLocal(input));
   // Nothing for the model to add when there is no evidence to ground the historical part of a
   // heritage or mixed question: the local composer says honestly that it is not in the sources.
+  // Everything else (travel, greetings, open questions) goes to the model when one is configured.
   const needsEvidence = input.intent === "heritage" || input.intent === "mixed";
-  const grounded = input.intent !== "unknown" && !(needsEvidence && input.retrieval.claims.length === 0);
-  if (!anthropicEnabled() || !grounded) return local;
+  const grounded = !(needsEvidence && input.retrieval.claims.length === 0);
+  const answerWithModel = anthropicEnabled() ? answerWithAnthropic : deepseekEnabled() ? answerWithDeepSeek : null;
+  if (!answerWithModel || !grounded) return local;
   if (options.allowModel && !options.allowModel()) return local;
-  const remote = await answerWithAnthropic(input, local);
+  const remote = await answerWithModel(input, local);
   return remote ?? local;
 }
 

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRef } from "react";
 import type { Site } from "@/domain/types";
-import { getSite } from "@/data/catalog";
+import { getSite } from "@/data/content";
 import { useAppState } from "@/state/store";
 import { IconHeart, IconInfo, IconMap } from "@/components/shell/icons";
 import { DemoBadge } from "@/components/shared/DemoBadge";
@@ -20,15 +20,14 @@ export default function GuardadosPage() {
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-5 md:px-8 md:py-8">
       <header className="flex flex-col gap-2">
-        <p className="text-[11px] font-semibold uppercase tracking-wider text-gold">Tus ideas</p>
+        <p className="text-2xs font-semibold uppercase tracking-wider text-accent">Tus ideas</p>
         <h1 ref={headingRef} tabIndex={-1} className="font-display text-3xl leading-tight text-ink md:text-4xl">
           Guardados
         </h1>
         <p className="flex max-w-2xl items-start gap-2 text-sm text-ink-muted">
           <IconInfo width={16} height={16} className="mt-0.5 shrink-0" />
           <span>
-            Guardar un lugar no lo programa en tu viaje. Usa «Añadir a mi viaje» para colocarlo en el horario; revisarás
-            el cambio antes de aceptarlo. Se guarda en este dispositivo.
+            Guardar no lo programa en tu viaje: usa «Añadir a mi viaje» para colocarlo en el horario.
           </span>
         </p>
         {sites.length > 0 && (
@@ -44,7 +43,7 @@ export default function GuardadosPage() {
 
       {sites.length === 0 ? (
         <section className="flex flex-col items-center gap-4 rounded-2xl border border-dashed border-stone bg-surface px-6 py-10 text-center">
-          <span aria-hidden="true" className="grid h-14 w-14 place-items-center rounded-full bg-gold-soft text-gold">
+          <span aria-hidden="true" className="grid h-14 w-14 place-items-center rounded-full bg-surface-muted text-accent">
             <IconHeart width={28} height={28} />
           </span>
           <h2 className="font-display text-2xl text-ink">Aún no has guardado lugares</h2>
@@ -54,7 +53,7 @@ export default function GuardadosPage() {
           <div className="flex flex-col gap-2 sm:flex-row">
             <Link
               href="/"
-              className="inline-flex min-h-11 items-center justify-center rounded-full bg-olive px-5 text-sm font-semibold text-on-olive hover:bg-olive-hover"
+              className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-on-primary hover:bg-primary-hover"
             >
               Explorar lugares
             </Link>

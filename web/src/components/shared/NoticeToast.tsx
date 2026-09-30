@@ -45,7 +45,7 @@ function ToastBody({ notice }: { notice: Notice }) {
             setPaused(false);
             actions.undo();
           }}
-          className="min-h-11 rounded-lg px-3 font-semibold text-gold-soft underline-offset-2 hover:underline"
+          className="min-h-11 rounded-lg px-3 font-semibold text-accent-soft underline-offset-2 hover:underline"
         >
           Deshacer
         </button>
@@ -74,7 +74,7 @@ export function NoticeToast() {
       aria-live="polite"
       aria-atomic="true"
       data-toast-region
-      className="pointer-events-none fixed inset-x-0 bottom-[calc(4.25rem+env(safe-area-inset-bottom))] z-40 flex justify-center px-4 md:bottom-6"
+      className="pointer-events-none fixed inset-x-0 bottom-[calc(var(--mobile-nav)+0.75rem+env(safe-area-inset-bottom))] z-40 flex justify-center px-4 md:bottom-6"
     >
       {notice && <ToastBody key={notice.id} notice={notice} />}
     </div>

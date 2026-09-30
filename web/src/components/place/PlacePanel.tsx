@@ -6,16 +6,31 @@
  * Only published claims are shown; scheduling always goes through a planner proposal.
  */
 import Link from "next/link";
-import { useId, type ReactNode } from "react";
-import type { Site, ValidatedClaim } from "@/domain/types";
-import { claimsForSite, getPublishedClaim, getSite, storiesForSite } from "@/data/catalog";
-import { formatClock, proposeAdd } from "@/domain/planner";
+import { useId, ViewTransition, type ReactNode } from "react";
+import type { Site } from "@/domain/types";
+import { claimsForSite, getSite, storiesForSite } from "@/data/content";
+import { proposeAdd } from "@/domain/planner";
+import { formatClock } from "@/domain/time";
 import { actions, getAppState, useAppState } from "@/state/store";
+import { directionsUrl } from "@/lib/directions";
 import { accessLabel } from "@/lib/hours";
 import { formatDuration, KIND_LABEL } from "@/lib/labels";
-import { IconChat, IconChevronLeft, IconClose, IconHeart, IconInfo, IconPin, IconPlus, IconTrip } from "@/components/shell/icons";
+import {
+  IconChat,
+  IconChevronLeft,
+  IconClose,
+  IconDirections,
+  IconGlobe,
+  IconHeart,
+  IconInfo,
+  IconPhone,
+  IconPin,
+  IconPlus,
+  IconTrip,
+} from "@/components/shell/icons";
 import { DemoBadge, NonVisigothicBadge } from "@/components/shared/DemoBadge";
-import { EvidenceBadge, EvidenceLegend } from "@/components/shared/EvidenceBadge";
+import { ClaimCard, StoryEvidence } from "@/components/shared/Claim";
+import { EvidenceLegend } from "@/components/shared/EvidenceBadge";
 import { HoursLabel } from "@/components/shared/HoursLabel";
 import { SiteImage } from "@/components/shared/SiteImage";
 
@@ -34,36 +49,68 @@ function addToTrip(siteId: string) {
   }
 }
 
-function ClaimSource({ claim }: { claim: ValidatedClaim }) {
+function hostname(url: string): string {
+  return new URL(url).hostname.replace(/^www\./, "");
+}
+
+function telHref(phone: string): string {
+  return `tel:${phone.replace(/\s+/g, "")}`;
+}
+
+const quickAction =
+  "inline-flex min-h-11 items-center gap-2 rounded-full border border-stone px-4 text-sm font-medium text-ink transition-colors hover:bg-surface-muted";
+
+/** Directions, website and phone, as on a map place card. External links open in a new tab. */
+function QuickActions({ site }: { site: Site }) {
   return (
-    <p className="text-xs text-ink-muted">
-      Fuente:{" "}
-      {claim.source.url ? (
-        <a href={claim.source.url} target="_blank" rel="noreferrer" className="underline underline-offset-2">
-          {claim.source.title}
+    <ul className="flex flex-wrap gap-2" aria-label="Acciones rápidas">
+      <li>
+        <a href={directionsUrl(site)} target="_blank" rel="noreferrer" className={quickAction}>
+          <IconDirections width={18} height={18} />
+          Cómo llegar
+          <span className="sr-only"> (abre Google Maps en otra pestaña)</span>
         </a>
-      ) : (
-        claim.source.title
+      </li>
+      {site.officialUrl && (
+        <li>
+          <a href={site.officialUrl} target="_blank" rel="noreferrer" className={quickAction}>
+            <IconGlobe width={18} height={18} />
+            Sitio web
+            <span className="sr-only"> (abre en otra pestaña)</span>
+          </a>
+        </li>
       )}
-      {claim.source.page ? ` · p. ${claim.source.page}` : ""}
-    </p>
+      {site.phone && (
+        <li>
+          <a href={telHref(site.phone)} className={quickAction}>
+            <IconPhone width={18} height={18} />
+            Llamar
+          </a>
+        </li>
+      )}
+    </ul>
   );
 }
 
-function ClaimItem({ claim }: { claim: ValidatedClaim }) {
+function PhotoCredit({ site }: { site: Site }) {
+  if (!site.image) return <p className="text-xs text-ink-muted">Galería pendiente de fotografías con licencia.</p>;
+  const { caption, author, license, sourceUrl } = site.image;
   return (
-    <li className="flex flex-col gap-1.5 rounded-xl border border-stone bg-surface p-3.5">
-      <EvidenceBadge level={claim.evidence} attribution={claim.evidence === "I" ? claim.attribution : undefined} />
-      <p className="text-sm text-ink">{claim.text}</p>
-      <ClaimSource claim={claim} />
-    </li>
+    <p className="text-xs text-ink-muted">
+      {caption && <span className="block text-ink">{caption}</span>}
+      Foto:{" "}
+      <a href={sourceUrl} target="_blank" rel="noreferrer" className="underline underline-offset-2">
+        {author}
+      </a>{" "}
+      · {license} · Wikimedia Commons
+    </p>
   );
 }
 
 function Fact({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="flex flex-col gap-0.5 border-b border-stone py-3 last:border-b-0">
-      <dt className="text-xs font-semibold uppercase tracking-wider text-ink-muted">{label}</dt>
+      <dt className="text-xs text-ink-muted">{label}</dt>
       <dd className="text-sm text-ink">{children}</dd>
     </div>
   );
@@ -76,8 +123,8 @@ function ActionBar({ site, variant }: { site: Site; variant: PlacePanelProps["va
 
   return (
     <div
-      className={`border-t border-stone bg-surface/95 px-4 py-3 backdrop-blur ${
-        variant === "page" ? "sticky bottom-[calc(3.5rem+env(safe-area-inset-bottom))] z-20 md:bottom-0" : ""
+      className={`border-t border-stone bg-surface/90 px-4 py-3 backdrop-blur-md ${
+        variant === "page" ? "sticky bottom-0 z-20 pb-[calc(var(--mobile-nav)+0.75rem+env(safe-area-inset-bottom))] md:pb-3" : ""
       }`}
     >
       <div className="flex flex-wrap items-center gap-2">
@@ -85,11 +132,16 @@ function ActionBar({ site, variant }: { site: Site; variant: PlacePanelProps["va
           type="button"
           onClick={() => actions.toggleSaved(site.id)}
           aria-pressed={saved}
-          className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold ${
-            saved ? "border-olive bg-gold-soft text-ink" : "border-stone text-ink hover:bg-surface-muted"
+          className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors ${
+            saved ? "border-ink text-ink" : "border-stone text-ink hover:bg-surface-muted"
           }`}
         >
-          <IconHeart width={18} height={18} fill={saved ? "currentColor" : "none"} />
+          <IconHeart
+            key={saved ? "on" : "off"}
+            width={18}
+            fill={saved ? "currentColor" : "none"}
+            className={saved ? "heart-pop text-granate" : ""}
+          />
           {saved ? "Guardado" : "Guardar"}
         </button>
 
@@ -102,7 +154,7 @@ function ActionBar({ site, variant }: { site: Site; variant: PlacePanelProps["va
             </p>
             <Link
               href="/mi-viaje"
-              className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-semibold text-olive underline-offset-2 hover:underline"
+              className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-semibold text-ink underline-offset-4 hover:underline"
             >
               Ver en Mi viaje
             </Link>
@@ -112,16 +164,13 @@ function ActionBar({ site, variant }: { site: Site; variant: PlacePanelProps["va
             type="button"
             onClick={() => addToTrip(site.id)}
             disabled={pending}
-            className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full bg-olive px-5 text-sm font-semibold text-on-olive hover:bg-olive-hover disabled:opacity-60 sm:flex-none"
+            className="btn-primary inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold sm:flex-none"
           >
             <IconPlus width={18} height={18} />
             Añadir a mi viaje
           </button>
         )}
       </div>
-      <p className="mt-1.5 text-[11px] text-ink-muted">
-        Guardar lo deja en tus ideas; añadir lo programa en tu viaje. Todo se guarda en este dispositivo.
-      </p>
     </div>
   );
 }
@@ -139,7 +188,7 @@ export function PlacePanel({ siteId, onClose, variant }: PlacePanelProps) {
       <div className="p-6 text-sm text-ink-muted">
         <p>No encontramos este lugar en el catálogo.</p>
         {onClose && (
-          <button type="button" onClick={onClose} className="mt-3 min-h-11 font-semibold text-olive underline">
+          <button type="button" onClick={onClose} className="mt-3 min-h-11 font-semibold text-ink underline">
             Cerrar
           </button>
         )}
@@ -154,13 +203,21 @@ export function PlacePanel({ siteId, onClose, variant }: PlacePanelProps) {
   const content = (
     <div className={`flex flex-col gap-6 ${isPage ? "px-4 py-5 md:px-8 md:py-8" : "px-4 py-4 md:px-5"}`}>
       <div className="flex flex-col gap-2">
-        <SiteImage site={site} aspect={isPage ? "aspect-[16/9]" : "aspect-[16/10]"} />
-        <p className="text-xs text-ink-muted">Galería pendiente de fotografías con licencia.</p>
+        {isPage ? (
+          <ViewTransition name={`place-${site.id}`} share="place-morph" default="none">
+            <div>
+              <SiteImage site={site} aspect="aspect-[16/10]" rounded="rounded-3xl" priority sizes="(min-width: 768px) 768px, 100vw" />
+            </div>
+          </ViewTransition>
+        ) : (
+          <SiteImage site={site} aspect="aspect-[16/10]" priority sizes="(min-width: 768px) 420px, 100vw" />
+        )}
+        <PhotoCredit site={site} />
       </div>
 
       <header className="flex flex-col gap-2">
-        <p className="text-[11px] font-semibold uppercase tracking-wider text-gold">
-          {site.locality} · {KIND_LABEL[site.kind]}
+        <p className="text-xs text-ink-muted">
+          {site.locality} · {site.category ?? KIND_LABEL[site.kind]}
         </p>
         <H1 id={headingId} className={`font-display leading-tight text-ink ${isPage ? "text-3xl md:text-4xl" : "text-2xl"}`}>
           {site.name}
@@ -178,9 +235,10 @@ export function PlacePanel({ siteId, onClose, variant }: PlacePanelProps) {
           <IconChat width={18} height={18} />
           Preguntar sobre este lugar
         </Link>
+        <QuickActions site={site} />
       </header>
 
-      <section aria-labelledby={`${headingId}-visit`} className="rounded-2xl border border-stone bg-surface px-4 py-1 shadow-sm">
+      <section aria-labelledby={`${headingId}-visit`} className="rounded-2xl border border-stone bg-surface px-4 py-1">
         <H2 id={`${headingId}-visit`} className={`${sectionTitle} pt-3`}>
           Datos de visita
         </H2>
@@ -195,11 +253,11 @@ export function PlacePanel({ siteId, onClose, variant }: PlacePanelProps) {
             </span>
             {site.access.note && <span className="mt-0.5 block text-xs text-ink-muted">{site.access.note}</span>}
           </Fact>
-          <Fact label="Ubicación">
+          <Fact label="Dirección">
             <span className="inline-flex items-start gap-1.5">
               <IconPin width={16} height={16} className="mt-0.5 shrink-0 text-ink-muted" />
               <span>
-                {site.locality}
+                {site.address ?? site.locality}
                 {site.coordinates.approximate && (
                   <span className="block text-xs text-ink-muted">
                     Ubicación aproximada, pendiente de verificación sobre el terreno.
@@ -208,10 +266,17 @@ export function PlacePanel({ siteId, onClose, variant }: PlacePanelProps) {
               </span>
             </span>
           </Fact>
+          {site.phone && (
+            <Fact label="Teléfono">
+              <a href={telHref(site.phone)} className="font-medium text-ink underline underline-offset-4">
+                {site.phone}
+              </a>
+            </Fact>
+          )}
           <Fact label="Web oficial">
             {site.officialUrl ? (
-              <a href={site.officialUrl} target="_blank" rel="noreferrer" className="font-medium text-olive underline underline-offset-2">
-                Consultar información oficial
+              <a href={site.officialUrl} target="_blank" rel="noreferrer" className="font-medium text-ink underline underline-offset-4">
+                {hostname(site.officialUrl)}
               </a>
             ) : (
               <span className="text-ink-muted">Enlace oficial pendiente. Confirma horarios y accesos antes de ir.</span>
@@ -225,32 +290,14 @@ export function PlacePanel({ siteId, onClose, variant }: PlacePanelProps) {
           <H2 id={`${headingId}-stories`} className={sectionTitle}>
             Historias del lugar
           </H2>
-          {stories.map((story) => {
-            const linked = story.claimIds
-              .map((id) => getPublishedClaim(id))
-              .filter((c): c is ValidatedClaim => c !== undefined);
-            return (
-              <article key={story.id} className="rounded-2xl border border-stone bg-surface-muted p-4">
-                <H3 className="font-display text-base text-ink">{story.title}</H3>
-                <p className="mt-0.5 text-xs text-ink-muted">Lectura de {story.minutes} min</p>
-                <p className="mt-2 text-sm leading-relaxed text-ink">{story.body}</p>
-                {linked.length > 0 && (
-                  <div className="mt-3">
-                    <p className="text-xs font-semibold text-ink-muted">En qué se basa</p>
-                    <ul className="mt-1.5 flex flex-col gap-2">
-                      {linked.map((c) => (
-                        <li key={c.id} className="flex flex-col gap-1">
-                          <EvidenceBadge level={c.evidence} attribution={c.evidence === "I" ? c.attribution : undefined} />
-                          <p className="text-xs text-ink">{c.text}</p>
-                          <ClaimSource claim={c} />
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </article>
-            );
-          })}
+          {stories.map((story) => (
+            <article key={story.id} className="rounded-2xl border border-stone bg-surface-muted p-4">
+              <H3 className="font-display text-base text-ink">{story.title}</H3>
+              <p className="mt-0.5 text-xs text-ink-muted">Lectura de {story.minutes} min</p>
+              <p className="mt-2 text-sm leading-relaxed text-ink">{story.body}</p>
+              <StoryEvidence story={story} className="mt-3" />
+            </article>
+          ))}
         </section>
       )}
 
@@ -266,12 +313,33 @@ export function PlacePanel({ siteId, onClose, variant }: PlacePanelProps) {
         ) : (
           <ul className="flex flex-col gap-2">
             {claims.map((c) => (
-              <ClaimItem key={c.id} claim={c} />
+              <ClaimCard key={c.id} claim={c} />
             ))}
           </ul>
         )}
         <EvidenceLegend />
       </section>
+
+      {site.sources && site.sources.length > 0 && (
+        <section aria-labelledby={`${headingId}-sources`} className="flex flex-col gap-2">
+          <H2 id={`${headingId}-sources`} className={sectionTitle}>
+            Fuentes de esta ficha
+          </H2>
+          <ul className="flex flex-col gap-1 text-sm">
+            {site.sources.map((source) => (
+              <li key={source.title}>
+                {source.url ? (
+                  <a href={source.url} target="_blank" rel="noreferrer" className="text-ink underline underline-offset-4">
+                    {source.title}
+                  </a>
+                ) : (
+                  source.title
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
     </div>
   );
 
@@ -297,9 +365,9 @@ export function PlacePanel({ siteId, onClose, variant }: PlacePanelProps) {
   }
 
   return (
-    <article aria-labelledby={headingId} className="flex h-full min-h-0 flex-col bg-ivory">
+    <article aria-labelledby={headingId} className="slide-in-right flex h-full min-h-0 flex-col bg-ivory">
       <div className="flex items-center justify-between border-b border-stone bg-surface px-4 py-1.5">
-        <p className="text-xs font-semibold uppercase tracking-wider text-ink-muted">Ficha del lugar</p>
+        <p className="text-xs font-medium text-ink-muted">Ficha del lugar</p>
         {onClose && (
           <button
             type="button"

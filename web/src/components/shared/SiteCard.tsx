@@ -1,17 +1,20 @@
 "use client";
 /**
- * Site card used in lists, the map sidebar and chat carousels.
+ * Place card. "default": a 4:3 photo with text below, no box (Explorar grid,
+ * Guardados, route stops); its photo morphs into the place page on navigation.
+ * "compact": a fixed-size row (chat carousel, map list), so every card in a list matches.
  * With `onSelect` it is a button (e.g. opens the contextual PlacePanel); otherwise it links to
  * /lugares/[slug]. Saved/scheduled indicators come from the store and are text, not color only.
  */
 import Link from "next/link";
+import { ViewTransition } from "react";
 import type { Site } from "@/domain/types";
 import { formatClock } from "@/domain/planner";
 import { useAppState } from "@/state/store";
-import { formatDuration, KIND_LABEL } from "@/lib/labels";
-import { IconClock, IconHeart, IconTrip } from "@/components/shell/icons";
-import { DemoBadge, NonVisigothicBadge } from "./DemoBadge";
+import { formatDuration, KIND_LABEL, themeLabel } from "@/lib/labels";
+import { matchingInterests } from "@/domain/recommend";
 import { SiteImage } from "./SiteImage";
+import { NonVisigothicBadge } from "./DemoBadge";
 
 export interface SiteCardProps {
   site: Site;
@@ -22,6 +25,14 @@ export interface SiteCardProps {
   className?: string;
 }
 
+/** "Te interesa: Arqueología" when the place matches the visitor's interests. */
+function InterestMatch({ site }: { site: Site }) {
+  const prefs = useAppState((s) => s.preferences);
+  const matches = matchingInterests(site, prefs);
+  if (matches.length === 0) return null;
+  return <span className="truncate text-xs font-semibold text-accent">Te interesa: {matches.map(themeLabel).join(", ")}</span>;
+}
+
 function Indicators({ siteId }: { siteId: string }) {
   const saved = useAppState((s) => s.savedSiteIds.includes(siteId));
   const arrival = useAppState((s) => {
@@ -30,48 +41,65 @@ function Indicators({ siteId }: { siteId: string }) {
   });
   if (!saved && arrival === undefined) return null;
   return (
-    <span className="flex flex-wrap gap-1.5">
-      {arrival !== undefined && (
-        <span className="inline-flex items-center gap-1 rounded-full bg-olive px-2 py-0.5 text-[11px] font-semibold text-on-olive">
-          <IconTrip width={12} height={12} />
-          En tu viaje · {formatClock(arrival)}
-        </span>
-      )}
-      {saved && (
-        <span className="inline-flex items-center gap-1 rounded-full border border-stone bg-surface px-2 py-0.5 text-[11px] font-semibold text-ink">
-          <IconHeart width={12} height={12} fill="currentColor" />
-          Guardado
-        </span>
-      )}
+    <span className="truncate text-xs font-semibold text-ink">
+      {[arrival !== undefined ? `En tu viaje · ${formatClock(arrival)}` : null, saved ? "Guardado" : null]
+        .filter(Boolean)
+        .join(" · ")}
+    </span>
+  );
+}
+
+/** The non-Visigothic label when it applies (rule 4); demo status is marked once per screen. */
+function StatusLine({ site }: { site: Site }) {
+  if (site.visigothic) return null;
+  return (
+    <span className="flex min-w-0 items-center truncate whitespace-nowrap">
+      <NonVisigothicBadge />
     </span>
   );
 }
 
 export function SiteCard({ site, variant = "default", onSelect, selected = false, className = "" }: SiteCardProps) {
   const compact = variant === "compact";
-  const frame = `group block w-full overflow-hidden rounded-2xl border bg-surface text-left shadow-sm transition-shadow hover:shadow-md ${
-    selected ? "border-olive ring-2 ring-olive/30" : "border-stone"
-  } ${compact ? "w-60 shrink-0" : ""} ${className}`;
+  const kind = site.category ?? KIND_LABEL[site.kind];
 
-  const body = (
+  const frame = compact
+    ? `group flex h-28 w-72 items-center gap-3 rounded-2xl border bg-surface p-2.5 pr-3 text-left transition-colors duration-150 hover:bg-surface-muted ${
+        selected ? "border-ink" : "border-stone"
+      } ${className}`
+    : `group flex h-full w-full flex-col gap-3 rounded-2xl text-left ${selected ? "ring-2 ring-ink ring-offset-4 ring-offset-ivory" : ""} ${className}`;
+
+  const body = compact ? (
     <>
-      <SiteImage site={site} aspect={compact ? "aspect-[16/9]" : "aspect-[16/10]"} rounded="rounded-none" />
-      <span className={`flex flex-col gap-1.5 ${compact ? "p-3" : "p-4"}`}>
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-gold">
-          {site.locality} · {KIND_LABEL[site.kind]}
+      <SiteImage site={site} aspect="" rounded="rounded-xl" width="w-[88px]" className="h-[88px] shrink-0" sizes="88px" />
+      <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+        <span className="line-clamp-2 font-display text-base leading-snug text-ink">{site.name}</span>
+        <span className="truncate text-xs text-ink-muted">
+          {site.locality} · {formatDuration(site.visitMinutes)}
         </span>
-        <span className={`font-display leading-snug text-ink ${compact ? "line-clamp-2 text-base" : "text-lg"}`}>
-          {site.name}
+        <StatusLine site={site} />
+      </span>
+    </>
+  ) : (
+    <>
+      <ViewTransition name={`place-${site.id}`} share="place-morph" default="none">
+        <div className="overflow-hidden rounded-2xl">
+          <SiteImage
+            site={site}
+            aspect="aspect-[4/3]"
+            className="transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+            sizes="(min-width: 1280px) 280px, (min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
+          />
+        </div>
+      </ViewTransition>
+      <span className="flex flex-col gap-1 px-0.5">
+        <span className="truncate text-xs text-ink-muted">
+          {site.locality} · {kind}
         </span>
-        {!compact && <span className="line-clamp-2 text-sm text-ink-muted">{site.tagline}</span>}
-        <span className="inline-flex items-center gap-1 text-xs text-ink-muted">
-          <IconClock width={14} height={14} />
-          Visita aprox. {formatDuration(site.visitMinutes)}
-        </span>
-        <span className="flex flex-wrap gap-1.5">
-          {!site.visigothic && <NonVisigothicBadge />}
-          {site.demo && <DemoBadge />}
-        </span>
+        <span className="line-clamp-2 min-h-[2.5em] font-display text-xl leading-tight text-ink">{site.name}</span>
+        <span className="truncate text-caption text-ink-muted">Visita aprox. {formatDuration(site.visitMinutes)}</span>
+        <StatusLine site={site} />
+        <InterestMatch site={site} />
         <Indicators siteId={site.id} />
       </span>
     </>

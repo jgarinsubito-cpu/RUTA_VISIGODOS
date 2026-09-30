@@ -5,13 +5,17 @@
  */
 import Link from "next/link";
 import { useId, useMemo, useRef, useState, type FormEvent } from "react";
-import { ROUTES, SITES } from "@/data/catalog";
+import { ROUTES, SHOWCASE, SITES, getSite } from "@/data/content";
 import { useAppState } from "@/state/store";
-import { IconClose, IconInfo, IconPin, IconSearch, IconTrip } from "@/components/shell/icons";
+import { rankSites, routeInterestScore } from "@/domain/recommend";
+import { themeLabel } from "@/lib/labels";
+import { prefersReducedMotion } from "@/lib/motion";
+import { IconClose, IconSearch, IconUser } from "@/components/shell/icons";
 import { DemoBadge } from "@/components/shared/DemoBadge";
+import { SiteImage } from "@/components/shared/SiteImage";
 import { RouteCard } from "@/components/shared/RouteCard";
 import { SiteCard } from "@/components/shared/SiteCard";
-import { SiteImage } from "@/components/shared/SiteImage";
+import type { Site } from "@/domain/types";
 import { AskComposer } from "./AskComposer";
 import {
   availableThemes,
@@ -24,28 +28,23 @@ import {
   type LocalityFilter,
 } from "./filter";
 
-const HERO_SITE = SITES.find((s) => s.id === "site-san-roman") ?? SITES[0];
+const HERO_SITE = getSite(SHOWCASE.heroSiteId) ?? SITES[0];
 const THEMES = availableThemes(SITES);
 
 function capitalize(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-function prefersReducedMotion() {
-  return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
 function LocalitySelector({ value, onChange }: { value: LocalityFilter; onChange: (v: LocalityFilter) => void }) {
   const name = useId();
   return (
-    <fieldset className="flex min-w-0 items-center gap-2">
+    <fieldset className="flex min-w-0 items-center">
       <legend className="sr-only">Zona</legend>
-      <IconPin className="shrink-0 text-gold" />
-      <div className="flex rounded-full border border-stone bg-surface p-0.5">
+      <div className="flex rounded-full bg-surface-muted p-1">
         {LOCALITY_OPTIONS.map((opt) => (
           <label
             key={opt}
-            className="relative flex min-h-11 cursor-pointer items-center gap-1 rounded-full px-3 text-sm font-medium text-ink-muted has-[:checked]:bg-olive has-[:checked]:font-semibold has-[:checked]:text-on-olive has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-gold"
+            className="relative flex min-h-11 cursor-pointer items-center rounded-full px-4 text-sm text-ink-muted transition-colors duration-150 hover:text-ink has-[:checked]:bg-surface has-[:checked]:font-semibold has-[:checked]:text-ink has-[:checked]:shadow-[0_1px_3px_var(--shadow)] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ink"
           >
             <input
               type="radio"
@@ -55,14 +54,33 @@ function LocalitySelector({ value, onChange }: { value: LocalityFilter; onChange
               onChange={() => onChange(opt)}
               className="peer sr-only"
             />
-            <span aria-hidden="true" className="hidden peer-checked:inline">
-              ✓
-            </span>
             {opt}
           </label>
         ))}
       </div>
     </fieldset>
+  );
+}
+
+function PlaceGroup({ title, intro, sites }: { title: string; intro: string; sites: Site[] }) {
+  const headingId = useId();
+  if (sites.length === 0) return null;
+  return (
+    <section aria-labelledby={headingId} className="flex flex-col gap-4">
+      <div className="flex flex-col gap-1">
+        <h3 id={headingId} className="font-display text-xl text-ink">
+          {title} <span className="font-sans text-sm font-normal text-ink-muted">· {sites.length}</span>
+        </h3>
+        <p className="text-sm text-ink-muted">{intro}</p>
+      </div>
+      <ul className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {sites.map((s, i) => (
+          <li key={s.id} className="rise flex" style={{ ["--i" as string]: i }}>
+            <SiteCard site={s} />
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
@@ -72,8 +90,17 @@ export function ExploreHome() {
   const searchId = useId();
   const stopCount = useAppState((s) => s.trip.stops.length);
 
-  const sites = useMemo(() => filterSites(SITES, filters), [filters]);
-  const routes = useMemo(() => filterRoutes(ROUTES, SITES, filters), [filters]);
+  const preferences = useAppState((s) => s.preferences);
+  // Interests reorder (never hide): matching places and routes come first.
+  const sites = useMemo(() => rankSites(filterSites(SITES, filters), preferences), [filters, preferences]);
+  const routes = useMemo(
+    () =>
+      filterRoutes(ROUTES, SITES, filters)
+        .map((r, i) => ({ r, i, score: routeInterestScore(r, getSite, preferences) }))
+        .sort((a, b) => b.score - a.score || a.i - b.i)
+        .map((x) => x.r),
+    [filters, preferences],
+  );
   const filtered = isFiltered(filters);
   const nothing = sites.length === 0 && routes.length === 0;
 
@@ -97,10 +124,20 @@ export function ExploreHome() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 pb-12 pt-4 md:gap-10 md:px-8 md:pt-8">
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 pb-16 pt-4 md:gap-14 md:px-10 md:pt-8">
       {/* Location + search */}
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <LocalitySelector value={filters.locality} onChange={(locality) => update({ locality })} />
+        <div className="flex items-center justify-between gap-2">
+          <LocalitySelector value={filters.locality} onChange={(locality) => update({ locality })} />
+          {/* Mobile has no rail: the account lives here (PLAN.md: profile in a utility entry). */}
+          <Link
+            href="/cuenta"
+            aria-label="Tu cuenta y preferencias"
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-stone bg-surface text-ink hover:bg-surface-muted md:hidden"
+          >
+            <IconUser />
+          </Link>
+        </div>
         <form role="search" onSubmit={onSearchSubmit} className="relative w-full md:max-w-sm">
           <label htmlFor={searchId} className="sr-only">
             Buscar lugares por nombre o tema
@@ -114,7 +151,7 @@ export function ExploreHome() {
             placeholder="Buscar lugares, temas…"
             autoComplete="off"
             enterKeyHint="search"
-            className="min-h-11 w-full rounded-full border border-stone bg-surface pl-11 pr-12 text-base text-ink shadow-sm placeholder:text-ink-muted [&::-webkit-search-cancel-button]:hidden"
+            className="min-h-11 w-full rounded-full border border-stone bg-surface pl-11 pr-12 text-base text-ink transition-colors placeholder:text-ink-muted focus:border-ink focus:outline-none [&::-webkit-search-cancel-button]:hidden"
           />
           {filters.query && (
             <button
@@ -129,29 +166,30 @@ export function ExploreHome() {
         </form>
       </div>
 
-      {/* Hero: restrained, modest height */}
-      <section aria-labelledby="explore-hero" className="grid items-center gap-5 md:grid-cols-[1.1fr_1fr] md:gap-8">
-        <div className="flex flex-col gap-4">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-gold">Toledo · Guadamur</p>
-          <h1 id="explore-hero" className="font-display text-3xl leading-tight text-ink md:text-5xl">
+      {/* Hero: headline and one photo, nothing else */}
+      <section aria-labelledby="explore-hero" className="grid items-center gap-10 md:grid-cols-[1.25fr_1fr] md:gap-16">
+        <div className="flex flex-col gap-5">
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-ink-muted">
+            Toledo · Guadamur · <DemoBadge />
+          </p>
+          <h1 id="explore-hero" className="font-display text-display text-ink md:text-display-lg">
             La ruta de la Toledo visigoda
           </h1>
-          <p className="max-w-prose text-base leading-relaxed text-ink-muted">
+          <p className="max-w-xl text-lead leading-relaxed text-ink-muted">
             Descubre la ciudad que fue sede regia del reino visigodo y el territorio del Tesoro de Guarrazar. Explora a
             tu ritmo, crea un viaje que encaje en tu día o pregunta al asistente.
           </p>
-          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+          <div className="flex flex-col gap-2 pt-1 sm:flex-row">
             <Link
               href="/rutas"
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-olive px-5 text-sm font-semibold text-on-olive shadow-sm hover:bg-olive-hover"
+              className="btn-primary inline-flex min-h-12 items-center justify-center rounded-full px-6 text-body font-semibold"
             >
-              <IconTrip width={18} height={18} />
               Crear mi viaje
             </Link>
             <button
               type="button"
               onClick={scrollToPlaces}
-              className="inline-flex min-h-11 items-center justify-center rounded-full border border-stone bg-surface px-5 text-sm font-semibold text-ink hover:bg-surface-muted"
+              className="inline-flex min-h-12 items-center justify-center rounded-full border border-stone px-6 text-body font-semibold text-ink transition-colors hover:bg-surface-muted"
             >
               Explorar la ruta
             </button>
@@ -159,29 +197,27 @@ export function ExploreHome() {
           {stopCount > 0 && (
             <p className="text-sm text-ink-muted">
               Tienes {stopCount} {stopCount === 1 ? "parada" : "paradas"} en tu viaje en este dispositivo.{" "}
-              <Link href="/mi-viaje" className="font-semibold text-olive underline underline-offset-2">
+              <Link href="/mi-viaje" className="font-semibold text-ink underline underline-offset-4">
                 Ver Mi viaje
               </Link>
             </p>
           )}
         </div>
-        <SiteImage site={HERO_SITE} aspect="aspect-[16/9] md:aspect-[4/3]" rounded="rounded-2xl" className="shadow-sm" />
+        <figure className="w-full">
+          <SiteImage site={HERO_SITE} aspect="aspect-[4/5]" rounded="rounded-3xl" priority sizes="(min-width: 768px) 420px, 100vw" />
+          {HERO_SITE.image && (
+            <figcaption className="mt-3 text-xs text-ink-muted">
+              {HERO_SITE.name} · Foto: {HERO_SITE.image.author}, {HERO_SITE.image.license}
+            </figcaption>
+          )}
+        </figure>
       </section>
 
       <AskComposer />
 
-      <p className="flex items-start gap-2 rounded-xl border border-dashed border-warn/60 bg-warn-soft px-4 py-3 text-sm text-ink">
-        <IconInfo className="mt-0.5 shrink-0 text-warn" />
-        <span>
-          <strong className="font-semibold">Versión de demostración.</strong> Los lugares, rutas y datos históricos son
-          fichas de ejemplo pendientes de validación por Urbs Regia. Los horarios son de ejemplo y no están verificados, y
-          las coordenadas son aproximadas. Tu viaje y tus guardados se quedan en este dispositivo.
-        </span>
-      </p>
-
       {/* Theme chips */}
       <section aria-labelledby="explore-themes" className="flex flex-col gap-3">
-        <h2 id="explore-themes" className="text-sm font-semibold uppercase tracking-wider text-ink-muted">
+        <h2 id="explore-themes" className="text-xs font-medium uppercase tracking-[0.2em] text-ink-muted">
           Temas
         </h2>
         <ul className="flex flex-wrap gap-2">
@@ -193,13 +229,12 @@ export function ExploreHome() {
                   type="button"
                   aria-pressed={active}
                   onClick={() => update({ theme })}
-                  className={`inline-flex min-h-11 items-center gap-1 rounded-full border px-4 text-sm font-medium ${
+                  className={`inline-flex min-h-11 items-center rounded-full border px-4 text-sm transition-colors duration-150 ${
                     active
-                      ? "border-olive bg-olive font-semibold text-on-olive"
-                      : "border-stone bg-surface text-ink hover:bg-surface-muted"
+                      ? "border-primary bg-primary font-semibold text-on-primary"
+                      : "border-stone text-ink hover:bg-surface-muted"
                   }`}
                 >
-                  {active && <span aria-hidden="true">✓</span>}
                   {theme ? capitalize(theme) : "Todos los temas"}
                 </button>
               </li>
@@ -213,7 +248,7 @@ export function ExploreHome() {
       </p>
 
       {nothing ? (
-        <div className="flex flex-col items-center gap-3 rounded-2xl border border-stone bg-surface px-6 py-10 text-center">
+        <div className="flex flex-col items-center gap-3 rounded-2xl border border-stone px-6 py-12 text-center">
           <IconSearch width={28} height={28} className="text-ink-muted" />
           <p className="text-base text-ink">
             {filters.query.trim()
@@ -224,7 +259,7 @@ export function ExploreHome() {
           <button
             type="button"
             onClick={reset}
-            className="min-h-11 rounded-full bg-olive px-5 text-sm font-semibold text-on-olive hover:bg-olive-hover"
+            className="btn-primary min-h-11 rounded-full px-5 text-sm font-semibold"
           >
             Borrar filtros
           </button>
@@ -233,17 +268,17 @@ export function ExploreHome() {
         <>
           <section aria-labelledby="explore-routes" className="flex flex-col gap-4">
             <div className="flex items-end justify-between gap-4">
-              <h2 id="explore-routes" className="font-display text-2xl text-ink">
+              <h2 id="explore-routes" className="font-display text-3xl text-ink">
                 Rutas
               </h2>
-              <Link href="/rutas" className="inline-flex min-h-11 items-center text-sm font-semibold text-olive underline-offset-2 hover:underline">
+              <Link href="/rutas" className="inline-flex min-h-11 items-center text-sm font-semibold text-ink underline-offset-4 hover:underline">
                 Ver todas
               </Link>
             </div>
             {routes.length > 0 ? (
-              <ul className="grid gap-4 sm:grid-cols-2">
-                {routes.map((r) => (
-                  <li key={r.id} className="flex">
+              <ul className="grid gap-5 sm:grid-cols-2">
+                {routes.map((r, i) => (
+                  <li key={r.id} className="rise flex" style={{ ["--i" as string]: i }}>
                     <RouteCard route={r} className="w-full" />
                   </li>
                 ))}
@@ -255,7 +290,7 @@ export function ExploreHome() {
 
           <section aria-labelledby="lugares" className="flex scroll-mt-4 flex-col gap-4">
             <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-1">
-              <h2 id="lugares" ref={placesHeadingRef} tabIndex={-1} className="scroll-mt-4 font-display text-2xl text-ink">
+              <h2 id="lugares" ref={placesHeadingRef} tabIndex={-1} className="scroll-mt-4 font-display text-3xl text-ink">
                 Lugares
               </h2>
               <span className="flex items-center gap-3 text-sm text-ink-muted">
@@ -264,27 +299,47 @@ export function ExploreHome() {
                   <button
                     type="button"
                     onClick={reset}
-                    className="min-h-11 font-semibold text-olive underline-offset-2 hover:underline"
+                    className="min-h-11 font-semibold text-ink underline-offset-4 hover:underline"
                   >
                     Borrar filtros
                   </button>
                 )}
               </span>
             </div>
+            <p className="text-sm text-ink-muted">
+              {preferences.interests.length > 0 ? (
+                <>
+                  Primero lo que te interesa: {preferences.interests.map(themeLabel).join(", ")}.{" "}
+                  <Link href="/cuenta" className="font-semibold text-ink underline underline-offset-4">
+                    Cambiar
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link href="/cuenta" className="font-semibold text-ink underline underline-offset-4">
+                    Dinos qué te interesa
+                  </Link>{" "}
+                  y ordenaremos los lugares para ti.
+                </>
+              )}
+            </p>
             {sites.length > 0 ? (
-              <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {sites.map((s) => (
-                  <li key={s.id} className="flex">
-                    <SiteCard site={s} />
-                  </li>
-                ))}
-              </ul>
+              <div className="flex flex-col gap-10">
+                <PlaceGroup
+                  title="Huella visigoda"
+                  intro="Los lugares donde se conserva o se estudia la Toledo visigoda."
+                  sites={sites.filter((s) => s.visigothic)}
+                />
+                <PlaceGroup
+                  title="Para completar la visita"
+                  intro="Patrimonio de otras épocas cerca de la ruta. Cada ficha lo indica como patrimonio no visigodo."
+                  sites={sites.filter((s) => !s.visigothic)}
+                />
+              </div>
             ) : (
               <p className="text-sm text-ink-muted">Ningún lugar coincide con estos filtros.</p>
             )}
-            <p className="flex flex-wrap items-center gap-2 text-xs text-ink-muted">
-              <DemoBadge /> Fichas de demostración: horarios de ejemplo y coordenadas aproximadas.
-            </p>
+            <p className="text-xs text-ink-muted">Fotos: Wikimedia Commons (créditos en cada ficha).</p>
           </section>
         </>
       )}

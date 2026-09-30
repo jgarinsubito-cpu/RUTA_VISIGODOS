@@ -3,12 +3,12 @@ import type { SVGProps } from "react";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
-function Base({ children, ...props }: IconProps) {
+function Base({ children, width = 20, height, ...props }: IconProps) {
   return (
     <svg
       viewBox="0 0 24 24"
-      width={20}
-      height={20}
+      width={width}
+      height={height ?? width}
       fill="none"
       stroke="currentColor"
       strokeWidth={1.7}
@@ -104,5 +104,87 @@ export const IconInfo = (p: IconProps) => (
 export const IconSpark = (p: IconProps) => (
   <Base {...p}>
     <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6" />
+  </Base>
+);
+
+export const IconDirections = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M11.3 2.7a1 1 0 0 1 1.4 0l8.6 8.6a1 1 0 0 1 0 1.4l-8.6 8.6a1 1 0 0 1-1.4 0l-8.6-8.6a1 1 0 0 1 0-1.4z" />
+    <path d="M9 14v-2.5a1.5 1.5 0 0 1 1.5-1.5H15m-2-2 2 2-2 2" />
+  </Base>
+);
+export const IconGlobe = (p: IconProps) => (
+  <Base {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z" />
+  </Base>
+);
+export const IconPhone = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M5 3h3.5l1.7 4.3-2.2 1.4a11 11 0 0 0 7.3 7.3l1.4-2.2L21 15.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" />
+  </Base>
+);
+export const IconChevronRight = (p: IconProps) => (
+  <Base {...p}>
+    <path d="m9 18 6-6-6-6" />
+  </Base>
+);
+export const IconHeadphones = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M4 14v-2a8 8 0 0 1 16 0v2" />
+    <rect x="3" y="14" width="5" height="7" rx="1.5" />
+    <rect x="16" y="14" width="5" height="7" rx="1.5" />
+  </Base>
+);
+export const IconPlay = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M7 4.5v15l12-7.5z" />
+  </Base>
+);
+export const IconPause = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M8 5v14M16 5v14" />
+  </Base>
+);
+export const IconLocate = (p: IconProps) => (
+  <Base {...p}>
+    <circle cx="12" cy="12" r="7" />
+    <circle cx="12" cy="12" r="2.5" />
+    <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+  </Base>
+);
+export const IconBattery = (p: IconProps) => (
+  <Base {...p}>
+    <rect x="2" y="7" width="17" height="10" rx="2" />
+    <path d="M22 11v2M11 9.5l-2 3h3l-2 3" />
+  </Base>
+);
+export const IconResume = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M4 12a8 8 0 1 0 2.4-5.7" />
+    <path d="M4 4v4h4" />
+  </Base>
+);
+export const IconCheck = (p: IconProps) => (
+  <Base {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="m8 12 2.7 2.7L16 9.5" />
+  </Base>
+);
+export const IconSpeaker = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M4 9.5h3.5L12 5v14l-4.5-4.5H4z" />
+    <path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" />
+  </Base>
+);
+export const IconChevronDown = (p: IconProps) => (
+  <Base {...p}>
+    <path d="m6 9 6 6 6-6" />
+  </Base>
+);
+export const IconUser = (p: IconProps) => (
+  <Base {...p}>
+    <circle cx="12" cy="8" r="4" />
+    <path d="M4 21a8 8 0 0 1 16 0" />
   </Base>
 );

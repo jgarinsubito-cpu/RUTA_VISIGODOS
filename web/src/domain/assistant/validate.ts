@@ -4,7 +4,7 @@
  * [[site-id]] tokens must name real sites, placeIds mirror the tokens, and a heritage answer with no
  * valid citation becomes an honest abstention.
  */
-import { getPublishedClaim, getRoute, getSite } from "@/data/catalog";
+import { SHOWCASE, getPublishedClaim, getRoute, getSite } from "@/data/content";
 import type { AssistantAnswer, Citation, Site, SiteId } from "@/domain/types";
 import { ABSTAIN_LEAD, citationFor } from "./compose-local";
 import { resolveSites } from "./retrieval";
@@ -41,9 +41,12 @@ export function validateAnswer(answer: AssistantAnswer): AssistantAnswer {
   let text = stripUnknownTokens(answer.text);
   let abstained = answer.abstained;
   // A model answer to a mixed question carries a historical part too: it needs a citation as well.
-  const needsCitation = answer.intent === "heritage" || (answer.intent === "mixed" && answer.provider === "anthropic");
+  const needsCitation = answer.intent === "heritage" || (answer.intent === "mixed" && answer.provider !== "local");
   if (needsCitation && citations.length === 0 && !abstained) {
-    text = `${ABSTAIN_LEAD}\n\nPuedes preguntarme por los lugares de la ruta, por ejemplo el Tesoro de Guarrazar ([[site-guarrazar]]).`;
+    const example = SHOWCASE.assistantExamples.find((e) => getSite(e.siteId));
+    text = example
+      ? `${ABSTAIN_LEAD}\n\nPuedes preguntarme por los lugares de la ruta, por ejemplo ${example.topic} ([[${example.siteId}]]).`
+      : ABSTAIN_LEAD;
     abstained = true;
   }
   if (!text) {
@@ -76,18 +79,28 @@ const HOURS_WORDING = /\b(abre|abren|abierto|abierta|abiertos|abiertas|cierra|ci
 const ACCESS_WORDING = /\b(accesible|accesibles|sin escalones|silla de ruedas|adaptado|adaptada)\b/;
 const QUALIFIER = /\b(de ejemplo|no verificad[oa]s?|sin verificar|consulta)\b/;
 
+/** "09:00" -> also "9:00", so the visitor's own times match however the text writes them. */
+function clockVariants(times: string[]): RegExp | null {
+  const variants = times.flatMap((t) => (/^\d{2}:\d{2}$/.test(t) ? [t, t.replace(/^0/, "")] : []));
+  if (variants.length === 0) return null;
+  return new RegExp(`(?<![\\d:])(?:${unique(variants).join("|")})(?![\\d:])`, "g");
+}
+
 /**
  * Post-generation check for model text: when a mentioned site's hours or access are not verified,
  * no sentence may state them as fact (open/closed times, "accesible", "sin escalones") without
- * saying the data is an example or unverified. Returns false when the answer must be discarded.
+ * saying the data is an example or unverified. `visitorTimes` are the visitor's own start/end
+ * times: repeating them ("entre las 10:00 y las 18:00") is not a claim about opening hours.
+ * Returns false when the answer must be discarded.
  */
-export function operationalWordingOk(text: string, mentioned: Site[]): boolean {
+export function operationalWordingOk(text: string, mentioned: Site[], visitorTimes: string[] = []): boolean {
   const unverifiedHours = mentioned.some((s) => s.hours.status !== "verified");
   const unverifiedAccess = mentioned.some((s) => s.access.status !== "verified");
   if (!unverifiedHours && !unverifiedAccess) return true;
+  const own = clockVariants(visitorTimes);
   const sentences = text.replace(TOKEN, " ").split(/(?<=[.!?])\s+|\n+/);
   for (const raw of sentences) {
-    const sentence = normalize(raw);
+    const sentence = normalize(own ? raw.replace(own, " ") : raw);
     if (!sentence || QUALIFIER.test(sentence)) continue;
     if (unverifiedHours && HOURS_WORDING.test(sentence)) return false;
     if (unverifiedAccess && ACCESS_WORDING.test(sentence)) return false;
@@ -96,7 +109,7 @@ export function operationalWordingOk(text: string, mentioned: Site[]): boolean {
 }
 
 /** Sites a text refers to by [[token]], name or alias. */
-export function mentionedSites(text: string, sites: Site[]): Site[] {
+export function mentionedSites(text: string, sites: readonly Site[]): Site[] {
   const tokens = new Set(placeTokens(text));
   const named = new Set(resolveSites(text.replace(TOKEN, " ")).mentioned.map((s) => s.id));
   return sites.filter((s) => tokens.has(s.id) || named.has(s.id));

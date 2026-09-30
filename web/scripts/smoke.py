@@ -42,7 +42,7 @@ def run(p, label, vp):
         box.fill(q)
         box.press('Enter')
         page.wait_for_timeout(300)
-        page.get_by_text('Buscando en las fuentes aprobadas…').wait_for(state='detached', timeout=30000)
+        page.get_by_text('Buscando en las fichas…').wait_for(state='detached', timeout=30000)
 
     step('home', lambda: (goto('/'), shot('01-home')))
     step('chat-empty', lambda: (goto('/asistente'), shot('02-asistente-empty')))
@@ -66,12 +66,26 @@ def run(p, label, vp):
         shot('04c-asistente-accepted')
 
     step('route', route)
+
+    def signup_prompt():
+        # Guests see a one-time sign-up invitation after their second question.
+        page.evaluate('localStorage.clear()')
+        ask('¿Qué es el Tesoro de Guarrazar?')
+        page.get_by_placeholder('Pregunta sobre la ruta…').fill('¿Qué ver en Toledo?')
+        page.get_by_placeholder('Pregunta sobre la ruta…').press('Enter')
+        page.get_by_role('dialog', name='¿Qué te gustaría descubrir?').wait_for(timeout=30000)
+        shot('09-signup-prompt')
+        page.get_by_role('button', name='Continuar').click(); page.get_by_role('button', name='Continuar').click(); page.get_by_role('button', name='Continuar').click(); shot('09b-signup-account'); page.get_by_role('button', name='Seguir sin cuenta').click()
+
+    step('signup-prompt', signup_prompt)
+    step('cuenta', lambda: (goto('/cuenta'), page.wait_for_timeout(1500), shot('10-cuenta')))
+    step('tour', lambda: (goto('/rutas/la-capital-de-un-reino/recorrido'), shot('11-recorrido')))
     for name, path in [('05-mi-viaje', '/mi-viaje'), ('06-mapa', '/mapa'),
                        ('07-lugar-guarrazar', '/lugares/huerta-de-guarrazar'),
                        ('08-ruta-capital', '/rutas/la-capital-de-un-reino')]:
         step(name, lambda path=path, name=name: (goto(path), page.wait_for_timeout(1200), shot(name)))
-    for path in ['/', '/asistente', '/mi-viaje', '/mapa', '/guardados', '/rutas',
-                 '/lugares/huerta-de-guarrazar', '/rutas/la-capital-de-un-reino']:
+    for path in ['/', '/asistente', '/mi-viaje', '/mapa', '/guardados', '/rutas', '/cuenta',
+                 '/lugares/huerta-de-guarrazar', '/rutas/la-capital-de-un-reino', '/rutas/la-capital-de-un-reino/recorrido']:
         goto(path)
         w = page.evaluate('[document.documentElement.scrollWidth, window.innerWidth]')
         if w[0] > w[1]:

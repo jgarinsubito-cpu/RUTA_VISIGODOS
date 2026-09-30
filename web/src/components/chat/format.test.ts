@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { ChatMessage } from "@/domain/types";
 import { DEFAULT_CONTEXT } from "@/state/store";
-import { buildRequest, contextLine, isAnswer, paragraphs, parseInline, plainText, sameContext } from "./format";
+import { buildRequest, contextLine, isAnswer, mergePlaceNames, paragraphs, parseInline, plainText, sameContext } from "./format";
 
 describe("parseInline", () => {
   it("splits text and [[site-id]] tokens in order", () => {
@@ -64,5 +64,23 @@ describe("isAnswer", () => {
     ).toBe(true);
     expect(isAnswer({ error: "Petición no válida." })).toBe(false);
     expect(isAnswer(null)).toBe(false);
+  });
+});
+
+describe("mergePlaceNames", () => {
+  const nameOf = (id: string) => (id === "site-guarrazar" ? "Huerta de Guarrazar" : undefined);
+
+  it("drops the name written right before the token so it is not repeated", () => {
+    const parts = mergePlaceNames(parseInline("en el entorno de la Huerta de Guarrazar [[site-guarrazar]]."), nameOf);
+    expect(parts).toEqual([
+      { type: "text", value: "en el entorno de la " },
+      { type: "place", siteId: "site-guarrazar" },
+      { type: "text", value: "." },
+    ]);
+  });
+
+  it("keeps the text when the token is not preceded by the name", () => {
+    const parts = mergePlaceNames(parseInline("Visita [[site-guarrazar]] hoy"), nameOf);
+    expect(parts[0]).toEqual({ type: "text", value: "Visita " });
   });
 });

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ROUTES, SITES } from "@/data/catalog";
+import { ROUTES, SITES } from "@/data/content";
 import { availableThemes, EMPTY_FILTERS, filterRoutes, filterSites, fold, isFiltered } from "./filter";
 
 const ids = (xs: { id: string }[]) => xs.map((x) => x.id);

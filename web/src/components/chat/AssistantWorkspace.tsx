@@ -7,7 +7,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
-import { getSite } from "@/data/catalog";
+import { getSite } from "@/data/content";
 import { reschedule } from "@/domain/planner";
 import { actions, getAppState, useAppState } from "@/state/store";
 import { DESKTOP_QUERY, useMediaQuery } from "@/lib/useMediaQuery";
@@ -19,7 +19,9 @@ import { ContextPill, type Segment } from "./ContextPill";
 import { ConversationMenu } from "./ConversationMenu";
 import { EmptyState } from "./EmptyState";
 import { contextLine, sameContext } from "./format";
-import { PlaceSheet } from "./PlaceSheet";
+import { PlaceSheet } from "@/components/place/PlaceSheet";
+import { SignupPrompt } from "@/components/account/SignupPrompt";
+import { prefersReducedMotion } from "@/lib/motion";
 import { useAssistant } from "./useAssistant";
 import { consumeAskHandoff } from "./askHandoff";
 
@@ -41,20 +43,20 @@ function recalculate() {
 function TypingIndicator() {
   return (
     <div className="flex items-center gap-3">
-      <span aria-hidden="true" className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-olive font-display text-xs text-on-olive">
+      <span aria-hidden="true" className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary font-display text-xs text-on-primary">
         RV
       </span>
-      <span className="inline-flex items-center gap-2 rounded-2xl bg-surface px-4 py-3 text-sm text-ink-muted shadow-sm">
+      <span className="inline-flex items-center gap-2 rounded-2xl bg-surface px-4 py-3 text-sm text-ink-muted">
         <span aria-hidden="true" className="flex gap-1">
           {[0, 150, 300].map((d) => (
             <span
               key={d}
-              className="h-1.5 w-1.5 rounded-full bg-gold motion-safe:animate-bounce"
+              className="h-1.5 w-1.5 rounded-full bg-accent motion-safe:animate-bounce"
               style={{ animationDelay: `${d}ms` }}
             />
           ))}
         </span>
-        Buscando en las fuentes aprobadas…
+        Buscando en las fichas…
       </span>
     </div>
   );
@@ -135,8 +137,7 @@ export function AssistantWorkspace() {
       el.scrollTop = 0;
       return;
     }
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    el.scrollTo({ top: el.scrollHeight, behavior: reduce ? "auto" : "smooth" });
+    el.scrollTo({ top: el.scrollHeight, behavior: prefersReducedMotion() ? "auto" : "smooth" });
   }, [lastId, showTyping, showFailure, activeId]);
 
   function onSend(value: string) {
@@ -168,7 +169,7 @@ export function AssistantWorkspace() {
 
   return (
     <>
-      <div className="flex h-[calc(100dvh-3.5rem-env(safe-area-inset-bottom))] min-h-0 md:h-dvh">
+      <div className="flex h-[calc(100dvh-var(--mobile-nav)-env(safe-area-inset-bottom))] min-h-0 md:h-dvh">
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="border-b border-stone bg-ivory px-3 py-2 md:px-6">
             <div className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 gap-y-2 ${threeCol.grid}`}>
@@ -183,7 +184,7 @@ export function AssistantWorkspace() {
               />
               <Link
                 href="/mi-viaje"
-                className={`order-2 inline-flex min-h-11 items-center gap-2 justify-self-end whitespace-nowrap rounded-full border border-stone bg-surface px-4 text-sm font-semibold text-ink shadow-sm hover:bg-surface-muted ${threeCol.trip}`}
+                className={`order-2 inline-flex min-h-11 items-center gap-2 justify-self-end whitespace-nowrap rounded-full border border-stone bg-surface px-4 text-sm font-semibold text-ink hover:bg-surface-muted ${threeCol.trip}`}
               >
                 <IconTrip width={18} height={18} />
                 {trip.stops.length > 0 ? (
@@ -219,7 +220,7 @@ export function AssistantWorkspace() {
                     type="button"
                     disabled={pendingProposal}
                     onClick={recalculate}
-                    className="min-h-11 rounded-full bg-olive px-4 text-sm font-semibold text-on-olive hover:bg-olive-hover disabled:opacity-60"
+                    className="min-h-11 rounded-full bg-primary px-4 text-sm font-semibold text-on-primary hover:bg-primary-hover disabled:opacity-60"
                   >
                     Recalcular mi viaje
                   </button>
@@ -237,7 +238,7 @@ export function AssistantWorkspace() {
                 {messages.map((m) =>
                   m.role === "user" ? (
                     <div key={m.id} className="flex justify-end">
-                      <p className="max-w-[85%] whitespace-pre-wrap break-words rounded-2xl rounded-br-md bg-gold-soft px-4 py-2.5 text-[15px] text-ink">
+                      <p className="max-w-[85%] whitespace-pre-wrap break-words rounded-2xl rounded-br-md bg-surface-muted px-4 py-2.5 text-body text-ink">
                         <span className="sr-only">Tú: </span>
                         {m.text}
                       </p>
@@ -268,7 +269,7 @@ export function AssistantWorkspace() {
                         type="button"
                         onClick={retry}
                         disabled={sending}
-                        className="min-h-11 rounded-full bg-olive px-5 text-sm font-semibold text-on-olive hover:bg-olive-hover disabled:opacity-60"
+                        className="min-h-11 rounded-full bg-primary px-5 text-sm font-semibold text-on-primary hover:bg-primary-hover disabled:opacity-60"
                       >
                         Reintentar
                       </button>
@@ -298,7 +299,8 @@ export function AssistantWorkspace() {
         )}
       </div>
 
-      {panelSiteId && !isDesktop && <PlaceSheet siteId={panelSiteId} onClose={() => actions.selectSite(null)} />}
+      {panelSiteId && !isDesktop && <PlaceSheet variant="fullscreen" siteId={panelSiteId} onClose={() => actions.selectSite(null)} />}
+      <SignupPrompt ready={!sending && lastAssistant && !pendingProposal && !(panelSiteId && !isDesktop)} />
     </>
   );
 }
@@ -306,7 +308,7 @@ export function AssistantWorkspace() {
 /** Suspense fallback while search params resolve on the client. */
 export function WorkspaceFallback() {
   return (
-    <div className="flex h-[calc(100dvh-3.5rem-env(safe-area-inset-bottom))] flex-col md:h-dvh" aria-busy="true">
+    <div className="flex h-[calc(100dvh-var(--mobile-nav)-env(safe-area-inset-bottom))] flex-col md:h-dvh" aria-busy="true">
       <div className="h-[6.5rem] border-b border-stone lg:h-[3.75rem]" />
       <div className="grid flex-1 place-items-center text-sm text-ink-muted">Cargando el asistente…</div>
     </div>

@@ -3,22 +3,28 @@
  * Pure functions only: no React, no storage, no network. The language model never decides
  * feasibility; these functions do. Every mutation is returned as a proposal that the visitor accepts.
  *
- * CONTRACT — signatures are consumed by src/state/store.ts and must not change.
- * Additive extensions: every propose* returns a PlannerProposal (an ItineraryProposal that also
- * carries the resulting context and route), and functions accept an optional PlannerOptions last
- * argument so tests and future repositories can inject sites and travel providers.
+ * CONTRACT — signatures are consumed by src/state/store.ts. Every propose* returns an
+ * ItineraryProposal carrying the resulting context and route, and functions accept an optional
+ * PlannerOptions last argument so tests and future repositories can inject sites and travel.
+ * Stop warnings are structured (StopWarning); domain/warnings.ts renders them.
  */
-import { getSite as catalogGetSite } from "@/data/catalog";
+import { getSite as contentGetSite } from "@/data/content";
 import { estimateTravelProvider, type TravelTimeProvider } from "./travel";
-import type { ItineraryProposal, Route, RouteId, Site, SiteId, TimeWindow, Trip, TripContext, TripStop } from "./types";
+import { isoWeekday, parseClock } from "./time";
+import { describeWarning, WARN_TRAVEL_ESTIMATE } from "./warnings";
+import type { ItineraryProposal, Route, Site, SiteId, StopWarning, TimeWindow, Trip, TripContext, TripStop } from "./types";
 
-/** Proposal plus what applyProposal needs beyond the stops. */
-export interface PlannerProposal extends ItineraryProposal {
-  /** Context the `after` schedule was computed with; becomes trip.context on accept. */
-  context: TripContext;
-  /** Set when the proposal replaces the trip with a curated route. */
-  routeId?: RouteId;
-}
+export { formatClock, isoWeekday, parseClock } from "./time";
+export {
+  WARN_ACCESS,
+  WARN_EXAMPLE_HOURS,
+  WARN_NO_DATE,
+  WARN_TRAVEL_ESTIMATE,
+  WARN_UNKNOWN_HOURS,
+} from "./warnings";
+
+/** Kept for callers written before proposals carried context and route. */
+export type PlannerProposal = ItineraryProposal;
 
 export interface PlannerOptions {
   getSite?: (id: SiteId) => Site | undefined;
@@ -27,6 +33,7 @@ export interface PlannerOptions {
 
 export interface ScheduleResult {
   stops: TripStop[];
+  /** Trip-wide notes; each stop carries its own structured warnings. */
   warnings: string[];
   ok: boolean;
   reason?: string;
@@ -37,81 +44,43 @@ export const BUFFER_MINUTES = 10;
 /** Longest walking leg accepted before suggesting the car. */
 export const MAX_WALK_KM = 6;
 
-export const WARN_NO_DATE = "Elige una fecha para comprobar horarios";
-export const WARN_EXAMPLE_HOURS = "Horario de ejemplo (no verificado)";
-export const WARN_UNKNOWN_HOURS = "Horario sin verificar";
-export const WARN_ACCESS = "Accesibilidad sin verificar";
-export const WARN_TRAVEL_ESTIMATE = "Tiempos de desplazamiento aproximados (estimación, no ruta real)";
-
-const WEEKDAY_NAMES = ["", "lunes", "martes", "miércoles", "jueves", "viernes", "sábados", "domingos"];
-
 export function emptyTrip(context: TripContext): Trip {
   return { id: "trip-local", revision: 0, context, stops: [], updatedAt: new Date(0).toISOString() };
-}
-
-/**
- * ISO weekday (1 = Monday … 7 = Sunday) of a local Europe/Madrid calendar date "YYYY-MM-DD".
- * Computed purely on the calendar date (UTC arithmetic at noon), so DST changes and the
- * runtime's own time zone cannot shift the day. Returns null for malformed dates.
- */
-export function isoWeekday(date: string): 1 | 2 | 3 | 4 | 5 | 6 | 7 | null {
-  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
-  if (!m) return null;
-  const [y, mo, d] = [Number(m[1]), Number(m[2]), Number(m[3])];
-  const dt = new Date(Date.UTC(y, mo - 1, d, 12));
-  if (dt.getUTCFullYear() !== y || dt.getUTCMonth() !== mo - 1 || dt.getUTCDate() !== d) return null;
-  const js = dt.getUTCDay();
-  return (js === 0 ? 7 : js) as 1 | 2 | 3 | 4 | 5 | 6 | 7;
 }
 
 function addUnique(list: string[], item: string) {
   if (!list.includes(item)) list.push(item);
 }
 
+function addWarning(list: StopWarning[], w: StopWarning) {
+  if (!list.some((x) => x.code === w.code)) list.push(w);
+}
+
 /**
- * Earliest start inside the day's windows such that the whole visit fits.
- * Returns the start minute, or a Spanish reason naming the site. Reasons based on hours that are
- * not verified are phrased conditionally and say so: placeholder data is never stated as fact.
+ * Earliest start inside the day's windows such that the whole visit fits, or the warning that
+ * explains why it does not (worded conditionally when the hours are not verified).
  */
-function fitInWindows(site: Site, windows: TimeWindow[], arrival: number, weekday: number): number | { reason: string } {
+function fitInWindows(site: Site, windows: TimeWindow[], arrival: number, weekday: 1 | 2 | 3 | 4 | 5 | 6 | 7): number | StopWarning {
   const verified = site.hours.status === "verified";
-  const qualify = (fact: string, conditional: string) =>
-    verified ? fact : `Según el horario de ejemplo (no verificado), ${conditional}`;
-  if (windows.length === 0) {
-    return { reason: qualify(`${site.name} cierra los ${WEEKDAY_NAMES[weekday]}`, `${site.name} cerraría los ${WEEKDAY_NAMES[weekday]}`) };
-  }
+  if (windows.length === 0) return { code: "closed-day", weekday, verified };
   const parsed = windows.map((w) => ({ open: parseClock(w.open), close: parseClock(w.close) })).sort((a, b) => a.open - b.open);
   for (const w of parsed) {
     const start = Math.max(arrival, w.open);
     if (start + site.visitMinutes <= w.close) return start;
   }
   const pending = parsed.filter((w) => w.close > arrival);
-  if (pending.length === 0) {
-    const close = formatClock(parsed[parsed.length - 1].close);
-    return {
-      reason: qualify(
-        `${site.name} cierra a las ${close} y ya estará cerrado al llegar (${formatClock(arrival)})`,
-        `${site.name} cerraría a las ${close} y ya estaría cerrado al llegar (${formatClock(arrival)})`,
-      ),
-    };
-  }
-  const close = formatClock(pending[pending.length - 1].close);
-  return {
-    reason: qualify(
-      `${site.name} cierra a las ${close} y no da tiempo a la visita`,
-      `${site.name} cerraría a las ${close} y no daría tiempo a la visita`,
-    ),
-  };
+  if (pending.length === 0) return { code: "closed-on-arrival", close: parsed[parsed.length - 1].close, arrival, verified };
+  return { code: "no-time", close: pending[pending.length - 1].close, verified };
 }
 
 /** Warning for a stop where the visitor arrives before the site opens. */
 export function waitWarning(start: number, verified: boolean): string {
-  return `Espera hasta las ${formatClock(start)} (${verified ? "abre a esa hora" : "abriría a esa hora según el horario de ejemplo"})`;
+  return describeWarning({ code: "wait", until: start, verified }, "");
 }
 
 /** Recompute arrivals/departures/warnings for an ordered list of site IDs under a context. */
 export function schedule(siteIds: SiteId[], context: TripContext, options: PlannerOptions = {}): ScheduleResult {
-  const lookup = options.getSite ?? catalogGetSite;
+  const lookup = options.getSite ?? contentGetSite;
   const travel = options.travel ?? estimateTravelProvider;
   const stops: TripStop[] = [];
   const warnings: string[] = [];
@@ -142,14 +111,14 @@ export function schedule(siteIds: SiteId[], context: TripContext, options: Plann
   let prev: Site | null = null;
 
   for (const site of sites) {
-    const stopWarnings: string[] = [];
+    const stopWarnings: StopWarning[] = [];
     let travelMinutes = 0;
     let arrival = clock;
     if (prev) {
       const km = travel.distanceKm(prev.coordinates, site.coordinates, context.transport);
       if (context.transport === "walk" && km > MAX_WALK_KM) {
         fail(`De ${prev.name} a ${site.name} hay unos ${Math.round(km)} km: demasiado para ir a pie. Prueba en coche.`);
-        addUnique(stopWarnings, "Demasiado lejos para ir a pie");
+        addWarning(stopWarnings, { code: "too-far-walk", km: Math.round(km * 10) / 10 });
       }
       travelMinutes = travel.minutes(prev.coordinates, site.coordinates, context.transport).minutes;
       arrival = clock + BUFFER_MINUTES + travelMinutes;
@@ -161,39 +130,39 @@ export function schedule(siteIds: SiteId[], context: TripContext, options: Plann
     const { hours } = site;
     if (hours.status === "example") {
       provisional = true;
-      addUnique(stopWarnings, WARN_EXAMPLE_HOURS);
+      addWarning(stopWarnings, { code: "example-hours" });
     } else if (hours.status === "unknown") {
       provisional = true;
-      addUnique(stopWarnings, WARN_UNKNOWN_HOURS);
+      addWarning(stopWarnings, { code: "unknown-hours" });
     }
     if (!hours.alwaysOpen && hours.weekly) {
       if (weekday === null) {
         provisional = true;
-        addUnique(stopWarnings, WARN_NO_DATE);
+        addWarning(stopWarnings, { code: "no-date" });
       } else {
         const fit = fitInWindows(site, hours.weekly[weekday] ?? [], arrival, weekday);
         if (typeof fit === "number") {
           start = fit;
           if (start > arrival) {
             provisional = true;
-            addUnique(stopWarnings, waitWarning(start, hours.status === "verified"));
+            addWarning(stopWarnings, { code: "wait", until: start, verified: hours.status === "verified" });
           }
         } else {
-          fail(fit.reason);
-          addUnique(stopWarnings, fit.reason);
+          fail(describeWarning(fit, site.name));
+          addWarning(stopWarnings, fit);
         }
       }
     }
     if (context.stepFreeRequired && (site.access.status !== "verified" || !site.access.stepFree)) {
       provisional = true;
-      addUnique(stopWarnings, WARN_ACCESS);
+      addWarning(stopWarnings, { code: "access-unverified" });
     }
 
     const departure = start + site.visitMinutes;
     if (departure > endTime) {
-      const r = `La visita a ${site.name} terminaría a las ${formatClock(departure)}, después de tu hora de fin (${context.endTime})`;
-      fail(r);
-      addUnique(stopWarnings, r);
+      const w: StopWarning = { code: "past-end", departure, endTime: context.endTime };
+      fail(describeWarning(w, site.name));
+      addWarning(stopWarnings, w);
     }
 
     stops.push({
@@ -205,7 +174,6 @@ export function schedule(siteIds: SiteId[], context: TripContext, options: Plann
       status: provisional ? "provisional" : "scheduled",
       warnings: stopWarnings,
     });
-    for (const w of stopWarnings) addUnique(warnings, `${site.name}: ${w}`);
     clock = departure;
     prev = site;
   }
@@ -222,11 +190,11 @@ function proposal(
   context: TripContext,
   result: ScheduleResult,
   extraWarnings: string[] = [],
-  routeId?: RouteId,
-): PlannerProposal {
+  routeId?: Route["id"],
+): ItineraryProposal {
   const beforeIds = new Set(trip.stops.map((s) => s.siteId));
   const afterIds = new Set(result.stops.map((s) => s.siteId));
-  const p: PlannerProposal = {
+  const p: ItineraryProposal = {
     ok: result.ok,
     baseRevision: trip.revision,
     before: trip.stops,
@@ -241,7 +209,7 @@ function proposal(
   return p;
 }
 
-function rejected(trip: Trip, reason: string): PlannerProposal {
+function rejected(trip: Trip, reason: string): ItineraryProposal {
   return {
     ok: false,
     reason,
@@ -256,10 +224,10 @@ function rejected(trip: Trip, reason: string): PlannerProposal {
 }
 
 /** Insert a site at the feasible position with least total travel (ties go to the end). */
-export function proposeAdd(trip: Trip, siteId: SiteId, options: PlannerOptions = {}): PlannerProposal {
+export function proposeAdd(trip: Trip, siteId: SiteId, options: PlannerOptions = {}): ItineraryProposal {
   const ids = trip.stops.map((s) => s.siteId);
   if (ids.includes(siteId)) return rejected(trip, "Ya está en tu viaje");
-  if (!(options.getSite ?? catalogGetSite)(siteId)) return rejected(trip, `Lugar desconocido: ${siteId}`);
+  if (!(options.getSite ?? contentGetSite)(siteId)) return rejected(trip, `Lugar desconocido: ${siteId}`);
 
   const append = schedule([...ids, siteId], trip.context, options);
   let best: ScheduleResult | null = append.ok ? append : null;
@@ -271,14 +239,14 @@ export function proposeAdd(trip: Trip, siteId: SiteId, options: PlannerOptions =
   return proposal(trip, trip.context, best ?? append);
 }
 
-export function proposeRemove(trip: Trip, siteId: SiteId, options: PlannerOptions = {}): PlannerProposal {
+export function proposeRemove(trip: Trip, siteId: SiteId, options: PlannerOptions = {}): ItineraryProposal {
   const ids = trip.stops.map((s) => s.siteId);
   if (!ids.includes(siteId)) return rejected(trip, "No está en tu viaje");
   return proposal(trip, trip.context, schedule(ids.filter((id) => id !== siteId), trip.context, options));
 }
 
 /** Move a stop to `toIndex` (clamped) and revalidate the whole remainder. */
-export function proposeMove(trip: Trip, siteId: SiteId, toIndex: number, options: PlannerOptions = {}): PlannerProposal {
+export function proposeMove(trip: Trip, siteId: SiteId, toIndex: number, options: PlannerOptions = {}): ItineraryProposal {
   const ids = trip.stops.map((s) => s.siteId);
   const from = ids.indexOf(siteId);
   if (from < 0) return rejected(trip, "No está en tu viaje");
@@ -289,7 +257,7 @@ export function proposeMove(trip: Trip, siteId: SiteId, toIndex: number, options
 }
 
 /** Replace the trip with a curated route; the route's transport mode becomes the trip's. */
-export function proposeFromRoute(trip: Trip, route: Route, options: PlannerOptions = {}): PlannerProposal {
+export function proposeFromRoute(trip: Trip, route: Route, options: PlannerOptions = {}): ItineraryProposal {
   const context: TripContext = { ...trip.context, transport: route.transport };
   const extra: string[] = [];
   if (route.transport !== trip.context.transport) {
@@ -300,7 +268,7 @@ export function proposeFromRoute(trip: Trip, route: Route, options: PlannerOptio
 }
 
 /** Re-run scheduling after the context (date, times, transport) changes. */
-export function reschedule(trip: Trip, context: TripContext, options: PlannerOptions = {}): PlannerProposal {
+export function reschedule(trip: Trip, context: TripContext, options: PlannerOptions = {}): ItineraryProposal {
   return proposal(trip, context, schedule(trip.stops.map((s) => s.siteId), context, options));
 }
 
@@ -308,24 +276,43 @@ export function reschedule(trip: Trip, context: TripContext, options: PlannerOpt
 export function applyProposal(trip: Trip, proposal: ItineraryProposal, nowIso: string): Trip | { error: "stale" | "invalid" } {
   if (proposal.baseRevision !== trip.revision) return { error: "stale" };
   if (!proposal.ok) return { error: "invalid" };
-  const extended = proposal as Partial<PlannerProposal>;
   return {
     ...trip,
     revision: trip.revision + 1,
     updatedAt: nowIso,
     stops: proposal.after,
-    context: extended.context ?? trip.context,
-    sourceRouteId: extended.routeId ?? trip.sourceRouteId,
+    context: proposal.context,
+    sourceRouteId: proposal.routeId ?? trip.sourceRouteId,
   };
 }
 
-export function formatClock(minutes: number): string {
-  const h = Math.floor(minutes / 60);
-  const m = Math.round(minutes % 60);
-  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+/** Neutral day for route estimates: no date (so no waiting for opening) and no time limit. */
+const ESTIMATE_CONTEXT: Omit<TripContext, "transport"> = {
+  area: "Toledo y Guadamur",
+  date: null,
+  startTime: "00:00",
+  endTime: "23:59",
+  profile: "general",
+  stepFreeRequired: false,
+};
+
+export interface RouteEstimate {
+  /** From the start of the first visit to the end of the last one, travel and buffers included. */
+  minutes: number;
+  /** Stops as scheduled on the neutral day (travel legs are estimates). */
+  stops: TripStop[];
 }
 
-export function parseClock(hhmm: string): number {
-  const [h, m] = hhmm.split(":").map(Number);
-  return h * 60 + m;
+/**
+ * Route duration from the same scheduler as the trip, so the route page, the tour, the assistant
+ * and Mi viaje agree. Opening hours are not applied (no date): the route is not on a day yet.
+ */
+export function estimateRoute(route: Route, options: PlannerOptions = {}): RouteEstimate {
+  const { stops } = schedule(route.stopIds, { ...ESTIMATE_CONTEXT, transport: route.transport }, options);
+  const minutes = stops.length > 0 ? stops[stops.length - 1].departure - stops[0].arrival : 0;
+  return { minutes, stops };
+}
+
+export function routeMinutes(route: Route, options: PlannerOptions = {}): number {
+  return estimateRoute(route, options).minutes;
 }

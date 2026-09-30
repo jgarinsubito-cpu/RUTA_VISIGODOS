@@ -2,7 +2,7 @@
 /** Per-stop controls on /mi-viaje: reorder, open the place page, remove. Each goes through a proposal. */
 import Link from "next/link";
 import type { TripStop } from "@/domain/types";
-import { getSite } from "@/data/catalog";
+import { getSite } from "@/data/content";
 import { IconChevronLeft, IconClose, IconInfo } from "@/components/shell/icons";
 import { requestMove, requestRemove } from "./proposals";
 
@@ -23,7 +23,7 @@ export function StopActions({
   const site = getSite(stop.siteId);
   const name = site?.name ?? stop.siteId;
   return (
-    <div className="grid grid-cols-2 gap-0.5" role="group" aria-label={`Acciones para ${name}`}>
+    <div className="flex items-center gap-0.5" role="group" aria-label={`Acciones para ${name}`}>
       <button
         type="button"
         className={btn}

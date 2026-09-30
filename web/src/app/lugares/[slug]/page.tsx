@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getSiteBySlug, SITES } from "@/data/catalog";
+import { getSiteBySlug, SITES } from "@/data/content";
 import { IconChevronLeft } from "@/components/shell/icons";
 import { PlacePanel } from "@/components/place/PlacePanel";
 

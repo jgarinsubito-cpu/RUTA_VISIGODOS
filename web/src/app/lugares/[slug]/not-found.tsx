@@ -7,7 +7,7 @@ export default function PlaceNotFound() {
       <p className="text-sm text-ink-muted">Puede que el enlace sea antiguo o que el lugar ya no forme parte de la demo.</p>
       <Link
         href="/"
-        className="inline-flex min-h-11 items-center rounded-full bg-olive px-5 text-sm font-semibold text-on-olive hover:bg-olive-hover"
+        className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-on-primary hover:bg-primary-hover"
       >
         Volver a Explorar
       </Link>

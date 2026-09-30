@@ -6,15 +6,21 @@
  * Device-local persistence only. The UI must say "Guardado en este dispositivo", never "en la nube".
  */
 import { useSyncExternalStore } from "react";
-import type { ChatMessage, ItineraryProposal, SiteId, Trip, TripContext } from "@/domain/types";
-import { applyProposal, emptyTrip, formatClock } from "@/domain/planner";
+import { EMPTY_PREFERENCES, type ChatMessage, type ItineraryProposal, type RouteId, type SiteId, type TourProgress, type Trip, type TripContext, type VisitorPreferences } from "@/domain/types";
+import { needsStepFree } from "@/domain/recommend";
+import { applyProposal, emptyTrip } from "@/domain/planner";
+import { formatClock } from "@/domain/time";
+import {
+  boundConversations,
+  LEGACY_STORAGE_KEY,
+  migrateV1,
+  parseStored,
+  STORAGE_KEY,
+  type Conversation,
+  type PersistedState,
+} from "./persisted";
 
-export interface Conversation {
-  id: string;
-  title: string;
-  messages: ChatMessage[];
-  updatedAt: string;
-}
+export type { Conversation } from "./persisted";
 
 export interface AppState {
   context: TripContext;
@@ -30,9 +36,11 @@ export interface AppState {
   activeConversationId: string | null;
   /** Transient confirmation toast, e.g. "Añadido a tu viaje · 11:30" with undo. */
   notice: { id: string; text: string; undoable: boolean } | null;
+  /** Guided tour in progress, if any (resumable). */
+  tour: TourProgress | null;
+  /** Interests, pace, group and access needs (this device; synced to an account if signed in). */
+  preferences: VisitorPreferences;
 }
-
-const STORAGE_KEY = "ruta-visigoda:v1";
 
 export const DEFAULT_CONTEXT: TripContext = {
   area: "Toledo y Guadamur",
@@ -55,6 +63,8 @@ function initialState(): AppState {
     conversations: [],
     activeConversationId: null,
     notice: null,
+    tour: null,
+    preferences: EMPTY_PREFERENCES,
   };
 }
 
@@ -75,16 +85,6 @@ export function sameContext(a: TripContext, b: TripContext): boolean {
   );
 }
 
-function readStored(raw: string | null): Partial<AppState> | null {
-  if (!raw) return null;
-  try {
-    const parsed = JSON.parse(raw) as Partial<AppState>;
-    return parsed && typeof parsed === "object" ? parsed : null;
-  } catch {
-    return null;
-  }
-}
-
 /**
  * Another tab wrote the shared device-local state: adopt it so this tab never writes an older trip
  * back. Transient UI (pending proposal, toast, selection) stays local; a pending proposal built on
@@ -92,39 +92,70 @@ function readStored(raw: string | null): Partial<AppState> | null {
  */
 function onStorage(e: StorageEvent) {
   if (e.key !== STORAGE_KEY) return;
-  const parsed = readStored(e.newValue);
+  const parsed = parseStored(e.newValue);
   const { pendingProposal, notice, selectedSiteId } = state;
   state = parsed ? { ...state, ...parsed, pendingProposal, notice, selectedSiteId } : { ...initialState(), pendingProposal, notice, selectedSiteId };
+  lastPersisted = persistedPart(state);
   listeners.forEach((l) => l());
+}
+
+/** Read this device's saved state; a v1 save is migrated once and rewritten as v2. */
+function readDevice(): Partial<PersistedState> | null {
+  const current = parseStored(window.localStorage.getItem(STORAGE_KEY));
+  if (current) return current;
+  const legacy = migrateV1(window.localStorage.getItem(LEGACY_STORAGE_KEY));
+  if (legacy) {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(legacy));
+    window.localStorage.removeItem(LEGACY_STORAGE_KEY);
+  }
+  return legacy;
 }
 
 function hydrate() {
   if (hydrated || typeof window === "undefined") return;
   hydrated = true;
   try {
-    const parsed = readStored(window.localStorage.getItem(STORAGE_KEY));
-    if (parsed) state = { ...state, ...parsed, pendingProposal: null, notice: null, selectedSiteId: null };
+    const stored = readDevice();
+    if (stored) state = { ...state, ...stored, pendingProposal: null, notice: null, selectedSiteId: null };
   } catch {
     // Storage unavailable or corrupt: continue with in-memory state.
   }
+  lastPersisted = persistedPart(state);
   window.addEventListener("storage", onStorage);
 }
 
+function persistedPart(s: AppState): PersistedState {
+  const { context, trip, previousTrip, savedSiteIds, conversations, activeConversationId, tour, preferences } = s;
+  return { context, trip, previousTrip, savedSiteIds, conversations, activeConversationId, tour, preferences };
+}
+
+/** Last state written, so selection and toasts (which are not stored) do not rewrite storage. */
+let lastPersisted: PersistedState | null = null;
+/** The visitor is told once per session when this device cannot save. */
+let saveFailureShown = false;
+
 function persist() {
+  const next = persistedPart(state);
+  const prev = lastPersisted;
+  if (prev && (Object.keys(next) as (keyof PersistedState)[]).every((k) => next[k] === prev[k])) return;
   try {
-    const { context, trip, previousTrip, savedSiteIds, conversations, activeConversationId } = state;
-    window.localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ context, trip, previousTrip, savedSiteIds, conversations, activeConversationId }),
-    );
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    lastPersisted = next;
   } catch {
-    // Ignore quota/private-mode failures; state stays in memory.
+    // Quota or private mode: the state stays in memory; say so once rather than fail silently.
+    if (!saveFailureShown) {
+      saveFailureShown = true;
+      state = {
+        ...state,
+        notice: { id: newId("n"), text: "No se pudo guardar en este dispositivo: los cambios se perderán al cerrar.", undoable: false },
+      };
+    }
   }
 }
 
 function setState(updater: (s: AppState) => AppState) {
   state = updater(state);
-  persist();
+  if (typeof window !== "undefined") persist();
   listeners.forEach((l) => l());
 }
 
@@ -160,7 +191,7 @@ export function newId(prefix: string): string {
 
 /** Feedback specific to the change: "Añadido a tu viaje · 11:30", "Quitado de tu viaje"… */
 function acceptedText(proposal: ItineraryProposal, trip: Trip): string {
-  const routeChange = (proposal as { routeId?: string }).routeId !== undefined;
+  const routeChange = proposal.routeId !== undefined;
   if (!routeChange && proposal.added.length === 1 && proposal.removed.length === 0) {
     const stop = trip.stops.find((st) => st.siteId === proposal.added[0]);
     if (stop) return `Añadido a tu viaje · ${formatClock(stop.visitStart ?? stop.arrival)}`;
@@ -199,6 +230,17 @@ export const actions = {
         trip: { ...s.trip, context, revision: s.trip.revision + 1, updatedAt: new Date().toISOString() },
       };
     });
+  },
+
+  /**
+   * Record preferences. Step-free needs (wheelchair, reduced mobility, stroller) switch on the
+   * planner's step-free check through setContext, so a trip with stops is still only re-planned
+   * by a reviewed proposal.
+   */
+  setPreferences(preferences: VisitorPreferences) {
+    setState((s) => ({ ...s, preferences }));
+    const stepFree = needsStepFree(preferences.accessNeeds);
+    if (stepFree !== state.context.stepFreeRequired) actions.setContext({ stepFreeRequired: stepFree });
   },
 
   /** Show a planner proposal for review. Nothing changes in the trip until acceptProposal. */
@@ -260,7 +302,7 @@ export const actions = {
     const id = newId("chat");
     setState((s) => ({
       ...s,
-      conversations: [{ id, title: "Nuevo chat", messages: [], updatedAt: new Date().toISOString() }, ...s.conversations],
+      conversations: boundConversations([{ id, title: "Nuevo chat", messages: [], updatedAt: new Date().toISOString() }, ...s.conversations]),
       activeConversationId: id,
     }));
     return id;
@@ -273,17 +315,56 @@ export const actions = {
   appendMessage(conversationId: string, message: ChatMessage) {
     setState((s) => ({
       ...s,
-      conversations: s.conversations.map((c) =>
-        c.id === conversationId
-          ? {
-              ...c,
-              title: c.messages.length === 0 && message.role === "user" ? message.text.slice(0, 48) : c.title,
-              messages: [...c.messages, message],
-              updatedAt: message.createdAt,
-            }
-          : c,
+      conversations: boundConversations(
+        s.conversations.map((c) =>
+          c.id === conversationId
+            ? {
+                ...c,
+                title: c.messages.length === 0 && message.role === "user" ? message.text.slice(0, 48) : c.title,
+                messages: [...c.messages, message],
+                updatedAt: message.createdAt,
+              }
+            : c,
+        ),
       ),
     }));
+  },
+
+  /** Start (or restart) a guided tour at a stop. */
+  startTour(routeId: RouteId, mode: TourProgress["mode"], startIndex = 0) {
+    const now = new Date().toISOString();
+    setState((s) => ({
+      ...s,
+      tour: { routeId, mode, currentIndex: startIndex, visitedSiteIds: [], startedAt: now, updatedAt: now },
+    }));
+  },
+
+  /** Show another stop of the tour (manual next/previous). */
+  setTourStop(index: number) {
+    setState((s) =>
+      s.tour ? { ...s, tour: { ...s.tour, currentIndex: Math.max(0, index), updatedAt: new Date().toISOString() } } : s,
+    );
+  },
+
+  /** The visitor reached a stop (geofence or "Ya estoy aquí"): record it and show it. */
+  markTourArrival(siteId: SiteId, index: number) {
+    setState((s) =>
+      s.tour
+        ? {
+            ...s,
+            tour: {
+              ...s.tour,
+              currentIndex: index,
+              visitedSiteIds: s.tour.visitedSiteIds.includes(siteId) ? s.tour.visitedSiteIds : [...s.tour.visitedSiteIds, siteId],
+              updatedAt: new Date().toISOString(),
+            },
+          }
+        : s,
+    );
+  },
+
+  endTour() {
+    setState((s) => ({ ...s, tour: null }));
   },
 
   deleteConversation(id: string) {

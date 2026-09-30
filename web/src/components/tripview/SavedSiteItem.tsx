@@ -25,7 +25,7 @@ export function SavedSiteItem({ site, onRemoved }: { site: Site; onRemoved?: () 
             </p>
             <Link
               href="/mi-viaje"
-              className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-semibold text-olive underline-offset-2 hover:underline"
+              className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-semibold text-primary underline-offset-2 hover:underline"
             >
               Ver en Mi viaje
             </Link>
@@ -36,7 +36,7 @@ export function SavedSiteItem({ site, onRemoved }: { site: Site; onRemoved?: () 
             onClick={() => requestAdd(site.id)}
             disabled={pending}
             aria-label={`Añadir ${site.name} a mi viaje`}
-            className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full bg-olive px-4 text-sm font-semibold text-on-olive hover:bg-olive-hover disabled:opacity-60"
+            className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-on-primary hover:bg-primary-hover disabled:opacity-60"
           >
             <IconPlus width={18} height={18} />
             Añadir a mi viaje

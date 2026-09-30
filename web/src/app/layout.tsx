@@ -12,9 +12,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  // Browser chrome colour: metadata cannot read CSS variables, so these mirror --ivory (light/dark).
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f7f5ef" },
-    { media: "(prefers-color-scheme: dark)", color: "#161612" },
+    { media: "(prefers-color-scheme: light)", color: "#f3f2ee" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
   ],
   width: "device-width",
   initialScale: 1,
