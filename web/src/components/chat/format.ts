@@ -1,5 +1,5 @@
 /** Pure helpers for the assistant workspace (text parsing, context labels, request building). */
-import type { AssistantAnswer, AssistantRequest, ChatMessage, SiteId, TripContext, VisitorProfile, VisitorPreferences } from "@/domain/types";
+import type { AssistantAnswer, AssistantMode, AssistantRequest, ChatMessage, SiteId, TripContext, VisitorProfile, VisitorPreferences } from "@/domain/types";
 import { getPublishedClaim } from "@/data/content";
 import { formatShortDate } from "@/lib/hours";
 import { TRANSPORT_LABEL } from "@/lib/labels";
@@ -69,8 +69,6 @@ export const PROFILE_HINT: Record<VisitorProfile, string> = {
   expert: "Más detalle, matices y fuentes.",
 };
 
-export const AREAS: TripContext["area"][] = ["Toledo", "Guadamur", "Toledo y Guadamur"];
-
 export function whenLabel(ctx: TripContext): string {
   return ctx.date ? `${formatShortDate(ctx.date)} · ${ctx.startTime}–${ctx.endTime}` : "Sin fecha";
 }
@@ -109,6 +107,7 @@ export function buildRequest(
   selectedSiteId: SiteId | null,
   tripSiteIds: SiteId[],
   preferences?: VisitorPreferences,
+  mode: AssistantMode = "strict",
 ): AssistantRequest {
   const hasPreferences =
     preferences && (preferences.interests.length > 0 || preferences.pace || preferences.group || preferences.accessNeeds.length > 0);
@@ -123,6 +122,7 @@ export function buildRequest(
     selectedSiteId,
     tripSiteIds,
     ...(hasPreferences ? { preferences } : {}),
+    mode,
   };
 }
 

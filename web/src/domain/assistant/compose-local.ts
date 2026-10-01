@@ -281,11 +281,7 @@ function siteTravelPart({ req, sites }: ComposeInput, unsupported: string[]): Pa
     const parts = [`${siteRef(site)}: visita de unos ${durationLabel(site.visitMinutes)}.`, hoursSentence(site)];
     if (askedAccess || req.context.stepFreeRequired) parts.push(accessSentence(site));
     if (askedGetting) {
-      parts.push(
-        site.locality === "Guadamur"
-          ? "Está en Guadamur, fuera de Toledo: se llega en coche y el planificador calcula el trayecto cuando lo añades a tu viaje."
-          : "Está en Toledo; el planificador calcula el trayecto cuando lo añades a tu viaje.",
-      );
+      parts.push(SHOWCASE.gettingThere[site.locality]);
       if (site.coordinates.approximate) parts.push("La ubicación del mapa es aproximada.");
     }
     return parts.join(" ");
@@ -334,7 +330,7 @@ export function suggestedPromptsFor(input: ComposeInput, planned = false): strin
   const { req, sites } = input;
   const pool: string[] = [];
   if (planned) pool.push("¿Qué horarios tienen estas paradas?");
-  if (req.context.profile === "family") pool.push("Plan con niños por Toledo");
+  if (req.context.profile === "family") pool.push(SHOWCASE.familyPrompt);
   const primary = sites.all[0] ?? (planned ? undefined : SITES.find((s) => req.tripSiteIds.includes(s.id)));
   if (primary) pool.push(...(primary.suggestedPrompts ?? []));
   pool.push(...SHOWCASE.generalPrompts);

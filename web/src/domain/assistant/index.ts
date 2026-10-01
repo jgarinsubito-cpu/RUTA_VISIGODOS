@@ -36,11 +36,12 @@ export interface AnswerOptions {
 export async function answerQuestion(req: AssistantRequest, options: AnswerOptions = {}): Promise<AssistantAnswer> {
   const input = prepare(req);
   const local = validateAnswer(composeLocal(input));
-  // Nothing for the model to add when there is no evidence to ground the historical part of a
-  // heritage or mixed question: the local composer says honestly that it is not in the sources.
+  // Strict mode: nothing for the model to add when there is no evidence to ground the historical
+  // part of a heritage or mixed question; the local composer says honestly that it is not in the
+  // sources. Open mode lets the model answer from general knowledge, labelled as unverified.
   // Everything else (travel, greetings, open questions) goes to the model when one is configured.
   const needsEvidence = input.intent === "heritage" || input.intent === "mixed";
-  const grounded = !(needsEvidence && input.retrieval.claims.length === 0);
+  const grounded = req.mode === "open" || !(needsEvidence && input.retrieval.claims.length === 0);
   const answerWithModel = anthropicEnabled() ? answerWithAnthropic : deepseekEnabled() ? answerWithDeepSeek : null;
   if (!answerWithModel || !grounded) return local;
   if (options.allowModel && !options.allowModel()) return local;

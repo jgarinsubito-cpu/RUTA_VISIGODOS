@@ -8,7 +8,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import type { AssistantAnswer } from "@/domain/types";
 import type { ComposeInput } from "./compose-local";
-import { OutputSchema, SYSTEM_PROMPT, buildUserContent, finalizeModelAnswer } from "./model-io";
+import { OutputSchema, buildUserContent, finalizeModelAnswer, systemPrompt } from "./model-io";
 
 export { dataJson } from "./model-io";
 
@@ -42,7 +42,7 @@ export async function answerWithAnthropic(
     const response = await client().beta.messages.parse({
       model,
       max_tokens: 4000,
-      system: SYSTEM_PROMPT,
+      system: systemPrompt(input.req.mode),
       messages: buildMessages(input, local),
       output_config: { effort: "low", format: betaZodOutputFormat(OutputSchema) },
       ...(FALLBACK_MODELS.has(model)

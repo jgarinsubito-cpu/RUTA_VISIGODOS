@@ -9,7 +9,7 @@
 import { z } from "zod";
 import { getSite } from "@/data/content";
 import { schedule } from "@/domain/planner";
-import { ACCESS_NEEDS, TRIP_AREAS, type ChatMessage, type TourProgress, type Trip, type TripContext, type VisitorPreferences } from "@/domain/types";
+import { ACCESS_NEEDS, ASSISTANT_MODES, TRIP_AREAS, type AssistantMode, type ChatMessage, type TourProgress, type Trip, type TripContext, type VisitorPreferences } from "@/domain/types";
 
 export const STORAGE_KEY = "ruta-visigoda:v2";
 export const LEGACY_STORAGE_KEY = "ruta-visigoda:v1";
@@ -112,6 +112,7 @@ export interface PersistedState {
   activeConversationId: string | null;
   tour: TourProgress | null;
   preferences: VisitorPreferences;
+  assistantMode: AssistantMode;
 }
 
 function field<T>(schema: z.ZodType<T>, value: unknown): T | undefined {
@@ -145,6 +146,8 @@ function readParts(raw: Record<string, unknown>): Partial<PersistedState> {
   if (tour !== undefined) out.tour = tour;
   const preferences = field(PreferencesSchema, raw.preferences);
   if (preferences) out.preferences = preferences;
+  const assistantMode = field(z.enum(ASSISTANT_MODES), raw.assistantMode);
+  if (assistantMode) out.assistantMode = assistantMode;
   return out;
 }
 

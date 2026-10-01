@@ -44,6 +44,7 @@ export function useAssistant() {
         s.selectedSiteId,
         s.trip.stops.map((st) => st.siteId),
         s.preferences,
+        s.assistantMode,
       );
       const res = await fetch("/api/assistant", {
         method: "POST",

@@ -1,7 +1,11 @@
 "use client";
-/** Bottom composer: auto-growing textarea, Enter sends, Shift+Enter adds a line. */
+/**
+ * Bottom composer: auto-growing textarea, Enter sends, Shift+Enter adds a line. The switch below it
+ * picks the assistant mode: strict (published sources only) or open (adds labelled general knowledge).
+ */
 import { useEffect, useId, type FormEvent, type KeyboardEvent, type RefObject } from "react";
 import { IconSend } from "@/components/shell/icons";
+import { actions, useAppState } from "@/state/store";
 
 const MAX_LENGTH = 1000;
 const MAX_HEIGHT = 176;
@@ -21,6 +25,7 @@ export function Composer({
 }) {
   const id = useId();
   const canSend = value.trim().length > 0 && !sending;
+  const open = useAppState((s) => s.assistantMode) === "open";
 
   useEffect(() => {
     const el = inputRef.current;
@@ -70,7 +75,30 @@ export function Composer({
             <IconSend />
           </button>
         </div>
-        <p id={`${id}-hint`} className="mt-1.5 text-center text-xs leading-snug text-ink-muted">
+        <div className="mt-1 flex flex-wrap items-center justify-center gap-x-3 text-xs leading-snug text-ink-muted">
+          <button
+            type="button"
+            role="switch"
+            aria-checked={open}
+            aria-describedby={`${id}-mode`}
+            onClick={() => actions.setAssistantMode(open ? "strict" : "open")}
+            className="inline-flex min-h-11 items-center gap-2 rounded-full px-2 text-ink hover:bg-surface-muted"
+          >
+            <span
+              aria-hidden="true"
+              className={`relative h-5 w-9 shrink-0 rounded-full border transition-colors motion-reduce:transition-none ${open ? "border-primary bg-primary" : "border-stone bg-surface"}`}
+            >
+              <span
+                className={`absolute top-0.5 h-3.5 w-3.5 rounded-full transition-[left] motion-reduce:transition-none ${open ? "left-[1.125rem] bg-on-primary" : "left-0.5 bg-ink-muted"}`}
+              />
+            </span>
+            Modo abierto
+          </button>
+          <p id={`${id}-mode`}>
+            {open ? "Puede añadir contexto general, marcado como no verificado." : "Solo fuentes aprobadas de la ruta."}
+          </p>
+        </div>
+        <p id={`${id}-hint`} className="text-center text-xs leading-snug text-ink-muted">
           Puede equivocarse. Comprueba horarios antes de ir.
           <span className="sr-only"> Pulsa Intro para enviar y Mayúsculas más Intro para una nueva línea.</span>
         </p>

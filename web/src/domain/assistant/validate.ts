@@ -41,7 +41,10 @@ export function validateAnswer(answer: AssistantAnswer): AssistantAnswer {
   let text = stripUnknownTokens(answer.text);
   let abstained = answer.abstained;
   // A model answer to a mixed question carries a historical part too: it needs a citation as well.
-  const needsCitation = answer.intent === "heritage" || (answer.intent === "mixed" && answer.provider !== "local");
+  // An open-mode answer labelled as general knowledge is shown as unverified instead.
+  const needsCitation =
+    !answer.generalKnowledge &&
+    (answer.intent === "heritage" || (answer.intent === "mixed" && answer.provider !== "local"));
   if (needsCitation && citations.length === 0 && !abstained) {
     const example = SHOWCASE.assistantExamples.find((e) => getSite(e.siteId));
     text = example
@@ -71,6 +74,7 @@ export function validateAnswer(answer: AssistantAnswer): AssistantAnswer {
     suggestedPrompts,
     ...(suggestedAction ? { suggestedAction } : {}),
     abstained,
+    ...(answer.generalKnowledge && !abstained && answer.provider !== "local" ? { generalKnowledge: true } : {}),
   };
 }
 

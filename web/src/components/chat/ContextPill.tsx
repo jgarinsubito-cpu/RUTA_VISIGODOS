@@ -7,13 +7,14 @@
  * conversation keeps the screen.
  */
 import { useId, useRef, useState, type ReactNode, type RefObject } from "react";
-import type { TransportMode, TripContext, VisitorProfile } from "@/domain/types";
+import { SHOWCASE } from "@/data/content";
+import { TRIP_AREAS, type TransportMode, type TripContext, type VisitorProfile } from "@/domain/types";
 import { parseClock } from "@/domain/time";
 import { TRANSPORT_LABEL } from "@/lib/labels";
 import { actions } from "@/state/store";
 import { IconChevronDown, IconInfo } from "@/components/shell/icons";
 import { DayPicker, TimeSelect } from "@/components/shared/DateTimeFields";
-import { AREAS, contextLine, PROFILE_HINT, PROFILE_LABEL, whenLabel, whoLabel } from "./format";
+import { contextLine, PROFILE_HINT, PROFILE_LABEL, whenLabel, whoLabel } from "./format";
 import { usePopover } from "./usePopover";
 
 export type Segment = "where" | "when" | "who" | "transport";
@@ -136,11 +137,7 @@ function SegmentBody({ segment, context }: { segment: Segment; context: TripCont
           legend="Zona de la visita"
           name={name}
           value={context.area}
-          options={AREAS.map((a) => ({
-            value: a,
-            label: a,
-            hint: a === "Guadamur" ? "A unos 15 km de Toledo; se llega en coche." : undefined,
-          }))}
+          options={TRIP_AREAS.map((a) => ({ value: a, label: a, hint: SHOWCASE.areaHints[a] }))}
           onChange={(area) => actions.setContext({ area })}
         />
       );
@@ -183,7 +180,7 @@ function SegmentBody({ segment, context }: { segment: Segment; context: TripCont
           options={(Object.keys(TRANSPORT_LABEL) as TransportMode[]).map((t) => ({
             value: t,
             label: TRANSPORT_LABEL[t],
-            hint: t === "walk" ? "Casco histórico de Toledo, con cuestas." : "Necesario para ir a Guadamur.",
+            hint: SHOWCASE.transportHints[t],
           }))}
           onChange={(transport) => actions.setContext({ transport })}
         />

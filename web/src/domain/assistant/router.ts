@@ -2,6 +2,7 @@
  * Request router (PLAN.md, "Assistant behavior and reliability"): heritage, travel, mixed or unknown.
  * Keyword based, accent-insensitive. Entries ending in "*" match any word with that prefix.
  */
+import { SHOWCASE } from "@/data/content";
 import type { AssistantAnswer } from "@/domain/types";
 import { hasPhrase, normalize } from "./text";
 
@@ -17,14 +18,14 @@ export const TRAVEL_KEYWORDS = [
   "transporte", "autobus", "tren", "anadir", "anade", "incluir", "mi viaje", "horas", "cuando abre",
 ];
 
-export const HERITAGE_KEYWORDS = [
-  "historia*", "historic*", "visigod*", "rey", "reyes", "reina", "corona*", "concilio*", "tesoro*",
-  "que es", "que era", "que son", "que eran", "por que", "quien fue", "quienes fueron", "siglo*",
-  "recesvinto", "recaredo", "leovigildo", "wamba", "suintila", "rodrigo", "arqueolog*", "excavacion*",
-  "yacimiento*", "palacio*", "palatino", "capital", "corte", "reino", "votiva*", "hallazgo*",
-  "descubri*", "capitel*", "reaprovecha*", "mezquita", "califal", "epoca", "origen", "significado",
-  "leyenda*", "tradicion*", "cuentame", "hablame", "explicame", "piezas", "obispo*", "iglesia",
+/** Generic historical wording; the route's own names and objects come from SHOWCASE.heritageKeywords. */
+const GENERIC_HERITAGE_KEYWORDS = [
+  "historia*", "historic*", "que es", "que era", "que son", "que eran", "por que", "quien fue",
+  "quienes fueron", "siglo*", "arqueolog*", "excavacion*", "yacimiento*", "hallazgo*", "descubri*",
+  "epoca", "origen", "significado", "leyenda*", "tradicion*", "cuentame", "hablame", "explicame", "piezas",
 ];
+
+export const HERITAGE_KEYWORDS = [...GENERIC_HERITAGE_KEYWORDS, ...SHOWCASE.heritageKeywords];
 
 function matches(normalized: string, words: string[], keyword: string): boolean {
   if (keyword.endsWith("*")) {

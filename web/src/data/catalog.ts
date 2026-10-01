@@ -809,4 +809,17 @@ export const SHOWCASE: Showcase = {
     { siteId: "site-guarrazar", topic: "cómo apareció el Tesoro de Guarrazar" },
     { siteId: "site-san-roman", topic: "por qué Toledo fue sede de la corte visigoda" },
   ],
+  heritageKeywords: [
+    "visigod*", "rey", "reyes", "reina", "corona*", "concilio*", "tesoro*", "recesvinto", "recaredo",
+    "leovigildo", "wamba", "suintila", "rodrigo", "palacio*", "palatino", "capital", "corte", "reino",
+    "votiva*", "capitel*", "reaprovecha*", "mezquita", "califal", "obispo*", "iglesia",
+  ],
+  gettingThere: {
+    Toledo: "Está en Toledo; el planificador calcula el trayecto cuando lo añades a tu viaje.",
+    Guadamur:
+      "Está en Guadamur, fuera de Toledo: se llega en coche y el planificador calcula el trayecto cuando lo añades a tu viaje.",
+  },
+  areaHints: { Guadamur: "A unos 15 km de Toledo; se llega en coche." },
+  transportHints: { walk: "Casco histórico de Toledo, con cuestas.", car: "Necesario para ir a Guadamur." },
+  familyPrompt: "Plan con niños por Toledo",
 };

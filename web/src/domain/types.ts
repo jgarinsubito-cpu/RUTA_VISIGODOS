@@ -305,6 +305,18 @@ export interface Showcase {
   generalPrompts: string[];
   /** What the assistant offers when it cannot answer; each topic is shown with its place token. */
   assistantExamples: { siteId: SiteId; topic: string }[];
+  /**
+   * Content vocabulary that marks a historical question (people, objects, events of this route),
+   * lowercase and unaccented; a trailing "*" matches any word with that prefix.
+   */
+  heritageKeywords: string[];
+  /** How a place in each locality is reached, said when a visitor asks how to get there. */
+  gettingThere: Record<Locality, string>;
+  /** Hints under the visit-area and transport choices of the chat context. */
+  areaHints: Partial<Record<TripArea, string>>;
+  transportHints: Record<TransportMode, string>;
+  /** Follow-up offered to visitors travelling with children. */
+  familyPrompt: string;
 }
 
 /** Assistant contract shared by /api/assistant and the chat UI. */
@@ -336,6 +348,11 @@ export interface AssistantAnswer {
   suggestedAction?: { type: "add-stop"; siteId: SiteId } | { type: "use-route"; routeId: RouteId };
   /** True when evidence was insufficient; UI shows an honest "no consta" state. */
   abstained: boolean;
+  /**
+   * Open mode only: the text includes general knowledge from the model, not from published claims.
+   * The UI labels it as unverified.
+   */
+  generalKnowledge?: boolean;
   provider: "local" | "anthropic" | "deepseek";
 }
 
@@ -347,4 +364,14 @@ export interface AssistantRequest {
   tripSiteIds: SiteId[];
   /** Interests, pace, group and access needs to tailor recommendations (never evidence). */
   preferences?: VisitorPreferences;
+  /** "strict" (default): history only from published claims. "open": see ASSISTANT_MODES. */
+  mode?: AssistantMode;
 }
+
+/**
+ * strict: historical statements only from published claims; off-topic questions are declined.
+ * open: the model may add general knowledge, labelled as unverified, and answer related questions.
+ * Unverified hours and access are never stated as fact in either mode.
+ */
+export const ASSISTANT_MODES = ["strict", "open"] as const;
+export type AssistantMode = (typeof ASSISTANT_MODES)[number];

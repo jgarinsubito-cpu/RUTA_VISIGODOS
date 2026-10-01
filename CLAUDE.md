@@ -16,7 +16,7 @@ Product plan: docs/PLAN.md. Interaction reference: docs/research/MINDTRIP-FLOW-A
 ## Product rules that code must keep
 
 1. All content is a demo fixture: show it as such. `example` hours are "Horario de ejemplo (no verificado)"; `unknown` hours/access are "Sin verificar", never open/accessible.
-2. Only published claims reach visitors or the assistant. Every claim shows its evidence level (D Documentado, I Interpretación + attribution, H Hipótesis, T Tradición) and source.
+2. Only published claims reach visitors or the assistant. Every claim shows its evidence level (D Documentado, I Interpretación + attribution, H Hipótesis, T Tradición) and source. Exception: the chat's "Modo abierto" switch (strict by default) lets the model add general knowledge, which must be flagged `generalKnowledge` and shown as unverified; it never gets an evidence level or citation, and the hours/access rules stay strict.
 3. "Guardar" ≠ "Añadir a mi viaje". Trip changes go planner `propose*` → `actions.propose` → review dialog → `actions.acceptProposal`. Never mutate the trip directly; the assistant never applies changes itself.
 4. Non-Visigothic sites are labelled "Patrimonio no visigodo".
 5. Guest use is complete and the default. Trips, saved places and chats are device-local ("en este dispositivo"); never imply they sync. An optional account (Supabase, `/cuenta`) stores only visit preferences and, with explicit consent, accessibility answers (docs/ACCOUNTS.md).

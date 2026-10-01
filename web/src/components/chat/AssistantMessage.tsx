@@ -228,6 +228,13 @@ export function AssistantMessage({
         ) : (
           <AnswerText text={text} selectedSiteId={selectedSiteId} />
         )}
+        {answer?.generalKnowledge && !answer.abstained && (
+          <p className="inline-flex items-start gap-1.5 rounded-lg border border-dashed border-warn/50 bg-warn-soft px-3 py-2 text-xs text-ink">
+            <IconInfo width={16} height={16} className="mt-px shrink-0 text-warn" aria-hidden="true" />
+            Incluye contexto general del modo abierto, no verificado en las fuentes de la ruta. Solo lo citado abajo
+            procede de fichas aprobadas.
+          </p>
+        )}
 
         {sites.length > 0 && (
           <Carousel label="Lugares mencionados">

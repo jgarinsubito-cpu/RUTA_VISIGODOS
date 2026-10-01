@@ -6,7 +6,7 @@
  * Device-local persistence only. The UI must say "Guardado en este dispositivo", never "en la nube".
  */
 import { useSyncExternalStore } from "react";
-import { EMPTY_PREFERENCES, type ChatMessage, type ItineraryProposal, type RouteId, type SiteId, type TourProgress, type Trip, type TripContext, type VisitorPreferences } from "@/domain/types";
+import { EMPTY_PREFERENCES, type AssistantMode, type ChatMessage, type ItineraryProposal, type RouteId, type SiteId, type TourProgress, type Trip, type TripContext, type VisitorPreferences } from "@/domain/types";
 import { needsStepFree } from "@/domain/recommend";
 import { applyProposal, emptyTrip } from "@/domain/planner";
 import { formatClock } from "@/domain/time";
@@ -40,6 +40,8 @@ export interface AppState {
   tour: TourProgress | null;
   /** Interests, pace, group and access needs (this device; synced to an account if signed in). */
   preferences: VisitorPreferences;
+  /** How strictly the assistant keeps to published sources (this device). */
+  assistantMode: AssistantMode;
 }
 
 export const DEFAULT_CONTEXT: TripContext = {
@@ -65,6 +67,7 @@ function initialState(): AppState {
     notice: null,
     tour: null,
     preferences: EMPTY_PREFERENCES,
+    assistantMode: "strict",
   };
 }
 
@@ -125,8 +128,8 @@ function hydrate() {
 }
 
 function persistedPart(s: AppState): PersistedState {
-  const { context, trip, previousTrip, savedSiteIds, conversations, activeConversationId, tour, preferences } = s;
-  return { context, trip, previousTrip, savedSiteIds, conversations, activeConversationId, tour, preferences };
+  const { context, trip, previousTrip, savedSiteIds, conversations, activeConversationId, tour, preferences, assistantMode } = s;
+  return { context, trip, previousTrip, savedSiteIds, conversations, activeConversationId, tour, preferences, assistantMode };
 }
 
 /** Last state written, so selection and toasts (which are not stored) do not rewrite storage. */
@@ -237,6 +240,9 @@ export const actions = {
    * planner's step-free check through setContext, so a trip with stops is still only re-planned
    * by a reviewed proposal.
    */
+  setAssistantMode(assistantMode: AssistantMode) {
+    setState((s) => ({ ...s, assistantMode }));
+  },
   setPreferences(preferences: VisitorPreferences) {
     setState((s) => ({ ...s, preferences }));
     const stepFree = needsStepFree(preferences.accessNeeds);

@@ -4,7 +4,7 @@
  */
 import { z } from "zod";
 import { answerQuestion } from "@/domain/assistant";
-import { ACCESS_NEEDS, TRIP_AREAS, type AssistantRequest } from "@/domain/types";
+import { ACCESS_NEEDS, ASSISTANT_MODES, TRIP_AREAS, type AssistantRequest } from "@/domain/types";
 import { createTokenBucket } from "@/lib/rateLimit";
 
 export const runtime = "nodejs";
@@ -36,6 +36,7 @@ const RequestSchema = z.object({
       accessNeeds: z.array(z.enum(ACCESS_NEEDS)).max(ACCESS_NEEDS.length),
     })
     .optional(),
+  mode: z.enum(ASSISTANT_MODES).default("strict"),
 });
 
 function badRequest(error: string, issues?: unknown) {

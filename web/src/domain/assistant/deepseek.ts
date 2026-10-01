@@ -7,7 +7,7 @@
 import { z } from "zod";
 import type { AssistantAnswer } from "@/domain/types";
 import type { ComposeInput } from "./compose-local";
-import { OutputSchema, SYSTEM_PROMPT, buildUserContent, finalizeModelAnswer } from "./model-io";
+import { OutputSchema, buildUserContent, finalizeModelAnswer, systemPrompt } from "./model-io";
 
 export const DEEPSEEK_DEFAULT_MODEL = "deepseek-flash";
 const ENDPOINT = "https://api.deepseek.com/chat/completions";
@@ -16,7 +16,7 @@ const TIMEOUT_MS = 20_000;
 /** JSON mode needs the shape spelled out in the prompt: there is no schema parameter. */
 const JSON_FORMAT = `
 
-Formato de salida: responde SOLO con un objeto JSON con exactamente estas claves: "text" (string con la respuesta), "citedClaimIds" (array de strings), "suggestedPrompts" (array de strings) y "abstained" (boolean).`;
+Formato de salida: responde SOLO con un objeto JSON con exactamente estas claves: "text" (string con la respuesta), "citedClaimIds" (array de strings), "suggestedPrompts" (array de strings), "abstained" (boolean) y "generalKnowledge" (boolean).`;
 
 const CompletionSchema = z.object({
   choices: z
@@ -49,7 +49,7 @@ export async function answerWithDeepSeek(
         reasoning_effort: "low",
         max_tokens: 4000,
         messages: [
-          { role: "system", content: SYSTEM_PROMPT + JSON_FORMAT },
+          { role: "system", content: systemPrompt(input.req.mode) + JSON_FORMAT },
           { role: "user", content: buildUserContent(input, local) },
         ],
       }),
