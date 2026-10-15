@@ -9,6 +9,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useState, ViewTransition, type ReactNode } from "react";
 import { actions, getAppState, useAppState } from "@/state/store";
 import { accountActions, useAccount } from "@/state/account";
+import { localities } from "@/data/content";
 import { NoticeToast } from "@/components/shared/NoticeToast";
 import { CrownArch } from "@/components/shared/CrownArch";
 import { ProposalReview } from "@/components/trip/ProposalReview";
@@ -58,6 +59,11 @@ export function AppShell({ children }: { children: ReactNode }) {
     if (getAppState().selectedSiteId !== null) actions.selectSite(null);
   }, [pathname]);
 
+  // The content admin has its own frame (components/admin/AdminShell), without visitor navigation.
+  if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+    return <div className="min-h-dvh">{children}</div>;
+  }
+
   function startChat() {
     // The conversation is created on the first message, so empty chats never pile up.
     actions.openConversation(null);
@@ -86,7 +92,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             {!collapsed && (
               <span className="leading-tight">
                 <span className="block whitespace-nowrap font-display text-lg text-ink">Ruta Visigoda</span>
-                <span className="block whitespace-nowrap text-2xs text-ink-muted">Toledo · Guadamur</span>
+                <span className="block whitespace-nowrap text-2xs text-ink-muted">{localities().join(" · ")}</span>
               </span>
             )}
           </Link>

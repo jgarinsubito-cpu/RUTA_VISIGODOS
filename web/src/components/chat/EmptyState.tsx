@@ -1,9 +1,7 @@
 /** Centered welcome for a new conversation (Mindtrip "¿Adónde vamos hoy?" adapted). */
 import { IconSpark } from "@/components/shell/icons";
 import { CrownArch } from "@/components/shared/CrownArch";
-import { SHOWCASE } from "@/data/content";
-
-export const STARTER_PROMPTS = SHOWCASE.starterPrompts;
+import { showcase } from "@/data/content";
 
 export function EmptyState({
   onPrompt,
@@ -20,7 +18,7 @@ export function EmptyState({
       <div className="flex flex-col gap-3">
         <h1 className="font-display text-3xl leading-tight text-ink md:text-4xl">¿Qué quieres descubrir hoy?</h1>
         <p className="mx-auto max-w-lg text-base leading-relaxed text-ink-muted">
-          Pregúntame por la ruta o pídeme que organice tu visita a Toledo y Guadamur.
+          {showcase().assistantIntro}
         </p>
       </div>
       <button
@@ -34,7 +32,7 @@ export function EmptyState({
       <div className="w-full">
         <h2 className="sr-only">Preguntas sugeridas</h2>
         <ul className="flex flex-wrap justify-center gap-2">
-          {STARTER_PROMPTS.map((p) => (
+          {showcase().starterPrompts.map((p) => (
             <li key={p}>
               <button
                 type="button"

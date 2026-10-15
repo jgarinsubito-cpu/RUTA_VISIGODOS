@@ -286,9 +286,12 @@ export function applyProposal(trip: Trip, proposal: ItineraryProposal, nowIso: s
   };
 }
 
-/** Neutral day for route estimates: no date (so no waiting for opening) and no time limit. */
+/**
+ * Neutral day for route estimates: no date (so no waiting for opening) and no time limit. The
+ * planner never reads the area.
+ */
 const ESTIMATE_CONTEXT: Omit<TripContext, "transport"> = {
-  area: "Toledo y Guadamur",
+  area: "",
   date: null,
   startTime: "00:00",
   endTime: "23:59",

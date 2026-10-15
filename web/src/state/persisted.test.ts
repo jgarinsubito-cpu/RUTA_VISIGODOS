@@ -17,7 +17,7 @@ describe("parseStored", () => {
   it("keeps valid parts and drops only the corrupt ones", () => {
     const stops = schedule(["site-san-roman"], CONTEXT).stops;
     const raw = JSON.stringify({
-      context: { ...CONTEXT, area: "Marte" },
+      context: { ...CONTEXT, startTime: "25:99" },
       trip: { id: "trip-local", revision: 2, context: CONTEXT, stops, updatedAt: "x" },
       savedSiteIds: ["site-guarrazar", "site-borrado"],
       conversations: "not a list",
@@ -29,6 +29,12 @@ describe("parseStored", () => {
     expect(parsed.savedSiteIds).toEqual(["site-guarrazar"]);
     expect(parsed.conversations).toBeUndefined();
     expect(parsed.tour).toBeNull();
+  });
+
+  it("moves an area the catalog no longer has to the whole region", () => {
+    const parsed = parseStored(JSON.stringify({ context: { ...CONTEXT, area: "Marte" } }))!;
+    expect(parsed.context).toEqual({ ...CONTEXT, area: "Toledo y Guadamur" });
+    expect(parseStored(JSON.stringify({ context: { ...CONTEXT, area: "Guadamur" } }))!.context?.area).toBe("Guadamur");
   });
 
   it("returns null for unreadable storage", () => {

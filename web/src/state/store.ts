@@ -10,6 +10,7 @@ import { EMPTY_PREFERENCES, type AssistantMode, type ChatMessage, type Itinerary
 import { needsStepFree } from "@/domain/recommend";
 import { applyProposal, emptyTrip } from "@/domain/planner";
 import { formatClock } from "@/domain/time";
+import { showcase, validArea } from "@/data/content";
 import {
   boundConversations,
   LEGACY_STORAGE_KEY,
@@ -44,20 +45,24 @@ export interface AppState {
   assistantMode: AssistantMode;
 }
 
-export const DEFAULT_CONTEXT: TripContext = {
-  area: "Toledo y Guadamur",
-  date: null,
-  startTime: "10:00",
-  endTime: "18:00",
-  profile: "general",
-  transport: "walk",
-  stepFreeRequired: false,
-};
+/** A new visitor's trip settings: the whole region of the current catalog, today unset, 10:00–18:00. */
+export function defaultContext(): TripContext {
+  return {
+    area: showcase().regionName,
+    date: null,
+    startTime: "10:00",
+    endTime: "18:00",
+    profile: "general",
+    transport: "walk",
+    stepFreeRequired: false,
+  };
+}
 
 function initialState(): AppState {
+  const context = defaultContext();
   return {
-    context: DEFAULT_CONTEXT,
-    trip: emptyTrip(DEFAULT_CONTEXT),
+    context,
+    trip: emptyTrip(context),
     previousTrip: null,
     pendingProposal: null,
     savedSiteIds: [],
@@ -114,6 +119,14 @@ function readDevice(): Partial<PersistedState> | null {
   return legacy;
 }
 
+/** Keep the trip area among the current catalog's choices (towns can be renamed in the admin). */
+function withValidArea(s: AppState): AppState {
+  const area = validArea(s.context.area);
+  const tripArea = validArea(s.trip.context.area);
+  if (area === s.context.area && tripArea === s.trip.context.area) return s;
+  return { ...s, context: { ...s.context, area }, trip: { ...s.trip, context: { ...s.trip.context, area: tripArea } } };
+}
+
 function hydrate() {
   if (hydrated || typeof window === "undefined") return;
   hydrated = true;
@@ -123,6 +136,8 @@ function hydrate() {
   } catch {
     // Storage unavailable or corrupt: continue with in-memory state.
   }
+  // Runs on first render, after CatalogProvider installed the published catalog.
+  state = withValidArea(state);
   lastPersisted = persistedPart(state);
   window.addEventListener("storage", onStorage);
 }

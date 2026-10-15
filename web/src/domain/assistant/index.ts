@@ -6,24 +6,11 @@
 import type { AssistantAnswer, AssistantRequest } from "@/domain/types";
 import { answerWithAnthropic, anthropicEnabled } from "./anthropic";
 import { answerWithDeepSeek, deepseekEnabled } from "./deepseek";
-import { type ComposeInput, composeLocal } from "./compose-local";
-import { resolveSites, retrieveClaims } from "./retrieval";
-import { classifyIntent } from "./router";
+import { composeLocal } from "./compose-local";
+import { prepare } from "./local";
 import { validateAnswer } from "./validate";
 
-export function prepare(req: AssistantRequest): ComposeInput {
-  let intent = classifyIntent(req.message);
-  const sites = resolveSites(req.message, req.selectedSiteId);
-  // "Guarrazar" alone names a place without a question word: treat it as "tell me about it".
-  if (intent === "unknown" && sites.mentioned.length > 0) intent = "heritage";
-  const retrieval = retrieveClaims(req.message, sites);
-  return { req, intent, sites, retrieval };
-}
-
-/** Deterministic answer with no network access. */
-export function answerLocally(req: AssistantRequest): AssistantAnswer {
-  return validateAnswer(composeLocal(prepare(req)));
-}
+export { answerLocally, prepare } from "./local";
 
 export interface AnswerOptions {
   /**

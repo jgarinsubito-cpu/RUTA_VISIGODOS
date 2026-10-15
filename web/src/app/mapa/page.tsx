@@ -8,7 +8,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { Site } from "@/domain/types";
-import { SITES } from "@/data/content";
+import { sites } from "@/data/content";
 import { actions, useAppState } from "@/state/store";
 import { IconInfo } from "@/components/shell/icons";
 import { DemoBadge } from "@/components/shared/DemoBadge";
@@ -126,11 +126,12 @@ export default function MapaPage() {
     trip: (s) => trip.includes(s.id),
     saved: (s) => savedIds.includes(s.id),
   };
-  const counts = Object.fromEntries(FILTERS.map((f) => [f.id, SITES.filter(matches[f.id]).length])) as Record<Filter, number>;
+  const all = sites();
+  const counts = Object.fromEntries(FILTERS.map((f) => [f.id, all.filter(matches[f.id]).length])) as Record<Filter, number>;
   const results =
     filter === "trip"
-      ? trip.map((id) => SITES.find((s) => s.id === id)).filter((s): s is Site => s !== undefined)
-      : SITES.filter(matches[filter]);
+      ? trip.map((id) => all.find((s) => s.id === id)).filter((s): s is Site => s !== undefined)
+      : all.filter(matches[filter]);
   const resultIds = results.map((s) => s.id);
   // Numbered trip markers only when every stop is visible, so numbers match the trip order.
   const showTripOrder = filter === "all" || filter === "trip";
@@ -138,7 +139,7 @@ export default function MapaPage() {
 
   const select = (id: string) => actions.selectSite(id);
   const close = () => actions.selectSite(null);
-  const selected = selectedSiteId && SITES.some((s) => s.id === selectedSiteId) ? selectedSiteId : null;
+  const selected = selectedSiteId && all.some((s) => s.id === selectedSiteId) ? selectedSiteId : null;
 
   const resultCount = (
     <p aria-live="polite" className="text-xs text-ink-muted">

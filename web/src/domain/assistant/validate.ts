@@ -4,7 +4,7 @@
  * [[site-id]] tokens must name real sites, placeIds mirror the tokens, and a heritage answer with no
  * valid citation becomes an honest abstention.
  */
-import { SHOWCASE, getPublishedClaim, getRoute, getSite } from "@/data/content";
+import { getPublishedClaim, getRoute, getSite, showcase } from "@/data/content";
 import type { AssistantAnswer, Citation, Site, SiteId } from "@/domain/types";
 import { ABSTAIN_LEAD, citationFor } from "./compose-local";
 import { resolveSites } from "./retrieval";
@@ -46,7 +46,7 @@ export function validateAnswer(answer: AssistantAnswer): AssistantAnswer {
     !answer.generalKnowledge &&
     (answer.intent === "heritage" || (answer.intent === "mixed" && answer.provider !== "local"));
   if (needsCitation && citations.length === 0 && !abstained) {
-    const example = SHOWCASE.assistantExamples.find((e) => getSite(e.siteId));
+    const example = showcase().assistantExamples.find((e) => getSite(e.siteId));
     text = example
       ? `${ABSTAIN_LEAD}\n\nPuedes preguntarme por los lugares de la ruta, por ejemplo ${example.topic} ([[${example.siteId}]]).`
       : ABSTAIN_LEAD;

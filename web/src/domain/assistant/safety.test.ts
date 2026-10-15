@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { SITES, getSite } from "@/data/content";
+import { getSite, sites } from "@/data/content";
 import type { AssistantAnswer, AssistantRequest, Site } from "@/domain/types";
 import { POST } from "@/app/api/assistant/route";
 import { createTokenBucket } from "@/lib/rateLimit";
@@ -76,7 +76,7 @@ describe("post-generation checks", () => {
   });
 
   it("finds sites by token or name", () => {
-    const found = mentionedSites("Visita [[site-guarrazar]] y el Cristo de la Luz", SITES).map((s) => s.id);
+    const found = mentionedSites("Visita [[site-guarrazar]] y el Cristo de la Luz", sites()).map((s) => s.id);
     expect(found).toEqual(expect.arrayContaining(["site-guarrazar", "site-cristo-luz"]));
   });
 

@@ -3,13 +3,11 @@
  * UI components consume these types; business rules live in src/domain, never in components.
  */
 
-/** Localities the demo covers. The single source for types, request validation and filters. */
-export const LOCALITIES = ["Toledo", "Guadamur"] as const;
-export type Locality = (typeof LOCALITIES)[number];
+/** A town the route covers, one of the catalog's `Showcase.localities` (content, not code). */
+export type Locality = string;
 
-/** Areas a visitor can choose for a trip: one locality or the whole demo region. */
-export const TRIP_AREAS = [...LOCALITIES, "Toledo y Guadamur"] as const;
-export type TripArea = (typeof TRIP_AREAS)[number];
+/** Area a visitor can choose for a trip: one locality or the whole region (`Showcase.regionName`). */
+export type TripArea = string;
 
 export type SiteId = string;
 export type ClaimId = string;
@@ -92,7 +90,7 @@ export type PlaceTone = "ochre" | "moss" | "terracotta" | "umber" | "stone" | "s
 
 /** Licensed photograph of a place, with the attribution its licence requires. */
 export interface PlaceImage {
-  /** Path under /public. */
+  /** Path under /public (bundled demo) or a public URL in the content image store (admin uploads). */
   src: string;
   width: number;
   height: number;
@@ -296,9 +294,30 @@ export interface ItineraryProposal {
   routeId?: RouteId;
 }
 
-/** Curated entry points: which place leads the home page and which questions get people started. */
+/** Title and one-line introduction of a group of places on the home page. */
+export interface PlaceGroupCopy {
+  title: string;
+  intro: string;
+}
+
+/**
+ * Curated entry points and the route's own vocabulary: which towns and themes exist, which place
+ * and words lead the home page, and which questions get people started.
+ */
 export interface Showcase {
+  /** Towns the route covers, in display order. Every place names one of them. */
+  localities: Locality[];
+  /** The whole area, offered as the "everywhere" trip choice, e.g. "Toledo y Guadamur". */
+  regionName: string;
+  /** Place themes in chip order (lowercase, e.g. "arqueología"). Every theme a place uses is listed. */
+  themes: string[];
   heroSiteId: SiteId;
+  heroTitle: string;
+  heroIntro: string;
+  /** Home page groups: Visigothic places first, then other heritage near the route. */
+  placeGroups: { visigothic: PlaceGroupCopy; other: PlaceGroupCopy };
+  /** One line under the greeting of an empty assistant chat. */
+  assistantIntro: string;
   /** Starter questions on the home composer and the empty assistant. */
   starterPrompts: string[];
   /** Follow-up questions when nothing more specific applies. */
@@ -313,10 +332,22 @@ export interface Showcase {
   /** How a place in each locality is reached, said when a visitor asks how to get there. */
   gettingThere: Record<Locality, string>;
   /** Hints under the visit-area and transport choices of the chat context. */
-  areaHints: Partial<Record<TripArea, string>>;
+  areaHints: Record<TripArea, string>;
   transportHints: Record<TransportMode, string>;
   /** Follow-up offered to visitors travelling with children. */
   familyPrompt: string;
+}
+
+/**
+ * Everything visitors and the assistant see, as one published version: the bundled demo catalog or
+ * a snapshot published from the admin. Claims here are published ones only.
+ */
+export interface Catalog {
+  sites: Site[];
+  claims: ValidatedClaim[];
+  stories: Story[];
+  routes: Route[];
+  showcase: Showcase;
 }
 
 /** Assistant contract shared by /api/assistant and the chat UI. */

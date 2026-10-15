@@ -12,6 +12,8 @@ What each choice does:
 
 Guests get the same effect on their device. The sign-up invitation (after the 2nd question) asks for these preferences first, applies them at once, then offers an account. On a new account the interests, pace and group chosen as a guest are saved; access needs stay on the device until the visitor consents on `/cuenta`.
 
+Staff of the content admin sign in with these same accounts; their role lives in `public.staff` ([ADMIN.md](ADMIN.md)).
+
 ## How it works
 
 | Piece | Where |

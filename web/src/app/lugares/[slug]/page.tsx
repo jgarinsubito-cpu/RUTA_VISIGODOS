@@ -1,18 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getSiteBySlug, SITES } from "@/data/content";
+import { getSiteBySlug, sites } from "@/data/content";
+import { loadPublishedCatalog } from "@/data/published";
 import { IconChevronLeft } from "@/components/shell/icons";
 import { PlacePanel } from "@/components/place/PlacePanel";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export function generateStaticParams() {
-  return SITES.map((s) => ({ slug: s.slug }));
+export async function generateStaticParams() {
+  await loadPublishedCatalog();
+  return sites().map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
+  await loadPublishedCatalog();
   const site = getSiteBySlug(slug);
   if (!site) return { title: "Lugar no encontrado" };
   return { title: site.name, description: site.tagline };
@@ -20,6 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PlacePage({ params }: Props) {
   const { slug } = await params;
+  await loadPublishedCatalog();
   const site = getSiteBySlug(slug);
   if (!site) notFound();
 

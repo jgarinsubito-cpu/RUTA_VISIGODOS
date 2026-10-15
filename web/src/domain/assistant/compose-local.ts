@@ -3,7 +3,7 @@
  * key and is the fallback whenever the model fails. Heritage text is built only from retrieved
  * published claims, phrased by evidence level; operational text only from catalog records.
  */
-import { ROUTES, SHOWCASE, SITES, claimsForSite, getSite, storiesForSite } from "@/data/content";
+import { claimsForSite, getSite, routes, showcase, sites, storiesForSite } from "@/data/content";
 import { routeMinutes } from "@/domain/planner";
 import { needsStepFree, routeInterestScore } from "@/domain/recommend";
 import { ACCESS_NEED_LABEL } from "@/lib/labels";
@@ -148,7 +148,7 @@ function abstainPart({ sites }: ComposeInput, lead = ABSTAIN_LEAD): Part {
       };
     }
   }
-  const examples = SHOWCASE.assistantExamples.filter((e) => getSite(e.siteId));
+  const examples = showcase().assistantExamples.filter((e) => getSite(e.siteId));
   return {
     text:
       examples.length > 0
@@ -193,12 +193,12 @@ function chooseRoute({ req, sites }: ComposeInput): Route {
     // The visitor's interests tip the balance, never over what the message asks for.
     points += Math.min(routeInterestScore(route, getSite, req.preferences), 1);
     points += route.stopIds.filter((id) => mentioned.has(id)).length * 2;
-    if (req.context.area !== "Toledo y Guadamur" && stops.some((s) => s.locality === req.context.area)) points += 1;
+    if (req.context.area !== showcase().regionName && stops.some((s) => s.locality === req.context.area)) points += 1;
     return points;
   };
-  let best = ROUTES[0];
+  let best = routes()[0];
   let bestScore = -1;
-  for (const route of ROUTES) {
+  for (const route of routes()) {
     const points = score(route);
     if (points > bestScore) {
       best = route;
@@ -281,7 +281,8 @@ function siteTravelPart({ req, sites }: ComposeInput, unsupported: string[]): Pa
     const parts = [`${siteRef(site)}: visita de unos ${durationLabel(site.visitMinutes)}.`, hoursSentence(site)];
     if (askedAccess || req.context.stepFreeRequired) parts.push(accessSentence(site));
     if (askedGetting) {
-      parts.push(SHOWCASE.gettingThere[site.locality]);
+      const how = showcase().gettingThere[site.locality];
+      if (how) parts.push(how);
       if (site.coordinates.approximate) parts.push("La ubicación del mapa es aproximada.");
     }
     return parts.join(" ");
@@ -309,15 +310,15 @@ function travelPart(input: ComposeInput): Part {
   if (sites.all.length > 0) return siteTravelPart(input, unsupported);
   if (unsupported.length > 0) {
     return {
-      text: `No consta en los datos disponibles información sobre ${joinList(unsupported)}; consulta la web oficial de cada lugar.\n\nLo que sí puedo darte son duraciones de visita, horarios de ejemplo (no verificados) y las rutas de demostración${ROUTES[0] ? `, por ejemplo «${ROUTES[0].name}»` : ""}.`,
+      text: `No consta en los datos disponibles información sobre ${joinList(unsupported)}; consulta la web oficial de cada lugar.\n\nLo que sí puedo darte son duraciones de visita, horarios de ejemplo (no verificados) y las rutas de demostración${routes()[0] ? `, por ejemplo «${routes()[0].name}»` : ""}.`,
       citations: [],
       placeIds: [],
       abstained: true,
     };
   }
-  const routes = ROUTES.map((r) => `«${r.name}» (${r.transport === "car" ? "en coche" : "a pie"}, unos ${durationLabel(routeMinutes(r))})`);
+  const options = routes().map((r) => `«${r.name}» (${r.transport === "car" ? "en coche" : "a pie"}, unos ${durationLabel(routeMinutes(r))})`);
   return {
-    text: `Puedo ayudarte a organizar la visita con ${routes.length === 1 ? "una ruta" : `${routes.length} rutas`} de demostración: ${joinList(routes)}.\n\nTambién puedo decirte cuánto dura la visita a cada lugar y sus horarios de ejemplo (no verificados). Dime cuánto tiempo tienes o qué te interesa.`,
+    text: `Puedo ayudarte a organizar la visita con ${options.length === 1 ? "una ruta" : `${options.length} rutas`} de demostración: ${joinList(options)}.\n\nTambién puedo decirte cuánto dura la visita a cada lugar y sus horarios de ejemplo (no verificados). Dime cuánto tiempo tienes o qué te interesa.`,
     citations: [],
     placeIds: [],
     abstained: false,
@@ -327,13 +328,13 @@ function travelPart(input: ComposeInput): Part {
 /* ---------- Suggested prompts ---------- */
 
 export function suggestedPromptsFor(input: ComposeInput, planned = false): string[] {
-  const { req, sites } = input;
+  const { req, sites: resolved } = input;
   const pool: string[] = [];
   if (planned) pool.push("¿Qué horarios tienen estas paradas?");
-  if (req.context.profile === "family") pool.push(SHOWCASE.familyPrompt);
-  const primary = sites.all[0] ?? (planned ? undefined : SITES.find((s) => req.tripSiteIds.includes(s.id)));
+  if (req.context.profile === "family") pool.push(showcase().familyPrompt);
+  const primary = resolved.all[0] ?? (planned ? undefined : sites().find((s) => req.tripSiteIds.includes(s.id)));
   if (primary) pool.push(...(primary.suggestedPrompts ?? []));
-  pool.push(...SHOWCASE.generalPrompts);
+  pool.push(...showcase().generalPrompts);
   const asked = normalize(req.message);
   return unique(pool).filter((p) => normalize(p) !== asked).slice(0, 3);
 }

@@ -8,10 +8,11 @@
  *    from a public source, that source is noted but the hours are still unverified);
  *  - coordinates are approximate;
  *  - claims cite a placeholder source until Urbs Regia validation.
- * Replace this module with the staged-import repository once approved data exists. App code
- * reads it only through ./content (a test enforces this), so the swap touches one module.
+ * It is the fallback version (no content store configured, or nothing published yet) and the
+ * starting point an admin imports into the content store (docs/ADMIN.md). App code reads it only
+ * through ./content (a test enforces this).
  */
-import type { OpeningInfo, Route, Showcase, Site, SourceRef, Story, ValidatedClaim } from "@/domain/types";
+import type { Catalog, OpeningInfo, Route, Showcase, Site, SourceRef, Story, ValidatedClaim } from "@/domain/types";
 
 export const DEMO_SOURCE = { title: "Ficha de demostración — pendiente de validación (Urbs Regia)" };
 
@@ -289,6 +290,7 @@ export const SITES: Site[] = [
       { title: "Museo del Ejército: Prepara tu visita", url: "https://ejercito.defensa.gob.es/museo/visitas/prepara_visita/" },
       wikipedia("Alcázar de Toledo", "Alcázar_de_Toledo"),
     ],
+    aliases: ["alcazar", "museo del ejercito"],
     demo: true,
   },
   {
@@ -330,6 +332,7 @@ export const SITES: Site[] = [
       { title: "Catedral Primada de Toledo: horarios y tarifas", url: "https://www.catedralprimada.es/es/info/museos/horarios-y-tarifas" },
       wikipedia("Catedral de Toledo", "Catedral_de_Toledo"),
     ],
+    aliases: ["catedral", "catedral primada"],
     demo: true,
   },
   {
@@ -366,6 +369,7 @@ export const SITES: Site[] = [
       { title: "San Juan de los Reyes: el monumento", url: "https://www.sanjuandelosreyes.org/monumento/" },
       wikipedia("Monasterio de San Juan de los Reyes", "Monasterio_de_San_Juan_de_los_Reyes"),
     ],
+    aliases: ["monasterio de san juan"],
     demo: true,
   },
   {
@@ -402,6 +406,7 @@ export const SITES: Site[] = [
       { title: "Toledo Monumental: Santa María la Blanca", url: "https://toledomonumental.com/en/monument-santa-maria-la-blanca-synagogue/" },
       wikipedia("Santa María la Blanca (Toledo)", "Santa_María_la_Blanca_(Toledo)"),
     ],
+    aliases: ["sinagoga de santa maria"],
     demo: true,
   },
   {
@@ -443,6 +448,7 @@ export const SITES: Site[] = [
       { title: "Museo Sefardí: horario", url: "https://www.cultura.gob.es/msefardi/en/visita/horario.html" },
       wikipedia("Sinagoga del Tránsito", "Sinagoga_del_Tránsito"),
     ],
+    aliases: ["transito", "museo sefardi"],
     demo: true,
   },
   {
@@ -477,6 +483,7 @@ export const SITES: Site[] = [
     address: "Plaza del Conde, 4, 45002 Toledo",
     officialUrl: "https://toledomonumental.com/",
     sources: [{ title: "Toledo Monumental", url: "https://toledomonumental.com/" }, wikipedia("Iglesia de Santo Tomé (Toledo)", "Iglesia_de_Santo_Tomé_(Toledo)")],
+    aliases: ["santo tome", "senor de orgaz"],
     demo: true,
   },
   {
@@ -509,6 +516,7 @@ export const SITES: Site[] = [
     },
     category: "Mirador",
     address: "Carretera de Circunvalación, s/n, 45004 Toledo",
+    aliases: ["mirador"],
     demo: true,
   },
   {
@@ -540,6 +548,7 @@ export const SITES: Site[] = [
     },
     category: "Puente medieval",
     sources: [wikipedia("Puente de San Martín (Toledo)", "Puente_de_San_Martín_(Toledo)")],
+    aliases: ["puente san martin"],
     demo: true,
   },
   {
@@ -571,6 +580,7 @@ export const SITES: Site[] = [
     },
     category: "Puerta monumental",
     sources: [wikipedia("Puerta Nueva de Bisagra", "Puerta_Nueva_de_Bisagra")],
+    aliases: ["bisagra"],
     demo: true,
   },
   {
@@ -609,6 +619,7 @@ export const SITES: Site[] = [
     phone: "+34 925 22 14 02",
     officialUrl: "https://cultura.castillalamancha.es/museos/nuestros-museos/museo-de-santa-cruz",
     sources: [wikipedia("Museo de Santa Cruz", "Museo_de_Santa_Cruz")],
+    aliases: ["museo santa cruz", "hospital de santa cruz"],
     demo: true,
   },
 ];
@@ -792,7 +803,17 @@ export const ROUTES: Route[] = [
 ];
 
 export const SHOWCASE: Showcase = {
+  localities: ["Toledo", "Guadamur"],
+  regionName: "Toledo y Guadamur",
+  themes: ["capital", "tesoro", "arqueología", "paisaje", "museos", "arquitectura", "arte", "territorio"],
   heroSiteId: "site-san-roman",
+  heroTitle: "La ruta de la Toledo visigoda",
+  heroIntro: "Descubre la ciudad que fue sede regia del reino visigodo y el territorio del Tesoro de Guarrazar.",
+  placeGroups: {
+    visigothic: { title: "Huella visigoda", intro: "Los lugares donde se conserva o se estudia la Toledo visigoda." },
+    other: { title: "Para completar la visita", intro: "Patrimonio de otras épocas cerca de la ruta." },
+  },
+  assistantIntro: "Pregúntame por la ruta o pídeme que organice tu visita a Toledo y Guadamur.",
   starterPrompts: [
     "Medio día en Toledo a pie",
     "¿Qué es el Tesoro de Guarrazar?",
@@ -823,3 +844,5 @@ export const SHOWCASE: Showcase = {
   transportHints: { walk: "Casco histórico de Toledo, con cuestas.", car: "Necesario para ir a Guadamur." },
   familyPrompt: "Plan con niños por Toledo",
 };
+
+export const DEMO_CATALOG: Catalog = { sites: SITES, claims: CLAIMS, stories: STORIES, routes: ROUTES, showcase: SHOWCASE };

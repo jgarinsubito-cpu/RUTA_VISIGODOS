@@ -4,10 +4,10 @@
  * passes the result through `finalizeModelAnswer`, so switching provider never relaxes a rule.
  */
 import { z } from "zod";
-import { ROUTES, SITES, getPublishedClaim, getRoute, getSite } from "@/data/content";
+import { getPublishedClaim, getRoute, getSite, localities, routes, sites } from "@/data/content";
 import { routeMinutes } from "@/domain/planner";
 import { ACCESS_NEED_LABEL, GROUP_LABEL, PACE_LABEL } from "@/lib/labels";
-import { LOCALITIES, type AssistantAnswer, type AssistantMode, type Citation } from "@/domain/types";
+import type { AssistantAnswer, AssistantMode, Citation } from "@/domain/types";
 import { type ComposeInput, citationFor } from "./compose-local";
 import { accessSentence, durationLabel, hoursSentence } from "./operational";
 import { describesAction, mentionedSites, operationalWordingOk, validateAnswer } from "./validate";
@@ -24,9 +24,8 @@ export const OutputSchema = z.object({
 });
 export type ModelOutput = z.infer<typeof OutputSchema>;
 
-export const SYSTEM_PROMPT = `Eres el asistente de "Ruta Visigoda de Toledo", una guía cultural para visitantes de ${LOCALITIES.join(" y ")}.
-
-Reglas:
+/** Rules for every answer; systemPrompt opens with the current catalog's towns. */
+const RULES = `Reglas:
 - Responde siempre en español, con frases breves y claras (2-5 frases por párrafo, máximo 3 párrafos).
 - Para cualquier afirmación histórica usa EXCLUSIVAMENTE las fichas de <fichas_aprobadas>. No añadas fechas, nombres ni hechos que no estén en ellas, aunque los conozcas.
 - Respeta el nivel de evidencia de cada ficha: D = "Está documentado que…"; I = "Según <atribución>, …"; H = "Una hipótesis plantea que…"; T = "Según la tradición, …". Nunca presentes una I, H o T como hecho seguro.
@@ -60,7 +59,8 @@ Modo abierto (activado por el visitante). Estas reglas sustituyen a las anterior
 - No inventes datos prácticos (precios, horarios, teléfonos, reservas): remite a la web oficial. Las reglas sobre horarios y accesibilidad no cambian.`;
 
 export function systemPrompt(mode: AssistantMode = "strict"): string {
-  return mode === "open" ? SYSTEM_PROMPT.replace("\n- generalKnowledge: false.", "") + OPEN_MODE_RULES : SYSTEM_PROMPT;
+  const base = `Eres el asistente de "Ruta Visigoda de Toledo", una guía cultural para visitantes de ${localities().join(" y ")}.\n\n${RULES}`;
+  return mode === "open" ? base.replace("\n- generalKnowledge: false.", "") + OPEN_MODE_RULES : base;
 }
 
 /** JSON with <, > and & escaped, so visitor text can never open or close a data tag. */
@@ -80,7 +80,7 @@ function actionData(local: AssistantAnswer): string | null {
 }
 
 function buildData(input: ComposeInput, local: AssistantAnswer): string {
-  const { req, intent, sites, retrieval } = input;
+  const { req, intent, sites: resolved, retrieval } = input;
   const claims = retrieval.claims.map(({ claim }) => ({
     id: claim.id,
     lugar: claim.siteId,
@@ -90,7 +90,7 @@ function buildData(input: ComposeInput, local: AssistantAnswer): string {
     fuente: claim.source.page ? `${claim.source.title}, p. ${claim.source.page}` : claim.source.title,
   }));
   // The catalog is small: pass every site so plans and "related place" tokens stay resolvable.
-  const siteRecords = SITES.map((s) => ({
+  const siteRecords = sites().map((s) => ({
     id: s.id,
     nombre: s.name,
     localidad: s.locality,
@@ -101,9 +101,9 @@ function buildData(input: ComposeInput, local: AssistantAnswer): string {
     temas: s.themes,
     ubicacionAproximada: s.coordinates.approximate,
     enMiViaje: req.tripSiteIds.includes(s.id),
-    mencionado: sites.all.includes(s),
+    mencionado: resolved.all.includes(s),
   }));
-  const routes = ROUTES.map((r) => ({
+  const routeRecords = routes().map((r) => ({
     id: r.id,
     nombre: r.name,
     paradas: r.stopIds,
@@ -127,7 +127,7 @@ function buildData(input: ComposeInput, local: AssistantAnswer): string {
     `<contexto>${dataJson({ zona: c.area, fecha: c.date, desde: c.startTime, hasta: c.endTime, perfil: c.profile, transporte: c.transport, sinEscalones: c.stepFreeRequired })}</contexto>`,
     `<fichas_aprobadas>${dataJson(claims)}</fichas_aprobadas>`,
     `<lugares>${dataJson(siteRecords)}</lugares>`,
-    `<rutas>${dataJson(routes)}</rutas>`,
+    `<rutas>${dataJson(routeRecords)}</rutas>`,
     ...(preferences ? [`<preferencias>${preferences}</preferencias>`] : []),
     ...(action ? [`<accion_sugerida>${action}</accion_sugerida>`] : []),
   ].join("\n");
@@ -172,7 +172,7 @@ export function finalizeModelAnswer(
     .map(citationFor);
 
   // Operational facts come from the catalog: unverified hours or access must never read as live.
-  const mentioned = Array.from(new Set([...input.sites.all, ...mentionedSites(out.text, SITES)]));
+  const mentioned = Array.from(new Set([...input.sites.all, ...mentionedSites(out.text, sites())]));
   const { startTime, endTime } = input.req.context;
   if (!operationalWordingOk(out.text, mentioned, [startTime, endTime])) {
     console.warn(`[assistant] ${provider} answer discarded: states unverified hours or access as fact`);

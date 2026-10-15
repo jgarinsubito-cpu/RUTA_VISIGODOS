@@ -7,9 +7,7 @@ import { useRouter } from "next/navigation";
 import { useId, useState, type FormEvent } from "react";
 import { IconSend } from "@/components/shell/icons";
 import { markAskHandoff } from "@/components/chat/askHandoff";
-import { SHOWCASE } from "@/data/content";
-
-const SUGGESTIONS = SHOWCASE.starterPrompts.slice(0, 3);
+import { showcase } from "@/data/content";
 
 export function assistantHref(text: string): string {
   const q = text.trim();
@@ -21,6 +19,7 @@ export function AskComposer() {
   const [text, setText] = useState("");
   const inputId = useId();
   const headingId = useId();
+  const suggestions = showcase().starterPrompts.slice(0, 3);
 
   function ask(value: string) {
     const q = value.trim();
@@ -61,7 +60,7 @@ export function AskComposer() {
         </button>
       </form>
       <ul className="mt-3 flex flex-wrap gap-2" aria-label="Preguntas sugeridas">
-        {SUGGESTIONS.map((s) => (
+        {suggestions.map((s) => (
           <li key={s}>
             <button
               type="button"

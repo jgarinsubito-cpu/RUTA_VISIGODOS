@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Montserrat, Playfair_Display } from "next/font/google";
 import { AppShell } from "@/components/shell/AppShell";
+import { CatalogProvider } from "@/components/shell/CatalogProvider";
+import { currentCatalog } from "@/data/content";
+import { loadPublishedCatalog } from "@/data/published";
 import "./globals.css";
 
 const montserrat = Montserrat({ variable: "--font-montserrat", subsets: ["latin"] });
@@ -21,11 +24,15 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  // The published catalog (or the bundled demo) for this render, handed to the browser as data.
+  const { version } = await loadPublishedCatalog();
   return (
     <html lang="es" className={`${montserrat.variable} ${playfair.variable} h-full antialiased`}>
       <body className="min-h-full">
-        <AppShell>{children}</AppShell>
+        <CatalogProvider catalog={version === null ? null : currentCatalog()} version={version}>
+          <AppShell>{children}</AppShell>
+        </CatalogProvider>
       </body>
     </html>
   );

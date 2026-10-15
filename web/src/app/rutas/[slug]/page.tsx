@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
-import { getRouteBySlug, getSite, ROUTES } from "@/data/content";
+import { getRouteBySlug, getSite, routes } from "@/data/content";
+import { loadPublishedCatalog } from "@/data/published";
 import type { Site } from "@/domain/types";
 import { estimateRoute } from "@/domain/planner";
 import { formatDuration, TRANSPORT_LABEL, travelLegText } from "@/lib/labels";
@@ -14,12 +15,14 @@ import { RouteActions } from "@/components/explore/RouteActions";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export function generateStaticParams() {
-  return ROUTES.map((r) => ({ slug: r.slug }));
+export async function generateStaticParams() {
+  await loadPublishedCatalog();
+  return routes().map((r) => ({ slug: r.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
+  await loadPublishedCatalog();
   const route = getRouteBySlug(slug);
   if (!route) return { title: "Ruta no encontrada" };
   return { title: route.name, description: route.summary };
@@ -39,6 +42,7 @@ function Fact({ icon, label, children }: { icon: ReactNode; label: string; child
 
 export default async function RouteDetailPage({ params }: Props) {
   const { slug } = await params;
+  await loadPublishedCatalog();
   const route = getRouteBySlug(slug);
   if (!route) notFound();
 

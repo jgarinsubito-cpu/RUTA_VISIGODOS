@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import type { ChatMessage } from "@/domain/types";
-import { DEFAULT_CONTEXT } from "@/state/store";
+import { defaultContext } from "@/state/store";
 import { buildRequest, contextLine, isAnswer, mergePlaceNames, paragraphs, parseInline, plainText, sameContext } from "./format";
+
+const DEFAULT_CONTEXT = defaultContext();
 
 describe("parseInline", () => {
   it("splits text and [[site-id]] tokens in order", () => {

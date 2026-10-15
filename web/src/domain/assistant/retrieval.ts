@@ -1,23 +1,13 @@
 /**
- * Site resolution and claim retrieval. Retrieval reads ONLY PUBLISHED_CLAIMS: drafts, review and
+ * Site resolution and claim retrieval. Retrieval reads ONLY published claims: drafts, review and
  * superseded records never reach the assistant (PLAN.md, assistant step 2).
  */
-import { PUBLISHED_CLAIMS, SITES } from "@/data/content";
+import { perCatalog, publishedClaims, sites } from "@/data/content";
 import type { Site, SiteId, ValidatedClaim } from "@/domain/types";
 import { GENERIC_TERMS, STOPWORDS, hasPhrase, normalize, stem, tokens, unique } from "./text";
+import { siteNames } from "./vocabulary";
 
-/** Slug fragments too generic to identify a single site on their own. */
-const GENERIC_SLUG_WORDS = new Set([
-  "museo", "cultura", "visigoda", "concilios", "huerta", "guadamur", "de", "la", "del", "los",
-]);
-
-function aliasesFor(site: Site): string[] {
-  const fragments = site.slug
-    .split("-")
-    .filter((w) => w.length >= 5 && !GENERIC_SLUG_WORDS.has(w));
-  // Names and distinctive slug words are automatic; Site.aliases adds what visitors also say.
-  return unique([normalize(site.name), site.slug.replace(/-/g, " "), ...fragments, ...(site.aliases ?? []).map(normalize)]);
-}
+export { siteNames } from "./vocabulary";
 
 export interface ResolvedSites {
   /** Sites named in the message, in catalog order. */
@@ -32,14 +22,14 @@ export function resolveSites(message: string, selectedSiteId?: SiteId | null): R
   const n = normalize(message);
   const aliasWords = new Set<string>();
   const mentioned: Site[] = [];
-  for (const site of SITES) {
-    const hits = aliasesFor(site).filter((a) => hasPhrase(n, a));
+  for (const site of sites()) {
+    const hits = siteNames(site).filter((a) => hasPhrase(n, a));
     if (hits.length === 0) continue;
     mentioned.push(site);
     for (const h of hits) for (const w of h.split(" ")) aliasWords.add(w);
   }
   const all = [...mentioned];
-  const selected = selectedSiteId ? SITES.find((s) => s.id === selectedSiteId) : undefined;
+  const selected = selectedSiteId ? sites().find((s) => s.id === selectedSiteId) : undefined;
   if (selected && !all.includes(selected)) all.push(selected);
   return { mentioned, all, aliasWords };
 }
@@ -66,15 +56,18 @@ interface ClaimIndex {
   textStems: Set<string>;
 }
 
-const INDEX: ClaimIndex[] = PUBLISHED_CLAIMS.map((claim) => {
-  const keywordPhrases = claim.keywords.map(normalize);
-  return {
-    claim,
-    keywordPhrases,
-    keywordStems: new Set(keywordPhrases.flatMap((k) => k.split(" ")).map(stem)),
-    textStems: new Set(tokens(claim.text).filter((w) => !STOPWORDS.has(w)).map(stem)),
-  };
-});
+/** Search index of the published claims, rebuilt when a new catalog version is installed. */
+const claimIndex = perCatalog((): ClaimIndex[] =>
+  publishedClaims().map((claim) => {
+    const keywordPhrases = claim.keywords.map(normalize);
+    return {
+      claim,
+      keywordPhrases,
+      keywordStems: new Set(keywordPhrases.flatMap((k) => k.split(" ")).map(stem)),
+      textStems: new Set(tokens(claim.text).filter((w) => !STOPWORDS.has(w)).map(stem)),
+    };
+  }),
+);
 
 /** Stemmed content terms of a question, excluding scaffolding and site names. */
 export function topicalTerms(message: string, aliasWords: Set<string> = new Set()): string[] {
@@ -102,7 +95,7 @@ export function retrieveClaims(
   const mentionedIds = new Set(sites.mentioned.map((s) => s.id));
 
   const scored: ScoredClaim[] = [];
-  for (const entry of INDEX) {
+  for (const entry of claimIndex()) {
     let score = 0;
     const matched: string[] = [];
     for (const phrase of entry.keywordPhrases) {

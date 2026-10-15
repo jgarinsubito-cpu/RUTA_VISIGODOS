@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getRoute, getSite, SITES } from "@/data/content";
+import { getRoute, getSite, sites } from "@/data/content";
 import { answerLocally } from "./assistant";
 import { matchingInterests, needsStepFree, rankSites, routeInterestScore } from "./recommend";
 import { EMPTY_PREFERENCES, type AssistantRequest, type VisitorPreferences } from "./types";
@@ -8,10 +8,10 @@ const prefs = (over: Partial<VisitorPreferences>): VisitorPreferences => ({ ...E
 
 describe("recommendations", () => {
   it("puts places matching the visitor's interests first without hiding any", () => {
-    const ranked = rankSites(SITES, prefs({ interests: ["tesoro"] }));
-    expect(ranked).toHaveLength(SITES.length);
+    const ranked = rankSites(sites(), prefs({ interests: ["tesoro"] }));
+    expect(ranked).toHaveLength(sites().length);
     expect(ranked[0].id).toBe("site-guarrazar");
-    expect(rankSites(SITES, EMPTY_PREFERENCES).map((s) => s.id)).toEqual(SITES.map((s) => s.id));
+    expect(rankSites(sites(), EMPTY_PREFERENCES).map((s) => s.id)).toEqual(sites().map((s) => s.id));
   });
 
   it("scores routes by the interests of their stops", () => {

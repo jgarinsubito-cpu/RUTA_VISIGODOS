@@ -7,9 +7,9 @@
  * from the same stops and settings; nothing else about it changes.
  */
 import { z } from "zod";
-import { getSite } from "@/data/content";
+import { getSite, validArea } from "@/data/content";
 import { schedule } from "@/domain/planner";
-import { ACCESS_NEEDS, ASSISTANT_MODES, TRIP_AREAS, type AssistantMode, type ChatMessage, type TourProgress, type Trip, type TripContext, type VisitorPreferences } from "@/domain/types";
+import { ACCESS_NEEDS, ASSISTANT_MODES, type AssistantMode, type ChatMessage, type TourProgress, type Trip, type TripContext, type VisitorPreferences } from "@/domain/types";
 
 export const STORAGE_KEY = "ruta-visigoda:v2";
 export const LEGACY_STORAGE_KEY = "ruta-visigoda:v1";
@@ -23,7 +23,8 @@ const clock = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/);
 const weekday = z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5), z.literal(6), z.literal(7)]);
 
 export const TripContextSchema = z.object({
-  area: z.enum(TRIP_AREAS),
+  // Towns are content: an area the current catalog no longer has becomes the whole region.
+  area: z.string().trim().min(1).max(80).transform(validArea),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable(),
   startTime: clock,
   endTime: clock,

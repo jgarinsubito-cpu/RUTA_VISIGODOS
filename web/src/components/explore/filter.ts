@@ -1,12 +1,14 @@
 /** Pure filtering for the Explorar home: locality, theme chip and accent-insensitive search. */
-import { LOCALITIES, type Route, type Site } from "@/domain/types";
+import type { Route, Site } from "@/domain/types";
 
-export type LocalityFilter = "Todos" | Site["locality"];
+/** "Todos" or one of the catalog's localities. */
+export type LocalityFilter = string;
 
-export const LOCALITY_OPTIONS: LocalityFilter[] = ["Todos", ...LOCALITIES];
+export const ALL_LOCALITIES = "Todos";
 
-/** Curated chip order; only themes present in the catalog are shown. */
-export const THEME_ORDER = ["capital", "tesoro", "arqueología", "paisaje", "museos", "arquitectura", "arte", "territorio"];
+export function localityOptions(localities: readonly string[]): LocalityFilter[] {
+  return [ALL_LOCALITIES, ...localities];
+}
 
 export interface ExploreFilters {
   query: string;
@@ -14,7 +16,7 @@ export interface ExploreFilters {
   theme: string | null;
 }
 
-export const EMPTY_FILTERS: ExploreFilters = { query: "", locality: "Todos", theme: null };
+export const EMPTY_FILTERS: ExploreFilters = { query: "", locality: ALL_LOCALITIES, theme: null };
 
 /** Lowercase, strip diacritics and collapse whitespace: "Arqueología" -> "arqueologia". */
 export function fold(input: string): string {
@@ -34,7 +36,7 @@ function textMatches(haystack: string[], query: string): boolean {
 }
 
 export function siteMatches(site: Site, f: ExploreFilters): boolean {
-  if (f.locality !== "Todos" && site.locality !== f.locality) return false;
+  if (f.locality !== ALL_LOCALITIES && site.locality !== f.locality) return false;
   if (f.theme && !site.themes.some((t) => fold(t) === fold(f.theme!))) return false;
   return textMatches([site.name, site.tagline, site.locality, ...site.themes], f.query);
 }
@@ -50,22 +52,22 @@ export function filterSites(sites: readonly Site[], f: ExploreFilters): Site[] {
 export function filterRoutes(routes: readonly Route[], sites: readonly Site[], f: ExploreFilters): Route[] {
   return routes.filter((route) => {
     const stops = route.stopIds.map((id) => sites.find((s) => s.id === id)).filter((s) => s !== undefined);
-    if (f.locality !== "Todos" && !stops.some((s) => s.locality === f.locality)) return false;
+    if (f.locality !== ALL_LOCALITIES && !stops.some((s) => s.locality === f.locality)) return false;
     if (f.theme && !stops.some((s) => s.themes.some((t) => fold(t) === fold(f.theme!)))) return false;
     if (!f.query.trim()) return true;
     return (
       textMatches([route.name, route.theme, route.summary], f.query) ||
-      stops.some((s) => siteMatches(s, { ...f, locality: "Todos", theme: null }))
+      stops.some((s) => siteMatches(s, { ...f, locality: ALL_LOCALITIES, theme: null }))
     );
   });
 }
 
-/** Curated themes that at least one catalog site actually has, in chip order. */
-export function availableThemes(sites: readonly Site[]): string[] {
+/** The catalog's themes (Showcase.themes, in chip order) that at least one place has. */
+export function availableThemes(sites: readonly Site[], themes: readonly string[]): string[] {
   const present = new Set(sites.flatMap((s) => s.themes));
-  return THEME_ORDER.filter((t) => present.has(t));
+  return themes.filter((t) => present.has(t));
 }
 
 export function isFiltered(f: ExploreFilters): boolean {
-  return f.query.trim() !== "" || f.locality !== "Todos" || f.theme !== null;
+  return f.query.trim() !== "" || f.locality !== ALL_LOCALITIES || f.theme !== null;
 }

@@ -7,28 +7,31 @@
 import Image from "next/image";
 import { useId } from "react";
 import { ACCESS_NEEDS, type AccessNeed, type Site, type TravelGroup, type TravelPace, type VisitorPreferences } from "@/domain/types";
-import { SITES } from "@/data/content";
+import { perCatalog, showcase, sites } from "@/data/content";
 import { ACCESS_NEED_LABEL, GROUP_LABEL, PACE_LABEL, themeLabel } from "@/lib/labels";
 import { availableThemes } from "@/components/explore/filter";
 import { IconCheck } from "@/components/shell/icons";
 
-export const INTEREST_OPTIONS = availableThemes(SITES);
+/** Themes a visitor can pick: the catalog's themes that some place has. */
+export function interestOptions(): string[] {
+  return availableThemes(sites(), showcase().themes);
+}
 
 /**
  * A photographed place for each theme, Visigothic places first, never the same photo twice
  * (unless a theme has no other photographed place).
  */
-const COVERS: Map<string, Site | undefined> = (() => {
+const covers = perCatalog((catalog) => {
   const used = new Set<string>();
-  const covers = new Map<string, Site | undefined>();
-  for (const theme of INTEREST_OPTIONS) {
-    const withTheme = SITES.filter((s) => s.themes.includes(theme) && s.image).sort((a, b) => Number(b.visigothic) - Number(a.visigothic));
+  const out = new Map<string, Site | undefined>();
+  for (const theme of availableThemes(catalog.sites, catalog.showcase.themes)) {
+    const withTheme = catalog.sites.filter((s) => s.themes.includes(theme) && s.image).sort((a, b) => Number(b.visigothic) - Number(a.visigothic));
     const pick = withTheme.find((s) => !used.has(s.id)) ?? withTheme[0];
     if (pick) used.add(pick.id);
-    covers.set(theme, pick);
+    out.set(theme, pick);
   }
-  return covers;
-})();
+  return out;
+});
 
 function toggle<T>(list: readonly T[], value: T): T[] {
   return list.includes(value) ? list.filter((v) => v !== value) : [...list, value];
@@ -143,9 +146,9 @@ export function InterestTiles({
       )}
       <div className="@container">
       <div className="grid grid-cols-2 gap-2 @md:grid-cols-3 @2xl:grid-cols-4">
-        {INTEREST_OPTIONS.map((theme) => {
+        {interestOptions().map((theme) => {
           const on = selected.includes(theme);
-          const cover = COVERS.get(theme);
+          const cover = covers().get(theme);
           return (
             <label
               key={theme}

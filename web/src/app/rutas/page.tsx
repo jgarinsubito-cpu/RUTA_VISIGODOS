@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ROUTES } from "@/data/content";
+import { routes } from "@/data/content";
+import { loadPublishedCatalog } from "@/data/published";
 import { RouteCard } from "@/components/shared/RouteCard";
 import { DemoBadge } from "@/components/shared/DemoBadge";
 
@@ -9,7 +10,8 @@ export const metadata: Metadata = {
   description: "Rutas temáticas por la Toledo visigoda y Guadamur, listas para adaptar a tu día.",
 };
 
-export default function RoutesPage() {
+export default async function RoutesPage() {
+  await loadPublishedCatalog();
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pb-12 pt-6 md:px-8 md:pt-10">
       <header className="flex flex-col gap-3">
@@ -22,7 +24,7 @@ export default function RoutesPage() {
         <DemoBadge className="self-start" />
       </header>
       <ul className="grid gap-4 sm:grid-cols-2">
-        {ROUTES.map((r) => (
+        {routes().map((r) => (
           <li key={r.id} className="flex">
             <RouteCard route={r} className="w-full" />
           </li>

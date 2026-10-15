@@ -5,7 +5,7 @@
  */
 import Link from "next/link";
 import { useId, useMemo, useRef, useState, type FormEvent } from "react";
-import { ROUTES, SHOWCASE, SITES, getSite } from "@/data/content";
+import { getSite, localities, routes as allRoutes, showcase, sites as allSites } from "@/data/content";
 import { useAppState } from "@/state/store";
 import { rankSites, routeInterestScore } from "@/domain/recommend";
 import { themeLabel } from "@/lib/labels";
@@ -23,13 +23,10 @@ import {
   filterRoutes,
   filterSites,
   isFiltered,
-  LOCALITY_OPTIONS,
+  localityOptions,
   type ExploreFilters,
   type LocalityFilter,
 } from "./filter";
-
-const HERO_SITE = getSite(SHOWCASE.heroSiteId) ?? SITES[0];
-const THEMES = availableThemes(SITES);
 
 function capitalize(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -41,7 +38,7 @@ function LocalitySelector({ value, onChange }: { value: LocalityFilter; onChange
     <fieldset className="flex min-w-0 items-center">
       <legend className="sr-only">Zona</legend>
       <div className="flex rounded-full bg-surface-muted p-1">
-        {LOCALITY_OPTIONS.map((opt) => (
+        {localityOptions(localities()).map((opt) => (
           <label
             key={opt}
             className="relative flex min-h-11 cursor-pointer items-center rounded-full px-4 text-sm text-ink-muted transition-colors duration-150 hover:text-ink has-[:checked]:bg-surface has-[:checked]:font-semibold has-[:checked]:text-ink has-[:checked]:shadow-[0_1px_3px_var(--shadow)] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ink"
@@ -91,11 +88,14 @@ export function ExploreHome() {
   const stopCount = useAppState((s) => s.trip.stops.length);
 
   const preferences = useAppState((s) => s.preferences);
+  const copy = showcase();
+  const heroSite = getSite(copy.heroSiteId) ?? allSites()[0];
+  const themes = availableThemes(allSites(), copy.themes);
   // Interests reorder (never hide): matching places and routes come first.
-  const sites = useMemo(() => rankSites(filterSites(SITES, filters), preferences), [filters, preferences]);
+  const sites = useMemo(() => rankSites(filterSites(allSites(), filters), preferences), [filters, preferences]);
   const routes = useMemo(
     () =>
-      filterRoutes(ROUTES, SITES, filters)
+      filterRoutes(allRoutes(), allSites(), filters)
         .map((r, i) => ({ r, i, score: routeInterestScore(r, getSite, preferences) }))
         .sort((a, b) => b.score - a.score || a.i - b.i)
         .map((x) => x.r),
@@ -170,14 +170,13 @@ export function ExploreHome() {
       <section aria-labelledby="explore-hero" className="grid items-center gap-10 md:grid-cols-[1.25fr_1fr] md:gap-16">
         <div className="flex flex-col gap-5">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-ink-muted">
-            Toledo · Guadamur · <DemoBadge />
+            {localities().join(" · ")} · <DemoBadge />
           </p>
           <h1 id="explore-hero" className="font-display text-display text-ink md:text-display-lg">
-            La ruta de la Toledo visigoda
+            {copy.heroTitle}
           </h1>
           <p className="max-w-xl text-lead leading-relaxed text-ink-muted">
-            Descubre la ciudad que fue sede regia del reino visigodo y el territorio del Tesoro de Guarrazar. Explora a
-            tu ritmo, crea un viaje que encaje en tu día o pregunta al asistente.
+            {copy.heroIntro} Explora a tu ritmo, crea un viaje que encaje en tu día o pregunta al asistente.
           </p>
           <div className="flex flex-col gap-2 pt-1 sm:flex-row">
             <Link
@@ -204,10 +203,10 @@ export function ExploreHome() {
           )}
         </div>
         <figure className="w-full">
-          <SiteImage site={HERO_SITE} aspect="aspect-[4/5]" rounded="rounded-3xl" priority sizes="(min-width: 768px) 420px, 100vw" />
-          {HERO_SITE.image && (
+          <SiteImage site={heroSite} aspect="aspect-[4/5]" rounded="rounded-3xl" priority sizes="(min-width: 768px) 420px, 100vw" />
+          {heroSite.image && (
             <figcaption className="mt-3 text-xs text-ink-muted">
-              {HERO_SITE.name} · Foto: {HERO_SITE.image.author}, {HERO_SITE.image.license}
+              {heroSite.name} · Foto: {heroSite.image.author}, {heroSite.image.license}
             </figcaption>
           )}
         </figure>
@@ -221,7 +220,7 @@ export function ExploreHome() {
           Temas
         </h2>
         <ul className="flex flex-wrap gap-2">
-          {[null, ...THEMES].map((theme) => {
+          {[null, ...themes].map((theme) => {
             const active = filters.theme === theme;
             return (
               <li key={theme ?? "all"}>
@@ -294,7 +293,7 @@ export function ExploreHome() {
                 Lugares
               </h2>
               <span className="flex items-center gap-3 text-sm text-ink-muted">
-                {filtered ? `${sites.length} de ${SITES.length}` : `${SITES.length} lugares`}
+                {filtered ? `${sites.length} de ${allSites().length}` : `${allSites().length} lugares`}
                 {filtered && (
                   <button
                     type="button"
@@ -326,20 +325,20 @@ export function ExploreHome() {
             {sites.length > 0 ? (
               <div className="flex flex-col gap-10">
                 <PlaceGroup
-                  title="Huella visigoda"
-                  intro="Los lugares donde se conserva o se estudia la Toledo visigoda."
+                  title={copy.placeGroups.visigothic.title}
+                  intro={copy.placeGroups.visigothic.intro}
                   sites={sites.filter((s) => s.visigothic)}
                 />
                 <PlaceGroup
-                  title="Para completar la visita"
-                  intro="Patrimonio de otras épocas cerca de la ruta. Cada ficha lo indica como patrimonio no visigodo."
+                  title={copy.placeGroups.other.title}
+                  intro={`${copy.placeGroups.other.intro} Cada ficha lo indica como patrimonio no visigodo.`}
                   sites={sites.filter((s) => !s.visigothic)}
                 />
               </div>
             ) : (
               <p className="text-sm text-ink-muted">Ningún lugar coincide con estos filtros.</p>
             )}
-            <p className="text-xs text-ink-muted">Fotos: Wikimedia Commons (créditos en cada ficha).</p>
+            <p className="text-xs text-ink-muted">Autoría y licencia de cada foto en su ficha.</p>
           </section>
         </>
       )}

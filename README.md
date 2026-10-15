@@ -52,8 +52,9 @@ El asistente funciona sin claves con respuestas locales deterministas. Para usar
 | `/rutas`, `/rutas/[slug]` | Rutas curadas y «Adaptar esta ruta» |
 | `/lugares/[slug]` | Ficha del lugar con evidencia D/I/H/T y fuentes |
 | `/guardados` | Ideas guardadas (distinto de «añadido al viaje») |
+| `/admin` | Gestor de contenidos para el equipo editorial: borradores, revisión, publicación y versiones ([docs/ADMIN.md](docs/ADMIN.md)) |
 
-Los datos se guardan solo en el navegador del visitante.
+Los datos del visitante se guardan solo en su navegador. El contenido (lugares, fichas, rutas, portada) lo publica el equipo desde `/admin`; sin Supabase configurado, la app usa el catálogo de demostración incluido.
 
 ## Documentación
 

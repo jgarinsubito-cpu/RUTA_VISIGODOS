@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { ROUTES, SITES } from "@/data/content";
+import { routes, showcase, sites } from "@/data/content";
 import { availableThemes, EMPTY_FILTERS, filterRoutes, filterSites, fold, isFiltered } from "./filter";
+
+const SITES = sites();
+const ROUTES = routes();
 
 const ids = (xs: { id: string }[]) => xs.map((x) => x.id);
 
@@ -36,7 +39,7 @@ describe("explore filters", () => {
   });
 
   it("lists only themes present in the catalog, in curated order", () => {
-    const themes = availableThemes(SITES);
+    const themes = availableThemes(SITES, showcase().themes);
     expect(themes[0]).toBe("capital");
     expect(themes).toContain("arqueología");
     expect(themes.every((t) => SITES.some((s) => s.themes.includes(t)))).toBe(true);

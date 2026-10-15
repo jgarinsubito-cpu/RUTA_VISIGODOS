@@ -4,7 +4,9 @@
  */
 import { z } from "zod";
 import { answerQuestion } from "@/domain/assistant";
-import { ACCESS_NEEDS, ASSISTANT_MODES, TRIP_AREAS, type AssistantRequest } from "@/domain/types";
+import { ACCESS_NEEDS, ASSISTANT_MODES, type AssistantRequest } from "@/domain/types";
+import { validArea } from "@/data/content";
+import { loadPublishedCatalog } from "@/data/published";
 import { createTokenBucket } from "@/lib/rateLimit";
 
 export const runtime = "nodejs";
@@ -18,7 +20,8 @@ const RequestSchema = z.object({
     .max(20)
     .default([]),
   context: z.object({
-    area: z.enum(TRIP_AREAS),
+    // A town or the whole region of the current catalog; anything else becomes the whole region.
+    area: z.string().trim().min(1).max(80),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable(),
     startTime: clock,
     endTime: clock,
@@ -90,7 +93,8 @@ export async function POST(request: Request) {
       parsed.error.issues.map((i) => ({ path: i.path.join("."), message: i.message })),
     );
   }
-  const req: AssistantRequest = parsed.data;
+  await loadPublishedCatalog();
+  const req: AssistantRequest = { ...parsed.data, context: { ...parsed.data.context, area: validArea(parsed.data.context.area) } };
   const key = clientKey(request);
   // Over the limit the visitor still gets the deterministic local answer.
   const answer = await answerQuestion(req, { allowModel: () => modelBucket(key) && globalBucket("all") });

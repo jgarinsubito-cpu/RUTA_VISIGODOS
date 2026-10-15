@@ -7,8 +7,8 @@
  * conversation keeps the screen.
  */
 import { useId, useRef, useState, type ReactNode, type RefObject } from "react";
-import { SHOWCASE } from "@/data/content";
-import { TRIP_AREAS, type TransportMode, type TripContext, type VisitorProfile } from "@/domain/types";
+import { showcase, tripAreas } from "@/data/content";
+import type { TransportMode, TripContext, VisitorProfile } from "@/domain/types";
 import { parseClock } from "@/domain/time";
 import { TRANSPORT_LABEL } from "@/lib/labels";
 import { actions } from "@/state/store";
@@ -137,7 +137,7 @@ function SegmentBody({ segment, context }: { segment: Segment; context: TripCont
           legend="Zona de la visita"
           name={name}
           value={context.area}
-          options={TRIP_AREAS.map((a) => ({ value: a, label: a, hint: SHOWCASE.areaHints[a] }))}
+          options={tripAreas().map((a) => ({ value: a, label: a, hint: showcase().areaHints[a] }))}
           onChange={(area) => actions.setContext({ area })}
         />
       );
@@ -180,7 +180,7 @@ function SegmentBody({ segment, context }: { segment: Segment; context: TripCont
           options={(Object.keys(TRANSPORT_LABEL) as TransportMode[]).map((t) => ({
             value: t,
             label: TRANSPORT_LABEL[t],
-            hint: SHOWCASE.transportHints[t],
+            hint: showcase().transportHints[t],
           }))}
           onChange={(transport) => actions.setContext({ transport })}
         />

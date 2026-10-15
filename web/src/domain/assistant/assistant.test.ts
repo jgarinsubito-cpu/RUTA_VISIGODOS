@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CLAIMS } from "@/data/catalog";
-import { PUBLISHED_CLAIMS, SITES } from "@/data/content";
+import { publishedClaims, sites } from "@/data/content";
 import { EDITORIAL_CLAIMS } from "@/data/editorial";
 import type { AssistantAnswer, AssistantRequest, TripContext } from "@/domain/types";
 import { POST } from "@/app/api/assistant/route";
@@ -30,8 +30,8 @@ function req(message: string, extra: Partial<AssistantRequest> = {}): AssistantR
   return { message, history: [], context: CONTEXT, selectedSiteId: null, tripSiteIds: [], ...extra };
 }
 
-const SITE_IDS = new Set(SITES.map((s) => s.id));
-const PUBLISHED_IDS = new Set(PUBLISHED_CLAIMS.map((c) => c.id));
+const SITE_IDS = new Set(sites().map((s) => s.id));
+const PUBLISHED_IDS = new Set(publishedClaims().map((c) => c.id));
 const DRAFT_ID = "claim-guarrazar-ocultacion";
 
 function expectWellFormed(a: AssistantAnswer) {
@@ -70,13 +70,28 @@ describe("router", () => {
 });
 
 describe("retrieval", () => {
-  it("resolves sites by name, alias and slug fragment plus selected context", () => {
+  it("resolves sites by name, alias and slug plus selected context", () => {
     expect(resolveSites("Háblame de la huerta de Guarrazar").mentioned.map((s) => s.id)).toEqual(["site-guarrazar"]);
     expect(resolveSites("¿Y el Cristo de la Luz?").mentioned.map((s) => s.id)).toEqual(["site-cristo-luz"]);
     expect(resolveSites("museo de San Roman").mentioned.map((s) => s.id)).toEqual(["site-san-roman"]);
     const withContext = resolveSites("¿Cuánto dura la visita?", "site-vega-baja");
     expect(withContext.mentioned).toEqual([]);
     expect(withContext.all.map((s) => s.id)).toEqual(["site-vega-baja"]);
+  });
+
+  it("does not let a town or a common word name a place", () => {
+    // Single slug words used to count as names: "alcazar-de-toledo" claimed every "Toledo",
+    // "museo-de-santa-cruz" every "Santa…" and "san-juan-de-los-reyes" every "reyes".
+    const named = (q: string) => resolveSites(q).mentioned.map((s) => s.id);
+    expect(named("¿Cómo llego a Toledo?")).toEqual([]);
+    expect(named("¿Por qué Toledo fue capital visigoda?")).toEqual([]);
+    expect(named("¿Qué reyes visigodos aparecen en las coronas?")).toEqual([]);
+    expect(named("¿Qué horario tiene Santa María la Blanca?")).toEqual(["site-santa-maria-blanca"]);
+    expect(named("¿Qué horario tiene el Tránsito?")).toEqual(["site-transito"]);
+    expect(named("El entierro del señor de Orgaz")).toEqual(["site-santo-tome"]);
+    const answer = answerLocally(req("¿Qué horario tiene Santa María la Blanca?"));
+    expect(answer.placeIds).toEqual(["site-santa-maria-blanca"]);
+    expect(answer.suggestedAction).toEqual({ type: "add-stop", siteId: "site-santa-maria-blanca" });
   });
 
   it("returns only published claims and never the draft 711 tradition", () => {
@@ -108,7 +123,7 @@ describe("retrieval", () => {
 });
 
 describe("evidence phrasing", () => {
-  const byId = (id: string) => PUBLISHED_CLAIMS.find((c) => c.id === id)!;
+  const byId = (id: string) => publishedClaims().find((c) => c.id === id)!;
 
   it("phrases D, I, H and T distinctly", () => {
     expect(phraseClaim(byId("claim-guarrazar-hallazgo"))).toBe("Está documentado que el Tesoro de Guarrazar se descubrió en 1858 en Guadamur.");
