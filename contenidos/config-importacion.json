@@ -1,0 +1,99 @@
+{
+  "_nota": "Configuración de la importación de contenidos (scripts/importar-contenidos.ts). La edita el equipo de contenidos. Los valores marcados en «revisar» son propuestas que hay que confirmar.",
+  "recorridos": {
+    "urbana": {
+      "id": "route-toledo-guadamur",
+      "nombre": "Ruta visigoda: Toledo y Guadamur",
+      "tema": "Huellas visigodas entre el casco histórico de Toledo y Guadamur",
+      "resumen": "Nueve paradas entre el casco histórico de Toledo y Guadamur: piezas visigodas reaprovechadas en iglesias y fachadas de Toledo, y en Guadamur el castillo y el Centro de Interpretación de Guarrazar.",
+      "transporte": "car",
+      "tipo": "monument",
+      "visigodo": true,
+      "tono": "stone",
+      "temas": ["capital", "arquitectura", "arte"],
+      "limitaciones": ["Une dos localidades: el tramo de Toledo se hace a pie y el de Guadamur requiere coche."]
+    },
+    "guarrazar": {
+      "id": "route-yacimiento-guarrazar",
+      "nombre": "Yacimiento de Guarrazar",
+      "tema": "El santuario donde apareció el tesoro de coronas votivas",
+      "resumen": "Seis puntos en el santuario visigodo de Guarrazar, en Guadamur: la basílica, el hospital de peregrinos, el edificio del manantial, la necrópolis y el mirador.",
+      "transporte": "walk",
+      "tipo": "archaeological",
+      "visigodo": true,
+      "tono": "ochre",
+      "temas": ["tesoro", "arqueología", "paisaje"],
+      "limitaciones": ["Yacimiento al aire libre: horario y condiciones de acceso pendientes de verificar."]
+    },
+    "vegabaja": {
+      "id": "route-vega-baja",
+      "nombre": "La Vega Baja",
+      "tema": "El suburbio de la capital visigoda",
+      "resumen": "Cinco paradas en la Vega Baja de Toledo, el gran suburbio de la ciudad regia: la avenida, el barrio de casas con patio y el área que la investigación relaciona con el palacio y la iglesia de los concilios.",
+      "transporte": "walk",
+      "tipo": "archaeological",
+      "visigodo": true,
+      "tono": "moss",
+      "temas": ["capital", "arqueología"],
+      "limitaciones": ["Parte del yacimiento no es visitable: varias paradas se explican desde el exterior."]
+    },
+    "concilios": {
+      "id": "route-museo-concilios",
+      "nombre": "Museo de los Concilios",
+      "tema": "La Toledo visigoda en la iglesia de San Román",
+      "resumen": "Seis paradas dentro del Museo de los Concilios y de la Cultura Visigoda, en la iglesia de San Román de Toledo.",
+      "transporte": "walk",
+      "tipo": "museum",
+      "visigodo": true,
+      "tono": "umber",
+      "temas": ["capital", "museos", "arte"],
+      "limitaciones": ["Recorrido en el interior del museo: las paradas se eligen a mano, porque el GPS no es fiable en interiores."]
+    },
+    "territorio": {
+      "id": "route-territorio-guarrazar",
+      "nombre": "El territorio de Guarrazar",
+      "tema": "Agua, plomo, molinos y caminos alrededor del santuario",
+      "resumen": "Nueve paradas por el territorio de Guarrazar, en Guadamur y sus alrededores: el agua del manantial, el valle del plomo, las minas, los molinos, el camino de Mérida y los castillos.",
+      "transporte": "car",
+      "tipo": "landscape",
+      "visigodo": true,
+      "tono": "terracotta",
+      "temas": ["territorio", "paisaje"],
+      "limitaciones": [
+        "Recorrido en coche; la variante en bici está pendiente de probar.",
+        "Algunas paradas están en fincas privadas y se ven desde el camino."
+      ]
+    }
+  },
+  "paradas": {
+    "santo-tome": { "visigodo": false, "revisar": "¿Se presenta como patrimonio no visigodo (torre mudéjar)?" },
+    "covarrubias": { "visigodo": false, "revisar": "¿Se presenta como patrimonio no visigodo?" },
+    "castillo-guadamur": { "visigodo": false },
+    "centro-guarrazar": { "tipo": "museum", "tono": "ochre" },
+    "casa-munecas": { "visigodo": false, "tipo": "museum" },
+    "territorio-3": { "visigodo": false, "revisar": "¿El coto minero se presenta como patrimonio no visigodo?" },
+    "territorio-4": { "visigodo": false, "tipo": "monument" },
+    "territorio-5": { "visigodo": false, "tipo": "monument" },
+    "territorio-7": { "visigodo": false, "revisar": "¿Las minas se presentan como patrimonio no visigodo?" },
+    "territorio-8": { "visigodo": false, "tipo": "monument", "localidad": "Polán" },
+    "territorio-9": { "visigodo": false, "tipo": "monument", "nombre": "Villa de Guadamur", "revisar": "Nombre provisional: el gestor no admite un lugar llamado igual que una localidad." }
+  },
+  "portada": {
+    "localidades": ["Toledo", "Guadamur", "Polán"],
+    "zona": "Toledo y su territorio",
+    "temas": ["capital", "tesoro", "arqueología", "paisaje", "museos", "arquitectura", "arte", "territorio"],
+    "paradaPortada": "guarrazar-2",
+    "tituloPortada": "La ruta de la Toledo visigoda",
+    "introPortada": "La ciudad que fue sede regia del reino visigodo y el territorio del Tesoro de Guarrazar, contados parada a parada.",
+    "comoLlegar": {
+      "Toledo": "Está en Toledo; el planificador calcula el trayecto cuando lo añades a tu viaje.",
+      "Guadamur": "Está en Guadamur, fuera de Toledo: se llega en coche y el planificador calcula el trayecto cuando lo añades a tu viaje.",
+      "Polán": "Está en Polán, cerca de Guadamur: se llega en coche y el planificador calcula el trayecto cuando lo añades a tu viaje."
+    },
+    "ayudaZonas": {
+      "Guadamur": "A unos 15 km de Toledo; se llega en coche.",
+      "Polán": "Cerca de Guadamur; se llega en coche."
+    },
+    "ayudaTransporte": { "walk": "Casco histórico de Toledo y recorridos dentro de los yacimientos.", "car": "Necesario para ir a Guadamur, Polán y el territorio de Guarrazar." }
+  }
+}

@@ -1,0 +1,1525 @@
+[
+  {
+    "kind": "site",
+    "id": "site-parada-santa-justa",
+    "data": {
+      "id": "site-parada-santa-justa",
+      "slug": "urbana-1-calle-santa-justa",
+      "name": "Calle Santa Justa",
+      "locality": "Toledo",
+      "kind": "monument",
+      "visigothic": true,
+      "tagline": "Pilastra visigoda y lápida árabe",
+      "summary": "Baja la vista. Ahí, a la altura de tus tobillos, en la esquina del muro de la iglesia de las Santas Justa y Rufina, hay una piedra que no se parece a ninguna otra de la calle. Es una pilastra de mármol labrada hace unos mil trescientos años, cuando Toledo era la capital del reino visigodo.",
+      "coordinates": {
+        "lat": 39.858916,
+        "lng": -4.023354,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "arquitectura",
+        "arte"
+      ],
+      "imageTone": "stone",
+      "category": "Ruta visigoda: Toledo y Guadamur · parada 1",
+      "demo": false
+    },
+    "position": 0,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-cuevas-hercules",
+    "data": {
+      "id": "site-parada-cuevas-hercules",
+      "slug": "urbana-2-cuevas-de-hercules",
+      "name": "Cuevas de Hércules",
+      "locality": "Toledo",
+      "kind": "monument",
+      "visigothic": true,
+      "tagline": "Antigua iglesia de San Ginés",
+      "summary": "Estás en el callejón de San Ginés. Bajo tus pies hay una gran cisterna de época romana, abovedada, a la que la tradición llamó «Cuevas de Hércules». Sobre ella se levantó durante siglos la iglesia de San Ginés, hoy desaparecida. Pero mira el muro que tienes delante: es un libro abierto.",
+      "coordinates": {
+        "lat": 39.858681,
+        "lng": -4.024278,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "arquitectura",
+        "arte"
+      ],
+      "imageTone": "stone",
+      "category": "Ruta visigoda: Toledo y Guadamur · parada 2",
+      "demo": false
+    },
+    "position": 1,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-el-salvador",
+    "data": {
+      "id": "site-parada-el-salvador",
+      "slug": "urbana-3-el-salvador",
+      "name": "El Salvador",
+      "locality": "Toledo",
+      "kind": "monument",
+      "visigothic": true,
+      "tagline": "Mezquita e iglesia",
+      "summary": "Asómate al estrecho pasillo junto a la torre de El Salvador y mira hacia arriba. Lo que ves no es un muro: son tres ciudades apiladas.",
+      "coordinates": {
+        "lat": 39.85673,
+        "lng": -4.026982,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "arquitectura",
+        "arte"
+      ],
+      "imageTone": "stone",
+      "category": "Ruta visigoda: Toledo y Guadamur · parada 3",
+      "demo": false
+    },
+    "position": 2,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-santo-tome",
+    "data": {
+      "id": "site-parada-santo-tome",
+      "slug": "urbana-4-santo-tome",
+      "name": "Santo Tomé",
+      "locality": "Toledo",
+      "kind": "monument",
+      "visigothic": false,
+      "tagline": "Torre mudéjar sobre el alminar",
+      "summary": "Muchos llegan a Santo Tomé por un cuadro: el Entierro del señor de Orgaz, de El Greco. Antes de entrar, levanta la vista hacia la torre. Cuenta otra parte de la misma historia.",
+      "coordinates": {
+        "lat": 39.856931,
+        "lng": -4.027827,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "arquitectura",
+        "arte"
+      ],
+      "imageTone": "stone",
+      "category": "Ruta visigoda: Toledo y Guadamur · parada 4",
+      "demo": false
+    },
+    "position": 3,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-san-bartolome",
+    "data": {
+      "id": "site-parada-san-bartolome",
+      "slug": "urbana-5-san-bartolome",
+      "name": "San Bartolomé",
+      "locality": "Toledo",
+      "kind": "monument",
+      "visigothic": true,
+      "tagline": "Friso visigodo en la torre",
+      "summary": "El callejón es estrecho y sube. Al fondo, la torre de San Bartolomé domina la perspectiva. A primera vista parece una torre mudéjar más: cajones de piedra, ladrillo, un arco de herradura polilobulado cegado bajo su recuadro y, arriba, el cuerpo de campanas. Pero detente a media altura.",
+      "coordinates": {
+        "lat": 39.855051,
+        "lng": -4.025905,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "arquitectura",
+        "arte"
+      ],
+      "imageTone": "stone",
+      "category": "Ruta visigoda: Toledo y Guadamur · parada 5",
+      "demo": false
+    },
+    "position": 4,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-covarrubias",
+    "data": {
+      "id": "site-parada-covarrubias",
+      "slug": "urbana-6-portada-de-covarrubias",
+      "name": "Portada de Covarrubias",
+      "locality": "Toledo",
+      "kind": "monument",
+      "visigothic": false,
+      "tagline": "Monasterio de San Clemente",
+      "summary": "Estás ante la portada del monasterio de San Clemente, obra del primer Renacimiento toledano atribuida a Alonso de Covarrubias, hacia la década de 1530. Tómate un minuto, porque está llena de figuras.",
+      "coordinates": {
+        "lat": 39.85935,
+        "lng": -4.02745,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "arquitectura",
+        "arte"
+      ],
+      "imageTone": "stone",
+      "category": "Ruta visigoda: Toledo y Guadamur · parada 6",
+      "demo": false
+    },
+    "position": 5,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-castillo-guadamur",
+    "data": {
+      "id": "site-parada-castillo-guadamur",
+      "slug": "urbana-7-castillo-de-guadamur",
+      "name": "Castillo de Guadamur",
+      "locality": "Guadamur",
+      "kind": "monument",
+      "visigothic": false,
+      "tagline": "Fortaleza de los condes de Fuensalida",
+      "summary": "Si te acercas desde el sur, entre olivos y pinos, el castillo aparece de golpe sobre la loma. Primero ves la torre del homenaje, un prisma enorme de granito. Después, su coronamiento: un matacán corrido sobre ménsulas escalonadas, garitones cilíndricos colgados de las esquinas y almenas rematadas en punta. Es el estilo de las fortalezas señoriales toledanas del siglo XV.",
+      "coordinates": {
+        "lat": 39.810637,
+        "lng": -4.146168,
+        "approximate": true
+      },
+      "visitMinutes": 8,
+      "hours": {
+        "status": "unknown",
+        "note": "Visitas guiadas: lunes, martes y miércoles, con pases a las 10:00 y a las 11:30 (duración, hora y media). Los fines de semana el castillo acoge bodas y eventos. (Guía del castillo, 2026) Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "arquitectura",
+        "arte"
+      ],
+      "imageTone": "stone",
+      "category": "Ruta visigoda: Toledo y Guadamur · parada 7",
+      "demo": false
+    },
+    "position": 6,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-centro-guarrazar",
+    "data": {
+      "id": "site-parada-centro-guarrazar",
+      "slug": "urbana-8-centro-de-interpretacion-de-guarrazar",
+      "name": "Centro de Interpretación de Guarrazar",
+      "locality": "Guadamur",
+      "kind": "museum",
+      "visigothic": true,
+      "tagline": "Guadamur",
+      "summary": "El Tesoro de Guarrazar ya no está en Guadamur. Sus originales se conservan en el Museo Arqueológico Nacional de Madrid y en el Museo de Cluny de París. Este centro cuenta lo que el oro solo no puede contar: quién vivió junto a este manantial, qué edificios se levantaron aquí y qué pasó cuando cayó el reino visigodo.",
+      "coordinates": {
+        "lat": 39.812014,
+        "lng": -4.146336,
+        "approximate": true
+      },
+      "visitMinutes": 8,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "arquitectura",
+        "arte"
+      ],
+      "imageTone": "ochre",
+      "category": "Ruta visigoda: Toledo y Guadamur · parada 8",
+      "demo": false
+    },
+    "position": 7,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-casa-munecas",
+    "data": {
+      "id": "site-parada-casa-munecas",
+      "slug": "urbana-9-casa-de-munecas-salyperla",
+      "name": "Casa de Muñecas Salyperla",
+      "locality": "Guadamur",
+      "kind": "museum",
+      "visigothic": false,
+      "tagline": "Museo de muñecas de Mari Carmen Zapata",
+      "summary": "Después del oro de los reyes visigodos, Guadamur guarda otro tesoro, mucho más reciente y más cercano: el de la infancia. Estás ante la Casa de Muñecas Salyperla, en la Costanilla de San Antón, a unos pasos del Centro de Interpretación.",
+      "coordinates": {
+        "lat": 39.8123285,
+        "lng": -4.1466158,
+        "approximate": true
+      },
+      "visitMinutes": 8,
+      "hours": {
+        "status": "unknown",
+        "note": "Entradas: 4 € en la Oficina de Turismo, junto al castillo (925 29 15 60). Abierto todos los días salvo jueves, de 10:00 a 14:00. Visita guiada por Salyperla de domingo a miércoles; mejor llamar antes. (Blog del museo, 2024) Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "arquitectura",
+        "arte"
+      ],
+      "imageTone": "stone",
+      "category": "Ruta visigoda: Toledo y Guadamur · parada 9",
+      "demo": false
+    },
+    "position": 8,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-guarrazar-1",
+    "data": {
+      "id": "site-parada-guarrazar-1",
+      "slug": "guarrazar-1-llegada",
+      "name": "Llegada",
+      "locality": "Guadamur",
+      "kind": "archaeological",
+      "visigothic": true,
+      "tagline": "Un santuario junto al agua",
+      "summary": "Estás a unos diez kilómetros al suroeste de Toledo, en una vaguada donde brota un manantial que nunca se ha secado. Aquí se cruzaban caminos, y muy cerca pasaba la ruta más corta entre Mérida y Toledo. El lugar estuvo habitado desde la prehistoria hasta la Edad Media, pero su momento de esplendor fue el siglo VII.",
+      "coordinates": {
+        "lat": 39.815837,
+        "lng": -4.11898,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "tesoro",
+        "arqueología",
+        "paisaje"
+      ],
+      "imageTone": "ochre",
+      "category": "Yacimiento de Guarrazar · parada 1",
+      "demo": false
+    },
+    "position": 9,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-guarrazar-2",
+    "data": {
+      "id": "site-parada-guarrazar-2",
+      "slug": "guarrazar-2-la-basilica-de-las-coronas",
+      "name": "La basílica de las coronas",
+      "locality": "Guadamur",
+      "kind": "archaeological",
+      "visigothic": true,
+      "tagline": "La basílica de las coronas",
+      "summary": "Estás a los pies de la gran iglesia del santuario. Se excavó entre 2014 y 2018, y de ella queda poco a la vista: las zanjas de los cimientos, abiertas en la roca, y las basas de mármol sobre las que se alzaban las columnas. Fue una iglesia de tres naves de casi 15 metros de ancho. La nave central medía más de 6 metros entre columnas.",
+      "coordinates": {
+        "lat": 39.815707,
+        "lng": -4.119209,
+        "approximate": false
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "tesoro",
+        "arqueología",
+        "paisaje"
+      ],
+      "imageTone": "ochre",
+      "category": "Yacimiento de Guarrazar · parada 2",
+      "demo": false
+    },
+    "position": 10,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-guarrazar-3",
+    "data": {
+      "id": "site-parada-guarrazar-3",
+      "slug": "guarrazar-3-el-hospital-de-peregrinos",
+      "name": "El hospital de peregrinos",
+      "locality": "Guadamur",
+      "kind": "archaeological",
+      "visigothic": true,
+      "tagline": "El hospital de peregrinos",
+      "summary": "Este edificio fue lo primero que se excavó, en 2013. Son dos grandes salas en forma de L: una de 15 por 5,5 metros y otra de 12,5 por 5. Sus muros, de casi 80 centímetros, son de piedra trabada con barro. A su alrededor se añadieron habitaciones más pequeñas, un porche y un patio.",
+      "coordinates": {
+        "lat": 39.815966,
+        "lng": -4.11875,
+        "approximate": false
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "tesoro",
+        "arqueología",
+        "paisaje"
+      ],
+      "imageTone": "ochre",
+      "category": "Yacimiento de Guarrazar · parada 3",
+      "demo": false
+    },
+    "position": 11,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-guarrazar-4",
+    "data": {
+      "id": "site-parada-guarrazar-4",
+      "slug": "guarrazar-4-el-edificio-del-manantial",
+      "name": "El edificio del manantial",
+      "locality": "Guadamur",
+      "kind": "archaeological",
+      "visigothic": true,
+      "tagline": "El edificio del manantial",
+      "summary": "Este es el corazón del santuario. Sobre el manantial se levantó un edificio alargado, de más de 30 metros de largo y unos 7 de ancho, con los muros apoyados directamente en la roca. Dentro, la roca se talló para formar bañeras dispuestas por parejas a ambos lados de un pasillo central. Cada bañera medía algo más de 2 metros de largo y unos 60 centímetros de ancho, y el agua brotaba dentro de ellas.",
+      "coordinates": {
+        "lat": 39.815837,
+        "lng": -4.11898,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "tesoro",
+        "arqueología",
+        "paisaje"
+      ],
+      "imageTone": "ochre",
+      "category": "Yacimiento de Guarrazar · parada 4",
+      "demo": false
+    },
+    "position": 12,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-guarrazar-5",
+    "data": {
+      "id": "site-parada-guarrazar-5",
+      "slug": "guarrazar-5-la-necropolis-y-el-lugar-del-hallazgo",
+      "name": "La necrópolis y el lugar del hallazgo",
+      "locality": "Guadamur",
+      "kind": "archaeological",
+      "visigothic": true,
+      "tagline": "La necrópolis y el lugar del hallazgo",
+      "summary": "Desde el edificio del manantial hacia el este se extiende, en línea, el cementerio del santuario, y al final, una pequeña capilla funeraria. Manantial, tumbas y capilla forman un eje de unos 70 metros. Enterrarse aquí era enterrarse junto a lo sagrado.",
+      "coordinates": {
+        "lat": 39.815837,
+        "lng": -4.11898,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "tesoro",
+        "arqueología",
+        "paisaje"
+      ],
+      "imageTone": "ochre",
+      "category": "Yacimiento de Guarrazar · parada 5",
+      "demo": false
+    },
+    "position": 13,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-guarrazar-6",
+    "data": {
+      "id": "site-parada-guarrazar-6",
+      "slug": "guarrazar-6-mirador",
+      "name": "Mirador",
+      "locality": "Guadamur",
+      "kind": "archaeological",
+      "visigothic": true,
+      "tagline": "Lo que queda bajo tierra",
+      "summary": "Desde aquí ves el cerro al norte del manantial. En la superficie no hay nada, pero en 2002 el arqueólogo alemán Christoph Eger lo recorrió con un magnetómetro, un aparato que detecta los muros enterrados. Apareció la planta de un gran edificio de unos 50 por 35 metros, con habitaciones alrededor de un patio. Un sondeo de 2015 confirmó que hay muros de piedra y barro.",
+      "coordinates": {
+        "lat": 39.815837,
+        "lng": -4.11898,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "tesoro",
+        "arqueología",
+        "paisaje"
+      ],
+      "imageTone": "ochre",
+      "category": "Yacimiento de Guarrazar · parada 6",
+      "demo": false
+    },
+    "position": 14,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-vegabaja-1",
+    "data": {
+      "id": "site-parada-vegabaja-1",
+      "slug": "vegabaja-1-cristo-de-la-vega",
+      "name": "Cristo de la Vega",
+      "locality": "Toledo",
+      "kind": "archaeological",
+      "visigothic": true,
+      "tagline": "La basílica de Santa Leocadia",
+      "summary": "Esta ermita ocupa el lugar más sagrado del Toledo visigodo. Según la tradición, aquí estaba la tumba de Leocadia, la mártir que es patrona de la ciudad, y sobre ella se levantó una basílica. El rey Sisebuto la reformó en el año 618. En ella se celebraron cuatro concilios de Toledo: el IV, el V, el VI y el XVII, entre los años 633 y 694. Junto a la basílica hubo un monasterio, y aquí se enterraron tres grandes obispos de Toledo: Eugenio, Ildefonso y Julián.",
+      "coordinates": {
+        "lat": 39.860775,
+        "lng": -4.034559,
+        "approximate": false
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "arqueología"
+      ],
+      "imageTone": "moss",
+      "category": "La Vega Baja · parada 1",
+      "demo": false
+    },
+    "position": 15,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-vegabaja-2",
+    "data": {
+      "id": "site-parada-vegabaja-2",
+      "slug": "vegabaja-2-la-gran-avenida",
+      "name": "La gran avenida",
+      "locality": "Toledo",
+      "kind": "archaeological",
+      "visigothic": true,
+      "tagline": "La gran avenida",
+      "summary": "Bajo tus pies corría una de las calles principales del suburbio visigodo. Las excavaciones han sacado a la luz calles de distinto rango, organizadas según un plan regular. La ciudad creció sobre todo entre la segunda mitad del siglo VI y mediados del VII, cuando Toledo se convirtió en la capital del reino.",
+      "coordinates": {
+        "lat": 39.862703,
+        "lng": -4.035632,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "arqueología"
+      ],
+      "imageTone": "moss",
+      "category": "La Vega Baja · parada 2",
+      "demo": false
+    },
+    "position": 16,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-vegabaja-3",
+    "data": {
+      "id": "site-parada-vegabaja-3",
+      "slug": "vegabaja-3-el-barrio-de-casas-con-patio",
+      "name": "El barrio de casas con patio",
+      "locality": "Toledo",
+      "kind": "archaeological",
+      "visigothic": true,
+      "tagline": "El barrio de casas con patio",
+      "summary": "A ambos lados de las calles se alineaban casas organizadas en torno a un patio. Alrededor de él se abrían salas alargadas, cocinas y almacenes. Muchas viviendas medían hasta unos 400 metros cuadrados, y algunos edificios eran mucho mayores: uno de unos 700 metros cuadrados tenía cuatro alas en torno a un patio con una cisterna, y otro rondaba los 900.",
+      "coordinates": {
+        "lat": 39.867655,
+        "lng": -4.039736,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "arqueología"
+      ],
+      "imageTone": "moss",
+      "category": "La Vega Baja · parada 3",
+      "demo": false
+    },
+    "position": 17,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-vegabaja-4",
+    "data": {
+      "id": "site-parada-vegabaja-4",
+      "slug": "vegabaja-4-el-palacio-y-la-iglesia-de-los-concilios",
+      "name": "El palacio y la iglesia de los concilios",
+      "locality": "Toledo",
+      "kind": "archaeological",
+      "visigothic": true,
+      "tagline": "El palacio y la iglesia de los concilios",
+      "summary": "Desde que Leovigildo hizo de Toledo su capital, a finales del siglo VI, los reyes visigodos imitaron el ceremonial de los emperadores: trono, vestiduras reales, moneda propia. Necesitaban un palacio y una iglesia de corte. Las fuentes escritas confirman que existieron: el palacio, el praetorium, aparece en las actas del VI Concilio de Toledo (638), y su iglesia, la de los Santos Apóstoles Pedro y Pablo, llamada «pretoriense», acogió cinco concilios. Según Julián de Toledo, en ella fue ungido el rey Wamba en 672.",
+      "coordinates": {
+        "lat": 39.862703,
+        "lng": -4.035632,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "arqueología"
+      ],
+      "imageTone": "moss",
+      "category": "La Vega Baja · parada 4",
+      "demo": false
+    },
+    "position": 18,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-vegabaja-5",
+    "data": {
+      "id": "site-parada-vegabaja-5",
+      "slug": "vegabaja-5-mirador-sobre-la-vega",
+      "name": "Mirador sobre la Vega",
+      "locality": "Toledo",
+      "kind": "archaeological",
+      "visigothic": true,
+      "tagline": "Mirador sobre la Vega",
+      "summary": "Desde aquí se abarca la Vega Baja, el llano que el Tajo deja al norte y noroeste del peñón de Toledo. Isidoro de Sevilla llamaba suburbium a la parte de la ciudad que quedaba por debajo de la urbs, la ciudad amurallada. Pero este suburbio no era un arrabal marginal: aquí estaban la basílica de la patrona, calles anchas, casas grandes y, quizá, el palacio de los reyes.",
+      "coordinates": {
+        "lat": 39.859679,
+        "lng": -4.032601,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "arqueología"
+      ],
+      "imageTone": "moss",
+      "category": "La Vega Baja · parada 5",
+      "demo": false
+    },
+    "position": 19,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-concilios-1",
+    "data": {
+      "id": "site-parada-concilios-1",
+      "slug": "concilios-1-san-roman-y-la-ciudad-de-los-concilios",
+      "name": "San Román y la ciudad de los concilios",
+      "locality": "Toledo",
+      "kind": "museum",
+      "visigothic": true,
+      "tagline": "San Román y la ciudad de los concilios",
+      "summary": "Estás en uno de los puntos más altos de Toledo, ante la iglesia de San Román. Su torre, levantada entre finales del siglo XIII y principios del XIV, se inspira en los alminares de las mezquitas califales. La iglesia actual se consagró en 1221, aunque ya era parroquia a principios del siglo XII. Algunos investigadores creen que pudo haber aquí un edificio visigodo, y también una mezquita, pero no hay pruebas concluyentes.",
+      "coordinates": {
+        "lat": 39.8584558,
+        "lng": -4.0271249,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "museos",
+        "arte"
+      ],
+      "imageTone": "umber",
+      "category": "Museo de los Concilios · parada 1",
+      "demo": false
+    },
+    "position": 20,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-concilios-2",
+    "data": {
+      "id": "site-parada-concilios-2",
+      "slug": "concilios-2-la-nave",
+      "name": "La nave",
+      "locality": "Toledo",
+      "kind": "museum",
+      "visigothic": true,
+      "tagline": "Un edificio de muchas épocas",
+      "summary": "San Román tiene tres naves separadas por arcos de herradura, con dovelas alternas enmarcadas por un alfiz, como en la arquitectura califal. Los arcos descansan en columnas de fuste romano adosadas a pilares de ladrillo, y sobre ellos corre una galería. Encima de las columnas hay doce capiteles reaprovechados, de tamaños distintos: algunos son visigodos. Piezas de un edificio anterior que los constructores medievales reutilizaron.",
+      "coordinates": {
+        "lat": 39.8584558,
+        "lng": -4.0271249,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "museos",
+        "arte"
+      ],
+      "imageTone": "umber",
+      "category": "Museo de los Concilios · parada 2",
+      "demo": false
+    },
+    "position": 21,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-concilios-3",
+    "data": {
+      "id": "site-parada-concilios-3",
+      "slug": "concilios-3-los-concilios-y-el-credo",
+      "name": "Los concilios y el Credo",
+      "locality": "Toledo",
+      "kind": "museum",
+      "visigothic": true,
+      "tagline": "Los concilios y el Credo",
+      "summary": "En el año 589, en el III Concilio de Toledo, el rey Recaredo y los obispos de su Iglesia abandonaron el cristianismo homoiano, la doctrina que se suele llamar «arriana», y aceptaron la fe católica de la mayoría de sus súbditos hispanorromanos. Desde entonces, la profesión de fe, el credo, fue un símbolo de la unidad del reino.",
+      "coordinates": {
+        "lat": 39.8584558,
+        "lng": -4.0271249,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "museos",
+        "arte"
+      ],
+      "imageTone": "umber",
+      "category": "Museo de los Concilios · parada 3",
+      "demo": false
+    },
+    "position": 22,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-concilios-4",
+    "data": {
+      "id": "site-parada-concilios-4",
+      "slug": "concilios-4-la-iglesia-visigoda-y-su-escultura",
+      "name": "La Iglesia visigoda y su escultura",
+      "locality": "Toledo",
+      "kind": "museum",
+      "visigothic": true,
+      "tagline": "La Iglesia visigoda y su escultura",
+      "summary": "Antes de las grandes iglesias de la capital, el cristianismo arraigó en el campo, en las villas de los grandes propietarios. En la de El Saucedo, en Talavera la Nueva, una sala se transformó en iglesia con baptisterio en el siglo VI. En Carranque apareció en 2009 una tapa de sarcófago romana con la historia de Jonás, reutilizada para cubrir una tumba de época visigoda.",
+      "coordinates": {
+        "lat": 39.8584558,
+        "lng": -4.0271249,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "museos",
+        "arte"
+      ],
+      "imageTone": "umber",
+      "category": "Museo de los Concilios · parada 4",
+      "demo": false
+    },
+    "position": 23,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-concilios-5",
+    "data": {
+      "id": "site-parada-concilios-5",
+      "slug": "concilios-5-la-vitrina-de-la-vega-baja",
+      "name": "La vitrina de la Vega Baja",
+      "locality": "Toledo",
+      "kind": "museum",
+      "visigothic": true,
+      "tagline": "La vitrina de la Vega Baja",
+      "summary": "Esta sala reúne lo que se encontró en las excavaciones de la Vega Baja, el gran suburbio de la capital visigoda. Hay piezas de arquitectura de edificios importantes: frisos, cimacios, capiteles, fustes decorados con arcos que se solapan como escamas y columnas de pórfido. Y hay objetos de la vida diaria.",
+      "coordinates": {
+        "lat": 39.8584558,
+        "lng": -4.0271249,
+        "approximate": true
+      },
+      "visitMinutes": 6,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "museos",
+        "arte"
+      ],
+      "imageTone": "umber",
+      "category": "Museo de los Concilios · parada 5",
+      "demo": false
+    },
+    "position": 24,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-concilios-6",
+    "data": {
+      "id": "site-parada-concilios-6",
+      "slug": "concilios-6-las-coronas-de-guarrazar",
+      "name": "Las coronas de Guarrazar",
+      "locality": "Toledo",
+      "kind": "museum",
+      "visigothic": true,
+      "tagline": "Las coronas de Guarrazar",
+      "summary": "Estas coronas son réplicas. Los originales del tesoro de Guarrazar se conservan en el Museo Arqueológico Nacional, en Madrid, y en el Museo de Cluny, en París. Aparecieron en 1858 en Guadamur, a unos diez kilómetros de Toledo, en un santuario que hoy se está excavando.",
+      "coordinates": {
+        "lat": 39.8584558,
+        "lng": -4.0271249,
+        "approximate": true
+      },
+      "visitMinutes": 7,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "capital",
+        "museos",
+        "arte"
+      ],
+      "imageTone": "umber",
+      "category": "Museo de los Concilios · parada 6",
+      "demo": false
+    },
+    "position": 25,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-territorio-1",
+    "data": {
+      "id": "site-parada-territorio-1",
+      "slug": "territorio-1-el-agua-de-guarrazar",
+      "name": "El agua de Guarrazar",
+      "locality": "Guadamur",
+      "kind": "landscape",
+      "visigothic": true,
+      "tagline": "El agua de Guarrazar",
+      "summary": "Todo empieza en el agua. Guarrazar está en una vaguada con manantiales permanentes, junto a dos vaguadas con buena tierra para el cultivo de huerta. Para los arqueólogos, el agua, la tierra fértil y la cercanía de filones de mineral explican que aquí se concentren tantos restos: en un perímetro de más de 40 hectáreas se han localizado restos desde la Edad del Cobre hasta la Edad Media. El santuario visigodo, con su edificio levantado sobre el manantial, es solo uno de esos momentos.",
+      "coordinates": {
+        "lat": 39.815966,
+        "lng": -4.11875,
+        "approximate": false
+      },
+      "visitMinutes": 6,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "territorio",
+        "paisaje"
+      ],
+      "imageTone": "terracotta",
+      "category": "El territorio de Guarrazar · parada 1",
+      "demo": false
+    },
+    "position": 26,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-territorio-2",
+    "data": {
+      "id": "site-parada-territorio-2",
+      "slug": "territorio-2-el-valle-del-plomo",
+      "name": "El valle del plomo",
+      "locality": "Guadamur",
+      "kind": "landscape",
+      "visigothic": true,
+      "tagline": "El valle del plomo",
+      "summary": "El subsuelo de Guadamur tiene filones importantes de galena argentífera, un mineral del que se obtienen plomo y plata, y también de grafito. Por eso, a lo largo de la historia se han hecho aquí explotaciones mineras de cierta importancia. El mapa del panel del yacimiento sitúa una de las de galena en el propio Guarrazar, a pocos pasos del santuario. A finales del siglo XIX se registraron en el municipio 16 concesiones para explotar minas de plomo.",
+      "coordinates": {
+        "lat": 39.8177,
+        "lng": -4.1189,
+        "approximate": true
+      },
+      "visitMinutes": 6,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "territorio",
+        "paisaje"
+      ],
+      "imageTone": "terracotta",
+      "category": "El territorio de Guarrazar · parada 2",
+      "demo": false
+    },
+    "position": 27,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-territorio-3",
+    "data": {
+      "id": "site-parada-territorio-3",
+      "slug": "territorio-3-el-coto-minero-de-guadamur",
+      "name": "El coto minero de Guadamur",
+      "locality": "Guadamur",
+      "kind": "landscape",
+      "visigothic": false,
+      "tagline": "El coto minero de Guadamur",
+      "summary": "Además de plomo, el subsuelo de Guadamur tiene grafito, una forma del carbono. Al noreste del yacimiento estaba el coto minero de Guadamur, dedicado a su explotación. El panel del yacimiento recoge que a principios del siglo XX se habían registrado 19 concesiones para explotar grafito en el municipio. La construcción en ruinas que se ve en el campo es uno de los testigos de esa actividad.",
+      "coordinates": {
+        "lat": 39.8216,
+        "lng": -4.1035,
+        "approximate": true
+      },
+      "visitMinutes": 5,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "territorio",
+        "paisaje"
+      ],
+      "imageTone": "terracotta",
+      "category": "El territorio de Guarrazar · parada 3",
+      "demo": false
+    },
+    "position": 28,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-territorio-4",
+    "data": {
+      "id": "site-parada-territorio-4",
+      "slug": "territorio-4-molino-de-la-casquilla-o-del-tio-lego",
+      "name": "Molino de la Casquilla o del Tío Lego",
+      "locality": "Guadamur",
+      "kind": "monument",
+      "visigothic": false,
+      "tagline": "Molino de la Casquilla o del Tío Lego",
+      "summary": "Las ruinas de los molinos de La Casquilla y de Alegre, en las márgenes del arroyo Guajaraz, son importantes testigos de las actividades «industriales» que tuvo esta zona durante la Edad Moderna y parte de la Contemporánea. El de La Casquilla, también llamado del Tío Lego, está en término de Guadamur.",
+      "coordinates": {
+        "lat": 39.8198,
+        "lng": -4.0911,
+        "approximate": true
+      },
+      "visitMinutes": 6,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "territorio",
+        "paisaje"
+      ],
+      "imageTone": "terracotta",
+      "category": "El territorio de Guarrazar · parada 4",
+      "demo": false
+    },
+    "position": 29,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-territorio-5",
+    "data": {
+      "id": "site-parada-territorio-5",
+      "slug": "territorio-5-molino-de-alegre",
+      "name": "Molino de Alegre",
+      "locality": "Guadamur",
+      "kind": "monument",
+      "visigothic": false,
+      "tagline": "Molino de Alegre",
+      "summary": "Aguas abajo, ya en término de Argés, está el molino de Alegre. Como el de La Casquilla, es uno de los molinos del arroyo Guajaraz que el panel del yacimiento destaca como patrimonio: sus ruinas informan sobre las actividades «industriales» de la zona en la Edad Moderna y parte de la Contemporánea.",
+      "coordinates": {
+        "lat": 39.810127,
+        "lng": -4.093895,
+        "approximate": true
+      },
+      "visitMinutes": 6,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "territorio",
+        "paisaje"
+      ],
+      "imageTone": "terracotta",
+      "category": "El territorio de Guarrazar · parada 5",
+      "demo": false
+    },
+    "position": 30,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-territorio-6",
+    "data": {
+      "id": "site-parada-territorio-6",
+      "slug": "territorio-6-torre-de-cervatos-y-el-camino-de-merida",
+      "name": "Torre de Cervatos y el camino de Mérida",
+      "locality": "Guadamur",
+      "kind": "landscape",
+      "visigothic": true,
+      "tagline": "Torre de Cervatos y el camino de Mérida",
+      "summary": "La Torre de Cervatos es una de las tres fortalezas de este territorio, junto con los castillos de Guadamur y de Polán. Que haya tres en tan pocos kilómetros cuadrados muestra un interés por controlar el territorio. Pero, según el panel del yacimiento, ese control se centraba en realidad en las vías de comunicación, que desde la prehistoria han sido fundamentales para la economía.",
+      "coordinates": {
+        "lat": 39.802321,
+        "lng": -4.110331,
+        "approximate": true
+      },
+      "visitMinutes": 6,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "territorio",
+        "paisaje"
+      ],
+      "imageTone": "terracotta",
+      "category": "El territorio de Guarrazar · parada 6",
+      "demo": false
+    },
+    "position": 31,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-territorio-7",
+    "data": {
+      "id": "site-parada-territorio-7",
+      "slug": "territorio-7-minas-de-la-trinidad",
+      "name": "Minas de La Trinidad",
+      "locality": "Guadamur",
+      "kind": "landscape",
+      "visigothic": false,
+      "tagline": "Minas de La Trinidad",
+      "summary": "Al sur de Guadamur estaban las minas de La Trinidad, otra explotación de galena argentífera, el mineral del que se obtienen plomo y plata. El mapa del panel del yacimiento las incluye entre las explotaciones más importantes de las que hay constancia en el término, desde la Edad Media hasta el siglo XX. De ellas queda a la vista alguno de sus pozos.",
+      "coordinates": {
+        "lat": 39.7934,
+        "lng": -4.1475,
+        "approximate": true
+      },
+      "visitMinutes": 5,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "territorio",
+        "paisaje"
+      ],
+      "imageTone": "terracotta",
+      "category": "El territorio de Guarrazar · parada 7",
+      "demo": false
+    },
+    "position": 32,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-territorio-8",
+    "data": {
+      "id": "site-parada-territorio-8",
+      "slug": "territorio-8-castillo-de-polan",
+      "name": "Castillo de Polán",
+      "locality": "Polán",
+      "kind": "monument",
+      "visigothic": false,
+      "tagline": "Castillo de Polán",
+      "summary": "El castillo de Polán es la tercera de las fortalezas que el panel del yacimiento relaciona con los caminos del territorio. Junto a Polán pasaba uno de los caminos que salían del paso de Portusa, en el Tajo, hacia Noez, Cuerva, Las Ventas y el puerto del Milagro, ya en los Montes de Toledo.",
+      "coordinates": {
+        "lat": 39.790435,
+        "lng": -4.16854,
+        "approximate": true
+      },
+      "visitMinutes": 6,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "territorio",
+        "paisaje"
+      ],
+      "imageTone": "terracotta",
+      "category": "El territorio de Guarrazar · parada 8",
+      "demo": false
+    },
+    "position": 33,
+    "status": "review"
+  },
+  {
+    "kind": "site",
+    "id": "site-parada-territorio-9",
+    "data": {
+      "id": "site-parada-territorio-9",
+      "slug": "territorio-9-villa-de-guadamur",
+      "name": "Villa de Guadamur",
+      "locality": "Guadamur",
+      "kind": "monument",
+      "visigothic": false,
+      "tagline": "Castillo y caminos de Portusa",
+      "summary": "A unos 7,5 km al noroeste de Guadamur está Portusa, un topónimo posiblemente de origen romano. Allí había un importante paso del Tajo en barcas, en el que confluían varios de los caminos que cruzaban este territorio de sureste a noroeste y de suroeste a noreste. De Portusa salían caminos hacia Guadamur, Argés, Cobisa y Burguillos; hacia Polán y los Montes; y hacia Layos, Ajofrín, Orgaz y Manzaneque. Rojas propone que una de esas rutas, la que iba de Portusa por Guadamur hacia Consabura (Consuegra) y Laminium (Alhambra), fuera una vía romana.",
+      "coordinates": {
+        "lat": 39.810541,
+        "lng": -4.14652,
+        "approximate": false
+      },
+      "visitMinutes": 6,
+      "hours": {
+        "status": "unknown",
+        "note": "Horario y condiciones de visita pendientes de verificar."
+      },
+      "access": {
+        "status": "unknown"
+      },
+      "themes": [
+        "territorio",
+        "paisaje"
+      ],
+      "imageTone": "terracotta",
+      "category": "El territorio de Guarrazar · parada 9",
+      "demo": false
+    },
+    "position": 34,
+    "status": "review"
+  },
+  {
+    "kind": "route",
+    "id": "route-toledo-guadamur",
+    "data": {
+      "id": "route-toledo-guadamur",
+      "slug": "ruta-visigoda-toledo-y-guadamur",
+      "name": "Ruta visigoda: Toledo y Guadamur",
+      "theme": "Huellas visigodas entre el casco histórico de Toledo y Guadamur",
+      "summary": "Nueve paradas entre el casco histórico de Toledo y Guadamur: piezas visigodas reaprovechadas en iglesias y fachadas de Toledo, y en Guadamur el castillo y el Centro de Interpretación de Guarrazar.",
+      "stopIds": [
+        "site-parada-santa-justa",
+        "site-parada-cuevas-hercules",
+        "site-parada-el-salvador",
+        "site-parada-santo-tome",
+        "site-parada-san-bartolome",
+        "site-parada-covarrubias",
+        "site-parada-castillo-guadamur",
+        "site-parada-centro-guarrazar",
+        "site-parada-casa-munecas"
+      ],
+      "transport": "car",
+      "limitations": [
+        "Une dos localidades: el tramo de Toledo se hace a pie y el de Guadamur requiere coche."
+      ],
+      "demo": false
+    },
+    "position": 0,
+    "status": "review"
+  },
+  {
+    "kind": "route",
+    "id": "route-yacimiento-guarrazar",
+    "data": {
+      "id": "route-yacimiento-guarrazar",
+      "slug": "yacimiento-de-guarrazar",
+      "name": "Yacimiento de Guarrazar",
+      "theme": "El santuario donde apareció el tesoro de coronas votivas",
+      "summary": "Seis puntos en el santuario visigodo de Guarrazar, en Guadamur: la basílica, el hospital de peregrinos, el edificio del manantial, la necrópolis y el mirador.",
+      "stopIds": [
+        "site-parada-guarrazar-1",
+        "site-parada-guarrazar-2",
+        "site-parada-guarrazar-3",
+        "site-parada-guarrazar-4",
+        "site-parada-guarrazar-5",
+        "site-parada-guarrazar-6"
+      ],
+      "transport": "walk",
+      "limitations": [
+        "Yacimiento al aire libre: horario y condiciones de acceso pendientes de verificar."
+      ],
+      "demo": false
+    },
+    "position": 1,
+    "status": "review"
+  },
+  {
+    "kind": "route",
+    "id": "route-vega-baja",
+    "data": {
+      "id": "route-vega-baja",
+      "slug": "la-vega-baja",
+      "name": "La Vega Baja",
+      "theme": "El suburbio de la capital visigoda",
+      "summary": "Cinco paradas en la Vega Baja de Toledo, el gran suburbio de la ciudad regia: la avenida, el barrio de casas con patio y el área que la investigación relaciona con el palacio y la iglesia de los concilios.",
+      "stopIds": [
+        "site-parada-vegabaja-1",
+        "site-parada-vegabaja-2",
+        "site-parada-vegabaja-3",
+        "site-parada-vegabaja-4",
+        "site-parada-vegabaja-5"
+      ],
+      "transport": "walk",
+      "limitations": [
+        "Parte del yacimiento no es visitable: varias paradas se explican desde el exterior."
+      ],
+      "demo": false
+    },
+    "position": 2,
+    "status": "review"
+  },
+  {
+    "kind": "route",
+    "id": "route-museo-concilios",
+    "data": {
+      "id": "route-museo-concilios",
+      "slug": "museo-de-los-concilios",
+      "name": "Museo de los Concilios",
+      "theme": "La Toledo visigoda en la iglesia de San Román",
+      "summary": "Seis paradas dentro del Museo de los Concilios y de la Cultura Visigoda, en la iglesia de San Román de Toledo.",
+      "stopIds": [
+        "site-parada-concilios-1",
+        "site-parada-concilios-2",
+        "site-parada-concilios-3",
+        "site-parada-concilios-4",
+        "site-parada-concilios-5",
+        "site-parada-concilios-6"
+      ],
+      "transport": "walk",
+      "limitations": [
+        "Recorrido en el interior del museo: las paradas se eligen a mano, porque el GPS no es fiable en interiores."
+      ],
+      "demo": false
+    },
+    "position": 3,
+    "status": "review"
+  },
+  {
+    "kind": "route",
+    "id": "route-territorio-guarrazar",
+    "data": {
+      "id": "route-territorio-guarrazar",
+      "slug": "el-territorio-de-guarrazar",
+      "name": "El territorio de Guarrazar",
+      "theme": "Agua, plomo, molinos y caminos alrededor del santuario",
+      "summary": "Nueve paradas por el territorio de Guarrazar, en Guadamur y sus alrededores: el agua del manantial, el valle del plomo, las minas, los molinos, el camino de Mérida y los castillos.",
+      "stopIds": [
+        "site-parada-territorio-1",
+        "site-parada-territorio-2",
+        "site-parada-territorio-3",
+        "site-parada-territorio-4",
+        "site-parada-territorio-5",
+        "site-parada-territorio-6",
+        "site-parada-territorio-7",
+        "site-parada-territorio-8",
+        "site-parada-territorio-9"
+      ],
+      "transport": "car",
+      "limitations": [
+        "Recorrido en coche; la variante en bici está pendiente de probar.",
+        "Algunas paradas están en fincas privadas y se ven desde el camino."
+      ],
+      "demo": false
+    },
+    "position": 4,
+    "status": "review"
+  },
+  {
+    "kind": "showcase",
+    "id": "showcase",
+    "data": {
+      "localities": [
+        "Toledo",
+        "Guadamur",
+        "Polán"
+      ],
+      "regionName": "Toledo y su territorio",
+      "themes": [
+        "capital",
+        "tesoro",
+        "arqueología",
+        "paisaje",
+        "museos",
+        "arquitectura",
+        "arte",
+        "territorio"
+      ],
+      "heroSiteId": "site-parada-guarrazar-2",
+      "heroTitle": "La ruta de la Toledo visigoda",
+      "heroIntro": "La ciudad que fue sede regia del reino visigodo y el territorio del Tesoro de Guarrazar, contados parada a parada.",
+      "placeGroups": {
+        "visigothic": {
+          "title": "Huella visigoda",
+          "intro": "Los lugares donde se conserva o se estudia la Toledo visigoda."
+        },
+        "other": {
+          "title": "Para completar la visita",
+          "intro": "Patrimonio de otras épocas a lo largo de la ruta."
+        }
+      },
+      "assistantIntro": "Pregúntame por la ruta o pídeme que organice tu visita a Toledo, Guadamur y el territorio de Guarrazar.",
+      "starterPrompts": [
+        "¿Qué es el Tesoro de Guarrazar?",
+        "¿Qué era la Vega Baja?",
+        "Medio día en Toledo a pie",
+        "La ruta del territorio en coche"
+      ],
+      "generalPrompts": [
+        "¿Qué es el Tesoro de Guarrazar?",
+        "¿Por qué Toledo fue la capital del reino visigodo?",
+        "¿Qué se ve hoy en el yacimiento de Guarrazar?",
+        "Planifica la ruta del territorio en coche"
+      ],
+      "assistantExamples": [
+        {
+          "siteId": "site-parada-guarrazar-2",
+          "topic": "qué se ha excavado en el santuario de Guarrazar"
+        }
+      ],
+      "heritageKeywords": [
+        "visigod*",
+        "rey",
+        "reyes",
+        "reina",
+        "corona*",
+        "concilio*",
+        "tesoro*",
+        "recesvinto",
+        "recaredo",
+        "leovigildo",
+        "wamba",
+        "suintila",
+        "rodrigo",
+        "palacio*",
+        "palatino",
+        "capital",
+        "corte",
+        "reino",
+        "votiva*",
+        "capitel*",
+        "reaprovecha*",
+        "obispo*",
+        "iglesia",
+        "basilica*",
+        "santuario",
+        "xenodochium",
+        "peregrino*",
+        "manantial",
+        "necropolis",
+        "suburbio",
+        "credo",
+        "plomo",
+        "mina*",
+        "molino*"
+      ],
+      "gettingThere": {
+        "Toledo": "Está en Toledo; el planificador calcula el trayecto cuando lo añades a tu viaje.",
+        "Guadamur": "Está en Guadamur, fuera de Toledo: se llega en coche y el planificador calcula el trayecto cuando lo añades a tu viaje.",
+        "Polán": "Está en Polán, cerca de Guadamur: se llega en coche y el planificador calcula el trayecto cuando lo añades a tu viaje."
+      },
+      "areaHints": {
+        "Guadamur": "A unos 15 km de Toledo; se llega en coche.",
+        "Polán": "Cerca de Guadamur; se llega en coche."
+      },
+      "transportHints": {
+        "walk": "Casco histórico de Toledo y recorridos dentro de los yacimientos.",
+        "car": "Necesario para ir a Guadamur, Polán y el territorio de Guarrazar."
+      },
+      "familyPrompt": "Plan con niños por Toledo y Guarrazar"
+    },
+    "position": 0,
+    "status": "review"
+  }
+]
