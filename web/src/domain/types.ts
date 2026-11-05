@@ -13,6 +13,7 @@ export type SiteId = string;
 export type ClaimId = string;
 export type StoryId = string;
 export type RouteId = string;
+export type StopId = string;
 
 /** Evidence status from the brief: Documentado / Interpretación / Hipótesis / Tradición. */
 export type EvidenceLevel = "D" | "I" | "H" | "T";
@@ -49,6 +50,8 @@ export interface ValidatedClaim {
 export interface Story {
   id: StoryId;
   siteId: SiteId;
+  /** The stop of its place this story is told at (guided tour); absent = the place as a whole. */
+  stopId?: StopId;
   title: string;
   body: string;
   claimIds: ClaimId[];
@@ -162,7 +165,51 @@ export interface Route {
   /** Words that point the assistant to this route in a plan request (router syntax: "corona*"). */
   keywords?: string[];
   limitations: string[];
+  /**
+   * Guided tour order, stop by stop. Absent: every stop of each place in `stopIds`, in their order
+   * (a place without stops is one stop). Lets a route use only some stops of a place.
+   */
+  tourStopIds?: StopId[];
   demo: boolean;
+}
+
+/** Recorded narration of a stop: the file, how long it lasts and its full text (accessibility). */
+export interface StopAudio {
+  /** Path under /media (bundled) or a public URL in the content media store. */
+  src: string;
+  durationSeconds: number;
+  /** What the player calls it, e.g. "Locución". */
+  label: string;
+  /** Full text of the recording, shown on demand: required, for deaf visitors and noisy places. */
+  transcript: string;
+  credit?: string;
+}
+
+/**
+ * A point inside a place where the guided tour stops (the brief's "punto de interés"): a dig area,
+ * a room, a viewpoint. The planner works with places; the tour, the audio and the stop-by-stop
+ * stories work with stops.
+ */
+export interface Stop {
+  id: StopId;
+  siteId: SiteId;
+  /** Order inside its place, from 1. */
+  order: number;
+  name: string;
+  tagline?: string;
+  /** Where the arrival zone is. Absent: the place's coordinates are used and arrival is manual. */
+  coordinates?: Coordinates;
+  /** Arrival zone radius in metres; absent = the default for the place's kind. */
+  radiusMeters?: number;
+  /** Indoors (a museum room): GPS is not reliable, so the stop is chosen by hand (or QR). */
+  indoor?: boolean;
+  /** Told only on routes that pass through the place, not in the place's own guided visit. */
+  routeOnly?: boolean;
+  audio?: StopAudio;
+  /** Licensed images with credits, in display order. */
+  gallery: PlaceImage[];
+  /** Derived from the stories that point to this stop. */
+  storyIds: StoryId[];
 }
 
 export type TransportMode = "walk" | "car";
@@ -172,12 +219,13 @@ export type TransportMode = "walk" | "car";
  * (geofence) or by hand; "virtual": the visitor steps through from anywhere.
  */
 export interface TourProgress {
-  routeId: RouteId;
+  /** What is being toured: a route ("route-…") or the stops of one place ("site-…"). */
+  tourId: RouteId | SiteId;
   mode: "live" | "virtual";
-  /** Index in the route's stops of the stop being shown. */
+  /** Index in the tour's stops of the stop being shown. */
   currentIndex: number;
-  /** Stops reached, in the order they were reached. */
-  visitedSiteIds: SiteId[];
+  /** Tour stops reached (stop ids, or place ids for places without stops), in arrival order. */
+  visitedStopIds: string[];
   startedAt: string;
   updatedAt: string;
 }
@@ -344,6 +392,8 @@ export interface Showcase {
  */
 export interface Catalog {
   sites: Site[];
+  /** Stops inside places; versions published before stops existed have none. */
+  stops: Stop[];
   claims: ValidatedClaim[];
   stories: Story[];
   routes: Route[];

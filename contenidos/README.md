@@ -63,8 +63,12 @@ NEXT_PUBLIC_SUPABASE_URL=… NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=… GESTOR_EMA
 
 ## Cómo se convierte cada cosa
 
-- Cada recorrido es una ruta; cada parada es un lugar (`site-parada-…`). Cuando exista la entidad Parada, `extensiones.json` tiene lo que falta.
-- El primer párrafo del relato es la descripción del lugar. El relato completo entra como historia cuando la parada tiene afirmaciones; si pasa de 1.500 caracteres, se divide en varias historias.
-- El tiempo de visita es la duración de la locución más 5 minutos.
+- Un recorrido de tipo **visita** (Guarrazar, Vega Baja, Concilios) es **un lugar con varias paradas** (`lugares` en la configuración); en la app tiene su visita guiada. Concilios es «interior»: se avanza a mano.
+- Un recorrido de tipo **ruta** (urbana, Ruta 1) es una ruta entre lugares: cada parada crea su lugar, salvo que la configuración la asigne a uno existente con `lugar` (entonces es «solo en rutas»: El agua de Guarrazar va al yacimiento; Guadamur, al castillo).
+- Cada parada lleva su locución con la transcripción (el guion; si no hay guion, el audio es el relato leído y se etiqueta «Relato en audio») y su galería (solo imágenes con créditos).
+- El primer párrafo del relato es la descripción del lugar. El relato completo entra como historia de la parada cuando tiene afirmaciones validadas; si pasa de 1.500 caracteres, se divide en varias historias.
+- El tiempo de visita suma las locuciones de sus paradas.
+- Los modelos 3D, las figuras y el mapa ilustrado quedan en `extensiones.json` hasta que el modelo los admita.
+- `--copiar-medios` copia fotos y audios a `web/public` (unos 60 MB, fuera de git). En producción se suben al almacén del gestor.
 - Horarios y accesibilidad quedan «sin verificar» hasta que producción los compruebe.
 - Las coordenadas son aproximadas salvo las de «toma de campo». Las paradas sin coordenada usan el centro de su recorrido y salen en el informe.

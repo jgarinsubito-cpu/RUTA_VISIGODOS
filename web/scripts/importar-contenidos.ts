@@ -27,13 +27,14 @@ import { recordsFromCatalog } from "@/domain/editorial/records";
 import type {
   Catalog,
   EvidenceLevel,
-  OpeningInfo,
   PlaceImage,
   PlaceTone,
   Route,
   Showcase,
   Site,
   SiteKind,
+  Stop,
+  StopAudio,
   Story,
   TransportMode,
   ValidatedClaim,
@@ -93,17 +94,39 @@ interface Fuente {
 
 /* ---------- Configuración ---------- */
 
+/** «visita»: las paradas de un solo lugar. «ruta»: una ruta entre lugares. */
 interface ConfigRecorrido {
-  id: string;
+  tipo: "visita" | "ruta";
+  /** visita: clave del lugar en «lugares». */
+  lugar?: string;
+  /** visita: paradas en un interior (se eligen a mano). */
+  interior?: boolean;
+  /** ruta: */
+  id?: string;
+  nombre?: string;
+  tema?: string;
+  resumen?: string;
+  transporte?: TransportMode;
+  limitaciones?: string[];
+  /** ruta: valores por defecto de los lugares que crea cada parada. */
+  tipo_lugar?: SiteKind;
+  visigodo?: boolean;
+  tono?: PlaceTone;
+  temas?: string[];
+}
+interface ConfigLugar {
   nombre: string;
-  tema: string;
-  resumen: string;
-  transporte: TransportMode;
+  localidad: string;
   tipo: SiteKind;
   visigodo: boolean;
   tono: PlaceTone;
   temas: string[];
-  limitaciones: string[];
+  lema: string;
+  resumen: string;
+  categoria: string;
+  direccion?: string;
+  info?: string;
+  coordenadas?: Site["coordinates"];
 }
 interface ConfigParada {
   visigodo?: boolean;
@@ -111,16 +134,22 @@ interface ConfigParada {
   tono?: PlaceTone;
   localidad?: string;
   nombre?: string;
+  categoria?: string;
+  /** Clave de un lugar ya creado (de «lugares» o de otra parada) al que pertenece esta parada. */
+  lugar?: string;
+  /** Radio de la geocerca, en metros. */
+  radio?: number;
   revisar?: string;
 }
 interface Config {
+  lugares: Record<string, ConfigLugar>;
   recorridos: Record<string, ConfigRecorrido>;
   paradas: Record<string, ConfigParada>;
   portada: {
     localidades: string[];
     zona: string;
     temas: string[];
-    paradaPortada: string;
+    lugarPortada: string;
     tituloPortada: string;
     introPortada: string;
     comoLlegar: Record<string, string>;
@@ -300,29 +329,35 @@ const avisos = {
 };
 
 /* ---------- Conversión ---------- */
+/*
+ * Estructura que se genera:
+ *  - Un recorrido de tipo «visita» (Guarrazar, Vega Baja, Concilios) es UN lugar con varias paradas.
+ *  - Un recorrido de tipo «ruta» (urbana, Ruta 1) es una ruta entre lugares: cada parada es un lugar
+ *    con una sola parada, salvo que la configuración la asigne a un lugar existente («lugar»).
+ *  - Cada parada lleva su locución (con transcripción) y su galería; cada relato, su historia.
+ */
 
-const siteId = (p: ParadaFuente) => `site-parada-${idFrom(p.id)}`;
+const paradaKey = (p: ParadaFuente) => idFrom(p.id);
+const stopIdOf = (p: ParadaFuente) => `stop-${paradaKey(p)}`;
 const photosOf = (p: ParadaFuente): string[] =>
   Array.isArray(p.photos) ? p.photos : typeof p.photos === "string" && p.photos.trim().startsWith("[") ? (JSON.parse(p.photos) as string[]) : [];
 
-function coordinatesOf(p: ParadaFuente, all: ParadaFuente[]): Site["coordinates"] {
+/** Coordenadas propias de la parada, o null si no tiene. */
+function ownCoordinates(p: ParadaFuente): Site["coordinates"] | null {
   const lat = Number(p.lat);
   const lng = Number(p.lon);
+  if (p.lat === undefined || p.lat === "" || !Number.isFinite(lat) || !Number.isFinite(lng)) return null;
   const note = p.coordnote ?? "";
-  if (p.lat !== undefined && p.lat !== "" && Number.isFinite(lat) && Number.isFinite(lng)) {
-    const field = /toma de campo/i.test(note) && !/provisional|pendiente|aproximad/i.test(note);
-    const approximate = Boolean(p.approx) || !field;
-    return { lat, lng, approximate };
-  }
-  const located = all.filter((o) => o.route === p.route && o.lat !== undefined && o.lat !== "" && Number.isFinite(Number(o.lat)));
-  if (located.length === 0) throw new Error(`La parada ${p.id} no tiene coordenadas ni paradas vecinas con coordenadas.`);
-  const c = {
-    lat: Number((located.reduce((s, o) => s + Number(o.lat), 0) / located.length).toFixed(6)),
-    lng: Number((located.reduce((s, o) => s + Number(o.lon), 0) / located.length).toFixed(6)),
+  const field = /toma de campo/i.test(note) && !/provisional|pendiente|aproximad/i.test(note);
+  return { lat, lng, approximate: Boolean(p.approx) || !field };
+}
+
+function centroid(list: Site["coordinates"][]): Site["coordinates"] {
+  return {
+    lat: Number((list.reduce((s, c) => s + c.lat, 0) / list.length).toFixed(6)),
+    lng: Number((list.reduce((s, c) => s + c.lng, 0) / list.length).toFixed(6)),
     approximate: true,
   };
-  avisos.coordenadas.push(`${p.id} (${p.name}): sin coordenada; se usa provisionalmente el centro de su recorrido (${c.lat}, ${c.lng}).`);
-  return c;
 }
 
 function imageFor(file: string, stopName: string): PlaceImage | undefined {
@@ -354,77 +389,165 @@ function imageFor(file: string, stopName: string): PlaceImage | undefined {
 }
 
 const sites: Site[] = [];
+const stops: Stop[] = [];
 const stories: Story[] = [];
 const claims: ValidatedClaim[] = [];
 const routes: Route[] = [];
 const extensiones: Record<string, unknown>[] = [];
 const imagenesUsadas = new Map<string, Set<string>>();
+/** Lugar de cada clave: la de un lugar de la configuración o la de la parada que lo creó. */
+const siteByKey = new Map<string, Site>();
 
 const recorridos = fuente.routes.filter((r) => config.recorridos[r.id]);
 for (const r of fuente.routes) if (!config.recorridos[r.id]) avisos.otros.push(`El recorrido «${r.id}» no está en la configuración: no se importa.`);
 
+const paradasDe = (routeId: string) =>
+  fuente.stops.filter((p) => p.route === routeId).sort((a, b) => Number(a.k ?? a.n ?? 0) - Number(b.k ?? b.n ?? 0));
+
+const note = (info?: string) =>
+  [info ? cutAtSentence(info, 300) : "", "Horario y condiciones de visita pendientes de verificar."].filter(Boolean).join(" ").slice(0, 400);
+
+function newSite(key: string, fields: Omit<Site, "id" | "slug" | "claimIds" | "storyIds" | "hours" | "access" | "demo"> & { info?: string }): Site {
+  const { info, ...rest } = fields;
+  const site: Site = {
+    ...rest,
+    id: `site-${key}`,
+    slug: idFrom(fields.name),
+    hours: { status: "unknown", note: note(info) },
+    access: { status: "unknown" },
+    claimIds: [],
+    storyIds: [],
+    demo: false,
+  };
+  if (sites.some((s) => s.slug === site.slug)) site.slug = `${site.slug}-${idFrom(fields.locality)}`;
+  sites.push(site);
+  siteByKey.set(key, site);
+  return site;
+}
+
+// 1. Lugares de los recorridos de tipo «visita».
 for (const recorrido of recorridos) {
   const cfg = config.recorridos[recorrido.id];
-  const paradas = fuente.stops
-    .filter((p) => p.route === recorrido.id)
-    .sort((a, b) => Number(a.k ?? a.n ?? 0) - Number(b.k ?? b.n ?? 0));
+  if (cfg.tipo !== "visita") continue;
+  const lugar = config.lugares[cfg.lugar!];
+  if (!lugar) throw new Error(`El recorrido ${recorrido.id} apunta a un lugar que no está en «lugares» (${cfg.lugar}).`);
+  const located = paradasDe(recorrido.id).map(ownCoordinates).filter((c): c is Site["coordinates"] => c !== null);
+  const coordinates = lugar.coordenadas ?? (located.length ? centroid(located) : null);
+  if (!coordinates) throw new Error(`El lugar ${cfg.lugar} no tiene coordenadas.`);
+  if (!lugar.coordenadas) avisos.coordenadas.push(`${lugar.nombre}: coordenada del lugar calculada como centro de sus paradas; conviene fijar la de la entrada.`);
+  newSite(cfg.lugar!, {
+    name: lugar.nombre,
+    locality: lugar.localidad,
+    kind: lugar.tipo,
+    visigothic: lugar.visigodo,
+    tagline: lugar.lema,
+    summary: lugar.resumen,
+    coordinates,
+    visitMinutes: 5,
+    themes: lugar.temas,
+    imageTone: lugar.tono,
+    category: lugar.categoria,
+    ...(lugar.direccion ? { address: lugar.direccion } : {}),
+    info: lugar.info,
+  });
+}
+
+// 2. Paradas de todos los recorridos.
+for (const recorrido of recorridos) {
+  const cfg = config.recorridos[recorrido.id];
+  const paradas = paradasDe(recorrido.id);
+  const tourStopIds: string[] = [];
+  const routeSiteIds: string[] = [];
 
   paradas.forEach((p, index) => {
     const over = config.paradas[p.id] ?? {};
     if (over.revisar) avisos.revisar.push(`${p.id} (${p.name}): ${over.revisar}`);
-    const id = siteId(p);
     const name = (over.nombre ?? p.name).slice(0, 120);
     const relato = paragraphs(p.text ?? "");
-    const summary = relato.length ? cutAtSentence(relato[0], 1200) : (p.sub || name);
+    const own = ownCoordinates(p);
 
-    // Audio: duración real para el tiempo de visita y la extensión de locución.
-    let audioSeconds: number | undefined;
+    // Lugar de la parada.
+    const siteKey = cfg.tipo === "visita" ? cfg.lugar! : (over.lugar ?? paradaKey(p));
+    let site = siteByKey.get(siteKey);
+    if (!site) {
+      if (over.lugar) throw new Error(`La parada ${p.id} apunta a un lugar que aún no existe («${over.lugar}»): revisa el orden de los recorridos.`);
+      let coordinates = own;
+      if (!coordinates) {
+        const located = paradas.map(ownCoordinates).filter((c): c is Site["coordinates"] => c !== null);
+        coordinates = centroid(located);
+        avisos.coordenadas.push(`${p.id} (${name}): sin coordenada; se usa provisionalmente el centro de su recorrido.`);
+      }
+      site = newSite(siteKey, {
+        name,
+        locality: over.localidad ?? p.zone ?? "",
+        kind: over.tipo ?? cfg.tipo_lugar ?? "monument",
+        visigothic: over.visigodo ?? cfg.visigodo ?? true,
+        tagline: (p.sub || p.title || name).slice(0, 200),
+        summary: relato.length ? cutAtSentence(relato[0], 1200) : (p.sub || name),
+        coordinates,
+        visitMinutes: 5,
+        themes: cfg.temas ?? [],
+        imageTone: over.tono ?? cfg.tono ?? "stone",
+        category: (over.categoria ?? `${cfg.nombre} · parada ${index + 1}`).slice(0, 80),
+        info: p.info,
+      });
+    }
+    if (!routeSiteIds.includes(site.id)) routeSiteIds.push(site.id);
+    if (cfg.tipo === "visita" && !own && !cfg.interior) {
+      avisos.coordenadas.push(`${p.id} (${name}): sin coordenada propia; la llegada no se detectará sola hasta tomarla en campo.`);
+    }
+
+    // Audio.
+    let audio: StopAudio | undefined;
     if (p.audio) {
       const file = path.join(origen!, "audio", p.audio);
-      if (fs.existsSync(file)) audioSeconds = probe(file).duration;
-      else avisos.mediosQueFaltan.push(`audio/${p.audio}`);
+      const seconds = fs.existsSync(file) ? probe(file).duration : undefined;
+      if (!fs.existsSync(file)) avisos.mediosQueFaltan.push(`audio/${p.audio}`);
+      const transcript = (p.guion || p.text || "").trim();
+      if (seconds && transcript) {
+        audio = {
+          src: `/media/audio/${p.audio}`,
+          durationSeconds: Math.max(1, Math.round(seconds)),
+          // Sin guion aparte, el audio es el relato leído (decisión del 04/11/2026).
+          label: p.guion ? (p.audiolabel ?? "Locución") : "Relato en audio",
+          transcript,
+        };
+      }
     }
-    const visitMinutes = Math.min(600, Math.max(5, Math.round((audioSeconds ?? 0) / 60) + 5));
+    site.visitMinutes = Math.min(600, site.visitMinutes + Math.round((audio?.durationSeconds ?? 0) / 60) + (cfg.tipo === "visita" ? 3 : 0));
 
+    // Galería: solo imágenes con créditos completos.
     const photos = photosOf(p);
     const heroFile = p.hero && fs.existsSync(path.join(origen!, "img", `${p.hero}.jpg`)) ? p.hero : photos[0];
-    for (const f of new Set([heroFile, ...photos].filter(Boolean) as string[])) {
-      imagenesUsadas.set(f, (imagenesUsadas.get(f) ?? new Set()).add(p.id));
-    }
+    const files = [...new Set([heroFile, ...photos].filter(Boolean) as string[])];
+    for (const f of files) imagenesUsadas.set(f, (imagenesUsadas.get(f) ?? new Set()).add(p.id));
+    const gallery = files.map((f) => imageFor(f, name)).filter((i): i is PlaceImage => i !== undefined);
+    if (!site.image && gallery[0]) site.image = gallery[0];
 
-    const note = [p.info ? cutAtSentence(p.info, 300) : "", "Horario y condiciones de visita pendientes de verificar."].filter(Boolean).join(" ");
-    const hours: OpeningInfo = { status: "unknown", note: note.slice(0, 400) };
-
-    const site: Site = {
-      id,
-      slug: idFrom(`${recorrido.id}-${index + 1}-${name}`).slice(0, 80).replace(/-+$/, ""),
+    const stop: Stop = {
+      id: stopIdOf(p),
+      siteId: site.id,
+      order: cfg.tipo === "visita" ? index + 1 : stops.filter((s) => s.siteId === site!.id).length + 1,
       name,
-      locality: over.localidad ?? p.zone ?? "",
-      kind: over.tipo ?? cfg.tipo,
-      visigothic: over.visigodo ?? cfg.visigodo,
-      tagline: (p.sub || p.title || name).slice(0, 200),
-      summary,
-      coordinates: coordinatesOf(p, fuente.stops),
-      visitMinutes,
-      hours,
-      access: { status: "unknown" },
-      themes: cfg.temas,
-      claimIds: [],
+      ...(p.title && p.title !== name ? { tagline: p.title.slice(0, 200) } : p.sub ? { tagline: p.sub.slice(0, 200) } : {}),
+      ...(own && !cfg.interior ? { coordinates: own } : {}),
+      ...(over.radio ? { radiusMeters: over.radio } : {}),
+      ...(cfg.interior ? { indoor: true } : {}),
+      // Asignada a un lugar de otro recorrido: se cuenta en la ruta, no en la visita de ese lugar.
+      ...(over.lugar ? { routeOnly: true } : {}),
+      ...(audio ? { audio } : {}),
+      gallery,
       storyIds: [],
-      imageTone: over.tono ?? cfg.tono,
-      category: `${cfg.nombre} · parada ${index + 1}`.slice(0, 80),
-      demo: false,
     };
-    const image = heroFile ? imageFor(heroFile, name) : undefined;
-    if (image) site.image = image;
-    sites.push(site);
+    stops.push(stop);
+    tourStopIds.push(stop.id);
 
-    // Relato → historias, solo si hay afirmaciones validadas de esta parada.
-    const own = afirmaciones.filter((a) => a.parada === p.id);
-    for (const a of own) {
+    // Relato → historias de la parada, solo con afirmaciones validadas.
+    const ownClaims = afirmaciones.filter((a) => a.parada === p.id);
+    for (const a of ownClaims) {
       claims.push({
         id: a.id,
-        siteId: id,
+        siteId: site.id,
         text: a.texto,
         evidence: a.nivel,
         ...(a.atribucion ? { attribution: a.atribucion } : {}),
@@ -436,51 +559,32 @@ for (const recorrido of recorridos) {
     }
     const partes = chunkParagraphs(relato, 1500);
     if (partes.length > 1) avisos.historiasPartidas.push(`${p.id} (${name}): el relato pasa de 1.500 caracteres y se divide en ${partes.length} historias.`);
-    if (own.length === 0 && relato.length) {
+    if (ownClaims.length === 0 && relato.length) {
       avisos.historiasSinAfirmaciones.push(p.id);
-    } else if (own.length) {
-      if (own.length > 10) avisos.otros.push(`${p.id}: tiene ${own.length} afirmaciones; cada historia cita solo las 10 primeras.`);
+    } else if (ownClaims.length) {
+      if (ownClaims.length > 10) avisos.otros.push(`${p.id}: tiene ${ownClaims.length} afirmaciones; cada historia cita solo las 10 primeras.`);
       partes.forEach((body, i) => {
         stories.push({
-          id: `story-${idFrom(p.id)}${partes.length > 1 ? `-${i + 1}` : ""}`,
-          siteId: id,
+          id: `story-${paradaKey(p)}${partes.length > 1 ? `-${i + 1}` : ""}`,
+          siteId: site!.id,
+          stopId: stop.id,
           title: `${p.title || name}${partes.length > 1 ? ` (${i + 1}/${partes.length})` : ""}`.slice(0, 120),
           body,
-          claimIds: own.slice(0, 10).map((a) => a.id),
+          claimIds: ownClaims.slice(0, 10).map((a) => a.id),
           audience: "general",
           minutes: Math.min(30, Math.max(1, Math.round(body.split(/\s+/).length / 180))),
         });
       });
     }
 
-    // Lo que el modelo actual aún no admite: queda listo para la entidad Parada.
+    // Lo que el modelo aún no admite (3D, figuras) y la galería completa, con o sin créditos.
     extensiones.push({
-      siteId: id,
+      stopId: stop.id,
+      siteId: site.id,
       paradaOrigen: p.id,
-      recorrido: cfg.id,
-      orden: index + 1,
-      relato: { titulo: p.title || name, texto: p.text ?? "" },
-      locucion: p.audio
-        ? {
-            archivo: p.audio,
-            src: `/media/audio/${p.audio}`,
-            etiqueta: p.audiolabel ?? "Locución",
-            duracionSeg: audioSeconds ? Math.round(audioSeconds) : null,
-            transcripcion: p.guion || null,
-            nota: p.guion ? null : "Este audio es el relato leído; no hay guion aparte.",
-          }
-        : null,
-      galeria: [...new Set([heroFile, ...photos].filter(Boolean) as string[])].map((f) => {
+      galeriaCompleta: files.map((f) => {
         const c = creditos.get(f);
-        return {
-          archivo: f,
-          src: `/images/ruta/${f}.jpg`,
-          alt: c?.alt || fuente.fichas[f]?.title || name,
-          pie: c?.pie || null,
-          autor: c?.autor || null,
-          licencia: c?.licencia || null,
-          urlFuente: c?.url_fuente || null,
-        };
+        return { archivo: f, src: `/images/ruta/${f}.jpg`, alt: c?.alt || fuente.fichas[f]?.title || name, conCreditos: gallery.some((g) => g.src.endsWith(`/${f}.jpg`)) };
       }),
       modelos3d: (p.models3d ?? []).map((m) => ({
         archivo: m.file.replace(/\.glb$/, ".json"),
@@ -495,23 +599,23 @@ for (const recorrido of recorridos) {
     });
   });
 
-  const stopIds = paradas.map(siteId);
-  routes.push({
-    id: cfg.id,
-    slug: idFrom(cfg.nombre),
-    name: cfg.nombre,
-    theme: cfg.tema,
-    summary: cfg.resumen,
-    stopIds,
-    transport: cfg.transporte,
-    limitations: cfg.limitaciones,
-    demo: false,
-  });
-  if (recorrido.illus) {
-    extensiones.push({ recorrido: cfg.id, mapaIlustrado: { ...recorrido.illus, src: `/images/ruta/${path.basename(recorrido.illus.img)}` } });
+  if (cfg.tipo === "ruta") {
+    if (routeSiteIds.length < 2) throw new Error(`La ruta ${recorrido.id} necesita al menos dos lugares.`);
+    routes.push({
+      id: cfg.id!,
+      slug: idFrom(cfg.nombre!),
+      name: cfg.nombre!,
+      theme: cfg.tema!,
+      summary: cfg.resumen!,
+      stopIds: routeSiteIds,
+      transport: cfg.transporte ?? "car",
+      limitations: cfg.limitaciones ?? [],
+      tourStopIds,
+      demo: false,
+    });
   }
-  if (recorrido.id === "concilios") {
-    avisos.otros.push("Las 6 paradas del Museo de los Concilios comparten la coordenada del museo: en interiores se eligen a mano (o por QR), no por geocerca.");
+  if (recorrido.illus) {
+    extensiones.push({ recorrido: cfg.id ?? recorrido.id, mapaIlustrado: { ...recorrido.illus, src: `/images/ruta/${path.basename(recorrido.illus.img)}` } });
   }
 }
 
@@ -519,13 +623,14 @@ for (const a of afirmaciones) {
   if (!fuente.stops.some((p) => p.id === a.parada)) avisos.otros.push(`La afirmación ${a.id} apunta a una parada que no existe («${a.parada}»).`);
 }
 
-// Las listas de afirmaciones e historias de cada lugar se derivan, como hace el gestor al publicar.
+// Listas derivadas, como hace el gestor al publicar.
 for (const site of sites) {
   site.claimIds = claims.filter((c) => c.siteId === site.id).map((c) => c.id);
   site.storyIds = stories.filter((s) => s.siteId === site.id).map((s) => s.id);
 }
+for (const stop of stops) stop.storyIds = stories.filter((s) => s.stopId === stop.id).map((s) => s.id);
 
-const heroSite = sites.find((s) => s.id === `site-parada-${idFrom(config.portada.paradaPortada)}`) ?? sites[0];
+const heroSite = siteByKey.get(config.portada.lugarPortada) ?? sites[0];
 const showcase: Showcase = {
   localities: config.portada.localidades,
   regionName: config.portada.zona,
@@ -559,7 +664,7 @@ const showcase: Showcase = {
 };
 avisos.otros.push("Los textos de portada y del asistente (preguntas de inicio, ejemplos, vocabulario) son provisionales: revísalos en «Portada y asistente».");
 
-const catalog: Catalog = { sites, claims, stories, routes, showcase };
+const catalog: Catalog = { sites, stops, claims, stories, routes, showcase };
 
 /* ---------- Comprobaciones con las reglas del gestor ---------- */
 
@@ -572,7 +677,7 @@ const advertencias = [
   ...issues
     .filter((i) => i.severity === "warning")
     .reduce((groups, i) => groups.set(i.message, [...(groups.get(i.message) ?? []), i.id]), new Map<string, string[]>()),
-].map(([message, ids]) => `${message} (${ids.length}: ${ids.map((id) => id.replace(/^site-parada-/, "")).join(", ")})`);
+].map(([message, ids]) => `${message} (${ids.length}: ${ids.map((id) => id.replace(/^(site|stop)-/, "")).join(", ")})`);
 
 /* ---------- Salida ---------- */
 
@@ -616,11 +721,12 @@ Generado el ${new Date().toISOString().slice(0, 16).replace("T", " ")} UTC desde
 
 | Qué | Cantidad |
 | --- | --- |
-| Recorridos | ${routes.length} |
-| Paradas (lugares) | ${sites.length} |
+| Rutas | ${routes.length} |
+| Lugares | ${sites.length} |
+| Paradas | ${stops.length} (${stops.filter((x) => x.audio).length} con audio) |
 | Afirmaciones | ${claims.length}${afirmacionesSinValidar ? ` (${afirmacionesSinValidar} más sin validar, fuera de la importación)` : ""}${flag("incluir-borradores") ? " (incluye borradores: solo previsualización)" : ""} |
 | Historias | ${stories.length} |
-| Paradas con imagen publicable | ${sites.filter((s) => s.image).length} |
+| Imágenes publicables (con créditos) | ${stops.reduce((n, x) => n + x.gallery.length, 0)} |
 | Registros para el gestor (en revisión) | ${registros.length} |
 
 **Comprobación con las reglas del gestor:** ${errores.length === 0 ? "sin errores; se puede importar." : `${errores.length} errores; corrígelos antes de importar.`}
@@ -665,9 +771,9 @@ ${lista(avisos.mediosQueFaltan)}
 
 ${lista(avisos.otros)}
 
-## Pendiente de la entidad Parada
+## Pendiente del modelo
 
-El modelo actual no tiene campos para la locución grabada, su transcripción, la galería, los modelos 3D ni el mapa ilustrado. Todo está en \`extensiones.json\`, enlazado a cada lugar por \`siteId\`, listo para cuando exista la entidad Parada.
+Las paradas ya llevan su locución, su transcripción y su galería. Los modelos 3D, las figuras y el mapa ilustrado aún no tienen sitio en el modelo: están en \`extensiones.json\`, enlazados por \`stopId\`.
 `;
 fs.writeFileSync(path.join(salida, "informe.md"), informe);
 
@@ -728,7 +834,7 @@ async function subir() {
   );
 }
 
-console.log(`Importación: ${routes.length} recorridos, ${sites.length} paradas, ${claims.length} afirmaciones, ${stories.length} historias.`);
+console.log(`Importación: ${routes.length} rutas, ${sites.length} lugares, ${stops.length} paradas, ${claims.length} afirmaciones, ${stories.length} historias.`);
 console.log(errores.length ? `${errores.length} errores: ver ${path.join(salida, "informe.md")}` : "Sin errores con las reglas del gestor.");
 console.log(`Salida en ${salida}`);
 

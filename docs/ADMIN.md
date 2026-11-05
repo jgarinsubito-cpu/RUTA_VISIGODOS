@@ -11,7 +11,7 @@ validator ──► /api/admin/publish ──► catalog_snapshots ───┘ 
                rebuilds + checks          (immutable versions)
 ```
 
-- **Records.** Each place, claim, story or route, plus one `showcase` record (home page and assistant settings), is a row in `public.content_records`. Its status says where its working copy stands: `draft` (being edited), `review` (sent to a validator), `published` (the web shows exactly this), `retired` (off the web).
+- **Records.** Each place, stop, claim, story or route, plus one `showcase` record (home page and assistant settings), is a row in `public.content_records`. Its status says where its working copy stands: `draft` (being edited), `review` (sent to a validator), `published` (the web shows exactly this), `retired` (off the web).
 - **Publishing** builds one complete catalog from the records the validator selects (in review) plus what the web already shows for everything else, checks it, and stores it as a new numbered version in `public.catalog_snapshots`. A draft never rides along with someone else's publication.
 - **The visitor app** reads only the latest version (`web/src/data/published.ts`), cached and tagged `catalog`. Publishing revalidates the tag, so the next request shows the new version; otherwise the cache refreshes every 5 minutes. Without Supabase configured, before the first publication, or if the store is down or a version fails its checks, the app keeps the bundled demo catalog (`web/src/data/catalog.ts`) or the last good version. The visitor app never depends on the store being up.
 - **Restoring** an earlier version publishes a copy of it as a new version (history is never rewritten). Records whose working copy no longer matches the web go back to draft, so they are not silently re-released.
@@ -31,6 +31,19 @@ Roles are enforced by the database (row-level security and a trigger in `web/sup
 | `validator` | Everything an editor can, plus publish, return a record to draft with a note, and restore an earlier version |
 
 Changing a record's content always makes it a draft again, for everyone, so an unreviewed change can never be published by accident.
+
+## Stops (paradas)
+
+A **stop** is a point inside a place where the guided tour stops: a dig area, a museum room, a viewpoint (the brief's «punto de interés»). The planner works with places; the guided tour, the recorded narration and stop-by-stop stories work with stops.
+
+- A place with **two or more stops** gets a guided visit (`/lugares/<slug>/visita`) and lists its stops on its page, each with its audio and stories. A place with one stop is shown as a whole.
+- Each stop has an order inside its place, optional coordinates and arrival radius (without them, or **indoors**, the visitor advances by hand), its **narration** (audio file, duration, label and the full **transcript**, which is required) and a **gallery** of images with credits.
+- **Solo en rutas**: the stop is told on routes that pass through the place, but not in the place's own visit (for example, the first stop of the territory route, at the Guarrazar dig).
+- A story can be told at a stop (*Parada* in the story form). A route can choose which stops its guided tour tells, in order (*Recorrido guiado* in the route form); otherwise it tells every stop of each place.
+- Checks: stops point to published places; two stops of a place cannot share an order; a transcript must be complete; route tour stops must belong to the route's places. Warnings for stops without coordinates, with approximate coordinates or without audio.
+- Audio goes to the public `stop-audio` bucket (MP3, M4A, AAC or OGG, up to 30 MB); images to `place-images`.
+
+Apply `web/supabase/migrations/20261105120000_stops.sql` after the content admin migration.
 
 ## Setup
 
@@ -68,6 +81,7 @@ Changing a record's content always makes it a draft again, for everyone, so an u
 - Page titles and descriptions in `web/src/app/**/layout.tsx` and the product name stay in code.
 - An open visitor tab keeps the version it loaded until it is reloaded.
 - Spanish only, like the rest of the pilot.
+- 3D models and the illustrated route map are not in the model yet (the content importer keeps them in `contenidos/salida/extensiones.json`).
 
 ## Code map
 

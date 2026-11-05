@@ -24,5 +24,5 @@ export default async function GuidedTourPage({ params }: Props) {
   await loadPublishedCatalog();
   const route = getRouteBySlug(slug);
   if (!route) notFound();
-  return <GuidedTour routeId={route.id} />;
+  return <GuidedTour source={{ kind: "route", id: route.id }} />;
 }

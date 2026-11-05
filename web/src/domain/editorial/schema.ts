@@ -6,7 +6,7 @@
  * Errors are reported in Spanish (zod's "es" locale): editors read them in the admin.
  */
 import { z } from "zod";
-import type { Catalog, Route, Showcase, Site, Story, ValidatedClaim } from "@/domain/types";
+import type { Catalog, Route, Showcase, Site, Stop, Story, ValidatedClaim } from "@/domain/types";
 
 const LOCALE = z.locales.es().localeError;
 
@@ -36,6 +36,12 @@ const imageSrc = z
   .trim()
   .max(500)
   .regex(/^(\/images\/[\w./-]+|https:\/\/[^\s"'<>]+)$/, "Debe ser una ruta /images/… o una dirección https://");
+/** Bundled media live under /media; uploads are https URLs in the content media store. */
+const mediaSrc = z
+  .string()
+  .trim()
+  .max(500)
+  .regex(/^(\/media\/[\w./-]+|https:\/\/[^\s"'<>]+)$/, "Debe ser una ruta /media/… o una dirección https://");
 const clock = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Hora en formato HH:MM");
 
 export const SourceRefSchema = z.object({
@@ -72,6 +78,12 @@ export const PlaceImageSchema = z.object({
     .optional(),
 });
 
+const CoordinatesSchema = z.object({
+  lat: z.number().min(-90).max(90),
+  lng: z.number().min(-180).max(180),
+  approximate: z.boolean(),
+});
+
 const siteShape = {
   id,
   slug: id,
@@ -81,11 +93,7 @@ const siteShape = {
   visigothic: z.boolean(),
   tagline: text(200),
   summary: text(1200),
-  coordinates: z.object({
-    lat: z.number().min(-90).max(90),
-    lng: z.number().min(-180).max(180),
-    approximate: z.boolean(),
-  }),
+  coordinates: CoordinatesSchema,
   visitMinutes: z.number().int().min(5).max(600),
   hours: OpeningInfoSchema,
   access: z.object({ status: z.enum(["verified", "unknown"]), stepFree: z.boolean().optional(), note: text(400).optional() }),
@@ -132,6 +140,7 @@ export const ClaimSchema = z.object({
 export const StorySchema = z.object({
   id,
   siteId: id,
+  stopId: id.optional(),
   title: text(120),
   body: text(1500),
   claimIds: z.array(id).min(1, "Elige al menos una ficha").max(10),
@@ -149,8 +158,35 @@ export const RouteSchema = z.object({
   transport: z.enum(["walk", "car"]),
   keywords: z.array(text(60)).max(30).optional(),
   limitations: z.array(text(200)).max(10),
+  tourStopIds: z.array(id).max(60).optional(),
   demo: z.boolean(),
 });
+
+export const StopAudioSchema = z.object({
+  src: mediaSrc,
+  durationSeconds: z.number().int().min(1).max(7200),
+  label: text(60),
+  transcript: text(12000),
+  credit: text(200).optional(),
+});
+
+const stopShape = {
+  id,
+  siteId: id,
+  order: z.number().int().min(1).max(200),
+  name: text(120),
+  tagline: text(200).optional(),
+  coordinates: CoordinatesSchema.optional(),
+  radiusMeters: z.number().int().min(10).max(1000).optional(),
+  indoor: z.boolean().optional(),
+  routeOnly: z.boolean().optional(),
+  audio: StopAudioSchema.optional(),
+  gallery: z.array(PlaceImageSchema).max(30),
+};
+
+/** A stop as an editor writes it: its story list is derived when the catalog is built. */
+export const StopDataSchema = z.object(stopShape);
+export const StopSchema = z.object({ ...stopShape, storyIds: z.array(id).max(50) });
 
 const groupCopy = z.object({ title: text(80), intro: text(300) });
 
@@ -175,6 +211,8 @@ export const ShowcaseSchema = z.object({
 
 export const CatalogSchema = z.object({
   sites: z.array(SiteSchema).max(500),
+  // Versions published before stops existed have none.
+  stops: z.array(StopSchema).max(2000).default([]),
   claims: z.array(ClaimSchema).max(5000),
   stories: z.array(StorySchema).max(2000),
   routes: z.array(RouteSchema).max(100),
@@ -183,20 +221,23 @@ export const CatalogSchema = z.object({
 
 export type SiteData = Omit<Site, "claimIds" | "storyIds">;
 export type ClaimData = Omit<ValidatedClaim, "status" | "version">;
+export type StopData = Omit<Stop, "storyIds">;
 
 /** What an editor saves for each kind of record. */
 export interface RecordDataByKind {
   site: SiteData;
+  stop: StopData;
   claim: ClaimData;
   story: Story;
   route: Route;
   showcase: Showcase;
 }
 export type RecordKind = keyof RecordDataByKind;
-export const RECORD_KINDS = ["site", "claim", "story", "route", "showcase"] as const satisfies readonly RecordKind[];
+export const RECORD_KINDS = ["site", "stop", "claim", "story", "route", "showcase"] as const satisfies readonly RecordKind[];
 
 const DATA_SCHEMAS: Record<RecordKind, z.ZodType> = {
   site: SiteDataSchema,
+  stop: StopDataSchema,
   claim: ClaimDataSchema,
   story: StorySchema,
   route: RouteSchema,

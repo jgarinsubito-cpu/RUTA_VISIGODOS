@@ -351,12 +351,12 @@ export const actions = {
     }));
   },
 
-  /** Start (or restart) a guided tour at a stop. */
-  startTour(routeId: RouteId, mode: TourProgress["mode"], startIndex = 0) {
+  /** Start (or restart) a guided tour of a route, or of the stops of one place, at a stop. */
+  startTour(tourId: RouteId | SiteId, mode: TourProgress["mode"], startIndex = 0) {
     const now = new Date().toISOString();
     setState((s) => ({
       ...s,
-      tour: { routeId, mode, currentIndex: startIndex, visitedSiteIds: [], startedAt: now, updatedAt: now },
+      tour: { tourId, mode, currentIndex: startIndex, visitedStopIds: [], startedAt: now, updatedAt: now },
     }));
   },
 
@@ -368,7 +368,7 @@ export const actions = {
   },
 
   /** The visitor reached a stop (geofence or "Ya estoy aquí"): record it and show it. */
-  markTourArrival(siteId: SiteId, index: number) {
+  markTourArrival(stopId: string, index: number) {
     setState((s) =>
       s.tour
         ? {
@@ -376,7 +376,7 @@ export const actions = {
             tour: {
               ...s.tour,
               currentIndex: index,
-              visitedSiteIds: s.tour.visitedSiteIds.includes(siteId) ? s.tour.visitedSiteIds : [...s.tour.visitedSiteIds, siteId],
+              visitedStopIds: s.tour.visitedStopIds.includes(stopId) ? s.tour.visitedStopIds : [...s.tour.visitedStopIds, stopId],
               updatedAt: new Date().toISOString(),
             },
           }

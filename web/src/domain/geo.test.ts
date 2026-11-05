@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { getSite } from "@/data/content";
 import type { Site } from "./types";
-import { EXIT_FACTOR, distanceMeters, formatDistance, geofenceRadius, MAX_ACCURACY_M, updateGeofence } from "./geo";
+import { EXIT_FACTOR, distanceMeters, formatDistance, geofenceRadius, MAX_ACCURACY_M, siteZone, updateGeofence } from "./geo";
 
 const SAN_ROMAN = getSite("site-san-roman")!;
 const CRISTO = getSite("site-cristo-luz")!;
 const GUARRAZAR = getSite("site-guarrazar")!;
-const STOPS: Site[] = [SAN_ROMAN, CRISTO];
+const STOPS = [SAN_ROMAN, CRISTO].map(siteZone);
 
 /** A point `meters` north of a site. */
 function north(site: Site, meters: number, accuracy = 10) {
@@ -35,13 +35,13 @@ describe("distance and formatting", () => {
 describe("updateGeofence", () => {
   it("enters the zone of the stop the visitor is at", () => {
     const u = updateGeofence(STOPS, north(SAN_ROMAN, 5), null);
-    expect(u).toEqual({ insideSiteId: SAN_ROMAN.id, entered: SAN_ROMAN.id, exited: null });
+    expect(u).toEqual({ insideId: SAN_ROMAN.id, entered: SAN_ROMAN.id, exited: null });
   });
 
   it("stays inside near the edge instead of flickering out", () => {
     const r = geofenceRadius(SAN_ROMAN);
     const u = updateGeofence(STOPS, north(SAN_ROMAN, r * (EXIT_FACTOR - 0.1)), SAN_ROMAN.id);
-    expect(u).toEqual({ insideSiteId: SAN_ROMAN.id, entered: null, exited: null });
+    expect(u).toEqual({ insideId: SAN_ROMAN.id, entered: null, exited: null });
   });
 
   it("exits once clearly outside, and does not re-enter on the way out", () => {
@@ -53,11 +53,17 @@ describe("updateGeofence", () => {
 
   it("moves from one stop's zone to the next", () => {
     const u = updateGeofence(STOPS, north(CRISTO, 0), SAN_ROMAN.id);
-    expect(u).toEqual({ insideSiteId: CRISTO.id, entered: CRISTO.id, exited: SAN_ROMAN.id });
+    expect(u).toEqual({ insideId: CRISTO.id, entered: CRISTO.id, exited: SAN_ROMAN.id });
   });
 
   it("ignores imprecise fixes", () => {
     const u = updateGeofence(STOPS, north(SAN_ROMAN, 0, MAX_ACCURACY_M + 1), null);
-    expect(u).toEqual({ insideSiteId: null, entered: null, exited: null });
+    expect(u).toEqual({ insideId: null, entered: null, exited: null });
+  });
+
+  it("never opens a stop that is chosen by hand (indoors)", () => {
+    const zones = [{ ...siteZone(SAN_ROMAN), manualOnly: true }, siteZone(CRISTO)];
+    const u = updateGeofence(zones, north(SAN_ROMAN, 0), null);
+    expect(u).toEqual({ insideId: null, entered: null, exited: null });
   });
 });

@@ -9,6 +9,92 @@ import { IconChevronDown, IconClose } from "@/components/shell/icons";
 import { CheckField, Field, LinesField, Section, SelectField, TextField, btnSecondary, inputClass } from "../ui";
 import type { FormProps } from "./shared";
 
+function TourStopsEditor({ data, set, catalog }: Pick<FormProps<"route">, "data" | "set" | "catalog">) {
+  const [adding, setAdding] = useState("");
+  const allStops = catalog.stops ?? [];
+  const stopById = new Map(allStops.map((s) => [s.id, s]));
+  const siteName = new Map(catalog.sites.map((s) => [s.id, s.name]));
+  const candidates = data.stopIds.flatMap((siteId) => allStops.filter((s) => s.siteId === siteId).sort((a, b) => a.order - b.order));
+  const chosen = data.tourStopIds;
+  const move = (i: number, d: -1 | 1) => {
+    const next = [...chosen!];
+    [next[i], next[i + d]] = [next[i + d], next[i]];
+    set({ tourStopIds: next });
+  };
+  if (!chosen) {
+    return (
+      <div className="flex flex-col gap-3">
+        <p className="text-sm text-ink-muted">
+          Ahora el recorrido pasa por todas las paradas de cada lugar, en su orden
+          {candidates.length > 0 ? ` (${candidates.length} paradas)` : ""}. Elige paradas si la ruta solo debe contar algunas.
+        </p>
+        <button type="button" disabled={candidates.length === 0} onClick={() => set({ tourStopIds: candidates.map((s) => s.id) })} className={`${btnSecondary} self-start`}>
+          Elegir paradas
+        </button>
+      </div>
+    );
+  }
+  return (
+    <div className="flex flex-col gap-3">
+      <ol aria-label="Paradas del recorrido guiado en orden" className="flex flex-col gap-2">
+        {chosen.map((id, i) => {
+          const stop = stopById.get(id);
+          return (
+            <li key={`${id}-${i}`} className="flex items-center gap-2 rounded-xl border border-stone px-3 py-1.5">
+              <span className="w-6 shrink-0 text-sm font-semibold tabular-nums text-ink-muted">{i + 1}</span>
+              <span className="min-w-0 flex-1 text-sm text-ink">
+                {stop ? stop.name : <span className="text-danger">{id} (no está entre las paradas)</span>}
+                {stop && <span className="block text-xs text-ink-muted">{siteName.get(stop.siteId)}</span>}
+              </span>
+              <button type="button" disabled={i === 0} onClick={() => move(i, -1)} aria-label={`Subir parada ${i + 1} del recorrido`} className="grid h-11 w-11 place-items-center rounded-full text-ink-muted hover:bg-surface-muted disabled:opacity-30">
+                <IconChevronDown width={18} className="rotate-180" />
+              </button>
+              <button type="button" disabled={i === chosen.length - 1} onClick={() => move(i, 1)} aria-label={`Bajar parada ${i + 1} del recorrido`} className="grid h-11 w-11 place-items-center rounded-full text-ink-muted hover:bg-surface-muted disabled:opacity-30">
+                <IconChevronDown width={18} />
+              </button>
+              <button type="button" onClick={() => set({ tourStopIds: chosen.filter((_, j) => j !== i) })} aria-label={`Quitar parada ${i + 1} del recorrido`} className="grid h-11 w-11 place-items-center rounded-full text-ink-muted hover:bg-surface-muted">
+                <IconClose width={18} />
+              </button>
+            </li>
+          );
+        })}
+      </ol>
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
+        <div className="flex-1">
+          <Field label="Añadir parada al recorrido" path="tourStopIds">
+            {(control) => (
+              <select {...control} value={adding} onChange={(e) => setAdding(e.target.value)} className={inputClass}>
+                <option value="">Elige una parada de los lugares de la ruta</option>
+                {candidates
+                  .filter((s) => !chosen.includes(s.id))
+                  .map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {siteName.get(s.siteId)} · {s.order}. {s.name}
+                    </option>
+                  ))}
+              </select>
+            )}
+          </Field>
+        </div>
+        <button
+          type="button"
+          disabled={!adding}
+          onClick={() => {
+            set({ tourStopIds: [...chosen, adding] });
+            setAdding("");
+          }}
+          className={btnSecondary}
+        >
+          Añadir
+        </button>
+      </div>
+      <button type="button" onClick={() => set({ tourStopIds: undefined })} className="self-start text-sm font-semibold text-ink-muted underline underline-offset-4 hover:text-ink">
+        Volver a todas las paradas de cada lugar
+      </button>
+    </div>
+  );
+}
+
 export function RouteForm({ data, set, catalog, isNew, locked }: FormProps<"route">) {
   const [slugTouched, setSlugTouched] = useState(!isNew);
   const [adding, setAdding] = useState("");
@@ -133,6 +219,10 @@ export function RouteForm({ data, set, catalog, isNew, locked }: FormProps<"rout
             Añadir
           </button>
         </div>
+      </Section>
+
+      <Section title="Recorrido guiado" description="Las paradas que cuenta el recorrido guiado de la ruta, en orden.">
+        <TourStopsEditor data={data} set={set} catalog={catalog} />
       </Section>
 
       <Section title="Asistente y avisos">

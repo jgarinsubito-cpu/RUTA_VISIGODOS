@@ -8,7 +8,7 @@
 import Link from "next/link";
 import { useId, ViewTransition, type ReactNode } from "react";
 import type { Site } from "@/domain/types";
-import { claimsForSite, getSite, storiesForSite } from "@/data/content";
+import { claimsForSite, getSite, storiesForSite, storiesForStop, visitStopsForSite } from "@/data/content";
 import { proposeAdd } from "@/domain/planner";
 import { formatClock } from "@/domain/time";
 import { actions, getAppState, useAppState } from "@/state/store";
@@ -21,6 +21,7 @@ import {
   IconClose,
   IconDirections,
   IconGlobe,
+  IconHeadphones,
   IconHeart,
   IconInfo,
   IconPhone,
@@ -33,6 +34,8 @@ import { ClaimCard, StoryEvidence } from "@/components/shared/Claim";
 import { EvidenceLegend } from "@/components/shared/EvidenceBadge";
 import { HoursLabel } from "@/components/shared/HoursLabel";
 import { SiteImage } from "@/components/shared/SiteImage";
+import { Gallery, Paragraphs } from "@/components/shared/Gallery";
+import { AudioPlayer } from "@/components/tour/AudioPlayer";
 
 export interface PlacePanelProps {
   siteId: string;
@@ -197,7 +200,13 @@ export function PlacePanel({ siteId, onClose, variant }: PlacePanelProps) {
   }
 
   const claims = claimsForSite(site.id);
-  const stories = storiesForSite(site.id);
+  // A place with several stops shows them as a guided visit, each with its audio and stories. A
+  // place with one stop is shown as a whole: that stop's audio and stories are the place's.
+  const visit = visitStopsForSite(site.id);
+  const stops = visit.length > 1 ? visit : [];
+  const single = visit.length === 1 ? visit[0] : null;
+  const visitIds = new Set(stops.map((s) => s.id));
+  const stories = storiesForSite(site.id).filter((s) => !s.stopId || !visitIds.has(s.stopId));
   const sectionTitle = "font-display text-lg text-ink";
 
   const content = (
@@ -285,21 +294,75 @@ export function PlacePanel({ siteId, onClose, variant }: PlacePanelProps) {
         </dl>
       </section>
 
-      {stories.length > 0 && (
+      {stops.length > 0 && (
+        <section aria-labelledby={`${headingId}-stops`} className="flex flex-col gap-3">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <H2 id={`${headingId}-stops`} className={sectionTitle}>
+              Visita guiada · {stops.length} {stops.length === 1 ? "parada" : "paradas"}
+            </H2>
+          </div>
+          <Link
+            href={`/lugares/${site.slug}/visita`}
+            className="btn-primary inline-flex min-h-12 items-center justify-center gap-2 self-start rounded-full px-6 text-sm font-semibold"
+          >
+            <IconHeadphones width={18} height={18} />
+            Empezar la visita guiada
+          </Link>
+          <ol className="flex flex-col gap-2">
+            {stops.map((stop) => {
+              const own = storiesForStop(stop.id);
+              return (
+                <li key={stop.id}>
+                  <details className="group rounded-2xl border border-stone bg-surface">
+                    <summary className="flex min-h-12 cursor-pointer items-baseline gap-3 px-4 py-3">
+                      <span className="w-5 shrink-0 text-sm font-semibold tabular-nums text-ink-muted">{stop.order}</span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-sm font-semibold text-ink">{stop.name}</span>
+                        {stop.tagline && <span className="block text-xs text-ink-muted">{stop.tagline}</span>}
+                      </span>
+                      {stop.audio && (
+                        <span className="shrink-0 text-xs tabular-nums text-ink-muted">
+                          <span className="sr-only">Audio de </span>
+                          {Math.max(1, Math.round(stop.audio.durationSeconds / 60))} min
+                        </span>
+                      )}
+                    </summary>
+                    <div className="flex flex-col gap-3 border-t border-stone px-4 py-4">
+                      {stop.audio && <AudioPlayer audio={stop.audio} title={stop.name} />}
+                      {own.map((story) => (
+                        <article key={story.id} className="flex flex-col gap-2">
+                          <Paragraphs text={story.body} className="text-sm leading-relaxed text-ink" />
+                          <StoryEvidence story={story} />
+                        </article>
+                      ))}
+                      <Gallery images={stop.gallery} label={`Imágenes de ${stop.name}`} />
+                    </div>
+                  </details>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      )}
+
+      {(stories.length > 0 || single?.audio) && (
         <section aria-labelledby={`${headingId}-stories`} className="flex flex-col gap-3">
           <H2 id={`${headingId}-stories`} className={sectionTitle}>
             Historias del lugar
           </H2>
+          {single?.audio && <AudioPlayer audio={single.audio} title={site.name} />}
           {stories.map((story) => (
             <article key={story.id} className="rounded-2xl border border-stone bg-surface-muted p-4">
               <H3 className="font-display text-base text-ink">{story.title}</H3>
               <p className="mt-0.5 text-xs text-ink-muted">Lectura de {story.minutes} min</p>
-              <p className="mt-2 text-sm leading-relaxed text-ink">{story.body}</p>
+              <Paragraphs text={story.body} className="mt-2 text-sm leading-relaxed text-ink" />
               <StoryEvidence story={story} className="mt-3" />
             </article>
           ))}
         </section>
       )}
+
+      {single && single.gallery.length > 1 && <Gallery images={single.gallery.slice(1)} label={`Imágenes de ${site.name}`} />}
 
       <section aria-labelledby={`${headingId}-claims`} className="flex flex-col gap-3">
         <H2 id={`${headingId}-claims`} className={sectionTitle}>

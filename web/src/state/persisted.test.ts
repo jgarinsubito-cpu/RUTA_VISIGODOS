@@ -103,3 +103,18 @@ describe("stored preferences", () => {
     expect(bad.preferences).toBeUndefined();
   });
 });
+
+describe("stored guided tour", () => {
+  it("reads a tour saved before stops existed into the current shape", () => {
+    const old = { routeId: "route-tesoro", mode: "live", currentIndex: 1, visitedSiteIds: ["site-san-roman"], startedAt: "2026-10-01T10:00:00Z", updatedAt: "2026-10-01T10:30:00Z" };
+    const parsed = parseStored(JSON.stringify({ tour: old }));
+    expect(parsed?.tour).toEqual({
+      tourId: "route-tesoro",
+      mode: "live",
+      currentIndex: 1,
+      visitedStopIds: ["site-san-roman"],
+      startedAt: "2026-10-01T10:00:00Z",
+      updatedAt: "2026-10-01T10:30:00Z",
+    });
+  });
+});

@@ -1,17 +1,18 @@
 # Informe de importación
 
-Generado el 2026-11-05 18:53 UTC desde `/home/claude/tour`.
+Generado el 2026-11-05 19:14 UTC desde `/home/claude/tour`.
 
 ## Resultado
 
 | Qué | Cantidad |
 | --- | --- |
-| Recorridos | 5 |
-| Paradas (lugares) | 35 |
+| Rutas | 2 |
+| Lugares | 19 |
+| Paradas | 35 (35 con audio) |
 | Afirmaciones | 0 (177 más sin validar, fuera de la importación) |
 | Historias | 0 |
-| Paradas con imagen publicable | 0 |
-| Registros para el gestor (en revisión) | 41 |
+| Imágenes publicables (con créditos) | 0 |
+| Registros para el gestor (en revisión) | 57 |
 
 **Comprobación con las reglas del gestor:** sin errores; se puede importar.
 
@@ -21,8 +22,10 @@ Generado el 2026-11-05 18:53 UTC desde `/home/claude/tour`.
 
 ## Advertencias del gestor
 
-- Lugar visigodo sin fichas publicadas: el asistente no podrá contar su historia. (25: santa-justa, cuevas-hercules, el-salvador, san-bartolome, centro-guarrazar, guarrazar-1, guarrazar-2, guarrazar-3, guarrazar-4, guarrazar-5, guarrazar-6, vegabaja-1, vegabaja-2, vegabaja-3, vegabaja-4, vegabaja-5, concilios-1, concilios-2, concilios-3, concilios-4, concilios-5, concilios-6, territorio-1, territorio-2, territorio-6)
-- Sin foto: se mostrará un fondo de color. (35: santa-justa, cuevas-hercules, el-salvador, santo-tome, san-bartolome, covarrubias, castillo-guadamur, centro-guarrazar, casa-munecas, guarrazar-1, guarrazar-2, guarrazar-3, guarrazar-4, guarrazar-5, guarrazar-6, vegabaja-1, vegabaja-2, vegabaja-3, vegabaja-4, vegabaja-5, concilios-1, concilios-2, concilios-3, concilios-4, concilios-5, concilios-6, territorio-1, territorio-2, territorio-3, territorio-4, territorio-5, territorio-6, territorio-7, territorio-8, territorio-9)
+- Lugar visigodo sin fichas publicadas: el asistente no podrá contar su historia. (10: yacimiento-guarrazar, vega-baja, museo-concilios, santa-justa, cuevas-hercules, el-salvador, san-bartolome, centro-guarrazar, territorio-2, territorio-6)
+- Sin foto: se mostrará un fondo de color. (19: yacimiento-guarrazar, vega-baja, museo-concilios, santa-justa, cuevas-hercules, el-salvador, santo-tome, san-bartolome, covarrubias, castillo-guadamur, centro-guarrazar, casa-munecas, territorio-2, territorio-3, territorio-4, territorio-5, territorio-6, territorio-7, territorio-8)
+- Coordenadas aproximadas: tómalas en campo antes de publicar. (18: santa-justa, cuevas-hercules, el-salvador, santo-tome, san-bartolome, covarrubias, castillo-guadamur, centro-guarrazar, casa-munecas, vegabaja-3, vegabaja-5, territorio-2, territorio-3, territorio-4, territorio-5, territorio-6, territorio-7, territorio-8)
+- Sin coordenadas: la llegada no se detectará sola; el visitante avanzará a mano. (6: guarrazar-1, guarrazar-4, guarrazar-5, guarrazar-6, vegabaja-2, vegabaja-4)
 
 ## Relatos que aún no entran como historias
 
@@ -80,29 +83,66 @@ El gestor exige que cada historia cite al menos una afirmación validada de su p
 Faltan autor, licencia o URL de origen en `creditos-imagenes.csv`. Plantilla con todas las imágenes: `creditos-imagenes.plantilla.csv`.
 
 - CG01
+- CG05
+- CG06
+- CG11
+- CG13
+- CG14
+- CG18
+- CG19
+- CG21
+- CH01
+- CH02
+- CH06
 - CH07
+- CH08
+- CI01
+- CI02
+- CI03
+- CI04
+- CI05
 - CM01
+- CM02
+- DSC00947
+- DSC00950
+- DSC00952
+- DSC00955
+- DSC00956
 - FC02
+- FC03
 - LAS_PIEZAS_DE_LAS_VITRINAS
 - MSS01
+- MSS02
 - PAISAJE3D
+- SB01
+- SB02
+- SB07
+- SB08
 - SB09
+- SB10
+- SJ01
 - SJ04
+- SJ05
 - ST01
+- ST02
 - VB01
 - VB02
 - VB03
+- VB04
+- VB07
 - VB08
 - VB09
 
 ## Coordenadas provisionales
 
-- guarrazar-1 (Llegada): sin coordenada; se usa provisionalmente el centro de su recorrido (39.815837, -4.11898).
-- guarrazar-4 (El edificio del manantial): sin coordenada; se usa provisionalmente el centro de su recorrido (39.815837, -4.11898).
-- guarrazar-5 (La necrópolis y el lugar del hallazgo): sin coordenada; se usa provisionalmente el centro de su recorrido (39.815837, -4.11898).
-- guarrazar-6 (Mirador): sin coordenada; se usa provisionalmente el centro de su recorrido (39.815837, -4.11898).
-- vegabaja-2 (La gran avenida): sin coordenada; se usa provisionalmente el centro de su recorrido (39.862703, -4.035632).
-- vegabaja-4 (El palacio y la iglesia de los concilios): sin coordenada; se usa provisionalmente el centro de su recorrido (39.862703, -4.035632).
+- Yacimiento de Guarrazar: coordenada del lugar calculada como centro de sus paradas; conviene fijar la de la entrada.
+- Vega Baja de Toledo: coordenada del lugar calculada como centro de sus paradas; conviene fijar la de la entrada.
+- guarrazar-1 (Llegada): sin coordenada propia; la llegada no se detectará sola hasta tomarla en campo.
+- guarrazar-4 (El edificio del manantial): sin coordenada propia; la llegada no se detectará sola hasta tomarla en campo.
+- guarrazar-5 (La necrópolis y el lugar del hallazgo): sin coordenada propia; la llegada no se detectará sola hasta tomarla en campo.
+- guarrazar-6 (Mirador): sin coordenada propia; la llegada no se detectará sola hasta tomarla en campo.
+- vegabaja-2 (La gran avenida): sin coordenada propia; la llegada no se detectará sola hasta tomarla en campo.
+- vegabaja-4 (El palacio y la iglesia de los concilios): sin coordenada propia; la llegada no se detectará sola hasta tomarla en campo.
 
 ## Decisiones a confirmar
 
@@ -110,7 +150,6 @@ Faltan autor, licencia o URL de origen en `creditos-imagenes.csv`. Plantilla con
 - covarrubias (Portada de Covarrubias): ¿Se presenta como patrimonio no visigodo?
 - territorio-3 (El coto minero de Guadamur): ¿El coto minero se presenta como patrimonio no visigodo?
 - territorio-7 (Minas de La Trinidad): ¿Las minas se presentan como patrimonio no visigodo?
-- territorio-9 (Guadamur): Nombre provisional: el gestor no admite un lugar llamado igual que una localidad.
 
 ## Medios que faltan en el origen
 
@@ -118,9 +157,8 @@ Faltan autor, licencia o URL de origen en `creditos-imagenes.csv`. Plantilla con
 
 ## Otros avisos
 
-- Las 6 paradas del Museo de los Concilios comparten la coordenada del museo: en interiores se eligen a mano (o por QR), no por geocerca.
 - Los textos de portada y del asistente (preguntas de inicio, ejemplos, vocabulario) son provisionales: revísalos en «Portada y asistente».
 
-## Pendiente de la entidad Parada
+## Pendiente del modelo
 
-El modelo actual no tiene campos para la locución grabada, su transcripción, la galería, los modelos 3D ni el mapa ilustrado. Todo está en `extensiones.json`, enlazado a cada lugar por `siteId`, listo para cuando exista la entidad Parada.
+Las paradas ya llevan su locución, su transcripción y su galería. Los modelos 3D, las figuras y el mapa ilustrado aún no tienen sitio en el modelo: están en `extensiones.json`, enlazados por `stopId`.

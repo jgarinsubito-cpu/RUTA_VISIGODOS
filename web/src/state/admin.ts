@@ -331,6 +331,33 @@ export const adminActions = {
     return result;
   },
 
+  /** Upload a stop's narration to the public audio bucket; returns its URL and duration. */
+  async uploadAudio(file: File): Promise<{ ok: true; src: string; durationSeconds: number } | { ok: false; message: string }> {
+    const db = supabase();
+    if (!db) return { ok: false, message: "El gestor de contenidos no está disponible." };
+    const types: Record<string, string> = { "audio/mpeg": "mp3", "audio/mp4": "m4a", "audio/aac": "aac", "audio/ogg": "ogg" };
+    const ext = types[file.type];
+    if (!ext) return { ok: false, message: "Usa un audio MP3, M4A, AAC u OGG." };
+    if (file.size > 30 * 1024 * 1024) return { ok: false, message: "El audio pesa más de 30 MB: redúcelo antes de subirlo." };
+    const durationSeconds = await new Promise<number>((resolve) => {
+      const url = URL.createObjectURL(file);
+      const el = new Audio();
+      const done = (value: number) => {
+        URL.revokeObjectURL(url);
+        resolve(value);
+      };
+      el.preload = "metadata";
+      el.onloadedmetadata = () => done(Number.isFinite(el.duration) ? Math.max(1, Math.round(el.duration)) : 0);
+      el.onerror = () => done(0);
+      el.src = url;
+    });
+    if (!durationSeconds) return { ok: false, message: "No se pudo leer el audio." };
+    const path = `${crypto.randomUUID()}.${ext}`;
+    const { error } = await db.storage.from("stop-audio").upload(path, file, { contentType: file.type, upsert: false });
+    if (error) return { ok: false, message: "No se pudo subir el audio. Comprueba que tienes acceso y vuelve a probar." };
+    return { ok: true, src: db.storage.from("stop-audio").getPublicUrl(path).data.publicUrl, durationSeconds };
+  },
+
   /** Upload a place photo to the public bucket; returns its URL and size. */
   async uploadImage(file: File): Promise<{ ok: true; src: string; width: number; height: number } | { ok: false; message: string }> {
     const db = supabase();

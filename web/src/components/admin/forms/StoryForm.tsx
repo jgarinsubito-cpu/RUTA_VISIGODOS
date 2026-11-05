@@ -10,6 +10,7 @@ const AUDIENCE_LABEL: Record<Story["audience"], string> = { general: "General", 
 
 export function StoryForm({ data, set, catalog, records }: FormProps<"story">) {
   const claims = records.filter((r) => r.kind === "claim" && (r.data as RecordDataByKind["claim"]).siteId === data.siteId);
+  const stops = (catalog.stops ?? []).filter((s) => s.siteId === data.siteId).sort((a, b) => a.order - b.order);
   return (
     <>
       <Section title="Relato" description="Un texto breve para leer o escuchar en el lugar.">
@@ -18,8 +19,17 @@ export function StoryForm({ data, set, catalog, records }: FormProps<"story">) {
           value={data.siteId}
           path="siteId"
           options={catalog.sites.map((s) => ({ value: s.id, label: s.name }))}
-          onChange={(siteId) => set({ siteId, claimIds: [] })}
+          onChange={(siteId) => set({ siteId, claimIds: [], stopId: undefined })}
         />
+        {stops.length > 0 && (
+          <SelectField
+            label="Parada"
+            value={data.stopId ?? ""}
+            path="stopId"
+            options={[{ value: "", label: "El lugar en general" }, ...stops.map((s) => ({ value: s.id, label: `${s.order}. ${s.name}` }))]}
+            onChange={(stopId) => set({ stopId: stopId || undefined })}
+          />
+        )}
         <TextField label="Título" value={data.title} path="title" onChange={(title) => set({ title: title ?? "" })} />
         <TextField
           label="Texto"

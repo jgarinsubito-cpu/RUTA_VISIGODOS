@@ -27,6 +27,10 @@ function detail(record: AnyRecord, siteName: (id: string) => string): string {
       const d = record.data as RecordDataByKind["site"];
       return [d.locality, KIND_LABEL[d.kind], d.visigothic ? "Visigodo" : "Patrimonio no visigodo"].filter(Boolean).join(" · ");
     }
+    case "stop": {
+      const d = record.data as RecordDataByKind["stop"];
+      return [`${siteName(d.siteId)} · parada ${d.order}`, d.audio ? "con audio" : "sin audio", `${d.gallery.length} ${d.gallery.length === 1 ? "imagen" : "imágenes"}`].join(" · ");
+    }
     case "claim": {
       const d = record.data as RecordDataByKind["claim"];
       return `${EVIDENCE_LABEL[d.evidence]} · ${siteName(d.siteId)}`;
@@ -106,7 +110,7 @@ export function RecordList({ kind }: { kind: ListKind }) {
             ))}
           </select>
         </label>
-        {(kind === "claim" || kind === "story") && (
+        {(kind === "claim" || kind === "story" || kind === "stop") && (
           <label className="flex flex-col gap-1 text-sm font-semibold text-ink">
             Lugar
             <select value={place} onChange={(e) => setPlace(e.target.value)} className={inputClass}>

@@ -10,9 +10,9 @@
  * Publishing turns a selection of records in review into a new catalog snapshot. Records not in
  * the selection keep what the web already shows, so a draft never leaks into a release.
  */
-import type { Catalog, Showcase, Site, Story, ValidatedClaim } from "@/domain/types";
+import type { Catalog, Showcase, Site, Stop, Story, ValidatedClaim } from "@/domain/types";
 import { normalize } from "@/domain/assistant/text";
-import type { ClaimData, RecordDataByKind, RecordKind, SiteData } from "./schema";
+import type { ClaimData, RecordDataByKind, RecordKind, SiteData, StopData } from "./schema";
 
 export type RecordStatus = "draft" | "review" | "published" | "retired";
 
@@ -53,6 +53,13 @@ export function siteData(site: Site): SiteData {
   return data as SiteData;
 }
 
+/** A stop as an editor writes it: without the story list derived at publication. */
+export function stopData(stop: Stop): StopData {
+  const data: Partial<Stop> = { ...stop };
+  delete data.storyIds;
+  return data as StopData;
+}
+
 /** A claim as an editor writes it: without the status and version the workflow sets. */
 export function claimData(claim: ValidatedClaim): ClaimData {
   const data: Partial<ValidatedClaim> = { ...claim };
@@ -69,6 +76,10 @@ export function liveData<K extends RecordKind>(catalog: Catalog | null, kind: K,
       case "site": {
         const site = catalog.sites.find((s) => s.id === id);
         return site && siteData(site);
+      }
+      case "stop": {
+        const stop = (catalog.stops ?? []).find((s) => s.id === id);
+        return stop && stopData(stop);
       }
       case "claim": {
         const claim = catalog.claims.find((c) => c.id === id);
@@ -105,6 +116,7 @@ export function sameData(a: unknown, b: unknown): boolean {
 export function recordsFromCatalog(catalog: Catalog): Pick<AnyRecord, "kind" | "id" | "data" | "position">[] {
   return [
     ...catalog.sites.map((s, i) => ({ kind: "site" as const, id: s.id, data: siteData(s), position: i })),
+    ...(catalog.stops ?? []).map((s, i) => ({ kind: "stop" as const, id: s.id, data: stopData(s), position: i })),
     ...catalog.claims.map((c, i) => ({ kind: "claim" as const, id: c.id, data: claimData(c), position: i })),
     ...catalog.stories.map((s, i) => ({ kind: "story" as const, id: s.id, data: s, position: i })),
     ...catalog.routes.map((r, i) => ({ kind: "route" as const, id: r.id, data: r, position: i })),
@@ -180,8 +192,11 @@ export function buildCatalog(records: readonly AnyRecord[], previous: Catalog | 
     claimIds: claims.filter((c) => c.siteId === data.id).map((c) => c.id),
     storyIds: stories.filter((s) => s.siteId === data.id).map((s) => s.id),
   }));
+  const stops: Stop[] = pick("stop")
+    .map((data) => ({ ...data, storyIds: stories.filter((s) => s.stopId === data.id).map((s) => s.id) }))
+    .sort((a, b) => (a.siteId === b.siteId ? a.order - b.order : 0));
   const showcase = pick("showcase")[0] ?? previous?.showcase ?? NO_SHOWCASE;
-  return { sites, claims, stories, routes: pick("route"), showcase };
+  return { sites, stops, claims, stories, routes: pick("route"), showcase };
 }
 
 /** Status changes that make the records agree with a published catalog (after publishing or restoring). */
@@ -219,7 +234,7 @@ export function statusesAfterRestore(records: readonly AnyRecord[], restored: Ca
 
 /* ---------- Identifiers ---------- */
 
-const PREFIX: Record<Exclude<RecordKind, "showcase">, string> = { site: "site", claim: "claim", story: "story", route: "route" };
+const PREFIX: Record<Exclude<RecordKind, "showcase">, string> = { site: "site", stop: "stop", claim: "claim", story: "story", route: "route" };
 
 /** "Museo de Santa Cruz" -> "museo-de-santa-cruz" (at most `words` words). */
 export function slugify(text: string, words = 8): string {

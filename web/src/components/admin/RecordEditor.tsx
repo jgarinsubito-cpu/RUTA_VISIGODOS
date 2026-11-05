@@ -18,6 +18,7 @@ import { KIND_INFO, editPath, fieldLabel, formatDate, previewCatalog, recordTitl
 import { ErrorsProvider, IssueList, ResultMessage, StatusBadge, btnDanger, btnPrimary, btnSecondary, inputClass } from "./ui";
 import { ClaimForm } from "./forms/ClaimForm";
 import { RouteForm } from "./forms/RouteForm";
+import { StopForm } from "./forms/StopForm";
 import { ShowcaseForm } from "./forms/ShowcaseForm";
 import { SiteForm } from "./forms/SiteForm";
 import { StoryForm } from "./forms/StoryForm";
@@ -45,6 +46,8 @@ function emptyData(kind: RecordKind, catalog: Catalog, siteId: string | undefine
         imageTone: "stone",
         demo: true,
       };
+    case "stop":
+      return { id: "", siteId: siteId ?? "", order: 1, name: "", gallery: [] };
     case "claim":
       return { id: "", siteId: siteId ?? "", text: "", evidence: "D", source: { title: "" }, keywords: [] };
     case "story":
@@ -63,6 +66,10 @@ function provisionalId(kind: RecordKind, data: Data, taken: ReadonlySet<string>)
     case "route": {
       const slug = (data as { slug: string }).slug;
       return slug ? newRecordId(kind, slug, taken) : "";
+    }
+    case "stop": {
+      const d = data as RecordDataByKind["stop"];
+      return d.name.trim() ? newRecordId("stop", `${d.siteId.replace(/^site-/, "")} ${d.name}`, taken) : "";
     }
     case "claim": {
       const text = (data as RecordDataByKind["claim"]).text;
@@ -282,6 +289,7 @@ function EditorBody({
           </div>
           <ErrorsProvider errors={errorMap}>
             {kind === "site" && <SiteForm {...(formProps as FormProps<"site">)} />}
+            {kind === "stop" && <StopForm {...(formProps as FormProps<"stop">)} />}
             {kind === "claim" && (
               <ClaimForm
                 {...(formProps as FormProps<"claim">)}

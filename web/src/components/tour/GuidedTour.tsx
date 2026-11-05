@@ -1,14 +1,17 @@
 "use client";
 /**
- * Guided tour of a route (VoiceMap-style start screen + stop-by-stop view).
- * Live mode opens each stop when the visitor walks into its zone (domain/geo geofencing) and also
- * works by hand; virtual mode steps through from anywhere. Narration plays only when asked (no
- * automatic audio). Location and progress stay on this device.
+ * Guided tour (VoiceMap-style start screen + stop-by-stop view) of a route or of the stops inside
+ * one place (domain/tour). Live mode opens each stop when the visitor walks into its zone
+ * (domain/geo geofencing) and also works by hand; indoor stops are always chosen by hand; virtual
+ * mode steps through from anywhere. Audio plays only when asked: the recorded narration of the
+ * stop when it has one, otherwise the browser reads the text. Location and progress stay on this
+ * device.
  */
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { Site, SiteId, Story } from "@/domain/types";
-import { getRoute, getSite, storiesForSite } from "@/data/content";
+import type { Story } from "@/domain/types";
+import type { TourStop } from "@/domain/tour";
+import { getRoute, getSite, storiesForSite, storiesForStop, stopsForSite, tourStopsForRoute, tourStopsForSite } from "@/data/content";
 import { distanceMeters, formatDistance, MAX_ACCURACY_M, updateGeofence } from "@/domain/geo";
 import { routeMinutes } from "@/domain/planner";
 import { actions, useAppState } from "@/state/store";
@@ -17,6 +20,8 @@ import { formatDuration, KIND_LABEL, TRANSPORT_LABEL } from "@/lib/labels";
 import { useGeolocation, type GeoStatus } from "@/lib/useGeolocation";
 import { useSpeech } from "@/lib/useSpeech";
 import { SiteImage } from "@/components/shared/SiteImage";
+import { Gallery, Paragraphs } from "@/components/shared/Gallery";
+import { AudioPlayer } from "./AudioPlayer";
 import { StoryEvidence } from "@/components/shared/Claim";
 import { EvidenceLegend } from "@/components/shared/EvidenceBadge";
 import { DemoBadge, NonVisigothicBadge } from "@/components/shared/DemoBadge";
@@ -42,15 +47,27 @@ const secondaryButton =
   "inline-flex min-h-12 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-stone px-3.5 text-sm font-semibold text-ink transition-colors hover:bg-surface-muted disabled:opacity-50";
 
 /**
- * What is read and shown at a stop: its published story (with the claims it rests on) if it has
- * one, else the place summary, which is practical description rather than a validated claim.
+ * What is read and shown at a stop: its published stories (with the claims they rest on); for a
+ * place without stops, or a stop that is the only one of its place, the place's stories; else a
+ * practical description, which is not a validated claim.
  */
-function narration(site: Site): { title: string; text: string; story?: Story } {
-  const story = storiesForSite(site.id)[0];
-  return story ? { title: story.title, text: story.body, story } : { title: "Sobre este lugar", text: site.summary };
+function narration(t: TourStop): { title: string; text: string; stories: Story[] } {
+  const own = t.stop ? storiesForStop(t.stop.id) : [];
+  const stories = own.length > 0 ? own : !t.stop || stopsForSite(t.site.id).length === 1 ? storiesForSite(t.site.id) : [];
+  if (stories.length > 0) {
+    return { title: stories[0].title.replace(/ \(\d+\/\d+\)$/, ""), text: stories.map((s) => s.body).join("\n\n"), stories };
+  }
+  return { title: t.stop ? t.stop.name : "Sobre este lugar", text: t.stop?.tagline ?? t.site.summary, stories: [] };
 }
 
-function LocationLine({ status, fix, target }: { status: GeoStatus; fix: { lat: number; lng: number; accuracy: number } | null; target: Site }) {
+/** The photo of a stop: the first of its gallery, else its place's. */
+function stopPicture(t: TourStop) {
+  return { name: t.name, imageTone: t.site.imageTone, imageCredit: t.site.imageCredit, image: t.stop?.gallery[0] ?? t.site.image };
+}
+
+export type TourSourceRef = { kind: "route"; id: string } | { kind: "site"; id: string };
+
+function LocationLine({ status, fix, target }: { status: GeoStatus; fix: { lat: number; lng: number; accuracy: number } | null; target: TourStop }) {
   if (status === "locating") return <>Buscando tu ubicación…</>;
   if (status === "denied") return <>Sin permiso de ubicación. Puedes seguir el recorrido a mano.</>;
   if (status === "unavailable") return <>Ubicación no disponible en este dispositivo.</>;
@@ -64,42 +81,51 @@ function LocationLine({ status, fix, target }: { status: GeoStatus; fix: { lat: 
   );
 }
 
-export function GuidedTour({ routeId }: { routeId: string }) {
-  const route = getRoute(routeId);
-  const stops = useMemo(
-    () => (getRoute(routeId)?.stopIds ?? []).map((id) => getSite(id)).filter((s): s is Site => s !== undefined),
-    [routeId],
-  );
-  const saved = useAppState((s) => (s.tour?.routeId === routeId ? s.tour : null));
+export function GuidedTour({ source }: { source: TourSourceRef }) {
+  const route = source.kind === "route" ? getRoute(source.id) : undefined;
+  const place = source.kind === "site" ? getSite(source.id) : undefined;
+  const tourId = source.id;
+  const stops = useMemo(() => (route ? tourStopsForRoute(route) : place ? tourStopsForSite(place) : []), [route, place]);
+  const saved = useAppState((s) => (s.tour?.tourId === tourId ? s.tour : null));
   const [view, setView] = useState<View>("start");
   const [locating, setLocating] = useState(false);
   const [howOpen, setHowOpen] = useState(false);
   const { fix, status } = useGeolocation(locating);
   const speech = useSpeech();
-  const insideRef = useRef<SiteId | null>(null);
+  const insideRef = useRef<string | null>(null);
 
   const live = saved?.mode === "live";
   const index = Math.min(saved?.currentIndex ?? 0, Math.max(0, stops.length - 1));
   const stop = stops[index];
-  const finished = saved !== null && saved.visitedSiteIds.length === stops.length && stops.length > 0;
+  const finished = saved !== null && saved.visitedStopIds.length === stops.length && stops.length > 0;
 
   // Geofencing: entering a stop's zone opens that stop and records the arrival.
   useEffect(() => {
     if (!fix || view !== "tour" || !live) return;
     const update = updateGeofence(stops, fix, insideRef.current);
-    insideRef.current = update.insideSiteId;
+    insideRef.current = update.insideId;
     if (update.entered) {
       actions.markTourArrival(update.entered, stops.findIndex((s) => s.id === update.entered));
       if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate(160);
     }
   }, [fix, view, live, stops]);
 
-  if (!route || stops.length === 0 || !stop) return null;
+  if ((!route && !place) || stops.length === 0 || !stop) return null;
   const first = stops[0];
+  const title = route ? route.name : `Visita guiada · ${place!.name}`;
+  const backHref = route ? `/rutas/${route.slug}` : `/lugares/${place!.slug}`;
+  const backLabel = route ? route.name : place!.name;
+  const isDemo = route ? route.demo : place!.demo;
+  // Every stop indoors (a museum): location cannot detect arrivals, so it is not asked for.
+  const allManual = stops.every((t) => t.manualOnly);
+  const audioMinutes = Math.round(stops.reduce((sum, t) => sum + (t.stop?.audio?.durationSeconds ?? 0), 0) / 60);
+  const meta = route
+    ? `${TRANSPORT_LABEL[route.transport]} · Aprox. ${formatDuration(routeMinutes(route))}`
+    : `A pie · Aprox. ${formatDuration(Math.max(place!.visitMinutes, audioMinutes))}`;
 
   function start(mode: "live" | "virtual", withLocation: boolean) {
     speech.stop();
-    actions.startTour(routeId, mode, 0);
+    actions.startTour(tourId, mode, 0);
     insideRef.current = null;
     setLocating(withLocation);
     setView("tour");
@@ -114,15 +140,15 @@ export function GuidedTour({ routeId }: { routeId: string }) {
     return (
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 pb-12 pt-4 md:px-8 md:pt-8">
         <Link
-          href={`/rutas/${route.slug}`}
+          href={backHref}
           className="-ml-2 inline-flex min-h-11 items-center gap-1 self-start rounded-full px-2 text-sm font-semibold text-ink-muted hover:text-ink"
         >
           <IconChevronLeft width={18} />
-          {route.name}
+          {backLabel}
         </Link>
 
         <figure>
-          <SiteImage site={first} aspect="aspect-[4/3]" rounded="rounded-3xl" priority sizes="(min-width: 768px) 672px, 100vw" />
+          <SiteImage site={stopPicture(first)} aspect="aspect-[4/3]" rounded="rounded-3xl" priority sizes="(min-width: 768px) 672px, 100vw" />
           <figcaption className="mt-2 flex items-center gap-1.5 text-xs text-ink-muted">
             <IconPin width={14} />
             Punto de inicio: {first.name}
@@ -131,11 +157,11 @@ export function GuidedTour({ routeId }: { routeId: string }) {
 
         <header className="flex flex-col gap-2">
           <p className="text-xs text-ink-muted">
-            Recorrido guiado · {stops.length} paradas · {TRANSPORT_LABEL[route.transport]} · Aprox.{" "}
-            {formatDuration(routeMinutes(route))}
+            Recorrido guiado · {stops.length} paradas · {meta}
+            {audioMinutes > 0 && ` · ${audioMinutes} min de audio`}
           </p>
-          <h1 className="font-display text-3xl leading-tight text-ink md:text-4xl">{route.name}</h1>
-          {route.demo && <DemoBadge />}
+          <h1 className="font-display text-3xl leading-tight text-ink md:text-4xl">{title}</h1>
+          {isDemo && <DemoBadge />}
         </header>
 
         <div aria-live="polite" className="flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-surface-muted px-4 text-center text-sm text-ink-muted">
@@ -158,31 +184,55 @@ export function GuidedTour({ routeId }: { routeId: string }) {
                 <IconResume width={18} />
                 Continuar · parada {index + 1} de {stops.length}
               </button>
-              <button type="button" onClick={() => start("live", true)} className="min-h-11 text-sm font-semibold text-ink-muted underline-offset-4 hover:underline">
+              <button type="button" onClick={() => start("live", !allManual)} className="min-h-11 text-sm font-semibold text-ink-muted underline-offset-4 hover:underline">
                 Empezar de nuevo
               </button>
             </>
           ) : (
             <>
-              <button type="button" onClick={() => start("live", true)} className="btn-primary inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-body font-semibold">
+              <button type="button" onClick={() => start("live", !allManual)} className="btn-primary inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-body font-semibold">
                 <IconPlay width={17} />
-                Empezar recorrido
+                {allManual ? "Empezar la visita" : "Empezar recorrido"}
               </button>
-              <p className="text-center text-xs text-ink-muted">Pediremos tu ubicación para detectar cuándo llegas a cada parada.</p>
+              <p className="text-center text-xs text-ink-muted">
+                {allManual
+                  ? "Es una visita en interior: avanzas a mano de una parada a la siguiente."
+                  : "Pediremos tu ubicación para detectar cuándo llegas a cada parada."}
+              </p>
             </>
           )}
-          <button
-            type="button"
-            onClick={() => start("virtual", false)}
-            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-stone px-6 text-body font-semibold text-ink transition-colors hover:bg-surface-muted"
-          >
-            <IconHeadphones width={18} />
-            {saved && !finished ? "Empezar de nuevo en virtual" : "Recorrido virtual, sin ubicación"}
-          </button>
+          {!allManual && (
+            <button
+              type="button"
+              onClick={() => start("virtual", false)}
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-stone px-6 text-body font-semibold text-ink transition-colors hover:bg-surface-muted"
+            >
+              <IconHeadphones width={18} />
+              {saved && !finished ? "Empezar de nuevo en virtual" : "Recorrido virtual, sin ubicación"}
+            </button>
+          )}
         </div>
 
+        <ol className="flex flex-col divide-y divide-stone rounded-2xl border border-stone bg-surface">
+          {stops.map((t, i) => (
+            <li key={t.id} className="flex items-baseline gap-3 px-4 py-3">
+              <span className="w-5 shrink-0 text-sm font-semibold tabular-nums text-ink-muted">{i + 1}</span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-sm font-semibold text-ink">{t.name}</span>
+                {route && t.stop && t.site.name !== t.name && <span className="block text-xs text-ink-muted">{t.site.name}</span>}
+              </span>
+              {t.stop?.audio && (
+                <span className="shrink-0 text-xs tabular-nums text-ink-muted">
+                  <span className="sr-only">Audio de </span>
+                  {Math.max(1, Math.round(t.stop.audio.durationSeconds / 60))} min
+                </span>
+              )}
+            </li>
+          ))}
+        </ol>
+
         <div className="grid grid-cols-2 gap-2">
-          <a href={directionsUrl(first)} target="_blank" rel="noreferrer" className={secondaryButton}>
+          <a href={directionsUrl({ ...first.site, name: first.name, coordinates: first.coordinates })} target="_blank" rel="noreferrer" className={secondaryButton}>
             <IconDirections width={18} />
             Cómo llegar
             <span className="sr-only"> al inicio (abre Google Maps en otra pestaña)</span>
@@ -196,9 +246,10 @@ export function GuidedTour({ routeId }: { routeId: string }) {
           <ul className="flex list-disc flex-col gap-1.5 rounded-2xl border border-stone px-8 py-4 text-sm leading-relaxed text-ink-muted">
             <li>Cuando llegas a una parada, se abre sola y vibra el móvil. También puedes avanzar a mano.</li>
             <li>El recorrido virtual no usa tu ubicación: avanzas cuando quieras, desde cualquier lugar.</li>
-            <li>Pulsa «Escuchar» para oír la historia de cada lugar; nunca suena sin que lo pidas.</li>
+            <li>Pulsa «Escuchar» para oír cada parada; nunca suena sin que lo pidas. Cada audio tiene su transcripción.</li>
+            <li>En los interiores el GPS no es fiable: allí avanzas a mano.</li>
             <li>Tu ubicación solo se usa en este dispositivo: no se guarda ni se envía.</li>
-            <li>Las ubicaciones de la demo son aproximadas: la llegada puede detectarse antes o después.</li>
+            <li>Algunas ubicaciones son aproximadas: la llegada puede detectarse antes o después.</li>
           </ul>
         )}
 
@@ -220,8 +271,11 @@ export function GuidedTour({ routeId }: { routeId: string }) {
     );
   }
 
-  const reached = saved?.visitedSiteIds.includes(stop.id) ?? false;
+  const reached = saved?.visitedStopIds.includes(stop.id) ?? false;
   const text = narration(stop);
+  const audio = stop.stop?.audio;
+  const moreImages = stop.stop?.gallery.slice(1) ?? [];
+  const picture = stopPicture(stop).image;
   const last = index === stops.length - 1;
 
   return (
@@ -245,7 +299,7 @@ export function GuidedTour({ routeId }: { routeId: string }) {
 
       <ol aria-label="Progreso del recorrido" className="grid gap-1.5" style={{ gridTemplateColumns: `repeat(${stops.length}, minmax(0, 1fr))` }}>
         {stops.map((s, i) => {
-          const done = saved?.visitedSiteIds.includes(s.id);
+          const done = saved?.visitedStopIds.includes(s.id);
           return (
             <li key={s.id}>
               <button
@@ -266,16 +320,24 @@ export function GuidedTour({ routeId }: { routeId: string }) {
         })}
       </ol>
 
-      <SiteImage key={stop.id} site={stop} aspect="aspect-[16/10]" rounded="rounded-3xl" priority sizes="(min-width: 768px) 672px, 100vw" />
+      <figure className="flex flex-col gap-1.5">
+        <SiteImage key={stop.id} site={stopPicture(stop)} aspect="aspect-[16/10]" rounded="rounded-3xl" priority sizes="(min-width: 768px) 672px, 100vw" />
+        {picture && (
+          <figcaption className="text-2xs text-ink-muted">
+            {picture.caption && <span className="text-ink">{picture.caption} </span>}
+            {picture.author} · {picture.license}
+          </figcaption>
+        )}
+      </figure>
 
       <header className="flex flex-col gap-1.5">
         <p className="text-xs text-ink-muted">
-          {stop.locality} · {stop.category ?? KIND_LABEL[stop.kind]}
+          {stop.site.locality} · {stop.stop ? stop.site.name : (stop.site.category ?? KIND_LABEL[stop.site.kind])}
         </p>
         <h1 className="font-display text-3xl leading-tight text-ink">{stop.name}</h1>
         <p className="flex flex-wrap items-center gap-x-2">
-          {stop.demo && <DemoBadge />}
-          {!stop.visigothic && <NonVisigothicBadge />}
+          {stop.site.demo && <DemoBadge />}
+          {!stop.site.visigothic && <NonVisigothicBadge />}
         </p>
       </header>
 
@@ -289,6 +351,11 @@ export function GuidedTour({ routeId }: { routeId: string }) {
           <>
             <IconHeadphones width={18} className="shrink-0" />
             Recorrido virtual: avanza cuando quieras.
+          </>
+        ) : stop.manualOnly ? (
+          <>
+            <IconInfo width={18} className="shrink-0" />
+            Parada en interior: avanza a mano cuando estés en ella.
           </>
         ) : locating ? (
           <>
@@ -311,17 +378,27 @@ export function GuidedTour({ routeId }: { routeId: string }) {
         <h2 id="tour-story" className="font-display text-xl text-ink">
           {text.title}
         </h2>
-        <p className="text-body leading-relaxed text-ink">{text.text}</p>
-        {text.story ? (
+        {audio && <AudioPlayer audio={audio} title={stop.name} />}
+        <Paragraphs text={text.text} className="text-body leading-relaxed text-ink" />
+        {text.stories.length > 0 ? (
           <>
-            <StoryEvidence story={text.story} className="border-t border-stone pt-3" />
-            <EvidenceLegend />
+            <details className="border-t border-stone pt-2">
+              <summary className="min-h-11 cursor-pointer content-center text-sm font-semibold text-ink underline-offset-4 hover:underline">
+                En qué se basa este texto
+              </summary>
+              <div className="mt-2 flex flex-col gap-3">
+                {text.stories.map((story) => (
+                  <StoryEvidence key={story.id} story={story} />
+                ))}
+                <EvidenceLegend />
+              </div>
+            </details>
           </>
         ) : (
-          <p className="text-xs text-ink-muted">Descripción práctica del lugar; la historia con fuentes está en su ficha.</p>
+          <p className="text-xs text-ink-muted">Descripción práctica; la historia con fuentes está en la ficha del lugar.</p>
         )}
         <div className="flex flex-wrap gap-2">
-          {speech.supported && (
+          {!audio && speech.supported && (
             <button
               type="button"
               onClick={() => (speech.speaking ? speech.stop() : speech.speak(`${stop.name}. ${text.text}`))}
@@ -332,16 +409,16 @@ export function GuidedTour({ routeId }: { routeId: string }) {
               {speech.speaking ? "Detener" : "Escuchar"}
             </button>
           )}
-          <a href={directionsUrl(stop)} target="_blank" rel="noreferrer" className={secondaryButton}>
+          <a href={directionsUrl({ ...stop.site, name: stop.name, coordinates: stop.coordinates })} target="_blank" rel="noreferrer" className={secondaryButton}>
             <IconDirections width={18} />
             Cómo llegar
             <span className="sr-only"> (abre Google Maps en otra pestaña)</span>
           </a>
-          <Link href={`/lugares/${stop.slug}`} className={secondaryButton}>
+          <Link href={`/lugares/${stop.site.slug}`} className={secondaryButton}>
             Ver ficha
           </Link>
         </div>
-        {live && !reached && (
+        {(live || stop.manualOnly) && saved?.mode !== "virtual" && !reached && (
           <button
             type="button"
             onClick={() => actions.markTourArrival(stop.id, index)}
@@ -351,6 +428,8 @@ export function GuidedTour({ routeId }: { routeId: string }) {
           </button>
         )}
       </section>
+
+      {moreImages.length > 0 && <Gallery images={moreImages} label={`Imágenes de ${stop.name}`} />}
 
       <div className="grid grid-cols-2 gap-2">
         <button type="button" onClick={() => go(index - 1)} disabled={index === 0} className={secondaryButton}>

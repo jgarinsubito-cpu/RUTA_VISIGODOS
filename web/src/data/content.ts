@@ -9,7 +9,9 @@
  * Only published claims are exposed (PLAN.md, assistant step 2): drafts, review and superseded
  * records never reach visitors or the assistant.
  */
-import type { Catalog, Route, RouteId, Showcase, Site, SiteId, Story, StoryId, TripArea, ValidatedClaim } from "@/domain/types";
+import type { Catalog, Route, RouteId, Showcase, Site, SiteId, Stop, StopId, Story, StoryId, TripArea, ValidatedClaim } from "@/domain/types";
+import type { TourStop } from "@/domain/tour";
+import { tourStopsOf } from "@/domain/tour";
 import { DEMO_CATALOG } from "./catalog";
 
 interface Installed {
@@ -19,6 +21,9 @@ interface Installed {
   claims: readonly ValidatedClaim[];
   siteById: Map<SiteId, Site>;
   siteBySlug: Map<string, Site>;
+  stopById: Map<StopId, Stop>;
+  /** Each place's stops, in order. */
+  stopsBySite: Map<SiteId, Stop[]>;
   routeById: Map<RouteId, Route>;
   routeBySlug: Map<string, Route>;
   claimById: Map<string, ValidatedClaim>;
@@ -29,12 +34,18 @@ interface Installed {
 function install(catalog: Catalog, version: number | null): Installed {
   // The catalog should already hold published claims only; the filter guards against one that does not.
   const claims = catalog.claims.filter((c) => c.status === "published");
+  const stops = catalog.stops ?? [];
+  const stopsBySite = new Map<SiteId, Stop[]>();
+  for (const stop of stops) stopsBySite.set(stop.siteId, [...(stopsBySite.get(stop.siteId) ?? []), stop]);
+  for (const list of stopsBySite.values()) list.sort((a, b) => a.order - b.order);
   return {
     catalog,
     version,
     claims,
     siteById: new Map(catalog.sites.map((s) => [s.id, s])),
     siteBySlug: new Map(catalog.sites.map((s) => [s.slug, s])),
+    stopById: new Map(stops.map((s) => [s.id, s])),
+    stopsBySite,
     routeById: new Map(catalog.routes.map((r) => [r.id, r])),
     routeBySlug: new Map(catalog.routes.map((r) => [r.slug, r])),
     claimById: new Map(claims.map((c) => [c.id, c])),
@@ -145,4 +156,31 @@ export function storiesForSite(siteId: SiteId): Story[] {
 /** Published claims a story is based on, in the story's order; withdrawn ones are left out. */
 export function claimsForStory(story: Story): ValidatedClaim[] {
   return story.claimIds.map((id) => current.claimById.get(id)).filter((c): c is ValidatedClaim => c !== undefined);
+}
+
+export function getStop(id: StopId): Stop | undefined {
+  return current.stopById.get(id);
+}
+/** A place's stops, in order (empty for a place without stops); includes stops told only on routes. */
+export function stopsForSite(siteId: SiteId): readonly Stop[] {
+  return current.stopsBySite.get(siteId) ?? [];
+}
+/** The stops of a place's own guided visit, in order. */
+export function visitStopsForSite(siteId: SiteId): readonly Stop[] {
+  return stopsForSite(siteId).filter((s) => !s.routeOnly);
+}
+/** Stories told at a stop. */
+export function storiesForStop(stopId: StopId): Story[] {
+  return current.catalog.stories.filter((s) => s.stopId === stopId);
+}
+
+const lookups = () => ({ getSite, getStop, stopsForSite });
+
+/** Guided tour of a route, stop by stop (see Route.tourStopIds). */
+export function tourStopsForRoute(route: Route): TourStop[] {
+  return tourStopsOf({ kind: "route", route }, lookups());
+}
+/** Guided visit of one place: its stops, or the place itself when it has none. */
+export function tourStopsForSite(site: Site): TourStop[] {
+  return tourStopsOf({ kind: "site", site }, lookups());
 }

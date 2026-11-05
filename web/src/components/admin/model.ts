@@ -5,6 +5,7 @@ import type { Catalog } from "@/domain/types";
 
 export const KIND_INFO: Record<RecordKind, { one: string; many: string; path: string; newLabel: string }> = {
   site: { one: "Lugar", many: "Lugares", path: "/admin/lugares", newLabel: "Nuevo lugar" },
+  stop: { one: "Parada", many: "Paradas", path: "/admin/paradas", newLabel: "Nueva parada" },
   claim: { one: "Ficha", many: "Fichas", path: "/admin/fichas", newLabel: "Nueva ficha" },
   story: { one: "Relato", many: "Relatos", path: "/admin/relatos", newLabel: "Nuevo relato" },
   route: { one: "Ruta", many: "Rutas", path: "/admin/rutas", newLabel: "Nueva ruta" },
@@ -27,6 +28,8 @@ export function recordTitle(record: { kind: RecordKind; data: unknown }): string
   switch (record.kind) {
     case "site":
       return (record.data as RecordDataByKind["site"]).name || "Lugar sin nombre";
+    case "stop":
+      return (record.data as RecordDataByKind["stop"]).name || "Parada sin nombre";
     case "claim": {
       const text = (record.data as RecordDataByKind["claim"]).text || "Ficha sin texto";
       return text.length > 90 ? `${text.slice(0, 88)}…` : text;
@@ -100,6 +103,19 @@ const FIELD_LABEL: Record<string, string> = {
   areaHints: "Ayudas de zona",
   transportHints: "Ayudas de transporte",
   familyPrompt: "Pregunta para familias",
+  order: "Orden en el lugar",
+  radiusMeters: "Radio de llegada",
+  indoor: "En interior",
+  routeOnly: "Solo en rutas",
+  audio: "Locución",
+  "audio.src": "Locución: archivo",
+  "audio.durationSeconds": "Locución: duración",
+  "audio.label": "Locución: etiqueta",
+  "audio.transcript": "Locución: transcripción",
+  "audio.credit": "Locución: créditos",
+  gallery: "Imágenes",
+  stopId: "Parada",
+  tourStopIds: "Recorrido guiado",
 };
 
 export function fieldLabel(path: string): string {

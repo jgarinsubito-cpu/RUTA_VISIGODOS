@@ -46,11 +46,14 @@ export function validateCatalog(catalog: Catalog, previous: Catalog | null = nul
   const warn = (kind: RecordKind, id: string, message: string) => issues.push({ severity: "warning", kind, id, message });
 
   const { sites, claims, stories, routes, showcase } = catalog;
+  const stops = catalog.stops ?? [];
   const siteById = new Map(sites.map((s) => [s.id, s]));
+  const stopById = new Map(stops.map((s) => [s.id, s]));
   const claimById = new Map(claims.map((c) => [c.id, c]));
 
   for (const [kind, list] of [
     ["site", sites],
+    ["stop", stops],
     ["claim", claims],
     ["story", stories],
     ["route", routes],
@@ -94,6 +97,31 @@ export function validateCatalog(catalog: Catalog, previous: Catalog | null = nul
   }
   validateNames(catalog, error, warn);
 
+  /* Stops */
+  for (const stop of stops) {
+    const site = siteById.get(stop.siteId);
+    if (!site) error("stop", stop.id, `Apunta a un lugar que no existe («${stop.siteId}»).`);
+    const ownStories = stories.filter((s) => s.stopId === stop.id).map((s) => s.id);
+    if (!sameIds(ownStories, stop.storyIds)) error("stop", stop.id, "Sus relatos no coinciden con los relatos que apuntan a esta parada.");
+    if (!stop.coordinates && !stop.indoor) {
+      warn("stop", stop.id, "Sin coordenadas: la llegada no se detectará sola; el visitante avanzará a mano.");
+    }
+    if (stop.coordinates && site && stop.coordinates.approximate) {
+      warn("stop", stop.id, "Coordenadas aproximadas: tómalas en campo antes de publicar.");
+    }
+    if (!stop.audio) warn("stop", stop.id, "Sin locución: se podrá leer el relato, pero no escucharlo grabado.");
+    if (stop.audio && stop.audio.transcript.trim().length < 40) {
+      error("stop", stop.id, "La transcripción de la locución está incompleta: hace falta el texto entero.");
+    }
+  }
+  const stopsBySite = new Map<string, typeof stops>();
+  for (const stop of stops) stopsBySite.set(stop.siteId, [...(stopsBySite.get(stop.siteId) ?? []), stop]);
+  for (const [siteId, list] of stopsBySite) {
+    for (const order of duplicates(list.map((s) => String(s.order)))) {
+      error("stop", list.find((s) => String(s.order) === order)!.id, `Dos paradas de «${siteById.get(siteId)?.name ?? siteId}» tienen el mismo orden (${order}).`);
+    }
+  }
+
   /* Claims */
   for (const claim of claims) {
     if (!siteById.has(claim.siteId)) error("claim", claim.id, `Apunta a un lugar que no existe («${claim.siteId}»).`);
@@ -104,6 +132,11 @@ export function validateCatalog(catalog: Catalog, previous: Catalog | null = nul
   /* Stories */
   for (const story of stories) {
     if (!siteById.has(story.siteId)) error("story", story.id, `Apunta a un lugar que no existe («${story.siteId}»).`);
+    if (story.stopId) {
+      const stop = stopById.get(story.stopId);
+      if (!stop) error("story", story.id, `Apunta a una parada que no está publicada («${story.stopId}»).`);
+      else if (stop.siteId !== story.siteId) error("story", story.id, `Su parada («${story.stopId}») es de otro lugar.`);
+    }
     for (const claimId of story.claimIds) {
       const claim = claimById.get(claimId);
       if (!claim) error("story", story.id, `Se basa en una ficha que no está publicada («${claimId}»).`);
@@ -120,6 +153,14 @@ export function validateCatalog(catalog: Catalog, previous: Catalog | null = nul
     for (const keyword of route.keywords ?? []) {
       if (!isMatchForm(keyword)) error("route", route.id, `Escribe la palabra clave «${keyword}» en minúsculas y sin tildes.`);
     }
+    for (const stopId of route.tourStopIds ?? []) {
+      const stop = stopById.get(stopId);
+      if (!stop) error("route", route.id, `Su recorrido guiado pasa por una parada que no está publicada («${stopId}»).`);
+      else if (!route.stopIds.includes(stop.siteId)) {
+        error("route", route.id, `Su recorrido guiado pasa por «${stop.name}», de un lugar que no está en la ruta.`);
+      }
+    }
+    for (const stopId of duplicates(route.tourStopIds ?? [])) error("route", route.id, `El recorrido guiado repite la parada «${stopId}».`);
   }
 
   if (previous) compareWithPrevious(catalog, previous, warn);

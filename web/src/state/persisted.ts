@@ -88,14 +88,32 @@ export const PreferencesSchema = z.object({
   accessNeeds: z.array(z.enum(ACCESS_NEEDS)).max(ACCESS_NEEDS.length),
 });
 
-const TourSchema = z.object({
-  routeId: z.string(),
-  mode: z.enum(["live", "virtual"]),
-  currentIndex: z.number().int().nonnegative(),
-  visitedSiteIds: z.array(z.string()),
-  startedAt: z.string(),
-  updatedAt: z.string(),
-});
+/**
+ * Tours saved before stops existed used routeId/visitedSiteIds; they are read into the current
+ * shape (a route's tour without stops still has one stop per place, with the place's id).
+ */
+const TourSchema = z
+  .object({
+    tourId: z.string().optional(),
+    routeId: z.string().optional(),
+    mode: z.enum(["live", "virtual"]),
+    currentIndex: z.number().int().nonnegative(),
+    visitedStopIds: z.array(z.string()).optional(),
+    visitedSiteIds: z.array(z.string()).optional(),
+    startedAt: z.string(),
+    updatedAt: z.string(),
+  })
+  .refine((t) => Boolean(t.tourId ?? t.routeId))
+  .transform(
+    (t): TourProgress => ({
+      tourId: (t.tourId ?? t.routeId)!,
+      mode: t.mode,
+      currentIndex: t.currentIndex,
+      visitedStopIds: t.visitedStopIds ?? t.visitedSiteIds ?? [],
+      startedAt: t.startedAt,
+      updatedAt: t.updatedAt,
+    }),
+  );
 
 export interface Conversation {
   id: string;

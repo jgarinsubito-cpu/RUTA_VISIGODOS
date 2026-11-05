@@ -845,4 +845,4 @@ export const SHOWCASE: Showcase = {
   familyPrompt: "Plan con niños por Toledo",
 };
 
-export const DEMO_CATALOG: Catalog = { sites: SITES, claims: CLAIMS, stories: STORIES, routes: ROUTES, showcase: SHOWCASE };
+export const DEMO_CATALOG: Catalog = { sites: SITES, stops: [], claims: CLAIMS, stories: STORIES, routes: ROUTES, showcase: SHOWCASE };

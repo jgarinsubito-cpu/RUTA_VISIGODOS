@@ -17,6 +17,7 @@ import { btnPrimary, btnSecondary } from "./ui";
 const SECTIONS = [
   { href: "/admin", label: "Resumen" },
   { href: KIND_INFO.site.path, label: KIND_INFO.site.many },
+  { href: KIND_INFO.stop.path, label: KIND_INFO.stop.many },
   { href: KIND_INFO.claim.path, label: KIND_INFO.claim.many },
   { href: KIND_INFO.story.path, label: KIND_INFO.story.many },
   { href: KIND_INFO.route.path, label: KIND_INFO.route.many },
