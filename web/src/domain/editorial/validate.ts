@@ -110,6 +110,11 @@ export function validateCatalog(catalog: Catalog, previous: Catalog | null = nul
       warn("stop", stop.id, "Coordenadas aproximadas: tómalas en campo antes de publicar.");
     }
     if (!stop.audio) warn("stop", stop.id, "Sin locución: se podrá leer el relato, pero no escucharlo grabado.");
+    for (const model of stop.models ?? []) {
+      if (model.description.trim().length < 40) {
+        error("stop", stop.id, `El modelo 3D «${model.name}» necesita una explicación de qué se ha encontrado y qué se propone.`);
+      }
+    }
     if (stop.audio && stop.audio.transcript.trim().length < 40) {
       error("stop", stop.id, "La transcripción de la locución está incompleta: hace falta el texto entero.");
     }
@@ -161,6 +166,14 @@ export function validateCatalog(catalog: Catalog, previous: Catalog | null = nul
       }
     }
     for (const stopId of duplicates(route.tourStopIds ?? [])) error("route", route.id, `El recorrido guiado repite la parada «${stopId}».`);
+    if (route.illustratedMap) {
+      // Pins point to stops the route's tour goes through.
+      const tourStops = new Set(route.tourStopIds ?? stops.filter((s) => route.stopIds.includes(s.siteId)).map((s) => s.id));
+      for (const pin of route.illustratedMap.pins) {
+        if (!tourStops.has(pin.stopId)) error("route", route.id, `El mapa ilustrado tiene un punto de una parada que no está en el recorrido («${pin.stopId}»).`);
+      }
+      for (const stopId of duplicates(route.illustratedMap.pins.map((p) => p.stopId))) error("route", route.id, `El mapa ilustrado repite la parada «${stopId}».`);
+    }
   }
 
   if (previous) compareWithPrevious(catalog, previous, warn);

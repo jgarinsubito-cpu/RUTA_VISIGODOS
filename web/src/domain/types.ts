@@ -170,7 +170,43 @@ export interface Route {
    * (a place without stops is one stop). Lets a route use only some stops of a place.
    */
   tourStopIds?: StopId[];
+  /** Illustrated map of the route, with its tour stops pinned. */
+  illustratedMap?: IllustratedMap;
   demo: boolean;
+}
+
+/**
+ * How much of a 3D model rests on what was found: the seal every reconstruction carries
+ * (PLAN: "excavado, restituido o hipótesis"; plus the footprint of a geophysical survey).
+ */
+export type ModelCertainty = "excavated" | "restored" | "hypothesis" | "geophysical";
+
+/** A 3D model shown at a stop (glTF/GLB), with what it shows and how sure it is. */
+export interface StopModel {
+  /** Path under /media (bundled) or a public URL in the content media store. */
+  src: string;
+  name: string;
+  certainty: ModelCertainty;
+  /** What is found and what is proposed, in plain words. Required. */
+  description: string;
+  /** What the model is based on (panel, excavation report, publication). */
+  source?: string;
+  /** USDZ version for augmented reality on iPhone. */
+  iosSrc?: string;
+}
+
+/**
+ * An illustrated (not to scale) map of a route, with a numbered pin per tour stop. Pins are
+ * percentages of the image size.
+ */
+export interface IllustratedMap {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  caption: string;
+  credit: string;
+  pins: { stopId: StopId; x: number; y: number }[];
 }
 
 /** Recorded narration of a stop: the file, how long it lasts and its full text (accessibility). */
@@ -208,6 +244,8 @@ export interface Stop {
   audio?: StopAudio;
   /** Licensed images with credits, in display order. */
   gallery: PlaceImage[];
+  /** 3D models, each with its certainty seal. */
+  models?: StopModel[];
   /** Derived from the stories that point to this stop. */
   storyIds: StoryId[];
 }

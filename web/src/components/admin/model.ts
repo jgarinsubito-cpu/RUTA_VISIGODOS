@@ -114,6 +114,8 @@ const FIELD_LABEL: Record<string, string> = {
   "audio.transcript": "Locución: transcripción",
   "audio.credit": "Locución: créditos",
   gallery: "Imágenes",
+  models: "Modelos 3D",
+  illustratedMap: "Mapa ilustrado",
   stopId: "Parada",
   tourStopIds: "Recorrido guiado",
 };

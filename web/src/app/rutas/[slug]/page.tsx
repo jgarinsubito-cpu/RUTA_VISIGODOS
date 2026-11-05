@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
-import { getRouteBySlug, getSite, routes } from "@/data/content";
+import { getRouteBySlug, getSite, routes, tourStopsForRoute } from "@/data/content";
 import { loadPublishedCatalog } from "@/data/published";
 import type { Site } from "@/domain/types";
 import { estimateRoute } from "@/domain/planner";
@@ -12,6 +12,7 @@ import { DemoBadge } from "@/components/shared/DemoBadge";
 import { HoursLabel } from "@/components/shared/HoursLabel";
 import { SiteCard } from "@/components/shared/SiteCard";
 import { RouteActions } from "@/components/explore/RouteActions";
+import { IllustratedRouteMap } from "@/components/tour/IllustratedRouteMap";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -50,6 +51,7 @@ export default async function RouteDetailPage({ params }: Props) {
   const localities = Array.from(new Set(stops.map((s) => s.locality)));
   const approximate = stops.some((s) => s.coordinates.approximate);
   const estimate = estimateRoute(route);
+  const tourStops = tourStopsForRoute(route);
 
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 pb-12 pt-4 md:px-8 md:pt-8">
@@ -81,6 +83,19 @@ export default async function RouteDetailPage({ params }: Props) {
           {stops.length} {stops.length === 1 ? "parada" : "paradas"}
         </Fact>
       </dl>
+
+      {route.illustratedMap && (
+        <section aria-labelledby="route-map" className="flex max-w-3xl flex-col gap-3">
+          <h2 id="route-map" className="font-display text-2xl text-ink">
+            El recorrido
+          </h2>
+          <IllustratedRouteMap
+            map={route.illustratedMap}
+            stopNumbers={new Map(tourStops.map((t, i) => [t.id, i + 1]))}
+            stopNames={new Map(tourStops.map((t) => [t.id, t.name]))}
+          />
+        </section>
+      )}
 
       <section aria-labelledby="route-stops" className="flex flex-col gap-4">
         <h2 id="route-stops" className="font-display text-2xl text-ink">
@@ -114,7 +129,7 @@ export default async function RouteDetailPage({ params }: Props) {
             );
           })}
         </ol>
-        {stops.some((s) => s.image) && <p className="text-xs text-ink-muted">Fotos: Wikimedia Commons (créditos en cada ficha).</p>}
+        {stops.some((s) => s.image) && <p className="text-xs text-ink-muted">Autoría y licencia de cada foto en la ficha del lugar.</p>}
       </section>
 
       {route.limitations.length > 0 && (

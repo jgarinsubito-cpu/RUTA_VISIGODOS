@@ -116,7 +116,11 @@
       "temas": [
         "territorio",
         "paisaje"
-      ]
+      ],
+      "mapaIlustrado": {
+        "credito": "Ilustración: Ruta Visigoda de Toledo Plus.",
+        "alt": "Mapa ilustrado del territorio de Guarrazar con Guadamur, el yacimiento, los molinos del arroyo Guajaraz, las minas, la Torre de Cervatos y el castillo de Polán."
+      }
     }
   },
   "paradas": {

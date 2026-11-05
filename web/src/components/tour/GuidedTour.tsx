@@ -23,6 +23,8 @@ import { SiteImage } from "@/components/shared/SiteImage";
 import { Gallery, Paragraphs } from "@/components/shared/Gallery";
 import { AudioPlayer } from "./AudioPlayer";
 import { OfflinePack, useOnline } from "./OfflinePack";
+import { StopModels } from "./StopModels";
+import { IllustratedRouteMap } from "./IllustratedRouteMap";
 import { StoryEvidence } from "@/components/shared/Claim";
 import { EvidenceLegend } from "@/components/shared/EvidenceBadge";
 import { DemoBadge, NonVisigothicBadge } from "@/components/shared/DemoBadge";
@@ -120,6 +122,9 @@ export function GuidedTour({ source }: { source: TourSourceRef }) {
   const tourHref = route ? `/rutas/${route.slug}/recorrido` : `/lugares/${place!.slug}/visita`;
   // Pages the tour links to, saved with it: the route or place page and each place's page.
   const tourPages = [backHref, ...new Set(stops.map((t) => `/lugares/${t.site.slug}`))];
+  const illustrated = route?.illustratedMap;
+  const stopNumbers = new Map(stops.map((t, i) => [t.id, i + 1]));
+  const stopNames = new Map(stops.map((t) => [t.id, t.name]));
   const isDemo = route ? route.demo : place!.demo;
   // Every stop indoors (a museum): location cannot detect arrivals, so it is not asked for.
   const allManual = stops.every((t) => t.manualOnly);
@@ -218,6 +223,8 @@ export function GuidedTour({ source }: { source: TourSourceRef }) {
           )}
         </div>
 
+        {illustrated && <IllustratedRouteMap map={illustrated} stopNumbers={stopNumbers} stopNames={stopNames} />}
+
         <ol className="flex flex-col divide-y divide-stone rounded-2xl border border-stone bg-surface">
           {stops.map((t, i) => (
             <li key={t.id} className="flex items-baseline gap-3 px-4 py-3">
@@ -258,7 +265,7 @@ export function GuidedTour({ source }: { source: TourSourceRef }) {
           </ul>
         )}
 
-        <OfflinePack tourId={tourId} title={title} href={tourHref} pages={tourPages} stops={stops} />
+        <OfflinePack tourId={tourId} title={title} href={tourHref} pages={tourPages} stops={stops} extra={illustrated ? [illustrated.src] : []} />
 
         <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs text-ink-muted">
           <li className="inline-flex items-center gap-1.5">
@@ -442,7 +449,24 @@ export function GuidedTour({ source }: { source: TourSourceRef }) {
         )}
       </section>
 
+      {stop.stop?.models && <StopModels models={stop.stop.models} />}
+
       {moreImages.length > 0 && <Gallery images={moreImages} label={`Imágenes de ${stop.name}`} />}
+
+      {illustrated && (
+        <details className="rounded-2xl border border-stone bg-surface p-3">
+          <summary className="min-h-11 cursor-pointer content-center text-sm font-semibold text-ink">Ver en el mapa del recorrido</summary>
+          <div className="mt-2">
+            <IllustratedRouteMap
+              map={illustrated}
+              stopNumbers={stopNumbers}
+              stopNames={stopNames}
+              current={stop.id}
+              onPin={(id) => go(stops.findIndex((t) => t.id === id))}
+            />
+          </div>
+        </details>
+      )}
 
       <div className="grid grid-cols-2 gap-2">
         <button type="button" onClick={() => go(index - 1)} disabled={index === 0} className={secondaryButton}>

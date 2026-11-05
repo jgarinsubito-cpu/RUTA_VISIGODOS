@@ -84,4 +84,17 @@ describe("stop publication rules", () => {
     const route = { ...ROUTE, stopIds: [SAN_ROMAN.id, CASTILLO.id], tourStopIds: ["stop-basilica"] };
     expect(errors(STOPS, [route]).some((m) => m.includes("lugar que no está en la ruta"))).toBe(true);
   });
+
+  it("refuses a 3D model without a real explanation", () => {
+    const model = { src: "/media/3d/a.glb", name: "Planta", certainty: "excavated" as const, description: "Planta." };
+    expect(errors([{ ...STOPS[0], models: [model] }]).some((m) => m.includes("necesita una explicación"))).toBe(true);
+    const ok = { ...model, description: "Planta del edificio tal como apareció en la excavación de 2013, sin completar los muros." };
+    expect(errors([{ ...STOPS[0], models: [ok] }])).toEqual([]);
+  });
+
+  it("refuses an illustrated map pin for a stop the route's tour does not go through", () => {
+    const map = { src: "/images/ruta/m.jpg", width: 100, height: 50, alt: "Mapa", caption: "Sin escala.", credit: "Proyecto.", pins: [{ stopId: "stop-nave", x: 10, y: 10 }] };
+    const route = { ...ROUTE, stopIds: [GUARRAZAR.id, CASTILLO.id], tourStopIds: ["stop-basilica"], illustratedMap: map };
+    expect(errors(STOPS, [route]).some((m) => m.includes("mapa ilustrado"))).toBe(true);
+  });
 });

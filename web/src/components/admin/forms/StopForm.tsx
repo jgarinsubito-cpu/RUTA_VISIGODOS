@@ -4,7 +4,8 @@
  * (with the full transcript, required) and its image gallery (each image with its credits).
  */
 import { useId, useState } from "react";
-import type { PlaceImage, StopAudio } from "@/domain/types";
+import type { ModelCertainty, PlaceImage, StopAudio, StopModel } from "@/domain/types";
+import { CERTAINTY_DESCRIPTION, CERTAINTY_LABEL } from "@/components/shared/CertaintyBadge";
 import { adminActions } from "@/state/admin";
 import { AudioPlayer } from "@/components/tour/AudioPlayer";
 import { SiteImage } from "@/components/shared/SiteImage";
@@ -175,6 +176,86 @@ function GalleryEditor({ gallery, onChange, name }: { gallery: PlaceImage[]; onC
   );
 }
 
+function ModelsEditor({ models, onChange }: { models: StopModel[]; onChange: (m: StopModel[] | undefined) => void }) {
+  const [message, setMessage] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const fileId = useId();
+  const patch = (i: number, p: Partial<StopModel>) => onChange(models.map((m, j) => (j === i ? { ...m, ...p } : m)));
+
+  async function upload(file: File) {
+    setBusy(true);
+    setMessage("Subiendo el modelo…");
+    const result = await adminActions.uploadModel(file);
+    setBusy(false);
+    if (!result.ok) {
+      setMessage(result.message);
+      return;
+    }
+    onChange([...models, { src: result.src, name: file.name.replace(/\.[^.]+$/, ""), certainty: "hypothesis", description: "" }]);
+    setMessage("Modelo añadido. Elige su sello de certeza y explica qué se ha encontrado y qué se propone.");
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      <ol className="flex flex-col gap-4">
+        {models.map((m, i) => (
+          <li key={`${m.src}-${i}`} className="flex flex-col gap-3 rounded-xl border border-stone p-3">
+            <div className="flex items-start justify-between gap-2">
+              <p className="min-w-0 break-all text-xs text-ink-muted">{m.src}</p>
+              <button type="button" onClick={() => onChange(models.length > 1 ? models.filter((_, j) => j !== i) : undefined)} aria-label={`Quitar modelo ${i + 1}`} className={iconButton}>
+                <IconClose width={18} />
+              </button>
+            </div>
+            <div className="grid gap-3 md:grid-cols-2">
+              <TextField label="Nombre" value={m.name} path={`models.${i}.name`} onChange={(name) => patch(i, { name: name ?? "" })} />
+              <SelectField<ModelCertainty>
+                label="Sello de certeza"
+                value={m.certainty}
+                path={`models.${i}.certainty`}
+                options={(Object.keys(CERTAINTY_LABEL) as ModelCertainty[]).map((c) => ({ value: c, label: CERTAINTY_LABEL[c] }))}
+                onChange={(certainty) => patch(i, { certainty })}
+              />
+            </div>
+            <p className="text-xs text-ink-muted">{CERTAINTY_DESCRIPTION[m.certainty]}</p>
+            <TextField
+              label="Explicación"
+              multiline
+              rows={4}
+              value={m.description}
+              path={`models.${i}.description`}
+              hint="Qué se ha encontrado y qué se propone. Lo valida el arqueólogo responsable."
+              onChange={(description) => patch(i, { description: description ?? "" })}
+            />
+            <TextField label="En qué se basa" optional value={m.source} path={`models.${i}.source`} placeholder="Panel del yacimiento, memoria de excavación…" onChange={(source) => patch(i, { source })} />
+            <TextField label="Versión USDZ para iPhone" optional value={m.iosSrc} path={`models.${i}.iosSrc`} hint="Para verlo en realidad aumentada en iPhone." onChange={(iosSrc) => patch(i, { iosSrc })} />
+          </li>
+        ))}
+      </ol>
+      <div className="flex flex-col gap-1">
+        <label htmlFor={fileId} className="text-sm font-semibold text-ink">
+          Añadir un modelo 3D
+        </label>
+        <input
+          id={fileId}
+          type="file"
+          accept=".glb,.gltf,.usdz,model/gltf-binary,model/gltf+json"
+          disabled={busy}
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) void upload(file);
+            e.target.value = "";
+          }}
+          className={fileInput}
+        />
+        <p className="text-xs text-ink-muted">GLB o glTF; para el móvil, mejor menos de 10 MB.</p>
+        <p aria-live="polite" className="min-h-5 text-sm text-ink-muted">
+          {message ?? ""}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export function StopForm({ data, set, catalog }: FormProps<"stop">) {
   const site = catalog.sites.find((s) => s.id === data.siteId);
   const hasPoint = data.coordinates !== undefined;
@@ -245,6 +326,10 @@ export function StopForm({ data, set, catalog }: FormProps<"stop">) {
 
       <Section title="Imágenes" description="Fotos, ilustraciones y reconstrucciones de la parada. Solo con autoría, licencia y página de origen.">
         <GalleryEditor gallery={data.gallery} name={data.name || "esta parada"} onChange={(gallery) => set({ gallery })} />
+      </Section>
+
+      <Section title="Modelos 3D" description="Cada modelo lleva un sello de certeza: lo excavado, lo restituido, la hipótesis o la huella de la prospección.">
+        <ModelsEditor models={data.models ?? []} onChange={(models) => set({ models })} />
       </Section>
     </>
   );

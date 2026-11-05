@@ -148,6 +148,26 @@ export const StorySchema = z.object({
   minutes: z.number().int().min(1).max(30),
 });
 
+export const StopModelSchema = z.object({
+  src: mediaSrc,
+  name: text(120),
+  certainty: z.enum(["excavated", "restored", "hypothesis", "geophysical"]),
+  description: text(1200),
+  source: text(300).optional(),
+  iosSrc: mediaSrc.optional(),
+});
+
+const percent = z.number().min(0).max(100);
+export const IllustratedMapSchema = z.object({
+  src: imageSrc,
+  width: z.number().int().min(1).max(20000),
+  height: z.number().int().min(1).max(20000),
+  alt: text(300),
+  caption: text(400),
+  credit: text(300),
+  pins: z.array(z.object({ stopId: id, x: percent, y: percent })).max(60),
+});
+
 export const RouteSchema = z.object({
   id,
   slug: id,
@@ -159,6 +179,7 @@ export const RouteSchema = z.object({
   keywords: z.array(text(60)).max(30).optional(),
   limitations: z.array(text(200)).max(10),
   tourStopIds: z.array(id).max(60).optional(),
+  illustratedMap: IllustratedMapSchema.optional(),
   demo: z.boolean(),
 });
 
@@ -182,6 +203,7 @@ const stopShape = {
   routeOnly: z.boolean().optional(),
   audio: StopAudioSchema.optional(),
   gallery: z.array(PlaceImageSchema).max(30),
+  models: z.array(StopModelSchema).max(12).optional(),
 };
 
 /** A stop as an editor writes it: its story list is derived when the catalog is built. */

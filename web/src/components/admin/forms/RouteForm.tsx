@@ -1,12 +1,14 @@
 "use client";
 /** Route form: texts, transport, ordered stops (with the planner's duration) and assistant words. */
-import { useState } from "react";
+import { useId, useState } from "react";
+import { adminActions } from "@/state/admin";
+import { IllustratedRouteMap } from "@/components/tour/IllustratedRouteMap";
 import { slugify } from "@/domain/editorial/records";
 import { estimateRoute } from "@/domain/planner";
-import type { Route, TransportMode } from "@/domain/types";
+import type { IllustratedMap, Route, TransportMode } from "@/domain/types";
 import { TRANSPORT_LABEL, formatDuration } from "@/lib/labels";
 import { IconChevronDown, IconClose } from "@/components/shell/icons";
-import { CheckField, Field, LinesField, Section, SelectField, TextField, btnSecondary, inputClass } from "../ui";
+import { CheckField, Field, LinesField, NumberField, Section, SelectField, TextField, btnSecondary, inputClass } from "../ui";
 import type { FormProps } from "./shared";
 
 function TourStopsEditor({ data, set, catalog }: Pick<FormProps<"route">, "data" | "set" | "catalog">) {
@@ -91,6 +93,97 @@ function TourStopsEditor({ data, set, catalog }: Pick<FormProps<"route">, "data"
       <button type="button" onClick={() => set({ tourStopIds: undefined })} className="self-start text-sm font-semibold text-ink-muted underline underline-offset-4 hover:text-ink">
         Volver a todas las paradas de cada lugar
       </button>
+    </div>
+  );
+}
+
+function MapEditor({ data, set, catalog }: Pick<FormProps<"route">, "data" | "set" | "catalog">) {
+  const [message, setMessage] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const fileId = useId();
+  const map = data.illustratedMap;
+  const allStops = catalog.stops ?? [];
+  const tourIds = data.tourStopIds ?? data.stopIds.flatMap((siteId) => allStops.filter((s) => s.siteId === siteId).sort((a, b) => a.order - b.order).map((s) => s.id));
+  const stopName = new Map(allStops.map((s) => [s.id, s.name]));
+  const patch = (p: Partial<IllustratedMap>) => set({ illustratedMap: { ...(map as IllustratedMap), ...p } });
+  const pinFor = (id: string) => map?.pins.find((p) => p.stopId === id);
+  const setPin = (id: string, xy: { x?: number; y?: number }) => {
+    if (!map) return;
+    const current = pinFor(id) ?? { stopId: id, x: 50, y: 50 };
+    const next = { ...current, ...xy };
+    patch({ pins: [...map.pins.filter((p) => p.stopId !== id), next].sort((a, b) => tourIds.indexOf(a.stopId) - tourIds.indexOf(b.stopId)) });
+  };
+
+  async function upload(file: File) {
+    setBusy(true);
+    setMessage("Subiendo el mapa…");
+    const result = await adminActions.uploadImage(file);
+    setBusy(false);
+    if (!result.ok) {
+      setMessage(result.message);
+      return;
+    }
+    set({
+      illustratedMap: {
+        alt: map?.alt ?? "",
+        caption: map?.caption ?? "Ilustración sin escala. Las posiciones de las paradas son orientativas.",
+        credit: map?.credit ?? "",
+        pins: map?.pins ?? [],
+        src: result.src,
+        width: result.width,
+        height: result.height,
+      },
+    });
+    setMessage("Mapa subido. Coloca cada parada con sus coordenadas en % (0 a 100, desde la esquina superior izquierda).");
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      {map && (
+        <IllustratedRouteMap map={map} stopNumbers={new Map(tourIds.map((id, i) => [id, i + 1]))} stopNames={stopName} />
+      )}
+      <div className="flex flex-col gap-1">
+        <label htmlFor={fileId} className="text-sm font-semibold text-ink">
+          {map ? "Cambiar la imagen del mapa" : "Subir un mapa ilustrado"}
+        </label>
+        <input
+          id={fileId}
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          disabled={busy}
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) void upload(file);
+            e.target.value = "";
+          }}
+          className="min-h-11 w-full min-w-0 text-sm text-ink file:mr-3 file:min-h-11 file:rounded-full file:border file:border-stone file:bg-surface file:px-4 file:text-sm file:font-semibold file:text-ink"
+        />
+        <p aria-live="polite" className="min-h-5 text-sm text-ink-muted">
+          {message ?? ""}
+        </p>
+      </div>
+      {map && (
+        <>
+          <TextField label="Texto alternativo" value={map.alt} path="illustratedMap.alt" hint="Qué muestra el mapa, para quien no puede verlo." onChange={(alt) => patch({ alt: alt ?? "" })} />
+          <TextField label="Pie" value={map.caption} path="illustratedMap.caption" hint="Di que es una ilustración sin escala." onChange={(caption) => patch({ caption: caption ?? "" })} />
+          <TextField label="Crédito" value={map.credit} path="illustratedMap.credit" onChange={(credit) => patch({ credit: credit ?? "" })} />
+          <fieldset className="flex flex-col gap-2">
+            <legend className="text-sm font-semibold text-ink">Posición de cada parada (% del ancho y del alto)</legend>
+            {tourIds.map((id, i) => (
+              <div key={id} className="grid grid-cols-[minmax(0,1fr)_6rem_6rem] items-end gap-2">
+                <span className="pb-3 text-sm text-ink">
+                  {i + 1}. {stopName.get(id) ?? id}
+                </span>
+                <NumberField label="X" step="0.1" value={pinFor(id)?.x} path="illustratedMap.pins" onChange={(x) => setPin(id, { x })} />
+                <NumberField label="Y" step="0.1" value={pinFor(id)?.y} path="illustratedMap.pins" onChange={(y) => setPin(id, { y })} />
+              </div>
+            ))}
+          </fieldset>
+          <button type="button" onClick={() => set({ illustratedMap: undefined })} className={`${btnSecondary} self-start`}>
+            Quitar el mapa
+          </button>
+        </>
+      )}
     </div>
   );
 }
@@ -223,6 +316,10 @@ export function RouteForm({ data, set, catalog, isNew, locked }: FormProps<"rout
 
       <Section title="Recorrido guiado" description="Las paradas que cuenta el recorrido guiado de la ruta, en orden.">
         <TourStopsEditor data={data} set={set} catalog={catalog} />
+      </Section>
+
+      <Section title="Mapa ilustrado" description="Un mapa dibujado del recorrido, sin escala, con sus paradas numeradas.">
+        <MapEditor data={data} set={set} catalog={catalog} />
       </Section>
 
       <Section title="Asistente y avisos">

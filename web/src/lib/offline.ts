@@ -36,13 +36,14 @@ export function offlineSupported(): boolean {
 }
 
 /** Every file a tour needs offline: its pages, and the audio and images of its stops. */
-export function tourFiles(href: string, pages: readonly string[], stops: readonly TourStop[]): string[] {
+export function tourFiles(href: string, pages: readonly string[], stops: readonly TourStop[], extra: readonly string[] = []): string[] {
   const media = stops.flatMap((t) => [
     ...(t.stop?.audio ? [t.stop.audio.src] : []),
     ...(t.stop?.gallery.map((g) => g.src) ?? []),
+    ...(t.stop?.models?.map((m) => m.src) ?? []),
     ...(t.site.image ? [t.site.image.src] : []),
   ]);
-  return [...new Set([href, ...pages, ...media])];
+  return [...new Set([href, ...pages, ...media, ...extra])];
 }
 
 /** Build assets a page or a stylesheet refers to (scripts, styles, fonts). */

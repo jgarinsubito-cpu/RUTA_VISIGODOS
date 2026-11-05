@@ -36,6 +36,7 @@ import { HoursLabel } from "@/components/shared/HoursLabel";
 import { SiteImage } from "@/components/shared/SiteImage";
 import { Gallery, Paragraphs } from "@/components/shared/Gallery";
 import { AudioPlayer } from "@/components/tour/AudioPlayer";
+import { StopModels } from "@/components/tour/StopModels";
 
 export interface PlacePanelProps {
   siteId: string;
@@ -335,6 +336,7 @@ export function PlacePanel({ siteId, onClose, variant }: PlacePanelProps) {
                           <StoryEvidence story={story} />
                         </article>
                       ))}
+                      {stop.models && <StopModels models={stop.models} />}
                       <Gallery images={stop.gallery} label={`Imágenes de ${stop.name}`} />
                     </div>
                   </details>
@@ -362,6 +364,7 @@ export function PlacePanel({ siteId, onClose, variant }: PlacePanelProps) {
         </section>
       )}
 
+      {single?.models && <StopModels models={single.models} />}
       {single && single.gallery.length > 1 && <Gallery images={single.gallery.slice(1)} label={`Imágenes de ${site.name}`} />}
 
       <section aria-labelledby={`${headingId}-claims`} className="flex flex-col gap-3">

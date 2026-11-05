@@ -29,7 +29,22 @@ function formatDate(iso: string): string {
   return new Intl.DateTimeFormat("es-ES", { day: "numeric", month: "long", year: "numeric" }).format(new Date(iso));
 }
 
-export function OfflinePack({ tourId, title, href, pages, stops }: { tourId: string; title: string; href: string; pages: readonly string[]; stops: readonly TourStop[] }) {
+export function OfflinePack({
+  tourId,
+  title,
+  href,
+  pages,
+  stops,
+  extra = [],
+}: {
+  tourId: string;
+  title: string;
+  href: string;
+  pages: readonly string[];
+  stops: readonly TourStop[];
+  /** Other files the tour shows (the illustrated map). */
+  extra?: readonly string[];
+}) {
   const supported = useSyncExternalStore(noSubscribe, offlineSupported, () => false);
   const online = useOnline();
   const [pack, setPack] = useState<PackRecord | null>(null);
@@ -48,12 +63,13 @@ export function OfflinePack({ tourId, title, href, pages, stops }: { tourId: str
 
   if (!supported) return null;
   const audioCount = stops.filter((t) => t.stop?.audio).length;
+  const modelCount = stops.reduce((n, t) => n + (t.stop?.models?.length ?? 0), 0);
   const outdated = pack !== null && pack.catalogVersion !== catalogVersion();
 
   async function download() {
     setBusy(true);
     setMessage(null);
-    const record = await downloadTour({ tourId, title, href, catalogVersion: catalogVersion() }, tourFiles(href, pages, stops), setProgress);
+    const record = await downloadTour({ tourId, title, href, catalogVersion: catalogVersion() }, tourFiles(href, pages, stops, extra), setProgress);
     setBusy(false);
     setProgress(null);
     if (record.urls.length && (await getPack(tourId))) {
@@ -110,7 +126,8 @@ export function OfflinePack({ tourId, title, href, pages, stops }: { tourId: str
       ) : (
         <>
           <p className="text-sm text-ink-muted">
-            Guarda en el móvil los textos{audioCount > 0 ? `, los ${audioCount} audios` : ""} y las imágenes del recorrido para hacerlo donde no hay cobertura. Mejor con wifi.
+            Guarda en el móvil los textos{audioCount > 0 ? `, los ${audioCount} audios` : ""}
+            {modelCount > 0 ? `, los ${modelCount} modelos 3D` : ""} y las imágenes del recorrido para hacerlo donde no hay cobertura. Mejor con wifi.
           </p>
           <button
             type="button"

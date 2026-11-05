@@ -358,6 +358,20 @@ export const adminActions = {
     return { ok: true, src: db.storage.from("stop-audio").getPublicUrl(path).data.publicUrl, durationSeconds };
   },
 
+  /** Upload a 3D model (GLB, glTF or USDZ) to the public models bucket; returns its URL. */
+  async uploadModel(file: File): Promise<{ ok: true; src: string } | { ok: false; message: string }> {
+    const db = supabase();
+    if (!db) return { ok: false, message: "El gestor de contenidos no está disponible." };
+    const ext = file.name.toLowerCase().match(/\.(glb|gltf|usdz)$/)?.[1];
+    if (!ext) return { ok: false, message: "Usa un modelo GLB o glTF (o USDZ para iPhone)." };
+    if (file.size > 50 * 1024 * 1024) return { ok: false, message: "El modelo pesa más de 50 MB: redúcelo antes de subirlo (para el móvil, mejor menos de 10 MB)." };
+    const type = ext === "glb" ? "model/gltf-binary" : ext === "gltf" ? "model/gltf+json" : "model/vnd.usdz+zip";
+    const path = `${crypto.randomUUID()}.${ext}`;
+    const { error } = await db.storage.from("stop-models").upload(path, file, { contentType: type, upsert: false });
+    if (error) return { ok: false, message: "No se pudo subir el modelo. Comprueba que tienes acceso y vuelve a probar." };
+    return { ok: true, src: db.storage.from("stop-models").getPublicUrl(path).data.publicUrl };
+  },
+
   /** Upload a place photo to the public bucket; returns its URL and size. */
   async uploadImage(file: File): Promise<{ ok: true; src: string; width: number; height: number } | { ok: false; message: string }> {
     const db = supabase();

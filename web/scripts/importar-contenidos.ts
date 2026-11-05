@@ -35,6 +35,8 @@ import type {
   SiteKind,
   Stop,
   StopAudio,
+  StopModel,
+  ModelCertainty,
   Story,
   TransportMode,
   ValidatedClaim,
@@ -51,6 +53,8 @@ interface Modelo3dFuente {
   src?: string;
 }
 interface ParadaFuente {
+  /** Posición en el mapa ilustrado de su recorrido, en % [x, y]. */
+  px?: [number, number];
   id: string;
   route: string;
   k?: string | number;
@@ -108,6 +112,8 @@ interface ConfigRecorrido {
   resumen?: string;
   transporte?: TransportMode;
   limitaciones?: string[];
+  /** ruta: crédito y texto alternativo del mapa ilustrado (si el recorrido tiene uno). */
+  mapaIlustrado?: { credito: string; alt: string };
   /** ruta: valores por defecto de los lugares que crea cada parada. */
   tipo_lugar?: SiteKind;
   visigodo?: boolean;
@@ -399,6 +405,7 @@ const claims: ValidatedClaim[] = [];
 const routes: Route[] = [];
 const extensiones: Record<string, unknown>[] = [];
 const imagenesUsadas = new Map<string, Set<string>>();
+const modelosUsados = new Set<string>();
 /** Lugar de cada clave: la de un lugar de la configuración o la de la parada que lo creó. */
 const siteByKey = new Map<string, Site>();
 
@@ -530,6 +537,26 @@ for (const recorrido of recorridos) {
     const gallery = files.map((f) => imageFor(f, name)).filter((i): i is PlaceImage => i !== undefined);
     if (!site.image && gallery[0]) site.image = gallery[0];
 
+    // Modelos 3D, con el sello de certeza del prototipo.
+    const models: StopModel[] = (p.models3d ?? []).flatMap((m) => {
+      const base = m.file.replace(/\.(glb|json)$/, "");
+      const file = fs.existsSync(path.join(origen!, "3d", `${base}.glb`)) ? `${base}.glb` : `${base}.json`;
+      if (!fs.existsSync(path.join(origen!, "3d", file))) {
+        avisos.mediosQueFaltan.push(`3d/${file}`);
+        return [];
+      }
+      modelosUsados.add(file);
+      const certainty: ModelCertainty = /excavad/i.test(m.status)
+        ? "excavated"
+        : /restitu/i.test(m.status)
+          ? "restored"
+          : /huella|geof/i.test(m.status) || m.cls === "geo"
+            ? "geophysical"
+            : "hypothesis";
+      return [{ src: `/media/3d/${file}`, name: m.name.slice(0, 120), certainty, description: (m.text ?? m.name).slice(0, 1200), ...(m.src ? { source: m.src.slice(0, 300) } : {}) }];
+    });
+    if (models.length) avisos.revisar.push(`${p.id} (${name}): ${models.length} modelo(s) 3D pendientes de validar por Rojas (sello de certeza y explicación).`);
+
     const stop: Stop = {
       id: stopIdOf(p),
       siteId: site.id,
@@ -543,6 +570,7 @@ for (const recorrido of recorridos) {
       ...(over.lugar ? { routeOnly: true } : {}),
       ...(audio ? { audio } : {}),
       gallery,
+      ...(models.length ? { models } : {}),
       storyIds: [],
     };
     stops.push(stop);
@@ -592,14 +620,6 @@ for (const recorrido of recorridos) {
         const c = creditos.get(f);
         return { archivo: f, src: `/images/ruta/${f}.jpg`, alt: c?.alt || fuente.fichas[f]?.title || name, conCreditos: gallery.some((g) => g.src.endsWith(`/${f}.jpg`)) };
       }),
-      modelos3d: (p.models3d ?? []).map((m) => ({
-        archivo: m.file.replace(/\.glb$/, ".json"),
-        src: `/media/3d/${m.file.replace(/\.glb$/, ".json")}`,
-        nombre: m.name,
-        certeza: m.status,
-        texto: m.text ?? null,
-        fuente: m.src ?? null,
-      })),
       figura: p.fig3d ?? null,
       notaCoordenadas: p.coordnote ?? null,
     });
@@ -607,6 +627,22 @@ for (const recorrido of recorridos) {
 
   if (cfg.tipo === "ruta") {
     if (routeSiteIds.length < 2) throw new Error(`La ruta ${recorrido.id} necesita al menos dos lugares.`);
+    // Mapa ilustrado: la imagen del recorrido y la posición de cada parada.
+    let illustratedMap: Route["illustratedMap"];
+    if (recorrido.illus && fs.existsSync(path.join(origen!, recorrido.illus.img))) {
+      const pins = paradas.flatMap((p) => (Array.isArray(p.px) && p.px.length === 2 ? [{ stopId: stopIdOf(p), x: Number(p.px[0]), y: Number(p.px[1]) }] : []));
+      if (pins.length < paradas.length) avisos.otros.push(`${recorrido.id}: ${paradas.length - pins.length} paradas sin posición en el mapa ilustrado.`);
+      if (!cfg.mapaIlustrado) avisos.revisar.push(`${recorrido.id}: el mapa ilustrado necesita crédito y texto alternativo («mapaIlustrado» en la configuración).`);
+      illustratedMap = {
+        src: `/images/ruta/${path.basename(recorrido.illus.img)}`,
+        width: recorrido.illus.w,
+        height: recorrido.illus.h,
+        alt: cfg.mapaIlustrado?.alt ?? `Mapa ilustrado de ${cfg.nombre}`,
+        caption: (recorrido.illus.cap ?? "Ilustración sin escala.").slice(0, 400),
+        credit: cfg.mapaIlustrado?.credito ?? "Crédito pendiente.",
+        pins,
+      };
+    }
     routes.push({
       id: cfg.id!,
       slug: idFrom(cfg.nombre!),
@@ -617,11 +653,9 @@ for (const recorrido of recorridos) {
       transport: cfg.transporte ?? "car",
       limitations: cfg.limitaciones ?? [],
       tourStopIds,
+      ...(illustratedMap ? { illustratedMap } : {}),
       demo: false,
     });
-  }
-  if (recorrido.illus) {
-    extensiones.push({ recorrido: cfg.id ?? recorrido.id, mapaIlustrado: { ...recorrido.illus, src: `/images/ruta/${path.basename(recorrido.illus.img)}` } });
   }
 }
 
@@ -779,7 +813,7 @@ ${lista(avisos.otros)}
 
 ## Pendiente del modelo
 
-Las paradas ya llevan su locución, su transcripción y su galería. Los modelos 3D, las figuras y el mapa ilustrado aún no tienen sitio en el modelo: están en \`extensiones.json\`, enlazados por \`stopId\`.
+Las paradas llevan su locución con transcripción, su galería y sus modelos 3D; las rutas, su mapa ilustrado. Solo las figuras (imagen aérea de la reconstrucción) quedan en \`extensiones.json\`.
 `;
 fs.writeFileSync(path.join(salida, "informe.md"), informe);
 
@@ -795,11 +829,8 @@ if (flag("copiar-medios")) {
   for (const r of recorridos) if (r.illus) copy(path.join(origen, r.illus.img), path.join(webDir, "public/images/ruta", path.basename(r.illus.img)));
   for (const p of fuente.stops) {
     if (p.audio) copy(path.join(origen, "audio", p.audio), path.join(webDir, "public/media/audio", p.audio));
-    for (const m of p.models3d ?? []) {
-      const json = m.file.replace(/\.glb$/, ".json");
-      copy(path.join(origen, "3d", json), path.join(webDir, "public/media/3d", json));
-    }
   }
+  for (const file of modelosUsados) copy(path.join(origen, "3d", file), path.join(webDir, "public/media/3d", file));
   console.log("Medios copiados a web/public/images/ruta y web/public/media.");
 }
 

@@ -41,7 +41,12 @@ A **stop** is a point inside a place where the guided tour stops: a dig area, a 
 - **Solo en rutas**: the stop is told on routes that pass through the place, but not in the place's own visit (for example, the first stop of the territory route, at the Guarrazar dig).
 - A story can be told at a stop (*Parada* in the story form). A route can choose which stops its guided tour tells, in order (*Recorrido guiado* in the route form); otherwise it tells every stop of each place.
 - Checks: stops point to published places; two stops of a place cannot share an order; a transcript must be complete; route tour stops must belong to the route's places. Warnings for stops without coordinates, with approximate coordinates or without audio.
-- Audio goes to the public `stop-audio` bucket (MP3, M4A, AAC or OGG, up to 30 MB); images to `place-images`.
+- **3D models** (GLB or glTF, optional USDZ for AR on iPhone) carry a certainty seal — *Excavado*, *Restituido*, *Hipótesis* or *Huella geofísica* — and a required explanation of what was found and what is proposed. Visitors open the viewer on demand (it is not downloaded otherwise) and can use AR where the device supports it.
+- Audio goes to the public `stop-audio` bucket (MP3, M4A, AAC or OGG, up to 30 MB); models to `stop-models` (up to 50 MB; keep them under 10 MB for phones); images to `place-images`.
+
+A route can have an **illustrated map** (not to scale): an image with alt text, caption and credit, and the position of each tour stop as a percentage of its width and height. It is shown on the route page and the guided tour, where its pins jump to the stop. Pins must belong to stops of the route's tour.
+
+Apply `web/supabase/migrations/20261105130000_stop_models.sql` for the models bucket.
 
 Apply `web/supabase/migrations/20261105120000_stops.sql` after the content admin migration.
 
@@ -81,7 +86,7 @@ Apply `web/supabase/migrations/20261105120000_stops.sql` after the content admin
 - Page titles and descriptions in `web/src/app/**/layout.tsx` and the product name stay in code.
 - An open visitor tab keeps the version it loaded until it is reloaded.
 - Spanish only, like the rest of the pilot.
-- 3D models and the illustrated route map are not in the model yet (the content importer keeps them in `contenidos/salida/extensiones.json`).
+- Interactive maps of each place's stops are not drawn yet; the illustrated route map and the planner's map cover routes.
 
 ## Code map
 
