@@ -1,6 +1,6 @@
 # Informe de importación
 
-Generado el 2026-11-05 18:04 UTC desde `/home/claude/tour`.
+Generado el 2026-11-05 18:53 UTC desde `/home/claude/tour`.
 
 ## Resultado
 
@@ -8,7 +8,7 @@ Generado el 2026-11-05 18:04 UTC desde `/home/claude/tour`.
 | --- | --- |
 | Recorridos | 5 |
 | Paradas (lugares) | 35 |
-| Afirmaciones | 0 |
+| Afirmaciones | 0 (177 más sin validar, fuera de la importación) |
 | Historias | 0 |
 | Paradas con imagen publicable | 0 |
 | Registros para el gestor (en revisión) | 41 |
@@ -26,7 +26,7 @@ Generado el 2026-11-05 18:04 UTC desde `/home/claude/tour`.
 
 ## Relatos que aún no entran como historias
 
-El gestor exige que cada historia cite al menos una afirmación validada de su parada. Estas paradas tienen relato pero no afirmaciones en `afirmaciones.json`; su relato está completo en `extensiones.json` y en la ficha se ve el primer párrafo como descripción.
+El gestor exige que cada historia cite al menos una afirmación validada de su parada. Estas paradas tienen relato pero ninguna afirmación validada en `afirmaciones.json`; su relato está completo en `extensiones.json` y en la ficha se ve el primer párrafo como descripción.
 
 - santa-justa
 - cuevas-hercules

@@ -1,0 +1,3181 @@
+[
+  {
+    "id": "claim-guarrazar-1-01",
+    "parada": "guarrazar-1",
+    "texto": "Guarrazar está a unos 10 km al suroeste de Toledo, en el término de Guadamur, junto a la Fuente de Guarrazar.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "217"
+    },
+    "palabrasClave": [
+      "guadamur",
+      "guarrazar",
+      "situacion",
+      "toledo"
+    ],
+    "origen": "FM-01 §1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-1-02",
+    "parada": "guarrazar-1",
+    "texto": "El manantial de Guarrazar es permanente.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "225, n. 8"
+    },
+    "palabrasClave": [
+      "agua",
+      "fuente",
+      "manantial"
+    ],
+    "origen": "FM-01 §1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-1-03",
+    "parada": "guarrazar-1",
+    "texto": "El trazado más corto entre Mérida y Toledo pasaba por Cervatos, a poco más de 1 km al sur de Guarrazar (mapa de Coello, 1889).",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "217"
+    },
+    "palabrasClave": [
+      "calzada",
+      "camino",
+      "cervatos",
+      "merida"
+    ],
+    "origen": "FM-01 §1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-1-04",
+    "parada": "guarrazar-1",
+    "texto": "El lugar estuvo ocupado desde la prehistoria reciente hasta inicios de la Baja Edad Media: épocas carpetana, romana, hispanovisigoda, emiral y califal.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "217, n. 2"
+    },
+    "palabrasClave": [
+      "epocas",
+      "ocupacion",
+      "prehistoria",
+      "romana"
+    ],
+    "origen": "FM-01 §1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-1-05",
+    "parada": "guarrazar-1",
+    "texto": "El apogeo del santuario fue el siglo VII, y su final llegó en el segundo decenio del siglo VIII.",
+    "nivel": "I",
+    "atribucion": "Rojas, Vicente y Eger (2022)",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "241-247"
+    },
+    "palabrasClave": [
+      "apogeo",
+      "cronologia",
+      "siglo vii"
+    ],
+    "origen": "FM-01 §4",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-1-06",
+    "parada": "guarrazar-1",
+    "texto": "El Tesoro de Guarrazar apareció en agosto de 1858, en días de tormenta.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX",
+      "pagina": "116"
+    },
+    "palabrasClave": [
+      "1858",
+      "hallazgo",
+      "tesoro"
+    ],
+    "origen": "FM-01 §2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-1-07",
+    "parada": "guarrazar-1",
+    "texto": "Los descubridores vendieron piezas del tesoro por partes, y una parte importante salió hacia Francia.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Mesa redonda «Una nueva mirada sobre el Tesoro de Guarrazar», Museo Arqueológico Nacional (2025), transcripción"
+    },
+    "palabrasClave": [
+      "dispersion",
+      "francia",
+      "tesoro",
+      "venta"
+    ],
+    "origen": "FM-01 §2 [PISTA]",
+    "revisar": "En FM-01 es una PISTA de la mesa redonda del MAN (validación n.º 7). Contrastar con Balmaseda y el Archivo de Palacio antes de publicar. El relato dice además «la mayoría acabó en Francia»: ¿es correcto?",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-1-08",
+    "parada": "guarrazar-1",
+    "texto": "La mayor parte del tesoro se expone hoy en el Museo Arqueológico Nacional, en Madrid; otras piezas están en el Musée de Cluny, en París.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX"
+    },
+    "palabrasClave": [
+      "cluny",
+      "donde esta",
+      "man",
+      "museo",
+      "tesoro"
+    ],
+    "origen": "FM-01 §3 (ver FM-10)",
+    "revisar": "La ficha no da página para el reparto actual. Añadir referencia.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-1-09",
+    "parada": "guarrazar-1",
+    "texto": "Camps (1963) calificó de «insignificantes» los restos de Guarrazar y defendió que el tesoro procedía de Toledo.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "218-219"
+    },
+    "palabrasClave": [
+      "camps",
+      "investigacion",
+      "toledo"
+    ],
+    "origen": "FM-01 §2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-1-10",
+    "parada": "guarrazar-1",
+    "texto": "Desde 2013 se desarrolla el proyecto «Guarrazar: Arqueología y Nuevos Recursos», del Ayuntamiento de Guadamur, dirigido por J. M. Rojas.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "219"
+    },
+    "palabrasClave": [
+      "2013",
+      "excavaciones",
+      "proyecto",
+      "rojas"
+    ],
+    "origen": "FM-01 §2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-1-11",
+    "parada": "guarrazar-1",
+    "texto": "Guarrazar fue un santuario hispanovisigodo formado por el edificio del manantial con su necrópolis, un edificio en L, un posible complejo monástico-palacial y una basílica.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "239"
+    },
+    "palabrasClave": [
+      "basilica",
+      "conjunto",
+      "hospital",
+      "santuario"
+    ],
+    "origen": "FM-01 §4",
+    "revisar": "FM-01 lo marca como hipótesis [H]; el relato lo presenta como hecho («las excavaciones han demostrado»). ¿Se puede afirmar como interpretación de los excavadores [I]?",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-1-12",
+    "parada": "guarrazar-1",
+    "texto": "Una de las cruces del tesoro, la de Sonnica, lleva la inscripción «+IN DI NOMINE OFFERET SONNICA SCE MARIE IN SORBACES».",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX",
+      "pagina": "136, 139, 147"
+    },
+    "palabrasClave": [
+      "cruz",
+      "inscripcion",
+      "sonnica",
+      "sorbaces"
+    ],
+    "origen": "FM-01 §3",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-1-13",
+    "parada": "guarrazar-1",
+    "texto": "El santuario pudo llamarse Santa María de Sorbaces, el nombre que aparece en la cruz de Sonnica.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Rojas (2025), «Indicios de un edificio monástico-palacial en el santuario hispanovisigodo de Sorbaces/Guarrazar», Urbs Regia 9"
+    },
+    "palabrasClave": [
+      "nombre",
+      "santa maria",
+      "sorbaces"
+    ],
+    "origen": "FM-01 §4 ⚖",
+    "revisar": "Hay otra hipótesis en la ficha: «San Félix in Tatanesio» (Martin 2025). ¿Se menciona?",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-1-14",
+    "parada": "guarrazar-1",
+    "texto": "Hay restos en más de 40 hectáreas, con un núcleo de unas 7 hectáreas.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Mesa redonda «Una nueva mirada sobre el Tesoro de Guarrazar», Museo Arqueológico Nacional (2025), transcripción"
+    },
+    "palabrasClave": [
+      "extension",
+      "hectareas"
+    ],
+    "origen": "FM-01 §1",
+    "revisar": "En FM-01 la cifra de las 7 ha y el vallado proceden de la mesa redonda del MAN (PISTA). Falta la referencia publicada de las 40 ha.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-1-15",
+    "parada": "guarrazar-1",
+    "texto": "Se ha excavado menos del 3 % del núcleo del yacimiento.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas (2025), «Indicios de un edificio monástico-palacial en el santuario hispanovisigodo de Sorbaces/Guarrazar», Urbs Regia 9",
+      "pagina": "n. 66"
+    },
+    "palabrasClave": [
+      "excavado",
+      "porcentaje"
+    ],
+    "origen": "FM-01 §1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-2-01",
+    "parada": "guarrazar-2",
+    "texto": "La basílica está a unos 160 m del manantial y se excavó en extensión entre 2014 y 2018, en 320 m².",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "227"
+    },
+    "palabrasClave": [
+      "2014",
+      "2018",
+      "basilica",
+      "excavacion"
+    ],
+    "origen": "FM-01 §5.2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-2-02",
+    "parada": "guarrazar-2",
+    "texto": "De la basílica se conservan las zanjas de cimentación excavadas en el gneis y una plataforma de nivelación sobre una ladera con más de 2 m de desnivel.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "229-231"
+    },
+    "palabrasClave": [
+      "basilica",
+      "cimientos",
+      "nivelacion",
+      "zanjas"
+    ],
+    "origen": "FM-01 §5.2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-2-03",
+    "parada": "guarrazar-2",
+    "texto": "Se conservan in situ cinco basas de mármol de morfologías distintas, reaprovechadas de edificios anteriores (spolia).",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "234"
+    },
+    "palabrasClave": [
+      "basas",
+      "columnas",
+      "marmol",
+      "spolia"
+    ],
+    "origen": "FM-01 §5.2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-2-04",
+    "parada": "guarrazar-2",
+    "texto": "Los materiales reaprovechados de la basílica procederían probablemente de templos paganos romanos.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Rojas (2025), «Indicios de un edificio monástico-palacial en el santuario hispanovisigodo de Sorbaces/Guarrazar», Urbs Regia 9"
+    },
+    "palabrasClave": [
+      "basas",
+      "reaprovechamiento",
+      "romanas"
+    ],
+    "origen": "FM-01 §5.2",
+    "revisar": "El relato dice «son piezas romanas reaprovechadas» como hecho; la ficha da como hipótesis su procedencia de templos romanos. Ajustar el relato o confirmar.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-2-05",
+    "parada": "guarrazar-2",
+    "texto": "La solería tenía pavimento de mármol gris biselado sobre un statumen de cantos de cuarzo y un rudus de teja y cal, según la técnica que describe Vitruvio.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "231-232"
+    },
+    "palabrasClave": [
+      "marmol",
+      "pavimento",
+      "suelo",
+      "vitruvio"
+    ],
+    "origen": "FM-01 §5.2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-2-06",
+    "parada": "guarrazar-2",
+    "texto": "La nave central medía 6,20 m entre ejes y la nave norte 4,25 m; el intercolumnio era de 2,85-2,88 m.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "234"
+    },
+    "palabrasClave": [
+      "medidas",
+      "nave central",
+      "naves"
+    ],
+    "origen": "FM-01 §5.2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-2-07",
+    "parada": "guarrazar-2",
+    "texto": "La basílica tenía tres naves y una anchura interior de 14,70 m.",
+    "nivel": "I",
+    "atribucion": "Rojas, Vicente y Eger (2022)",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "234"
+    },
+    "palabrasClave": [
+      "anchura",
+      "basilica",
+      "tres naves"
+    ],
+    "origen": "FM-01 §5.2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-2-08",
+    "parada": "guarrazar-2",
+    "texto": "La basílica pudo medir unos 29,40 m de longitud, con una nave central de 14-15 m de altura; la cabecera no se ha excavado.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "238"
+    },
+    "palabrasClave": [
+      "altura",
+      "cabecera",
+      "estimacion",
+      "longitud"
+    ],
+    "origen": "FM-01 §5.2",
+    "revisar": "Validación n.º 1 del nodo. El relato añade «nueve columnas por fila», que no está en la ficha.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-2-09",
+    "parada": "guarrazar-2",
+    "texto": "Hay una tumba infantil de lajas de toba entre la capilla lateral y la cabecera de la basílica.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "234-235"
+    },
+    "palabrasClave": [
+      "capilla",
+      "tumba infantil"
+    ],
+    "origen": "FM-01 §5.2",
+    "revisar": "El relato habla de una capilla añadida en el lado norte, que no está en la ficha v0.3. Confirmar.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-2-10",
+    "parada": "guarrazar-2",
+    "texto": "Las coronas eran ofrendas votivas para colgar sobre el altar, dedicadas a los mártires, y no coronas para ser llevadas por los reyes.",
+    "nivel": "I",
+    "atribucion": "Martin (2025), siguiendo a Arce y Valverde",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX",
+      "pagina": "131-136"
+    },
+    "palabrasClave": [
+      "altar",
+      "coronas",
+      "coronas de guarrazar",
+      "funcion",
+      "ofrenda",
+      "para que servian",
+      "servian",
+      "uso de las coronas",
+      "votivas"
+    ],
+    "origen": "FM-01 §3",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-2-11",
+    "parada": "guarrazar-2",
+    "texto": "La corona de Suintila lleva la inscripción «+SU[IN]T[H]IL[A]NUS REX OFFE[RE]T» y la de Recesvinto «RECCESVINTHVS REX OFFERET».",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX",
+      "pagina": "136, 139, 147"
+    },
+    "palabrasClave": [
+      "corona",
+      "inscripcion",
+      "recesvinto",
+      "suintila"
+    ],
+    "origen": "FM-01 §3",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-2-12",
+    "parada": "guarrazar-2",
+    "texto": "Entre los donantes de las ofrendas hay reyes y también eclesiásticos, como el abad Teodosio.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX"
+    },
+    "palabrasClave": [
+      "abad",
+      "donantes",
+      "teodosio"
+    ],
+    "origen": "FM-01 §3",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-2-13",
+    "parada": "guarrazar-2",
+    "texto": "Si las coronas se donaron a esta basílica, el arco cronológico de las donaciones va de 621 a 672.",
+    "nivel": "I",
+    "atribucion": "Rojas, Vicente y Eger (2022)",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "241-247"
+    },
+    "palabrasClave": [
+      "basilica",
+      "coronas",
+      "cronologia"
+    ],
+    "origen": "FM-01 §4",
+    "revisar": "El relato dice «Aquí, o en una iglesia muy parecida, colgaban las coronas». ¿Es correcto ese matiz?",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-2-14",
+    "parada": "guarrazar-2",
+    "texto": "Tras su abandono, la basílica pasó por seis fases, hasta el expolio final hacia el siglo XI.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "228-229"
+    },
+    "palabrasClave": [
+      "abandono",
+      "expolio",
+      "fases"
+    ],
+    "origen": "FM-01 §5.2",
+    "revisar": "El relato menciona casas construidas en su interior; fecharlas (finales del VIII-IX, según el Centro de Interpretación).",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-2-15",
+    "parada": "guarrazar-2",
+    "texto": "Podría haber desaparecido más del 95 % de las estructuras de la basílica.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "228"
+    },
+    "palabrasClave": [
+      "95",
+      "expolio"
+    ],
+    "origen": "FM-01 §5.2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-3-01",
+    "parada": "guarrazar-3",
+    "texto": "El edificio en L tiene dos naves con dos estancias adosadas, un porche y un patio, y mide unos 20 × 20 m.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "221"
+    },
+    "palabrasClave": [
+      "edificio en l",
+      "hospital",
+      "medidas",
+      "xenodochium"
+    ],
+    "origen": "FM-01 §5.3",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-3-02",
+    "parada": "guarrazar-3",
+    "texto": "Las dos salas del edificio en L miden 15 × 5,5 m y 12,5 × 5 m, y sus muros, de piedra trabada con barro, tienen unos 70-80 cm de grosor.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Entrevistas a J. M. Rojas en el yacimiento de Guarrazar (agosto de 2026)"
+    },
+    "palabrasClave": [
+      "medidas",
+      "muros",
+      "salas"
+    ],
+    "origen": "Documento del nodo (no está en FM-01 v0.3)",
+    "revisar": "Datos del relato que no están en la ficha. Validación n.º 12: las cifras de muros se toman de las publicaciones (70-80 cm). Dar la referencia publicada.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-3-03",
+    "parada": "guarrazar-3",
+    "texto": "Una escalera de cuatro escalones prueba que el edificio tenía una planta alta.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "221"
+    },
+    "palabrasClave": [
+      "escalera",
+      "planta alta"
+    ],
+    "origen": "FM-01 §5.3",
+    "revisar": "Validación n.º 4: ICAC 2025 sitúa la escalera adosada a un espacio anexo.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-3-04",
+    "parada": "guarrazar-3",
+    "texto": "El edificio tenía unos 290 m² útiles repartidos en dos pisos y casi 6 m de altura, y en una habitación aparecieron esquirlas de caliza de un taller de cantero.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Entrevistas a J. M. Rojas en el yacimiento de Guarrazar (agosto de 2026)"
+    },
+    "palabrasClave": [
+      "altura",
+      "cantero",
+      "superficie"
+    ],
+    "origen": "Documento del nodo (no está en FM-01 v0.3)",
+    "revisar": "Datos del relato sin referencia en la ficha. Dar la fuente publicada o retirarlos.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-3-05",
+    "parada": "guarrazar-3",
+    "texto": "El edificio se construyó hacia mediados del siglo VII; se abandonó y expolió desde 711, se reocupó en la primera mitad del siglo VIII y la ocupación terminó con el derrumbe de la cubierta.",
+    "nivel": "I",
+    "atribucion": "Rojas (2025)",
+    "fuente": {
+      "titulo": "Rojas (2025), «Indicios de un edificio monástico-palacial en el santuario hispanovisigodo de Sorbaces/Guarrazar», Urbs Regia 9"
+    },
+    "palabrasClave": [
+      "711",
+      "construccion",
+      "cronologia",
+      "reocupacion"
+    ],
+    "origen": "FM-01 §5.3",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-3-06",
+    "parada": "guarrazar-3",
+    "texto": "Bajo el muro medianero del edificio hay una tumba fundacional.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX",
+      "pagina": "125"
+    },
+    "palabrasClave": [
+      "enterramiento",
+      "tumba fundacional"
+    ],
+    "origen": "FM-01 §5.3",
+    "revisar": "Validación n.º 5: confirmar que puede contarse así.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-3-07",
+    "parada": "guarrazar-3",
+    "texto": "En el derrumbe del edificio apareció media cruz de piedra calada dentro de una corona de laurel, con una pata para fijarla en lo alto del tejado; se conserva en el Centro de Interpretación de Guadamur.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Paneles del Centro de Interpretación de Guarrazar (Ayuntamiento de Guadamur)"
+    },
+    "palabrasClave": [
+      "cruz calada",
+      "laurel",
+      "tejado"
+    ],
+    "origen": "Documento del nodo (no está en FM-01 v0.3)",
+    "revisar": "Fuente institucional (panel). Dar la referencia publicada; la orientación «mirando al este» del relato no tiene fuente.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-3-08",
+    "parada": "guarrazar-3",
+    "texto": "Los excavadores interpretan el edificio como un xenodochium, un albergue u hospital de peregrinos, por sus salas diáfanas y su cercanía a la cabecera de la basílica.",
+    "nivel": "I",
+    "atribucion": "Rojas, Vicente y Eger (2022); Rojas (2025)",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "239"
+    },
+    "palabrasClave": [
+      "funcion",
+      "hospital",
+      "hospital de peregrinos",
+      "para que servia",
+      "peregrinos",
+      "xenodochium"
+    ],
+    "origen": "FM-01 §5.3 ⚖",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-3-09",
+    "parada": "guarrazar-3",
+    "texto": "Otra interpretación lo considera parte de un monasterio, porque la Regla de Isidoro pide que los monjes duerman en un dormitorio común junto a la iglesia.",
+    "nivel": "I",
+    "atribucion": "Martin (2025)",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX",
+      "pagina": "125-126"
+    },
+    "palabrasClave": [
+      "debate",
+      "monasterio",
+      "monjes",
+      "regla de isidoro"
+    ],
+    "origen": "FM-01 §5.3 ⚖",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-3-10",
+    "parada": "guarrazar-3",
+    "texto": "En el edificio en L apareció un relicario de óleos de piedra con tres compartimentos, entre restos expoliados en el siglo VIII.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "244, n. 28"
+    },
+    "palabrasClave": [
+      "oleos",
+      "relicario"
+    ],
+    "origen": "FM-01 §5.3",
+    "revisar": "FM-01: no es prueba de la función del edificio. No está en el relato; se incluye para el asistente.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-4-01",
+    "parada": "guarrazar-4",
+    "texto": "El edificio del manantial es rectangular y mide unos 30 × 7 m (33 × 7 m según Martin).",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "222-225"
+    },
+    "palabrasClave": [
+      "delubrum",
+      "edificio del manantial",
+      "medidas"
+    ],
+    "origen": "FM-01 §5.1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-4-02",
+    "parada": "guarrazar-4",
+    "texto": "Dentro hay al menos veinte fosas talladas en la roca, dispuestas por parejas a ambos lados de un pasillo central de 1 m; miden 55-62 cm de ancho por 2,15 m de largo y el agua brota dentro de ellas.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas (2025), «Indicios de un edificio monástico-palacial en el santuario hispanovisigodo de Sorbaces/Guarrazar», Urbs Regia 9"
+    },
+    "palabrasClave": [
+      "agua",
+      "banera",
+      "baneras",
+      "fosas"
+    ],
+    "origen": "FM-01 §5.1",
+    "revisar": "Validación n.º 3: las Jornadas de 2026 dicen «al menos dieciséis». ¿Fosas o bañeras? ¿Cuántas?",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-4-03",
+    "parada": "guarrazar-4",
+    "texto": "Se ha excavado alrededor de un tercio del edificio del manantial, y las bañeras se usaron hasta bien entrado el siglo VIII.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX",
+      "pagina": "121-123"
+    },
+    "palabrasClave": [
+      "excavado",
+      "siglo viii",
+      "tercio"
+    ],
+    "origen": "FM-01 §5.1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-4-04",
+    "parada": "guarrazar-4",
+    "texto": "Si todo el edificio tuvo el mismo uso, pudo haber más de cuarenta bañeras.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Entrevistas a J. M. Rojas en el yacimiento de Guarrazar (agosto de 2026)"
+    },
+    "palabrasClave": [
+      "baneras",
+      "cuantas"
+    ],
+    "origen": "Documento del nodo (deducción a partir de FM-01)",
+    "revisar": "Deducción del relato, no está en la ficha. ¿Se mantiene?",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-4-05",
+    "parada": "guarrazar-4",
+    "texto": "En 2025 se restauraron dos de las bañeras.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Paneles del Centro de Interpretación de Guarrazar (Ayuntamiento de Guadamur)"
+    },
+    "palabrasClave": [
+      "baneras",
+      "restauracion"
+    ],
+    "origen": "Documento del nodo (no está en FM-01 v0.3)",
+    "revisar": "Dar la fuente (Jornadas o memoria de la intervención).",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-4-06",
+    "parada": "guarrazar-4",
+    "texto": "Los excavadores identifican el edificio con un delubrum, un recinto de agua para la purificación y la regeneración que describe San Isidoro (Etimologías XV, 4), y proponen baños buscando curación, como hoy en Lourdes.",
+    "nivel": "I",
+    "atribucion": "Rojas, Vicente y Eger (2022); Rojas (2025)",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "225"
+    },
+    "palabrasClave": [
+      "curacion",
+      "delubrum",
+      "edificio del manantial",
+      "isidoro",
+      "lourdes",
+      "para que servia",
+      "purificacion",
+      "que era"
+    ],
+    "origen": "FM-01 §5.1 ⚖",
+    "revisar": "Validación n.º 2: cita exacta de Isidoro e Ildefonso (escalones).",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-4-07",
+    "parada": "guarrazar-4",
+    "texto": "Otra interpretación sostiene que el delubrum de Isidoro sería un baptisterio y que estas bañeras serían un anexo purificador o curativo de una iglesia cercana.",
+    "nivel": "I",
+    "atribucion": "Martin (2025)",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX",
+      "pagina": "121-124"
+    },
+    "palabrasClave": [
+      "baptisterio",
+      "debate",
+      "delubrum",
+      "edificio del manantial",
+      "para que servia"
+    ],
+    "origen": "FM-01 §5.1 ⚖",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-4-08",
+    "parada": "guarrazar-4",
+    "texto": "Según los análisis de 2014, el agua del manantial carece de propiedades mineromedicinales.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "225, n. 8"
+    },
+    "palabrasClave": [
+      "agua",
+      "analisis",
+      "medicinal"
+    ],
+    "origen": "FM-01 §1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-4-09",
+    "parada": "guarrazar-4",
+    "texto": "Algunas fosas se reutilizaron después como tumbas.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "225"
+    },
+    "palabrasClave": [
+      "reutilizacion",
+      "tumbas"
+    ],
+    "origen": "FM-01 §5.1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-5-01",
+    "parada": "guarrazar-5",
+    "texto": "La necrópolis está alineada con el edificio del manantial, sobre un terraplén, y al final de ella hay una pequeña capilla funeraria; el conjunto forma un eje de unos 70 m.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Mesa redonda «Una nueva mirada sobre el Tesoro de Guarrazar», Museo Arqueológico Nacional (2025), transcripción"
+    },
+    "palabrasClave": [
+      "capilla",
+      "cementerio",
+      "eje",
+      "necropolis"
+    ],
+    "origen": "FM-01 §4 [PISTA]",
+    "revisar": "En FM-01 es una PISTA de la mesa redonda del MAN, pendiente de publicación. La cifra de 70 m no está en la ficha.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-5-02",
+    "parada": "guarrazar-5",
+    "texto": "El epitafio del presbítero Crispín, fechado en 693, dice que eligió para enterrarse un «locum sacrum».",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "243"
+    },
+    "palabrasClave": [
+      "693",
+      "crispin",
+      "epitafio",
+      "lugar santo"
+    ],
+    "origen": "FM-01 §4",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-5-03",
+    "parada": "guarrazar-5",
+    "texto": "El epitafio de Crispín adapta en parte el de la reina Reciberga, compuesto por Eugenio de Toledo.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX",
+      "pagina": "140"
+    },
+    "palabrasClave": [
+      "crispin",
+      "eugenio",
+      "reciberga"
+    ],
+    "origen": "FM-01 §4 (Velázquez 2001)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-5-04",
+    "parada": "guarrazar-5",
+    "texto": "José Amador de los Ríos excavó en abril de 1859 una capilla funeraria y una necrópolis en las «Huertas de Guarrazar».",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "218-219"
+    },
+    "palabrasClave": [
+      "1859",
+      "amador de los rios",
+      "capilla"
+    ],
+    "origen": "FM-01 §2",
+    "revisar": "El panel del Museo de los Concilios habla de excavaciones en 1861 (validación de Concilios n.º 9).",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-5-05",
+    "parada": "guarrazar-5",
+    "texto": "Un dibujo de 1879 muestra la planta de la capilla, que parecía una cruz; en 2025 los arqueólogos la volvieron a localizar.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Entrevistas a J. M. Rojas en el yacimiento de Guarrazar (agosto de 2026)"
+    },
+    "palabrasClave": [
+      "1879",
+      "2025",
+      "capilla",
+      "cruz"
+    ],
+    "origen": "FM-01 §9 (pendiente de publicación)",
+    "revisar": "FM-01 lista como pendiente la publicación de la iglesia cruciforme. Dar la fuente antes de publicar.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-5-06",
+    "parada": "guarrazar-5",
+    "texto": "El tesoro estaba en dos escondites preparados en el extremo suroeste del cementerio, entre las tumbas y con su misma apariencia exterior, pero revestidos por dentro de opus signinum.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX",
+      "pagina": "119"
+    },
+    "palabrasClave": [
+      "cementerio",
+      "escondites",
+      "hallazgo",
+      "tesoro"
+    ],
+    "origen": "FM-01 §2 (Balmaseda 2001)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-5-07",
+    "parada": "guarrazar-5",
+    "texto": "Junto a las coronas había cálices, una paloma de oro y una cruz procesional.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas (2025), «Indicios de un edificio monástico-palacial en el santuario hispanovisigodo de Sorbaces/Guarrazar», Urbs Regia 9",
+      "pagina": "n. 8"
+    },
+    "palabrasClave": [
+      "calices",
+      "cruz procesional",
+      "paloma"
+    ],
+    "origen": "FM-01 §2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-5-08",
+    "parada": "guarrazar-5",
+    "texto": "Los escondites del tesoro pudieron ser pequeños depósitos de agua del manantial, reutilizados.",
+    "nivel": "H",
+    "atribucion": "J. M. Rojas",
+    "fuente": {
+      "titulo": "Entrevistas a J. M. Rojas en el yacimiento de Guarrazar (agosto de 2026)"
+    },
+    "palabrasClave": [
+      "depositos",
+      "escondites"
+    ],
+    "origen": "Documento del nodo (no está en FM-01 v0.3)",
+    "revisar": "Propuesta de Rojas en entrevista. ¿Está publicada?",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-5-09",
+    "parada": "guarrazar-5",
+    "texto": "La explicación más aceptada es que el tesoro se ocultó tras 711; es plausible, pero no demostrable (Arce, 2001).",
+    "nivel": "I",
+    "atribucion": "La mayoría de los investigadores (Arce 2001)",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "245-246"
+    },
+    "palabrasClave": [
+      "711",
+      "ocultacion",
+      "quien escondio"
+    ],
+    "origen": "FM-01 §4 ⚖",
+    "revisar": "Validación n.º 8: confirmar el matiz. La ficha recoge también otras hipótesis (escondites preparados con antelación; séquito de Rodrigo).",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-5-10",
+    "parada": "guarrazar-5",
+    "texto": "Los zafiros del tesoro proceden de Sri Lanka.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX",
+      "pagina": "137"
+    },
+    "palabrasClave": [
+      "sri lanka",
+      "zafiros"
+    ],
+    "origen": "FM-01 §3 (Cózar y Sapalski 2001)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-5-11",
+    "parada": "guarrazar-5",
+    "texto": "En 2014 se halló un zafiro junto a la fuente, custodiado hoy en el Museo de Santa Cruz.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Entrevistas a J. M. Rojas en el yacimiento de Guarrazar (agosto de 2026)"
+    },
+    "palabrasClave": [
+      "2014",
+      "zafiro"
+    ],
+    "origen": "FM-01 §3 [P]",
+    "revisar": "FM-01 lo marca [P]: su vínculo con el tesoro procede de declaraciones públicas y falta el informe técnico. El relato afirma su origen en Sri Lanka: no publicar hasta tener el informe.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-6-01",
+    "parada": "guarrazar-6",
+    "texto": "La prospección geofísica del cerro muestra un edificio de unos 35 × 50 m (1.750 m²) con estancias en torno a un patio; se han excavado unos 150 m², con muros de los siglos VII a X.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "222, 239-240"
+    },
+    "palabrasClave": [
+      "area 5",
+      "cerro",
+      "edificio",
+      "magnetometro",
+      "prospeccion"
+    ],
+    "origen": "FM-01 §5.4",
+    "revisar": "Método: geomagnético según Rojas, georradar según Martin (verificar en Eger 2007). El relato fecha la prospección en 2002 y un sondeo en 2015.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-6-02",
+    "parada": "guarrazar-6",
+    "texto": "Christoph Eger hizo prospección y sondeos en Guarrazar entre 2002 y 2005.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "219"
+    },
+    "palabrasClave": [
+      "eger",
+      "prospeccion"
+    ],
+    "origen": "FM-01 §2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-6-03",
+    "parada": "guarrazar-6",
+    "texto": "El gran edificio del cerro pudo ser un complejo monástico-palacial, e incluso una residencia regia; sus autores lo presentan como «tan sólo indicios».",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Rojas (2025), «Indicios de un edificio monástico-palacial en el santuario hispanovisigodo de Sorbaces/Guarrazar», Urbs Regia 9"
+    },
+    "palabrasClave": [
+      "area 5",
+      "monasterio",
+      "palacio",
+      "residencia regia"
+    ],
+    "origen": "FM-01 §5.4 ⚖",
+    "revisar": "La comparación con El Escorial del relato procede de la entrevista; ¿se mantiene?",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-6-04",
+    "parada": "guarrazar-6",
+    "texto": "Otra hipótesis propone que el edificio del cerro fuera un palacio o praetorium tardorromano de finales del siglo IV, con paralelo en Carranque.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX",
+      "pagina": "128-129"
+    },
+    "palabrasClave": [
+      "carranque",
+      "debate",
+      "praetorium",
+      "romano"
+    ],
+    "origen": "FM-01 §5.4 ⚖",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-6-05",
+    "parada": "guarrazar-6",
+    "texto": "El cerro estuvo habitado en la Edad del Cobre, hace más de cuatro mil años.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Paneles del Centro de Interpretación de Guarrazar (Ayuntamiento de Guadamur)"
+    },
+    "palabrasClave": [
+      "cerro",
+      "edad del cobre",
+      "prehistoria"
+    ],
+    "origen": "Documento del nodo (FM-01 dice «prehistoria reciente»)",
+    "revisar": "Dar la referencia publicada de la ocupación calcolítica.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-6-06",
+    "parada": "guarrazar-6",
+    "texto": "En el Área 5 hay una mina de galena explotada en época andalusí y en el siglo XVII.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas (2025), «Indicios de un edificio monástico-palacial en el santuario hispanovisigodo de Sorbaces/Guarrazar», Urbs Regia 9"
+    },
+    "palabrasClave": [
+      "galena",
+      "mina",
+      "plomo"
+    ],
+    "origen": "FM-01 §1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-6-07",
+    "parada": "guarrazar-6",
+    "texto": "El nombre de Guarrazar procedería del árabe wadi + rasas, «valle del plomo», según Amador de los Ríos.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Rojas (2025), «Indicios de un edificio monástico-palacial en el santuario hispanovisigodo de Sorbaces/Guarrazar», Urbs Regia 9",
+      "pagina": "n. 37"
+    },
+    "palabrasClave": [
+      "arabe",
+      "etimologia",
+      "nombre",
+      "valle del plomo"
+    ],
+    "origen": "FM-01 §1",
+    "revisar": "Las VII Jornadas lo dan por seguro; el panel, como posibilidad. ¿Hay fuente filológica?",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-6-08",
+    "parada": "guarrazar-6",
+    "texto": "Cerca del cerro se han excavado entre 2022 y 2026 unos baños con una pila de agua y dos pequeñas pilas para lavarse los pies; por sus paralelos podrían ser romanos, de los siglos III o IV, reformados en época visigoda.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Entrevistas a J. M. Rojas en el yacimiento de Guarrazar (agosto de 2026)"
+    },
+    "palabrasClave": [
+      "banos",
+      "pilas",
+      "romano"
+    ],
+    "origen": "Documento del nodo (campañas 2021-2026, pendientes en FM-01)",
+    "revisar": "FM-01 lista las campañas de 2021-2026 como pendientes. Dar la fuente.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-guarrazar-6-09",
+    "parada": "guarrazar-6",
+    "texto": "Un georradar de 2021 ha detectado otro gran edificio al este de la basílica.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Entrevistas a J. M. Rojas en el yacimiento de Guarrazar (agosto de 2026)"
+    },
+    "palabrasClave": [
+      "2021",
+      "edificio",
+      "georradar"
+    ],
+    "origen": "Documento del nodo",
+    "revisar": "Validación n.º 9. Dar la fuente; la idea de «otros hospitales» solo está en un vídeo y no se usa.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-centro-guarrazar-01",
+    "parada": "centro-guarrazar",
+    "texto": "En el cerro al norte del manantial han aparecido un hacha pulimentada, un punzón de hueso y un fragmento de vaso campaniforme de la Edad del Cobre.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Paneles del Centro de Interpretación de Guarrazar (Ayuntamiento de Guadamur)"
+    },
+    "palabrasClave": [
+      "campaniforme",
+      "edad del cobre",
+      "vitrina"
+    ],
+    "origen": "Paneles del Centro",
+    "revisar": "Fuente institucional; dar la referencia publicada.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-centro-guarrazar-02",
+    "parada": "centro-guarrazar",
+    "texto": "En Guarrazar apareció cerámica de lujo fabricada cerca de Nápoles, de al menos el siglo IV a. C.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Paneles del Centro de Interpretación de Guarrazar (Ayuntamiento de Guadamur)"
+    },
+    "palabrasClave": [
+      "ceramica",
+      "napoles",
+      "siglo iv"
+    ],
+    "origen": "Paneles del Centro",
+    "revisar": "Fuente institucional; dar la referencia publicada.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-centro-guarrazar-03",
+    "parada": "centro-guarrazar",
+    "texto": "La cerámica de lujo del siglo IV a. C. quizá se ofrecía en un santuario junto a la fuente; en época romana hubo un posible santuario precristiano sin estructuras asignables.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "240-241"
+    },
+    "palabrasClave": [
+      "romano",
+      "santuario precristiano"
+    ],
+    "origen": "FM-01 §1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-centro-guarrazar-04",
+    "parada": "centro-guarrazar",
+    "texto": "De época romana se conservan los dedos del pie de una gran estatua de mármol, un fragmento de cerámica de barniz rojo traída de Italia y una figurita de barro con rostro de mujer.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Paneles del Centro de Interpretación de Guarrazar (Ayuntamiento de Guadamur)"
+    },
+    "palabrasClave": [
+      "estatua",
+      "romano",
+      "sigillata"
+    ],
+    "origen": "Paneles del Centro",
+    "revisar": "Fuente institucional; dar la referencia publicada.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-centro-guarrazar-05",
+    "parada": "centro-guarrazar",
+    "texto": "De la basílica se exponen el cancel de mármol, la barrotera que lo sujetaba, una columna de mármol veteado, una columnilla y el salmer de una ventana con arcos de herradura gemelos.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Paneles del Centro de Interpretación de Guarrazar (Ayuntamiento de Guadamur)"
+    },
+    "palabrasClave": [
+      "basilica",
+      "cancel",
+      "piezas",
+      "salmer"
+    ],
+    "origen": "Paneles del Centro; FM-01 §5.2 (materiales en posición secundaria)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-centro-guarrazar-06",
+    "parada": "centro-guarrazar",
+    "texto": "Un fragmento de friso lleva grabado el número XIX para indicar su posición, con la V escrita al revés.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Paneles del Centro de Interpretación de Guarrazar (Ayuntamiento de Guadamur)"
+    },
+    "palabrasClave": [
+      "cantero",
+      "friso",
+      "numero"
+    ],
+    "origen": "Paneles del Centro",
+    "revisar": "Fuente institucional; dar la referencia publicada.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-centro-guarrazar-07",
+    "parada": "centro-guarrazar",
+    "texto": "Del edificio en L proceden una llave, un fragmento de anillo de plata y unas varillas de bronce.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Paneles del Centro de Interpretación de Guarrazar (Ayuntamiento de Guadamur)"
+    },
+    "palabrasClave": [
+      "anillo",
+      "hospital",
+      "llave",
+      "varillas"
+    ],
+    "origen": "Paneles del Centro",
+    "revisar": "El relato añade que las varillas «quizá» pertenecieron a un laboratorio farmacéutico: ¿se mantiene como hipótesis?",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-centro-guarrazar-08",
+    "parada": "centro-guarrazar",
+    "texto": "Tras 711 el santuario se abandonó, pero el lugar siguió habitado: entre finales del siglo VIII y el IX se construyeron casas dentro de la basílica.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Paneles del Centro de Interpretación de Guarrazar (Ayuntamiento de Guadamur)"
+    },
+    "palabrasClave": [
+      "711",
+      "andalusi",
+      "basilica",
+      "casas"
+    ],
+    "origen": "Paneles del Centro; FM-01 §5.2",
+    "revisar": "Dar la referencia publicada de la cronología de las casas.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-centro-guarrazar-09",
+    "parada": "centro-guarrazar",
+    "texto": "Entre las monedas expuestas hay un felús de los primeros gobernadores andalusíes y un fragmento de dírham de plata de la taifa de Toledo, del siglo XI, recortado; un triente de Chindasvinto acuñado en Toledo se muestra como referencia.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Paneles del Centro de Interpretación de Guarrazar (Ayuntamiento de Guadamur)"
+    },
+    "palabrasClave": [
+      "chindasvinto",
+      "dirham",
+      "felus",
+      "monedas"
+    ],
+    "origen": "Paneles del Centro",
+    "revisar": "Fuente institucional; dar la referencia publicada.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-centro-guarrazar-10",
+    "parada": "centro-guarrazar",
+    "texto": "La escultura de Guarrazar es de caliza micrítica, probablemente de la cantera del arroyo de La Rosa, con predominio de motivos vegetales.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "237-238"
+    },
+    "palabrasClave": [
+      "caliza",
+      "escultura",
+      "motivos vegetales"
+    ],
+    "origen": "FM-01 §6 (Balmaseda 2006)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-centro-guarrazar-11",
+    "parada": "centro-guarrazar",
+    "texto": "Las coronas, la cruz y la escultura comparten motivos (racimos, capullos, trifolias, rosetas y lirios), lo que apunta a talleres de orfebrería y cantería con diseños análogos.",
+    "nivel": "I",
+    "atribucion": "Rojas, Vicente y Eger (2022); Balmaseda (2001)",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "241-245"
+    },
+    "palabrasClave": [
+      "escultura",
+      "motivos",
+      "orfebreria",
+      "talleres"
+    ],
+    "origen": "FM-01 §6",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-1-01",
+    "parada": "vegabaja-1",
+    "texto": "La basílica de Santa Leocadia estaba en el suburbio, junto a la tumba de la mártir, y en ella se celebraron los concilios IV (633), V (636), VI (638) y XVII (694).",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "basilica",
+      "concilios",
+      "martir",
+      "santa leocadia"
+    ],
+    "origen": "FM-02 §3.1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-1-02",
+    "parada": "vegabaja-1",
+    "texto": "Según la tradición, la ermita del Cristo de la Vega ocupa el lugar de la tumba de Leocadia, la mártir patrona de Toledo.",
+    "nivel": "T",
+    "fuente": {
+      "titulo": "«Historia de la Vega Baja», web de Toletum Visigodo (copia de 2020)"
+    },
+    "palabrasClave": [
+      "cristo de la vega",
+      "leocadia",
+      "patrona",
+      "tumba"
+    ],
+    "origen": "Documento del nodo",
+    "revisar": "Comprobar que la identificación del lugar se presenta como tradición.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-1-03",
+    "parada": "vegabaja-1",
+    "texto": "El rey Sisebuto hizo obras en la basílica de Santa Leocadia en 618, según Eulogio.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "618",
+      "eulogio",
+      "sisebuto"
+    ],
+    "origen": "FM-02 §3.1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-1-04",
+    "parada": "vegabaja-1",
+    "texto": "Junto a la basílica hubo un monasterio, con el abad Valderedo, y en ella se enterraron los obispos Eugenio II, Ildefonso y Julián.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "eugenio",
+      "ildefonso",
+      "julian",
+      "monasterio",
+      "obispos"
+    ],
+    "origen": "FM-02 §3.1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-1-05",
+    "parada": "vegabaja-1",
+    "texto": "Entre 1972 y 1975 Palol excavó un edificio sobre suelo virgen, con muros de unos 2 m y contrafuertes de 1,50 × 1,20 m separados entre 3,50 y 4 m.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Gurt y Diarte (2012), Zephyrus LXIX",
+      "pagina": "150-155"
+    },
+    "palabrasClave": [
+      "contrafuertes",
+      "excavacion",
+      "palol"
+    ],
+    "origen": "FM-02 §3.1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-1-06",
+    "parada": "vegabaja-1",
+    "texto": "Ese edificio se construyó con sillares reutilizados del circo romano.",
+    "nivel": "I",
+    "atribucion": "Gurt y Diarte (2012)",
+    "fuente": {
+      "titulo": "Gurt y Diarte (2012), Zephyrus LXIX",
+      "pagina": "155-156"
+    },
+    "palabrasClave": [
+      "circo",
+      "reutilizacion",
+      "sillares"
+    ],
+    "origen": "FM-02 §3.1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-1-07",
+    "parada": "vegabaja-1",
+    "texto": "El edificio excavado por Palol sería el martyrium original de Leocadia, anterior a la basílica de Sisebuto.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Gurt y Diarte (2012), Zephyrus LXIX",
+      "pagina": "157-161"
+    },
+    "palabrasClave": [
+      "leocadia",
+      "martyrium",
+      "mausoleo"
+    ],
+    "origen": "FM-02 §3.1",
+    "revisar": "Validación n.º 5: comprobar que no hay revisión posterior.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-1-08",
+    "parada": "vegabaja-1",
+    "texto": "En 1956 se halló cerca un credo epigráfico, hoy en el Museo de los Concilios.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "1956",
+      "credo",
+      "museo de los concilios"
+    ],
+    "origen": "FM-02 §3.1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-1-09",
+    "parada": "vegabaja-1",
+    "texto": "El santuario estaba en ruina en 1121, se restauró con un convento agustino en 1162 y la ermita fue destruida por las tropas francesas.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Villa y Peris, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "1121",
+      "1162",
+      "ermita",
+      "franceses"
+    ],
+    "origen": "FM-02 §3.1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-1-10",
+    "parada": "vegabaja-1",
+    "texto": "La leyenda «A buen juez, mejor testigo», recogida por Zorrilla, explica el brazo desclavado del Cristo de la Vega.",
+    "nivel": "T",
+    "fuente": {
+      "titulo": "«Historia de la Vega Baja», web de Toletum Visigodo (copia de 2020)"
+    },
+    "palabrasClave": [
+      "brazo",
+      "buen juez",
+      "leyenda",
+      "zorrilla"
+    ],
+    "origen": "FM-02 §3.1 [T]",
+    "revisar": "En FM-02 procede de una transcripción de documental (PISTA). Dar una fuente publicada.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-2-01",
+    "parada": "vegabaja-2",
+    "texto": "El suburbio se organizó según un plan jerarquizado y regular, con su máximo desarrollo entre la segunda mitad del siglo VI y mediados del VII.",
+    "nivel": "I",
+    "atribucion": "Olmo Enciso (2009)",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "calles",
+      "plan",
+      "siglo vi",
+      "urbanismo"
+    ],
+    "origen": "FM-02 §4",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-2-02",
+    "parada": "vegabaja-2",
+    "texto": "Una de las calzadas excavadas mide 6 m de ancho y discurre junto a un edificio de más de 50 × 25 m.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "6 metros",
+      "calzada",
+      "edificio"
+    ],
+    "origen": "FM-02 §4",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-2-03",
+    "parada": "vegabaja-2",
+    "texto": "El georradar de 2020 detectó una calzada de hasta 8,40 m de ancho, con piedras de borde y posibles rodadas de carro.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Gómez Laguna et al., prospección con georradar de 2020 (publicada por la JCCM en 2023)"
+    },
+    "palabrasClave": [
+      "8 40",
+      "calzada",
+      "georradar",
+      "rodadas"
+    ],
+    "origen": "Documento del nodo (georradar, pendiente de lectura en FM-02)",
+    "revisar": "Validación n.º 7: es una anomalía sin excavar. Confirmar que puede contarse así.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-2-04",
+    "parada": "vegabaja-2",
+    "texto": "La gran vía uniría la parte alta de la ciudad, por la Puerta del Cambrón, con la basílica de Santa Leocadia y el entorno donde se cree que estuvo el palacio.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Entrevistas a J. M. Rojas en la Vega Baja (2026)"
+    },
+    "palabrasClave": [
+      "palacio",
+      "puerta del cambron",
+      "trazado"
+    ],
+    "origen": "Documento del nodo",
+    "revisar": "Hipótesis de los investigadores; dar la fuente publicada.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-2-05",
+    "parada": "vegabaja-2",
+    "texto": "Las calzadas documentadas tienen piedras de borde y un firme de cantos; los encachados de piedra documentados son de los patios, no de las calles.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "calzadas",
+      "enlosadas",
+      "firme"
+    ],
+    "origen": "FM-02 §8 (errores: «calles enlosadas»)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-3-01",
+    "parada": "vegabaja-3",
+    "texto": "El barrio tenía manzanas con patios y viviendas de hasta unos 400 m².",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "400",
+      "casas",
+      "patio"
+    ],
+    "origen": "FM-02 §4",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-3-02",
+    "parada": "vegabaja-3",
+    "texto": "Algunos edificios eran mucho mayores: uno de unos 700 m² con cuatro alas en torno a un patio con cisterna y otro de unos 900 m².",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "700",
+      "900",
+      "cisterna",
+      "edificios"
+    ],
+    "origen": "Documento del nodo",
+    "revisar": "Validación n.º 8: confirmar las cifras en Gallego et al. 2009.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-3-03",
+    "parada": "vegabaja-3",
+    "texto": "Se construía nivelando el terreno y levantando zócalos de mampostería de gneis, granito o cantos trabados con barro, de 0,60-0,80 m, con alzados de tapial o adobe, tejas curvas con marcas serpentiformes y suelos de arcilla o cal.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "adobe",
+      "construccion",
+      "tapial",
+      "tejas",
+      "zocalo"
+    ],
+    "origen": "FM-02 §4 (RGL 2009: 64-66)",
+    "revisar": "En FM-02 la fuente es el informe inédito RGL 2009, que no puede citarse sin permiso. El relato dice 60-90 cm. Buscar fuente publicada o pedir autorización.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-3-04",
+    "parada": "vegabaja-3",
+    "texto": "En el barrio se han hallado ánforas y spatheia norteafricanos, vidrio, ponderales y objetos de hueso.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "anforas",
+      "comercio",
+      "hueso",
+      "vidrio"
+    ],
+    "origen": "FM-02 §4",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-3-05",
+    "parada": "vegabaja-3",
+    "texto": "El suburbio pudo tener una zona comercial y artesanal.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "artesania",
+      "comercio",
+      "taller"
+    ],
+    "origen": "FM-02 §4",
+    "revisar": "El relato menciona pesas, un gancho de balanza y un posible taller de vidrio (PISTA de documental en FM-02). Dar la fuente.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-3-06",
+    "parada": "vegabaja-3",
+    "texto": "En las excavaciones anteriores a 2009 apareció un tesorillo de 30 tremises, de Leovigildo a Chintila, con un contenido de oro decreciente.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "chintila",
+      "leovigildo",
+      "monedas",
+      "tesorillo",
+      "tremises"
+    ],
+    "origen": "FM-02 §4",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-3-07",
+    "parada": "vegabaja-3",
+    "texto": "El entramado del suburbio siguió habitado tras 711.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Izquierdo, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "711",
+      "andalusi",
+      "continuidad"
+    ],
+    "origen": "FM-02 §6",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-3-08",
+    "parada": "vegabaja-3",
+    "texto": "Hubo áreas de extracción de áridos reutilizadas como basureros.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "abandono",
+      "basureros",
+      "graveras"
+    ],
+    "origen": "FM-02 §4 (RGL 2009)",
+    "revisar": "Fuente inédita (RGL 2009) en la ficha. El relato añade que algunas casas se abandonaron a finales del siglo VII: dar la fuente.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-4-01",
+    "parada": "vegabaja-4",
+    "texto": "Leovigildo adoptó trono y vestiduras reales (Isidoro, Historia Gothorum 51), acuñó moneda propia y fundó Recópolis.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "leovigildo",
+      "moneda",
+      "recopolis",
+      "trono"
+    ],
+    "origen": "FM-02 §2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-4-02",
+    "parada": "vegabaja-4",
+    "texto": "Los reyes visigodos practicaron una aemulatio imperii, la imitación del ceremonial de los emperadores.",
+    "nivel": "I",
+    "atribucion": "Olmo Enciso (2009)",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "ceremonial",
+      "emperadores",
+      "imitacion"
+    ],
+    "origen": "FM-02 §2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-4-03",
+    "parada": "vegabaja-4",
+    "texto": "El praetorium se cita en el VI Concilio de Toledo (638), y la iglesia pretoriense de los Santos Apóstoles acogió los concilios VIII, XII, XIII, XV y XVI.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "concilios",
+      "palacio",
+      "praetorium",
+      "pretoriense"
+    ],
+    "origen": "FM-02 §3.2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-4-04",
+    "parada": "vegabaja-4",
+    "texto": "Según Julián de Toledo, el rey Wamba fue ungido en la iglesia pretoriense en 672.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Julián de Toledo, Historia Wambae regis"
+    },
+    "palabrasClave": [
+      "672",
+      "uncion",
+      "wamba"
+    ],
+    "origen": "Documento del nodo",
+    "revisar": "Validación n.º 3: comprobar el pasaje.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-4-05",
+    "parada": "vegabaja-4",
+    "texto": "La localización del palacio sigue en debate: unos lo sitúan en la Vega Baja y otros en la parte alta de la ciudad.",
+    "nivel": "I",
+    "atribucion": "Olmo Enciso (2009); Barroso et al. (2011); Gurt y Diarte (2012)",
+    "fuente": {
+      "titulo": "Gurt y Diarte (2012), Zephyrus LXIX"
+    },
+    "palabrasClave": [
+      "debate",
+      "donde estaba el palacio",
+      "localizacion",
+      "palacio",
+      "palacio de los reyes",
+      "palacio real"
+    ],
+    "origen": "FM-02 §3.2 ⚖",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-4-06",
+    "parada": "vegabaja-4",
+    "texto": "En la calle San Pedro el Verde, 25, se documentó en 2001 y 2003 un gran edificio.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "edificio",
+      "san pedro el verde"
+    ],
+    "origen": "FM-02 §3.2",
+    "revisar": "El relato da más de 900 m², muros de 1,50 m y cimientos de más de 2 m: no están en la ficha. Dar la fuente.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-4-07",
+    "parada": "vegabaja-4",
+    "texto": "Sus excavadores propusieron que el edificio de San Pedro el Verde fuera la iglesia pretoriense; otros autores consideran la identificación «algo forzada» o la aceptan «con muchas reservas».",
+    "nivel": "I",
+    "atribucion": "Rojas y Gómez (2009); Olmo Enciso (2009); Gurt y Diarte (2012)",
+    "fuente": {
+      "titulo": "Gurt y Diarte (2012), Zephyrus LXIX"
+    },
+    "palabrasClave": [
+      "debate",
+      "identificacion",
+      "iglesia pretoriense"
+    ],
+    "origen": "FM-02 §3.2 ⚖",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-4-08",
+    "parada": "vegabaja-4",
+    "texto": "En la Fábrica de Armas se halló en 1923 una villa romana del siglo IV con mosaicos.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Villa y Peris, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "1923",
+      "fabrica de armas",
+      "mosaicos",
+      "villa"
+    ],
+    "origen": "FM-02 §1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-5-01",
+    "parada": "vegabaja-5",
+    "texto": "La Vega Baja es la llanura aluvial al norte y noroeste del peñón de Toledo, de más de 50 ha.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "«Historia de la Vega Baja», web de Toletum Visigodo (copia de 2020)"
+    },
+    "palabrasClave": [
+      "hectareas",
+      "llanura",
+      "vega baja"
+    ],
+    "origen": "FM-02 §1",
+    "revisar": "Validación n.º 2: Rojas da más de 70 o 100 ha. Buscar cifra publicada.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-5-02",
+    "parada": "vegabaja-5",
+    "texto": "El circo romano se construyó entre los años 50-60 d. C. y la época de Vespasiano, y mide 423,10 × 100,80 m.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Gurt y Diarte (2012), Zephyrus LXIX",
+      "pagina": "151"
+    },
+    "palabrasClave": [
+      "carreras",
+      "circo",
+      "romano"
+    ],
+    "origen": "FM-02 §1",
+    "revisar": "El relato dice «en el siglo I»: correcto, pero conviene precisarlo.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-5-03",
+    "parada": "vegabaja-5",
+    "texto": "El circo tenía capacidad para unos 13.000 espectadores.",
+    "nivel": "I",
+    "atribucion": "Villa y Peris (2009)",
+    "fuente": {
+      "titulo": "Villa y Peris, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "circo",
+      "espectadores"
+    ],
+    "origen": "FM-02 §1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-5-04",
+    "parada": "vegabaja-5",
+    "texto": "El circo seguía en uso hacia el año 400, según el marfil de Hipólito.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "400",
+      "circo",
+      "marfil"
+    ],
+    "origen": "FM-02 §1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-5-05",
+    "parada": "vegabaja-5",
+    "texto": "La Vega fue después cementerio musulmán (maqbara), zona de ventas y de recreo en el siglo XVI, descansadero de ganado de la Mesta y sede de la Fábrica de Armas, cerrada en 1996.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Villa y Peris, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "1996",
+      "fabrica de armas",
+      "maqbara",
+      "mesta"
+    ],
+    "origen": "FM-02 §6",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-5-06",
+    "parada": "vegabaja-5",
+    "texto": "La Vega Baja fue declarada definitivamente Bien de Interés Cultural el 18 de junio de 2008.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Peris, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "2008",
+      "bic",
+      "proteccion"
+    ],
+    "origen": "FM-02 §7",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-5-07",
+    "parada": "vegabaja-5",
+    "texto": "En 2020 se prospectó con georradar parte de la Vega Baja; el estudio lo publicó la JCCM en 2023.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Gómez Laguna et al., prospección con georradar de 2020 (publicada por la JCCM en 2023)"
+    },
+    "palabrasClave": [
+      "2020",
+      "georradar",
+      "prospeccion"
+    ],
+    "origen": "FM-02 §5",
+    "revisar": "El relato da «más de 8 hectáreas»: dar la cifra publicada.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-1-01",
+    "parada": "concilios-1",
+    "texto": "La iglesia de San Román está en una de las partes más altas de Toledo.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "983"
+    },
+    "palabrasClave": [
+      "san roman",
+      "situacion"
+    ],
+    "origen": "FM-03 §1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-1-02",
+    "parada": "concilios-1",
+    "texto": "La torre de San Román, inspirada en los alminares califales, se construyó exenta a finales del siglo XIII o principios del XIV y se unió a la cabecera en el XVI.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "985"
+    },
+    "palabrasClave": [
+      "alminar",
+      "san roman",
+      "torre"
+    ],
+    "origen": "FM-03 §2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-1-03",
+    "parada": "concilios-1",
+    "texto": "San Román aparece como parroquia a principios del siglo XII, y la fábrica actual es la consagrada por el arzobispo Jiménez de Rada en 1221.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "983"
+    },
+    "palabrasClave": [
+      "1221",
+      "jimenez de rada",
+      "parroquia"
+    ],
+    "origen": "FM-03 §2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-1-04",
+    "parada": "concilios-1",
+    "texto": "El edificio pudo tener un origen visigodo, y pudo usarse como mezquita.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "983"
+    },
+    "palabrasClave": [
+      "hipotesis",
+      "mezquita",
+      "origen visigodo"
+    ],
+    "origen": "FM-03 §2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-1-05",
+    "parada": "concilios-1",
+    "texto": "El museo se creó en 1969 como filial del Museo de Santa Cruz y abrió al público en 1971; su creadora y primera directora fue Matilde Revuelta Tubino.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "983-985"
+    },
+    "palabrasClave": [
+      "1971",
+      "matilde revuelta",
+      "museo"
+    ],
+    "origen": "FM-03 §3",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-1-06",
+    "parada": "concilios-1",
+    "texto": "El museo se renovó en 2014, a cargo de la JCCM y del Museo de Santa Cruz.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "985-987"
+    },
+    "palabrasClave": [
+      "2014",
+      "renovacion"
+    ],
+    "origen": "FM-03 §3",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-1-07",
+    "parada": "concilios-1",
+    "texto": "Ningún concilio de Toledo se celebró en San Román: se reunieron en otras iglesias, como Santa Leocadia o la iglesia pretoriense.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
+    },
+    "palabrasClave": [
+      "concilios",
+      "donde",
+      "pretoriense",
+      "santa leocadia"
+    ],
+    "origen": "Documento del nodo; FM-02 §3",
+    "revisar": "Validación n.º 2 del nodo: confirmar la cifra (dieciocho concilios) y la redacción.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-1-08",
+    "parada": "concilios-1",
+    "texto": "El museo reúne piezas de la Vega Baja, Guarrazar, Carranque, Carpio de Tajo, Malpica de Tajo y otros lugares de la provincia.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "985"
+    },
+    "palabrasClave": [
+      "coleccion",
+      "procedencia",
+      "provincia"
+    ],
+    "origen": "FM-03 §3 y §5",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-2-01",
+    "parada": "concilios-2",
+    "texto": "San Román tiene planta basilical de tres naves, con arcos de herradura califal de dovelas alternas enmarcadas por alfiz, sobre columnas de fuste romano adosadas a pilares de ladrillo, y una galería encima.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "983"
+    },
+    "palabrasClave": [
+      "alfiz",
+      "arcos de herradura",
+      "arquitectura",
+      "naves"
+    ],
+    "origen": "FM-03 §2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-2-02",
+    "parada": "concilios-2",
+    "texto": "Hay doce capiteles reutilizados de tamaños distintos, algunos de ellos visigodos.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Folleto «Museo de los Concilios y la Cultura Visigoda» (sin fecha ni autoría)"
+    },
+    "palabrasClave": [
+      "capiteles",
+      "reutilizados",
+      "visigodos"
+    ],
+    "origen": "FM-03 §2",
+    "revisar": "Validación n.º 5: identificar cuáles son visigodos.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-2-03",
+    "parada": "concilios-2",
+    "texto": "Las pinturas murales son del siglo XIII, se descubrieron en la restauración de los años cuarenta del siglo XX y son románicas con motivos de raíz islámica.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "985"
+    },
+    "palabrasClave": [
+      "pinturas",
+      "romanico",
+      "siglo xiii"
+    ],
+    "origen": "FM-03 §2",
+    "revisar": "Validación n.º 6: unificar la lista de temas con el museo.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-2-04",
+    "parada": "concilios-2",
+    "texto": "Alonso de Covarrubias reformó la capilla mayor a partir de 1552, con una cúpula sobre pechinas.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "983"
+    },
+    "palabrasClave": [
+      "1552",
+      "covarrubias",
+      "cupula"
+    ],
+    "origen": "FM-03 §2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-2-05",
+    "parada": "concilios-2",
+    "texto": "La cripta descubierta en 1968 bajo la capilla mayor se ha identificado como un ábside visigodo; otras fuentes la atribuyen a época romana.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "983"
+    },
+    "palabrasClave": [
+      "1968",
+      "absido",
+      "cripta",
+      "hipotesis"
+    ],
+    "origen": "FM-03 §2",
+    "revisar": "Validación n.º 4: pedir el informe de la restauración de 1968.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-3-01",
+    "parada": "concilios-3",
+    "texto": "En el III Concilio de Toledo (589), el rey Recaredo y los obispos de su Iglesia abandonaron el cristianismo homoiano, llamado habitualmente «arriano», y aceptaron la fe católica.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Ponencia inaugural del Seminario SOFIA (Urbs Regia)"
+    },
+    "palabrasClave": [
+      "589",
+      "arrianismo",
+      "conversion",
+      "iii concilio",
+      "recaredo"
+    ],
+    "origen": "Documento del nodo",
+    "revisar": "Validación n.º 3: dato general; confirmar la terminología con Urbs Regia y dar una referencia bibliográfica.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-3-02",
+    "parada": "concilios-3",
+    "texto": "Se conservan dos fragmentos de un tablero de piedra con un credo, hallados cerca de la basílica de Santa Leocadia, orlados con una greca de palmas.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "987"
+    },
+    "palabrasClave": [
+      "credo",
+      "fragmentos",
+      "piedra",
+      "santa leocadia"
+    ],
+    "origen": "FM-03 §4.2",
+    "revisar": "El relato describe «una orla con escamas y una franja con veneras y palmas»; contrastar con la pieza.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-3-03",
+    "parada": "concilios-3",
+    "texto": "El folleto del museo data el credo epigráfico en el siglo VII; se publicó en Jorge Aragoneses (1957).",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Folleto «Museo de los Concilios y la Cultura Visigoda» (sin fecha ni autoría)"
+    },
+    "palabrasClave": [
+      "1957",
+      "credo",
+      "siglo vii"
+    ],
+    "origen": "FM-03 §4.2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-3-04",
+    "parada": "concilios-3",
+    "texto": "La cartela del museo identifica el texto como el «símbolo de los apóstoles»; otras publicaciones hablan del credo de Nicea en versión hispana.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Cartelas y paneles del Museo de los Concilios (textos de S. Cortés Hernández)"
+    },
+    "palabrasClave": [
+      "credo",
+      "debate",
+      "nicea",
+      "simbolo de los apostoles"
+    ],
+    "origen": "Documento del nodo; FM-03 §4.2",
+    "revisar": "Validación n.º 1, urgente: consultar Jorge Aragoneses (1957) o al museo. Bloquea esta parada.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-4-01",
+    "parada": "concilios-4",
+    "texto": "En la villa de El Saucedo (Talavera la Nueva), una sala se transformó en iglesia con baptisterio en el siglo VI.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "987"
+    },
+    "palabrasClave": [
+      "baptisterio",
+      "el saucedo",
+      "villa"
+    ],
+    "origen": "FM-03 §4.1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-4-02",
+    "parada": "concilios-4",
+    "texto": "En Carranque apareció en 2009 una tapa de sarcófago con el ciclo de Jonás, reutilizada como cubierta de una tumba de la necrópolis visigoda.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "988"
+    },
+    "palabrasClave": [
+      "carranque",
+      "jonas",
+      "sarcofago"
+    ],
+    "origen": "FM-03 §4.4",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-4-03",
+    "parada": "concilios-4",
+    "texto": "La placa de Las Tamujas (Malpica de Tajo) es uno de los escasos relieves figurados visigodos.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "987"
+    },
+    "palabrasClave": [
+      "figura",
+      "placa",
+      "relieve",
+      "tamujas"
+    ],
+    "origen": "FM-03 §4.2",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-4-04",
+    "parada": "concilios-4",
+    "texto": "Para la figura de la placa de Las Tamujas se han propuesto varias identificaciones, entre ellas un eclesiástico que bendice o predica y Cristo en su bautismo.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Folleto «Museo de los Concilios y la Cultura Visigoda» (sin fecha ni autoría)"
+    },
+    "palabrasClave": [
+      "hipotesis",
+      "iconografia",
+      "tamujas"
+    ],
+    "origen": "FM-03 §4.2",
+    "revisar": "El relato sigue la cartela (divinidad pagana, santo predicando, Cristo en el bautismo); el folleto da otra lista. Unificar.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-4-05",
+    "parada": "concilios-4",
+    "texto": "Las piezas litúrgicas (canceles, tenantes de altar con hueco para reliquias y placas-nicho) proceden sobre todo de Toledo capital.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "987-988"
+    },
+    "palabrasClave": [
+      "altar",
+      "canceles",
+      "placas-nicho",
+      "reliquias"
+    ],
+    "origen": "FM-03 §4.3",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-4-06",
+    "parada": "concilios-4",
+    "texto": "Abundan los fragmentos escultóricos reutilizados en fachadas, murallas y viviendas, con motivos geométricos y vegetales tallados a bisel.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "988"
+    },
+    "palabrasClave": [
+      "bisel",
+      "escultura",
+      "reutilizacion"
+    ],
+    "origen": "FM-03 §4.3",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-4-07",
+    "parada": "concilios-4",
+    "texto": "El museo expone una reproducción exacta de la pilastra de El Salvador, con escenas de la vida de Cristo.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "988"
+    },
+    "palabrasClave": [
+      "el salvador",
+      "pilastra",
+      "reproduccion"
+    ],
+    "origen": "FM-03 §4.3",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-4-08",
+    "parada": "concilios-4",
+    "texto": "La pileta de alabastro procede del Cristo de la Luz: era un capitel visigodo del siglo VII con hojas de acanto, transformado después en recipiente.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Cartelas y paneles del Museo de los Concilios (textos de S. Cortés Hernández)"
+    },
+    "palabrasClave": [
+      "capitel",
+      "cristo de la luz",
+      "pileta"
+    ],
+    "origen": "Documento del nodo",
+    "revisar": "Fuente institucional (cartela). Dar la referencia publicada.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-4-09",
+    "parada": "concilios-4",
+    "texto": "El museo se organiza en ocho ámbitos temáticos, de la Hispania tardorromana a la liturgia, con una sala final dedicada a la Vega Baja.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "987-990"
+    },
+    "palabrasClave": [
+      "ambitos",
+      "museo",
+      "recorrido"
+    ],
+    "origen": "FM-03 §4",
+    "revisar": "El relato de esta parada dice «cuatro escenas» pero solo nombra tres: regrabar o completar (pendiente con Rojas).",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-5-01",
+    "parada": "concilios-5",
+    "texto": "La sala de la Vega Baja reúne frisos, cimacios, capiteles y columnas de pórfido, y en hueso una píxide, dados, fichas de juego, cajitas y placas.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "990"
+    },
+    "palabrasClave": [
+      "dados",
+      "hueso",
+      "sala",
+      "vega baja"
+    ],
+    "origen": "FM-03 §4.6",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-5-02",
+    "parada": "concilios-5",
+    "texto": "Se expone un fragmento de bote de hueso con dos figuras junto a un pozo.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Folleto «Museo de los Concilios y la Cultura Visigoda» (sin fecha ni autoría)"
+    },
+    "palabrasClave": [
+      "bote",
+      "hueso",
+      "pozo"
+    ],
+    "origen": "FM-03 §4.6",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-5-03",
+    "parada": "concilios-5",
+    "texto": "La escena del bote de hueso se ha identificado con Jesús y la samaritana.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Folleto «Museo de los Concilios y la Cultura Visigoda» (sin fecha ni autoría)"
+    },
+    "palabrasClave": [
+      "iconografia",
+      "samaritana"
+    ],
+    "origen": "FM-03 §4.6",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-5-04",
+    "parada": "concilios-5",
+    "texto": "En la vitrina hay una cruz de bronce dorado del siglo VII, un adorno de oro y vidrio, una hebilla en forma de lira, una llave y un objeto de bronce de uso discutido (quizá un osculatorio).",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Cartelas y paneles del Museo de los Concilios (textos de S. Cortés Hernández)"
+    },
+    "palabrasClave": [
+      "cruz",
+      "hebilla",
+      "llave",
+      "osculatorio"
+    ],
+    "origen": "Documento del nodo (cartelas fotografiadas en 2026)",
+    "revisar": "Fuente institucional (cartela).",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-5-05",
+    "parada": "concilios-5",
+    "texto": "Las monedas de oro de Suintila y Sisenando de la vitrina se hallaron, según su cartela, «cerca de Toledo», no necesariamente en la Vega Baja.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Cartelas y paneles del Museo de los Concilios (textos de S. Cortés Hernández)"
+    },
+    "palabrasClave": [
+      "monedas",
+      "sisenando",
+      "suintila"
+    ],
+    "origen": "Documento del nodo",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-6-01",
+    "parada": "concilios-6",
+    "texto": "El museo expone reproducciones de las coronas del tesoro de Guarrazar.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Caballero Klink y Gómez García (2017), «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35",
+      "pagina": "990"
+    },
+    "palabrasClave": [
+      "coronas",
+      "guarrazar",
+      "reproducciones"
+    ],
+    "origen": "FM-03 §4.5",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-6-02",
+    "parada": "concilios-6",
+    "texto": "Las coronas de Guarrazar eran ofrendas votivas para colgar sobre el altar, no coronas para ceñir.",
+    "nivel": "I",
+    "atribucion": "Martin (2025), siguiendo a Arce y Valverde",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX",
+      "pagina": "131-136"
+    },
+    "palabrasClave": [
+      "coronas",
+      "coronas de guarrazar",
+      "funcion",
+      "ofrenda",
+      "para que servian",
+      "servian",
+      "votivas"
+    ],
+    "origen": "FM-01 §3",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-6-03",
+    "parada": "concilios-6",
+    "texto": "La corona de Suintila, conservada en la Real Armería, fue robada en 1921 y no se ha recuperado.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX"
+    },
+    "palabrasClave": [
+      "1921",
+      "robo",
+      "suintila"
+    ],
+    "origen": "FM-01 §2 (Balmaseda 1995)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-6-04",
+    "parada": "concilios-6",
+    "texto": "Francia devolvió parte del tesoro: seis coronas, cuatro cruces y colgantes.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "219"
+    },
+    "palabrasClave": [
+      "1941",
+      "devolucion",
+      "francia"
+    ],
+    "origen": "FM-01 §2",
+    "revisar": "El relato da 1941 (llegada) y 1943 (MAN), que en FM-01 son PISTA de la mesa redonda del MAN.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-6-05",
+    "parada": "concilios-6",
+    "texto": "Entre las ofrendas del tesoro hay una corona ofrecida por el abad Teodosio y la cruz de Lucecio.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Martin (2025), «Guarrazar y su tesoro: una revisión», Hispania Antiqva XLIX",
+      "pagina": "136, 139, 147"
+    },
+    "palabrasClave": [
+      "lucecio",
+      "ofrendas",
+      "teodosio"
+    ],
+    "origen": "FM-01 §3",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-6-06",
+    "parada": "concilios-6",
+    "texto": "Las coronas regias cuelgan con una cruz: para J. M. Rojas expresa que el rey reina porque hay un rey por encima de él, Cristo.",
+    "nivel": "I",
+    "atribucion": "J. M. Rojas",
+    "fuente": {
+      "titulo": "Entrevistas a J. M. Rojas en el Museo de los Concilios (2026)"
+    },
+    "palabrasClave": [
+      "cruz",
+      "realeza",
+      "simbolo"
+    ],
+    "origen": "Documento del nodo (entrevista)",
+    "revisar": "Interpretación expresada en entrevista. ¿Está publicada? ¿Se mantiene?",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-1-01",
+    "parada": "territorio-1",
+    "texto": "Guarrazar está en una vaguada con manantiales permanentes, junto a dos vaguadas con buena tierra de huerta.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Panel «El territorio de Guarrazar», yacimiento de Guarrazar (Ayuntamiento de Guadamur / Actividades Arqueológicas)"
+    },
+    "palabrasClave": [
+      "agua",
+      "huertas",
+      "manantiales"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-1-02",
+    "parada": "territorio-1",
+    "texto": "En un perímetro de más de 40 hectáreas hay restos desde la Edad del Cobre hasta la Edad Media.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Panel «El territorio de Guarrazar», yacimiento de Guarrazar (Ayuntamiento de Guadamur / Actividades Arqueológicas)"
+    },
+    "palabrasClave": [
+      "40 hectareas",
+      "perimetro",
+      "restos"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-1-03",
+    "parada": "territorio-1",
+    "texto": "El agua, la tierra fértil y la cercanía de filones de mineral explican la concentración de restos en Guarrazar.",
+    "nivel": "I",
+    "atribucion": "J. M. Rojas",
+    "fuente": {
+      "titulo": "Rojas Rodríguez-Malo, «El primer año de trabajos en Guarrazar», VII Jornadas de Cultura Visigoda"
+    },
+    "palabrasClave": [
+      "agua",
+      "ocupacion",
+      "por que aqui"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-1-04",
+    "parada": "territorio-1",
+    "texto": "El acueducto y el pozo de la Huerta Larga regaron huertas hasta hace unas tres décadas, y la Casa de Higinio fue una explotación familiar de huerta hasta la segunda mitad del siglo XX.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas Rodríguez-Malo, «El primer año de trabajos en Guarrazar», VII Jornadas de Cultura Visigoda"
+    },
+    "palabrasClave": [
+      "acueducto",
+      "casa de higinio",
+      "huerta larga"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "Cronología del acueducto por confirmar.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-2-01",
+    "parada": "territorio-2",
+    "texto": "El subsuelo de Guadamur tiene filones de galena argentífera, de la que se obtienen plomo y plata, y de grafito.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Panel «El territorio de Guarrazar», yacimiento de Guarrazar (Ayuntamiento de Guadamur / Actividades Arqueológicas)"
+    },
+    "palabrasClave": [
+      "galena",
+      "grafito",
+      "plata",
+      "plomo"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-2-02",
+    "parada": "territorio-2",
+    "texto": "A finales del siglo XIX se registraron en Guadamur 16 concesiones para explotar minas de plomo.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Panel «El territorio de Guarrazar», yacimiento de Guarrazar (Ayuntamiento de Guadamur / Actividades Arqueológicas)"
+    },
+    "palabrasClave": [
+      "concesiones",
+      "plomo",
+      "siglo xix"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-2-03",
+    "parada": "territorio-2",
+    "texto": "El nombre de Guarrazar derivaría de un nombre árabe que significa «valle del plomo».",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Rojas (2025), «Indicios de un edificio monástico-palacial en el santuario hispanovisigodo de Sorbaces/Guarrazar», Urbs Regia 9",
+      "pagina": "n. 37"
+    },
+    "palabrasClave": [
+      "etimologia",
+      "nombre",
+      "valle del plomo"
+    ],
+    "origen": "FM-01 §1",
+    "revisar": "Las VII Jornadas lo dan por seguro; el panel, como posibilidad. ¿Hay fuente filológica?",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-2-04",
+    "parada": "territorio-2",
+    "texto": "La minería pudo ser la actividad principal de la zona en época andalusí, lo que explicaría la continuidad de la ocupación.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Rojas Rodríguez-Malo, «El primer año de trabajos en Guarrazar», VII Jornadas de Cultura Visigoda"
+    },
+    "palabrasClave": [
+      "andalusi",
+      "mineria"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-3-01",
+    "parada": "territorio-3",
+    "texto": "Al noreste del yacimiento estaba el coto minero de Guadamur, dedicado a la explotación de grafito.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Panel «El territorio de Guarrazar», yacimiento de Guarrazar (Ayuntamiento de Guadamur / Actividades Arqueológicas)"
+    },
+    "palabrasClave": [
+      "coto minero",
+      "grafito"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-3-02",
+    "parada": "territorio-3",
+    "texto": "A principios del siglo XX se habían registrado en Guadamur 19 concesiones para explotar grafito.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Panel «El territorio de Guarrazar», yacimiento de Guarrazar (Ayuntamiento de Guadamur / Actividades Arqueológicas)"
+    },
+    "palabrasClave": [
+      "concesiones",
+      "grafito",
+      "siglo xx"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-4-01",
+    "parada": "territorio-4",
+    "texto": "Los molinos de La Casquilla y de Alegre, en el arroyo Guajaraz, son testigos de la actividad «industrial» de la zona en la Edad Moderna y parte de la Contemporánea.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Panel «El territorio de Guarrazar», yacimiento de Guarrazar (Ayuntamiento de Guadamur / Actividades Arqueológicas)"
+    },
+    "palabrasClave": [
+      "casquilla",
+      "guajaraz",
+      "molinos"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "Cronología de construcción por confirmar.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-4-02",
+    "parada": "territorio-4",
+    "texto": "Guarrazar está en la vaguada donde confluyen el camino de Toledo y el del Molino de la Casquilla.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "217"
+    },
+    "palabrasClave": [
+      "caminos",
+      "casquilla",
+      "toledo"
+    ],
+    "origen": "FM-01 §1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-5-01",
+    "parada": "territorio-5",
+    "texto": "El molino de Alegre está en el arroyo Guajaraz, en término de Argés.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Panel «El territorio de Guarrazar», yacimiento de Guarrazar (Ayuntamiento de Guadamur / Actividades Arqueológicas)"
+    },
+    "palabrasClave": [
+      "arges",
+      "molino de alegre"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-6-01",
+    "parada": "territorio-6",
+    "texto": "La Torre de Cervatos y los castillos de Guadamur y Polán son las tres fortalezas del territorio; según el panel, controlaban sobre todo las vías de comunicación.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Panel «El territorio de Guarrazar», yacimiento de Guarrazar (Ayuntamiento de Guadamur / Actividades Arqueológicas)"
+    },
+    "palabrasClave": [
+      "caminos",
+      "cervatos",
+      "fortalezas"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "Falta fuente científica para la cronología de Cervatos.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-6-02",
+    "parada": "territorio-6",
+    "texto": "El camino de Toledo al puerto Marchés se identifica con la calzada romana de Toledo a Mérida.",
+    "nivel": "I",
+    "atribucion": "Panel del yacimiento",
+    "fuente": {
+      "titulo": "Panel «El territorio de Guarrazar», yacimiento de Guarrazar (Ayuntamiento de Guadamur / Actividades Arqueológicas)"
+    },
+    "palabrasClave": [
+      "calzada",
+      "merida",
+      "puerto marches"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-6-03",
+    "parada": "territorio-6",
+    "texto": "El trazado más corto entre Mérida y Toledo pasaba por Cervatos (mapa de Coello, 1889).",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas, Vicente y Eger (2022), «La basílica de Guarrazar (Guadamur, Toledo) en el contexto de un santuario hispanovisigodo», en Salido y Gómez (eds.), Iglesias tardoantiguas en el centro peninsular, La Ergástula",
+      "pagina": "217"
+    },
+    "palabrasClave": [
+      "cervatos",
+      "coello",
+      "merida"
+    ],
+    "origen": "FM-01 §1",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-7-01",
+    "parada": "territorio-7",
+    "texto": "Al sur de Guadamur estaban las minas de galena argentífera de La Trinidad, entre las explotaciones más importantes del término.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Panel «El territorio de Guarrazar», yacimiento de Guarrazar (Ayuntamiento de Guadamur / Actividades Arqueológicas)"
+    },
+    "palabrasClave": [
+      "galena",
+      "la trinidad",
+      "minas"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "Fechas de actividad por confirmar.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-8-01",
+    "parada": "territorio-8",
+    "texto": "Junto a Polán pasaba uno de los caminos que salían del paso de Portusa hacia Noez, Cuerva, Las Ventas y el puerto del Milagro.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas Rodríguez-Malo, «El primer año de trabajos en Guarrazar», VII Jornadas de Cultura Visigoda"
+    },
+    "palabrasClave": [
+      "caminos",
+      "castillo",
+      "polan",
+      "portusa"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "Falta fuente científica para la cronología del castillo.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-9-01",
+    "parada": "territorio-9",
+    "texto": "En Portusa, a unos 7,5 km al noroeste de Guadamur, había un importante paso del Tajo en barcas donde confluían varios caminos.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas Rodríguez-Malo, «El primer año de trabajos en Guarrazar», VII Jornadas de Cultura Visigoda"
+    },
+    "palabrasClave": [
+      "barcas",
+      "caminos",
+      "portusa",
+      "tajo"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-9-02",
+    "parada": "territorio-9",
+    "texto": "El topónimo Portusa podría ser de origen romano.",
+    "nivel": "H",
+    "fuente": {
+      "titulo": "Rojas Rodríguez-Malo, «El primer año de trabajos en Guarrazar», VII Jornadas de Cultura Visigoda"
+    },
+    "palabrasClave": [
+      "portusa",
+      "romano",
+      "toponimo"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-9-03",
+    "parada": "territorio-9",
+    "texto": "La ruta de Portusa por Guadamur hacia Consabura (Consuegra) y Laminium (Alhambra) fue una vía romana.",
+    "nivel": "I",
+    "atribucion": "J. M. Rojas",
+    "fuente": {
+      "titulo": "Rojas (2025), «Indicios de un edificio monástico-palacial en el santuario hispanovisigodo de Sorbaces/Guarrazar», Urbs Regia 9"
+    },
+    "palabrasClave": [
+      "consabura",
+      "laminium",
+      "via romana"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-territorio-9-04",
+    "parada": "territorio-9",
+    "texto": "Desde el siglo XIX han desaparecido más del 80 % de las huertas y viñas de Guadamur, y el olivar quizá haya triplicado su extensión.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Rojas Rodríguez-Malo, «El primer año de trabajos en Guarrazar», VII Jornadas de Cultura Visigoda"
+    },
+    "palabrasClave": [
+      "cultivos",
+      "olivar",
+      "paisaje",
+      "vinas"
+    ],
+    "origen": "Ficha de la parada",
+    "revisar": "",
+    "estado": "borrador"
+  }
+]

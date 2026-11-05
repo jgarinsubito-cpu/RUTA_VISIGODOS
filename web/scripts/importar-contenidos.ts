@@ -8,6 +8,7 @@
  *     [--copiar-medios]   copia fotos, audios y modelos a web/public
  *     [--subir]           sube los registros al gestor «en revisión» (necesita variables de entorno)
  *     [--actualizar]      con --subir: también reemplaza registros que ya existen (vuelven a revisión)
+ *     [--incluir-borradores]  incluye afirmaciones aún no validadas (solo para previsualizar; nunca con --subir)
  *
  * Nunca publica nada: los registros entran «en revisión» y solo un validador los publica en /admin.
  * Comprueba todo con las mismas reglas que el gestor (schema.ts y validate.ts) antes de escribir.
@@ -131,6 +132,8 @@ interface Config {
 /** Afirmación validada, tal como la entrega el equipo de contenidos (afirmaciones.json). */
 interface AfirmacionEntrada {
   id: string;
+  /** borrador · validada · pendiente-fuente. Solo las validadas llegan al gestor. */
+  estado?: string;
   parada: string;
   texto: string;
   nivel: EvidenceLevel;
@@ -273,9 +276,16 @@ if (fs.existsSync(creditosPath)) {
 }
 
 const afirmacionesPath = path.join(configDir, "afirmaciones.json");
-const afirmaciones: AfirmacionEntrada[] = fs.existsSync(afirmacionesPath)
+const todasLasAfirmaciones: AfirmacionEntrada[] = fs.existsSync(afirmacionesPath)
   ? (JSON.parse(fs.readFileSync(afirmacionesPath, "utf8")) as AfirmacionEntrada[])
   : [];
+if (flag("incluir-borradores") && flag("subir")) {
+  console.error("--incluir-borradores es solo para previsualizar: no se puede combinar con --subir.");
+  process.exit(1);
+}
+// Solo las afirmaciones validadas por Rojas / Urbs Regia entran en el gestor.
+const afirmaciones = flag("incluir-borradores") ? todasLasAfirmaciones : todasLasAfirmaciones.filter((a) => a.estado === "validada");
+const afirmacionesSinValidar = todasLasAfirmaciones.length - afirmaciones.length;
 
 /* ---------- Informe ---------- */
 
@@ -608,7 +618,7 @@ Generado el ${new Date().toISOString().slice(0, 16).replace("T", " ")} UTC desde
 | --- | --- |
 | Recorridos | ${routes.length} |
 | Paradas (lugares) | ${sites.length} |
-| Afirmaciones | ${claims.length} |
+| Afirmaciones | ${claims.length}${afirmacionesSinValidar ? ` (${afirmacionesSinValidar} más sin validar, fuera de la importación)` : ""}${flag("incluir-borradores") ? " (incluye borradores: solo previsualización)" : ""} |
 | Historias | ${stories.length} |
 | Paradas con imagen publicable | ${sites.filter((s) => s.image).length} |
 | Registros para el gestor (en revisión) | ${registros.length} |
@@ -625,7 +635,7 @@ ${lista(advertencias)}
 
 ## Relatos que aún no entran como historias
 
-El gestor exige que cada historia cite al menos una afirmación validada de su parada. Estas paradas tienen relato pero no afirmaciones en \`afirmaciones.json\`; su relato está completo en \`extensiones.json\` y en la ficha se ve el primer párrafo como descripción.
+El gestor exige que cada historia cite al menos una afirmación validada de su parada. Estas paradas tienen relato pero ninguna afirmación validada en \`afirmaciones.json\`; su relato está completo en \`extensiones.json\` y en la ficha se ve el primer párrafo como descripción.
 
 ${lista(avisos.historiasSinAfirmaciones)}
 
