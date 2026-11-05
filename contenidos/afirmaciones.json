@@ -9,10 +9,9 @@
       "pagina": "217"
     },
     "palabrasClave": [
-      "guadamur",
-      "guarrazar",
+      "donde esta",
       "situacion",
-      "toledo"
+      "ubicacion"
     ],
     "origen": "FM-01 §1",
     "revisar": "",
@@ -141,7 +140,6 @@
       "cluny",
       "donde esta",
       "man",
-      "museo",
       "tesoro"
     ],
     "origen": "FM-01 §3 (ver FM-10)",
@@ -159,8 +157,7 @@
     },
     "palabrasClave": [
       "camps",
-      "investigacion",
-      "toledo"
+      "investigacion"
     ],
     "origen": "FM-01 §2",
     "revisar": "",
@@ -232,7 +229,9 @@
       "titulo": "Rojas (2025), «Indicios de un edificio monástico-palacial en el santuario hispanovisigodo de Sorbaces/Guarrazar», Urbs Regia 9"
     },
     "palabrasClave": [
+      "como se llamaba",
       "nombre",
+      "nombre del santuario",
       "santa maria",
       "sorbaces"
     ],
@@ -267,7 +266,9 @@
     },
     "palabrasClave": [
       "excavado",
-      "porcentaje"
+      "excavar",
+      "porcentaje",
+      "terminado"
     ],
     "origen": "FM-01 §1",
     "revisar": "",
@@ -304,7 +305,10 @@
     "palabrasClave": [
       "basilica",
       "cimientos",
+      "conserva",
       "nivelacion",
+      "queda",
+      "restos",
       "zanjas"
     ],
     "origen": "FM-01 §5.2",
@@ -322,8 +326,12 @@
     },
     "palabrasClave": [
       "basas",
+      "basas de columna",
       "columnas",
+      "conserva",
       "marmol",
+      "queda",
+      "restos",
       "spolia"
     ],
     "origen": "FM-01 §5.2",
@@ -359,7 +367,9 @@
     "palabrasClave": [
       "marmol",
       "pavimento",
+      "solado",
       "suelo",
+      "suelo de la basilica",
       "vitruvio"
     ],
     "origen": "FM-01 §5.2",
@@ -416,7 +426,9 @@
       "altura",
       "cabecera",
       "estimacion",
-      "longitud"
+      "largo",
+      "longitud",
+      "media"
     ],
     "origen": "FM-01 §5.2",
     "revisar": "Validación n.º 1 del nodo. El relato añade «nueve columnas por fila», que no está en la ficha.",
@@ -433,6 +445,8 @@
     },
     "palabrasClave": [
       "capilla",
+      "enterramiento",
+      "tumba",
       "tumba infantil"
     ],
     "origen": "FM-01 §5.2",
@@ -452,7 +466,6 @@
     "palabrasClave": [
       "altar",
       "coronas",
-      "coronas de guarrazar",
       "funcion",
       "ofrenda",
       "para que servian",
@@ -476,7 +489,10 @@
     "palabrasClave": [
       "corona",
       "inscripcion",
+      "nombre del rey",
       "recesvinto",
+      "rey",
+      "reyes",
       "suintila"
     ],
     "origen": "FM-01 §3",
@@ -494,6 +510,9 @@
     "palabrasClave": [
       "abad",
       "donantes",
+      "donaron",
+      "ofrecieron",
+      "ofrecio",
       "teodosio"
     ],
     "origen": "FM-01 §3",
@@ -600,7 +619,9 @@
       "pagina": "221"
     },
     "palabrasClave": [
+      "dos plantas",
       "escalera",
+      "piso",
       "planta alta"
     ],
     "origen": "FM-01 §5.3",
@@ -688,6 +709,7 @@
       "pagina": "239"
     },
     "palabrasClave": [
+      "era un hospital",
       "funcion",
       "hospital",
       "hospital de peregrinos",
@@ -711,6 +733,7 @@
     },
     "palabrasClave": [
       "debate",
+      "hospital",
       "monasterio",
       "monjes",
       "regla de isidoro"
@@ -766,7 +789,9 @@
       "agua",
       "banera",
       "baneras",
-      "fosas"
+      "cuantas baneras",
+      "fosas",
+      "fosas por parejas"
     ],
     "origen": "FM-01 §5.1",
     "revisar": "Validación n.º 3: las Jornadas de 2026 dicen «al menos dieciséis». ¿Fosas o bañeras? ¿Cuántas?",
@@ -783,8 +808,11 @@
     },
     "palabrasClave": [
       "excavado",
+      "hasta cuando",
       "siglo viii",
-      "tercio"
+      "tercio",
+      "usaron",
+      "uso de las baneras"
     ],
     "origen": "FM-01 §5.1",
     "revisar": "",
@@ -799,8 +827,7 @@
       "titulo": "Entrevistas a J. M. Rojas en el yacimiento de Guarrazar (agosto de 2026)"
     },
     "palabrasClave": [
-      "baneras",
-      "cuantas"
+      "mas de cuarenta"
     ],
     "origen": "Documento del nodo (deducción a partir de FM-01)",
     "revisar": "Deducción del relato, no está en la ficha. ¿Se mantiene?",
@@ -879,6 +906,9 @@
     "palabrasClave": [
       "agua",
       "analisis",
+      "cura",
+      "curan",
+      "enfermedades",
       "medicinal"
     ],
     "origen": "FM-01 §1",
@@ -1024,6 +1054,9 @@
     "palabrasClave": [
       "calices",
       "cruz procesional",
+      "encontraron",
+      "junto a las coronas",
+      "objetos del tesoro",
       "paloma"
     ],
     "origen": "FM-01 §2",
@@ -1059,7 +1092,11 @@
     },
     "palabrasClave": [
       "711",
+      "esconder",
+      "escondido",
+      "escondio",
       "ocultacion",
+      "por que se escondio",
       "quien escondio"
     ],
     "origen": "FM-01 §4 ⚖",
@@ -1146,8 +1183,11 @@
     },
     "palabrasClave": [
       "area 5",
+      "cerro",
+      "gran edificio",
       "monasterio",
       "palacio",
+      "palacio en guarrazar",
       "residencia regia"
     ],
     "origen": "FM-01 §5.4 ⚖",
@@ -1165,7 +1205,10 @@
     },
     "palabrasClave": [
       "carranque",
+      "cerro",
       "debate",
+      "gran edificio",
+      "palacio",
       "praetorium",
       "romano"
     ],
@@ -1201,6 +1244,8 @@
     "palabrasClave": [
       "galena",
       "mina",
+      "mina de plomo",
+      "minas",
       "plomo"
     ],
     "origen": "FM-01 §1",
@@ -1340,7 +1385,9 @@
       "basilica",
       "cancel",
       "piezas",
-      "salmer"
+      "que se ve",
+      "salmer",
+      "vitrinas"
     ],
     "origen": "Paneles del Centro; FM-01 §5.2 (materiales en posición secundaria)",
     "revisar": "",
@@ -1517,11 +1564,16 @@
       "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
     },
     "palabrasClave": [
+      "enterrado",
+      "enterrados",
       "eugenio",
       "ildefonso",
       "julian",
       "monasterio",
-      "obispos"
+      "obispos",
+      "obispos enterrados",
+      "quien esta enterrado",
+      "sepultura"
     ],
     "origen": "FM-02 §3.1",
     "revisar": "",
@@ -1592,8 +1644,7 @@
     },
     "palabrasClave": [
       "1956",
-      "credo",
-      "museo de los concilios"
+      "credo"
     ],
     "origen": "FM-02 §3.1",
     "revisar": "",
@@ -1664,6 +1715,8 @@
     },
     "palabrasClave": [
       "6 metros",
+      "calle",
+      "calles",
       "calzada",
       "edificio"
     ],
@@ -1715,7 +1768,9 @@
       "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
     },
     "palabrasClave": [
+      "calles",
       "calzadas",
+      "como eran las calles",
       "enlosadas",
       "firme"
     ],
@@ -1768,7 +1823,10 @@
     },
     "palabrasClave": [
       "adobe",
+      "casas",
       "construccion",
+      "construian",
+      "muros",
       "tapial",
       "tejas",
       "zocalo"
@@ -1788,7 +1846,10 @@
     "palabrasClave": [
       "anforas",
       "comercio",
+      "encontrado",
+      "hallazgos",
       "hueso",
+      "objetos",
       "vidrio"
     ],
     "origen": "FM-02 §4",
@@ -2019,8 +2080,7 @@
     },
     "palabrasClave": [
       "hectareas",
-      "llanura",
-      "vega baja"
+      "llanura"
     ],
     "origen": "FM-02 §1",
     "revisar": "Validación n.º 2: Rojas da más de 70 o 100 ha. Buscar cifra publicada.",
@@ -2140,7 +2200,6 @@
       "pagina": "983"
     },
     "palabrasClave": [
-      "san roman",
       "situacion"
     ],
     "origen": "FM-03 §1",
@@ -2158,7 +2217,6 @@
     },
     "palabrasClave": [
       "alminar",
-      "san roman",
       "torre"
     ],
     "origen": "FM-03 §2",
@@ -2176,6 +2234,9 @@
     },
     "palabrasClave": [
       "1221",
+      "consagracion",
+      "consagrada",
+      "consagro",
       "jimenez de rada",
       "parroquia"
     ],
@@ -2194,7 +2255,9 @@
     },
     "palabrasClave": [
       "hipotesis",
+      "iglesia visigoda",
       "mezquita",
+      "origen",
       "origen visigodo"
     ],
     "origen": "FM-03 §2",
@@ -2212,8 +2275,7 @@
     },
     "palabrasClave": [
       "1971",
-      "matilde revuelta",
-      "museo"
+      "matilde revuelta"
     ],
     "origen": "FM-03 §3",
     "revisar": "",
@@ -2245,7 +2307,9 @@
       "titulo": "Olmo Enciso, en Gallego et al. (2009), La Vega Baja de Toledo, Toletum Visigodo"
     },
     "palabrasClave": [
+      "concilio en san roman",
       "concilios",
+      "concilios en san roman",
       "donde",
       "pretoriense",
       "santa leocadia"
@@ -2357,7 +2421,8 @@
       "1968",
       "absido",
       "cripta",
-      "hipotesis"
+      "hipotesis",
+      "iglesia visigoda"
     ],
     "origen": "FM-03 §2",
     "revisar": "Validación n.º 4: pedir el informe de la restauración de 1968.",
@@ -2591,7 +2656,6 @@
     },
     "palabrasClave": [
       "ambitos",
-      "museo",
       "recorrido"
     ],
     "origen": "FM-03 §4",
@@ -2610,8 +2674,7 @@
     "palabrasClave": [
       "dados",
       "hueso",
-      "sala",
-      "vega baja"
+      "sala"
     ],
     "origen": "FM-03 §4.6",
     "revisar": "",
@@ -2696,7 +2759,6 @@
     },
     "palabrasClave": [
       "coronas",
-      "guarrazar",
       "reproducciones"
     ],
     "origen": "FM-03 §4.5",
@@ -2715,7 +2777,6 @@
     },
     "palabrasClave": [
       "coronas",
-      "coronas de guarrazar",
       "funcion",
       "ofrenda",
       "para que servian",
@@ -2842,7 +2903,9 @@
     },
     "palabrasClave": [
       "agua",
+      "junto al agua",
       "ocupacion",
+      "por que",
       "por que aqui"
     ],
     "origen": "Ficha de la parada",
@@ -2945,7 +3008,10 @@
     },
     "palabrasClave": [
       "coto minero",
-      "grafito"
+      "extraia",
+      "grafito",
+      "sacaba",
+      "se sacaba"
     ],
     "origen": "Ficha de la parada",
     "revisar": "",
@@ -2996,8 +3062,7 @@
     },
     "palabrasClave": [
       "caminos",
-      "casquilla",
-      "toledo"
+      "casquilla"
     ],
     "origen": "FM-01 §1",
     "revisar": "",

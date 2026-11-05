@@ -20,6 +20,10 @@
       ],
       "imageTone": "ochre",
       "category": "Yacimiento arqueológico",
+      "aliases": [
+        "yacimiento de guarrazar",
+        "santuario de guarrazar"
+      ],
       "id": "site-yacimiento-guarrazar",
       "slug": "yacimiento-de-guarrazar",
       "hours": {
@@ -52,6 +56,10 @@
       ],
       "imageTone": "moss",
       "category": "Yacimiento arqueológico",
+      "aliases": [
+        "vega baja",
+        "suburbio"
+      ],
       "id": "site-vega-baja",
       "slug": "vega-baja-de-toledo",
       "hours": {
@@ -86,6 +94,11 @@
       "imageTone": "umber",
       "category": "Museo",
       "address": "Calle San Román s/n, 45002 Toledo",
+      "aliases": [
+        "museo de los concilios",
+        "san roman",
+        "iglesia de san roman"
+      ],
       "id": "site-museo-concilios",
       "slug": "museo-de-los-concilios-y-de-la-cultura-visigoda",
       "hours": {
@@ -350,6 +363,9 @@
       ],
       "imageTone": "stone",
       "category": "Ruta visigoda: Toledo y Guadamur · parada 8",
+      "aliases": [
+        "centro de interpretacion"
+      ],
       "id": "site-centro-guarrazar",
       "slug": "centro-de-interpretacion-de-guarrazar",
       "hours": {

@@ -1,6 +1,6 @@
 # Informe de importación
 
-Generado el 2026-11-05 19:14 UTC desde `/home/claude/tour`.
+Generado el 2026-11-05 19:21 UTC desde `/home/claude/tour`.
 
 ## Resultado
 
@@ -24,6 +24,7 @@ Generado el 2026-11-05 19:14 UTC desde `/home/claude/tour`.
 
 - Lugar visigodo sin fichas publicadas: el asistente no podrá contar su historia. (10: yacimiento-guarrazar, vega-baja, museo-concilios, santa-justa, cuevas-hercules, el-salvador, san-bartolome, centro-guarrazar, territorio-2, territorio-6)
 - Sin foto: se mostrará un fondo de color. (19: yacimiento-guarrazar, vega-baja, museo-concilios, santa-justa, cuevas-hercules, el-salvador, santo-tome, san-bartolome, covarrubias, castillo-guadamur, centro-guarrazar, casa-munecas, territorio-2, territorio-3, territorio-4, territorio-5, territorio-6, territorio-7, territorio-8)
+- «suburbio» también es una palabra que el asistente usa para entender la pregunta («suburbio»). (1: vega-baja)
 - Coordenadas aproximadas: tómalas en campo antes de publicar. (18: santa-justa, cuevas-hercules, el-salvador, santo-tome, san-bartolome, covarrubias, castillo-guadamur, centro-guarrazar, casa-munecas, vegabaja-3, vegabaja-5, territorio-2, territorio-3, territorio-4, territorio-5, territorio-6, territorio-7, territorio-8)
 - Sin coordenadas: la llegada no se detectará sola; el visitante avanzará a mano. (6: guarrazar-1, guarrazar-4, guarrazar-5, guarrazar-6, vegabaja-2, vegabaja-4)
 

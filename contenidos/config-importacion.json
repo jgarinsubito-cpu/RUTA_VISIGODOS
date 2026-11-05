@@ -15,7 +15,11 @@
       "lema": "El santuario donde se ofrecieron las coronas votivas",
       "categoria": "Yacimiento arqueológico",
       "resumen": "Santuario hispanovisigodo junto a un manantial, en Guadamur, donde apareció en 1858 el Tesoro de Guarrazar. La visita recorre la basílica, el hospital de peregrinos, el edificio del manantial, la necrópolis y el cerro, en seis paradas.",
-      "info": "Yacimiento al aire libre."
+      "info": "Yacimiento al aire libre.",
+      "alias": [
+        "yacimiento de guarrazar",
+        "santuario de guarrazar"
+      ]
     },
     "vega-baja": {
       "nombre": "Vega Baja de Toledo",
@@ -29,7 +33,11 @@
       ],
       "lema": "El gran suburbio de la capital visigoda",
       "categoria": "Yacimiento arqueológico",
-      "resumen": "La llanura al norte y noroeste del peñón de Toledo, donde estaban la basílica de Santa Leocadia, calles anchas y casas con patio. La visita la recorre en cinco paradas, desde el Cristo de la Vega hasta el mirador."
+      "resumen": "La llanura al norte y noroeste del peñón de Toledo, donde estaban la basílica de Santa Leocadia, calles anchas y casas con patio. La visita la recorre en cinco paradas, desde el Cristo de la Vega hasta el mirador.",
+      "alias": [
+        "vega baja",
+        "suburbio"
+      ]
     },
     "museo-concilios": {
       "nombre": "Museo de los Concilios y de la Cultura Visigoda",
@@ -50,7 +58,12 @@
         "lat": 39.8584558,
         "lng": -4.0271249,
         "approximate": true
-      }
+      },
+      "alias": [
+        "museo de los concilios",
+        "san roman",
+        "iglesia de san roman"
+      ]
     }
   },
   "recorridos": {
@@ -119,7 +132,10 @@
       "visigodo": false
     },
     "centro-guarrazar": {
-      "tipo": "museum"
+      "tipo": "museum",
+      "alias": [
+        "centro de interpretacion"
+      ]
     },
     "casa-munecas": {
       "visigodo": false,

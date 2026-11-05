@@ -121,7 +121,7 @@ a(p, "D", "Dentro hay al menos veinte fosas talladas en la roca, dispuestas por 
   revisar="Validación n.º 3: las Jornadas de 2026 dicen «al menos dieciséis». ¿Fosas o bañeras? ¿Cuántas?", claves=["banera", "baneras", "fosas", "agua"])
 a(p, "D", "Se ha excavado alrededor de un tercio del edificio del manantial, y las bañeras se usaron hasta bien entrado el siglo VIII.", "MAR", "121-123", origen="FM-01 §5.1", claves=["excavado", "tercio", "siglo viii"])
 a(p, "H", "Si todo el edificio tuvo el mismo uso, pudo haber más de cuarenta bañeras.", "ENTG", "", origen="Documento del nodo (deducción a partir de FM-01)",
-  revisar="Deducción del relato, no está en la ficha. ¿Se mantiene?", claves=["baneras", "cuantas"])
+  revisar="Deducción del relato, no está en la ficha. ¿Se mantiene?", claves=["mas de cuarenta"])
 a(p, "D", "En 2025 se restauraron dos de las bañeras.", "PCI", "", origen="Documento del nodo (no está en FM-01 v0.3)", revisar="Dar la fuente (Jornadas o memoria de la intervención).", claves=["restauracion", "baneras"])
 a(p, "I", "Los excavadores identifican el edificio con un delubrum, un recinto de agua para la purificación y la regeneración que describe San Isidoro (Etimologías XV, 4), y proponen baños buscando curación, como hoy en Lourdes.", "RVE", "225", atrib="Rojas, Vicente y Eger (2022); Rojas (2025)", origen="FM-01 §5.1 ⚖",
   revisar="Validación n.º 2: cita exacta de Isidoro e Ildefonso (escalones).", claves=["delubrum", "isidoro", "purificacion", "curacion", "lourdes", "que era", "para que servia", "edificio del manantial"])
@@ -357,6 +357,48 @@ a(p, "H", "El topónimo Portusa podría ser de origen romano.", "JOR7", "", orig
 a(p, "I", "La ruta de Portusa por Guadamur hacia Consabura (Consuegra) y Laminium (Alhambra) fue una vía romana.", "ROJ", "", atrib="J. M. Rojas", origen="Ficha de la parada", claves=["via romana", "consabura", "laminium"])
 a(p, "D", "Desde el siglo XIX han desaparecido más del 80 % de las huertas y viñas de Guadamur, y el olivar quizá haya triplicado su extensión.", "JOR7", "", origen="Ficha de la parada", claves=["olivar", "vinas", "cultivos", "paisaje"])
 
+# ---------------------------------------------------------------- Palabras clave adicionales
+# Formas en que los visitantes preguntan (banco de evaluación del asistente, 05/11/2026).
+EXTRA = {
+    "guarrazar-2-11": ["reyes", "rey", "nombre del rey"],
+    "guarrazar-5-07": ["junto a las coronas", "encontraron", "objetos del tesoro"],
+    "guarrazar-2-12": ["ofrecieron", "ofrecio", "donaron", "abad"],
+    "guarrazar-2-05": ["suelo", "solado", "suelo de la basilica"],
+    "guarrazar-1-01": ["donde esta", "situacion", "ubicacion"],
+    "territorio-3-01": ["se sacaba", "sacaba", "extraia"],
+    "guarrazar-2-02": ["conserva", "queda", "restos"],
+    "guarrazar-2-03": ["conserva", "queda", "restos", "basas de columna"],
+    "guarrazar-2-09": ["tumba", "enterramiento"],
+    "guarrazar-3-03": ["dos plantas", "planta alta", "piso"],
+    "guarrazar-4-02": ["cuantas baneras", "fosas por parejas"],
+    "guarrazar-4-03": ["hasta cuando", "usaron", "uso de las baneras"],
+    "guarrazar-6-06": ["minas", "mina de plomo"],
+    "vegabaja-1-04": ["enterrado", "enterrados", "sepultura", "obispos enterrados", "quien esta enterrado"],
+    "vegabaja-2-02": ["calles", "calle"],
+    "vegabaja-2-05": ["calles", "como eran las calles"],
+    "vegabaja-3-03": ["casas", "construian", "muros"],
+    "vegabaja-3-04": ["objetos", "encontrado", "hallazgos"],
+    "concilios-1-03": ["consagro", "consagracion", "consagrada"],
+    "concilios-1-07": ["concilio en san roman", "concilios en san roman"],
+    "territorio-1-03": ["por que", "junto al agua"],
+    "guarrazar-6-03": ["gran edificio", "cerro", "palacio en guarrazar"],
+    "guarrazar-6-04": ["gran edificio", "cerro", "palacio"],
+    "guarrazar-5-09": ["escondio", "escondido", "esconder", "ocultacion", "por que se escondio"],
+    "guarrazar-1-13": ["como se llamaba", "nombre del santuario"],
+    "concilios-1-04": ["iglesia visigoda", "origen"],
+    "concilios-2-05": ["iglesia visigoda", "cripta"],
+    "guarrazar-2-08": ["largo", "longitud", "media"],
+    "guarrazar-3-08": ["hospital", "era un hospital"],
+    "guarrazar-3-09": ["hospital", "monasterio"],
+    "guarrazar-4-08": ["curan", "enfermedades", "cura"],
+    "guarrazar-1-15": ["excavar", "excavado", "terminado"],
+    "centro-guarrazar-05": ["que se ve", "piezas", "vitrinas"],
+}
+# El lugar ya lo reconoce el asistente por su nombre: como palabra clave, un nombre de lugar haría
+# ganar a cualquier afirmación de ese lugar en cualquier pregunta que lo mencione.
+NOMBRES_DE_LUGAR = {"guarrazar", "guadamur", "toledo", "vega baja", "san roman", "coronas de guarrazar",
+                    "museo", "museo de los concilios", "yacimiento", "centro de interpretacion"}
+
 # ---------------------------------------------------------------- Salida
 def kw(t):
     t = strip(t).replace(",", " ")
@@ -367,7 +409,8 @@ count = {}
 for x in A:
     count[x["parada"]] = count.get(x["parada"], 0) + 1
     cid = f"claim-{x['parada']}-{count[x['parada']]:02d}"
-    claves = sorted({kw(k) for k in x["claves"] if k})[:30]
+    base_id = f"{x['parada']}-{count[x['parada']]:02d}"
+    claves = sorted({kw(k) for k in [*x["claves"], *EXTRA.get(base_id, [])] if k} - NOMBRES_DE_LUGAR)[:30]
     item = {
         "id": cid,
         "parada": x["parada"],

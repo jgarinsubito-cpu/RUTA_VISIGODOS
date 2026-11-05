@@ -37,6 +37,8 @@ export function resolveSites(message: string, selectedSiteId?: SiteId | null): R
 export interface ScoredClaim {
   claim: ValidatedClaim;
   score: number;
+  /** The part of the score that comes from the claim's own keywords (no place or evidence boost). */
+  keywordScore: number;
   /** Topical query terms (stemmed) this claim matched. */
   matched: string[];
 }
@@ -97,25 +99,27 @@ export function retrieveClaims(
   const scored: ScoredClaim[] = [];
   for (const entry of claimIndex()) {
     let score = 0;
+    let keywordScore = 0;
     const matched: string[] = [];
     for (const phrase of entry.keywordPhrases) {
-      if (phrase.length >= 3 && hasPhrase(n, phrase)) score += phrase.includes(" ") ? 4 : 3;
+      if (phrase.length >= 3 && hasPhrase(n, phrase)) keywordScore += phrase.includes(" ") ? 4 : 3;
     }
     for (const term of terms) {
       if (entry.keywordStems.has(term)) {
-        score += 2;
+        keywordScore += 2;
         matched.push(term);
       } else if (entry.textStems.has(term)) {
         score += 1;
         matched.push(term);
       }
     }
+    score += keywordScore;
     const overview = terms.length === 0 && mentionedIds.has(entry.claim.siteId);
     if (matched.length === 0 && !overview) continue;
     if (siteIds.has(entry.claim.siteId)) score += mentionedIds.has(entry.claim.siteId) ? 3 : 1;
     // Documented claims first on ties: they are the safest opening statement.
     if (entry.claim.evidence === "D") score += 0.5;
-    scored.push({ claim: entry.claim, score, matched });
+    scored.push({ claim: entry.claim, score, keywordScore, matched });
   }
   scored.sort((a, b) => b.score - a.score);
   const claims = scored.slice(0, limit);

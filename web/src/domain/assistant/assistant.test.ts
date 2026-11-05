@@ -313,3 +313,18 @@ describe("POST /api/assistant", () => {
     expect((await post({ ...req("hola"), history })).status).toBe(400);
   });
 });
+
+describe("questions without historical wording", () => {
+  it("treats a question that matches a claim's own keywords as historical", () => {
+    // No word of the router's lists, but "1858" and "hallazgo" are keywords of a published claim.
+    const answer = answerLocally(req("¿Qué hallazgo hubo en 1858?"));
+    expect(answer.intent).toBe("heritage");
+    expect(answer.citations.map((c) => c.claimId)).toContain("claim-guarrazar-hallazgo");
+  });
+
+  it("says first that the asked-for detail is not in the sources", () => {
+    // "pesa" is what is asked; the sources only cover the treasure itself.
+    const answer = answerLocally(req("¿Cuánto pesa el tesoro de Guarrazar?"));
+    expect(answer.text).toMatch(/No todo lo que preguntas consta|No consta/);
+  });
+});

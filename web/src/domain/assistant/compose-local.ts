@@ -117,7 +117,10 @@ function heritagePart({ req, retrieval }: ComposeInput): Part | null {
   const paragraphs: string[] = [];
   const unmatched = retrieval.unmatchedTerms.filter((t) => !TRAVEL_STEMS.has(t) && !/^\d{1,2}$/.test(t));
   const matchedCount = retrieval.topicalTerms.length - retrieval.unmatchedTerms.length;
-  if (unmatched.length > 0 && unmatched.length >= matchedCount) {
+  // The first content word of a Spanish question is usually what it asks about ("¿Cuánto *pesa*
+  // la corona…?"): when no claim covers it, the answer must say so before offering what is known.
+  const focusUnmatched = retrieval.topicalTerms.length > 1 && unmatched.includes(retrieval.topicalTerms[0]);
+  if (unmatched.length > 0 && (unmatched.length >= matchedCount || focusUnmatched)) {
     paragraphs.push("No todo lo que preguntas consta en las fuentes aprobadas; esto es lo que sí está recogido:");
   } else if (req.context.profile === "family") {
     paragraphs.push("Te lo cuento de forma sencilla:");

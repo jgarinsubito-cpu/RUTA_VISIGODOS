@@ -127,6 +127,8 @@ interface ConfigLugar {
   direccion?: string;
   info?: string;
   coordenadas?: Site["coordinates"];
+  /** Otros nombres con los que preguntan los visitantes (minúsculas, sin tildes). */
+  alias?: string[];
 }
 interface ConfigParada {
   visigodo?: boolean;
@@ -139,6 +141,8 @@ interface ConfigParada {
   lugar?: string;
   /** Radio de la geocerca, en metros. */
   radio?: number;
+  /** Otros nombres del lugar que crea esta parada (minúsculas, sin tildes). */
+  alias?: string[];
   revisar?: string;
 }
 interface Config {
@@ -448,6 +452,7 @@ for (const recorrido of recorridos) {
     imageTone: lugar.tono,
     category: lugar.categoria,
     ...(lugar.direccion ? { address: lugar.direccion } : {}),
+    ...(lugar.alias?.length ? { aliases: lugar.alias } : {}),
     info: lugar.info,
   });
 }
@@ -489,6 +494,7 @@ for (const recorrido of recorridos) {
         themes: cfg.temas ?? [],
         imageTone: over.tono ?? cfg.tono ?? "stone",
         category: (over.categoria ?? `${cfg.nombre} · parada ${index + 1}`).slice(0, 80),
+        ...(over.alias?.length ? { aliases: over.alias } : {}),
         info: p.info,
       });
     }
