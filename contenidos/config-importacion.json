@@ -225,5 +225,51 @@
       "car": "Necesario para ir a Guadamur, Polán y el territorio de Guarrazar."
     },
     "lugarPortada": "yacimiento-guarrazar"
+  },
+  "videos360": {
+    "_nota": "Vídeos 360° grabados el 26/10/2026 (Drive: carpeta de vídeos 360°). Se preparan con web/scripts/preparar-360.ts y se enlazan a su parada. Un vídeo sin «descripcion» no se importa: la descripción (qué se ve, para quien no puede verlo) la escribe quien conoce la grabación. Ver docs/VIDEO360.md.",
+    "base": "/media/360/",
+    "credito": "Grabación 360°: [autoría] para Ruta Visigoda de Toledo Plus.",
+    "paradas": {
+      "guarrazar-3": [
+        {
+          "original": "yacimiento guarrazar hostel.mp4",
+          "archivo": "guarrazar-hospital",
+          "nombre": "El hospital de peregrinos en 360°",
+          "descripcion": "",
+          "revisar": "¿El archivo «hostel» es el hospital de peregrinos (parada 3)?"
+        }
+      ],
+      "concilios-2": [
+        {
+          "original": "museo concilios.mp4",
+          "archivo": "museo-concilios",
+          "nombre": "El Museo de los Concilios en 360°",
+          "descripcion": "",
+          "revisar": "¿En qué parada del museo se grabó? Propuesta: la nave (parada 2)."
+        }
+      ],
+      "castillo-guadamur": [
+        {
+          "original": "castillo patio.mp4",
+          "archivo": "castillo-patio",
+          "nombre": "El patio del castillo",
+          "descripcion": ""
+        },
+        {
+          "original": "castillo dentro puerta.mp4",
+          "archivo": "castillo-puerta",
+          "nombre": "La entrada del castillo",
+          "descripcion": ""
+        }
+      ]
+    },
+    "sinParada": [
+      {
+        "original": "mezquita de las tornerias 2.mp4",
+        "archivo": "mezquita-tornerias",
+        "nota": "La Mezquita de las Tornerías no es parada de ningún recorrido: decidir si se añade a la ruta urbana (como patrimonio no visigodo) o se deja fuera."
+      }
+    ]
   }
 }

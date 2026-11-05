@@ -115,6 +115,13 @@ export function validateCatalog(catalog: Catalog, previous: Catalog | null = nul
         error("stop", stop.id, `El modelo 3D «${model.name}» necesita una explicación de qué se ha encontrado y qué se propone.`);
       }
     }
+    for (const video of stop.videos360 ?? []) {
+      if (video.description.trim().length < 40) {
+        error("stop", stop.id, `El vídeo 360° «${video.name}» necesita una descripción de lo que se ve, para quien no puede verlo.`);
+      }
+      if (!video.credit) warn("stop", stop.id, `El vídeo 360° «${video.name}» no tiene crédito de autoría.`);
+      if (!video.srcMobile) warn("stop", stop.id, `El vídeo 360° «${video.name}» no tiene versión ligera para móvil: pesará demasiado con datos.`);
+    }
     if (stop.audio && stop.audio.transcript.trim().length < 40) {
       error("stop", stop.id, "La transcripción de la locución está incompleta: hace falta el texto entero.");
     }

@@ -49,6 +49,7 @@ describe("collectCredits", () => {
         storyIds: [],
         audio: { src: "/1.mp3", durationSeconds: 60, label: "Locución", transcript: "Texto", credit: "Voz: Marta" },
         models: [{ src: "/b.glb", name: "Basílica", certainty: "hypothesis", description: "Propuesta", source: "Panel del yacimiento" }],
+        videos360: [{ src: "/media/360/b-4k.mp4", name: "La basílica en 360°", description: "Vista", durationSeconds: 60, credit: "Grabación: Equipo" }],
       },
       {
         id: "s2",
@@ -67,6 +68,7 @@ describe("collectCredits", () => {
       { where: `${GUARRAZAR.name} · Hospital`, credit: undefined },
     ]);
     expect(credits.missingAudioCredits).toBe(1);
+    expect(credits.videos360).toEqual([{ where: `${GUARRAZAR.name} · Basílica`, name: "La basílica en 360°", credit: "Grabación: Equipo" }]);
     expect(credits.models).toEqual([
       { where: `${GUARRAZAR.name} · Basílica; ${GUARRAZAR.name} · Hospital`, name: "Basílica", source: "Panel del yacimiento" },
     ]);

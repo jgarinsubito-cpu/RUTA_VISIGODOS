@@ -44,6 +44,19 @@ describe("validateCatalog", () => {
     expect(errorsFor(DEMO)).toEqual([]);
   });
 
+  it("asks every 360° video for a description, and warns without a credit or a phone version", () => {
+    const c = clone(DEMO);
+    const video = { src: "/media/360/patio-4k.mp4", name: "El patio", description: "Patio.", durationSeconds: 90 };
+    c.stops = [{ id: "stop-prueba", siteId: c.sites[0].id, order: 1, name: "Patio", indoor: true, gallery: [], storyIds: [], videos360: [video] }];
+    expect(errorsFor(c, "stop-prueba").join()).toContain("descripción");
+    const issues = validateCatalog(c).filter((i) => i.id === "stop-prueba" && i.severity === "warning").map((i) => i.message).join();
+    expect(issues).toContain("crédito");
+    expect(issues).toContain("móvil");
+    c.stops[0].videos360 = [{ ...video, description: "El patio de armas visto desde el centro, con la torre del homenaje al fondo." }];
+    expect(errorsFor(c, "stop-prueba")).toEqual([]);
+    expect(parseCatalog({ ...c, stops: [{ ...c.stops[0], videos360: [{ ...video, src: "ftp://x/v.mp4" }] }] }).ok).toBe(false);
+  });
+
   it("rejects broken links, unknown towns and unattributed interpretations", () => {
     const c = clone(DEMO);
     c.sites[0].locality = "Recópolis";

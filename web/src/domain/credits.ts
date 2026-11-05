@@ -19,6 +19,8 @@ export interface Credits {
   audio: { where: string; credit?: string }[];
   /** One entry per model file; `where` lists every stop that shows it, separated by "; ". */
   models: { where: string; name: string; source?: string }[];
+  /** 360° videos: where, what, and the recording credit (absent: not recorded yet). */
+  videos360: { where: string; name: string; credit?: string }[];
   maps: { where: string; credit: string }[];
   /** Unique source titles of the published claims, alphabetical, with how many claims cite each. */
   sources: { title: string; url?: string; claims: number }[];
@@ -50,6 +52,7 @@ export function collectCredits(catalog: Catalog): Credits {
 
   const audio: Credits["audio"] = [];
   const models: Credits["models"] = [];
+  const videos360: Credits["videos360"] = [];
   const modelBySrc = new Map<string, Credits["models"][number]>();
   const stops = [...(catalog.stops ?? [])].sort(
     (a, b) => collator.compare(siteName.get(a.siteId) ?? "", siteName.get(b.siteId) ?? "") || a.order - b.order,
@@ -59,6 +62,7 @@ export function collectCredits(catalog: Catalog): Credits {
     const where = stop.name === place ? place : `${place} · ${stop.name}`;
     for (const img of stop.gallery) addImage(img, where);
     if (stop.audio) audio.push({ where, credit: stop.audio.credit?.trim() || undefined });
+    for (const v of stop.videos360 ?? []) videos360.push({ where, name: v.name, credit: v.credit?.trim() || undefined });
     for (const m of stop.models ?? []) {
       // A model shown at several stops is credited once, naming every stop.
       const known = modelBySrc.get(m.src);
@@ -88,6 +92,7 @@ export function collectCredits(catalog: Catalog): Credits {
     images: [...images.values()].sort((a, b) => b.items.length - a.items.length || collator.compare(a.author, b.author)),
     audio,
     models,
+    videos360,
     maps,
     sources: [...sourceCount.values()].sort((a, b) => collator.compare(a.title, b.title)),
     missingAudioCredits: audio.filter((a) => !a.credit).length,

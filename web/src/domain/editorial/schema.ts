@@ -157,6 +157,17 @@ export const StopModelSchema = z.object({
   iosSrc: mediaSrc.optional(),
 });
 
+export const StopVideo360Schema = z.object({
+  src: mediaSrc,
+  srcMobile: mediaSrc.optional(),
+  poster: z.union([imageSrc, mediaSrc]).optional(),
+  name: text(120),
+  description: text(1200),
+  durationSeconds: z.number().int().min(1).max(3600),
+  startYaw: z.number().min(-180).max(180).optional(),
+  credit: text(200).optional(),
+});
+
 const percent = z.number().min(0).max(100);
 export const IllustratedMapSchema = z.object({
   src: imageSrc,
@@ -204,6 +215,7 @@ const stopShape = {
   audio: StopAudioSchema.optional(),
   gallery: z.array(PlaceImageSchema).max(30),
   models: z.array(StopModelSchema).max(12).optional(),
+  videos360: z.array(StopVideo360Schema).max(6).optional(),
 };
 
 /** A stop as an editor writes it: its story list is derived when the catalog is built. */

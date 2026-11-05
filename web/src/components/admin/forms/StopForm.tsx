@@ -4,7 +4,7 @@
  * (with the full transcript, required) and its image gallery (each image with its credits).
  */
 import { useId, useState } from "react";
-import type { ModelCertainty, PlaceImage, StopAudio, StopModel } from "@/domain/types";
+import type { ModelCertainty, PlaceImage, StopAudio, StopModel, StopVideo360 } from "@/domain/types";
 import { CERTAINTY_DESCRIPTION, CERTAINTY_LABEL } from "@/components/shared/CertaintyBadge";
 import { adminActions } from "@/state/admin";
 import { AudioPlayer } from "@/components/tour/AudioPlayer";
@@ -256,6 +256,71 @@ function ModelsEditor({ models, onChange }: { models: StopModel[]; onChange: (m:
   );
 }
 
+/**
+ * 360° videos are too large for the content store: they are prepared with scripts/preparar-360.ts
+ * and served from /media/360 or a video host; here they are linked by address (docs/VIDEO360.md).
+ */
+function Videos360Editor({ videos, onChange }: { videos: StopVideo360[]; onChange: (v: StopVideo360[] | undefined) => void }) {
+  const patch = (i: number, p: Partial<StopVideo360>) => onChange(videos.map((v, j) => (j === i ? { ...v, ...p } : v)));
+  return (
+    <div className="flex flex-col gap-4">
+      <ol className="flex flex-col gap-4">
+        {videos.map((v, i) => (
+          <li key={i} className="flex flex-col gap-3 rounded-xl border border-stone p-3">
+            <div className="flex items-start justify-between gap-2">
+              <p className="text-sm font-semibold text-ink">Vídeo 360° {i + 1}</p>
+              <button type="button" onClick={() => onChange(videos.length > 1 ? videos.filter((_, j) => j !== i) : undefined)} aria-label={`Quitar vídeo 360° ${i + 1}`} className={iconButton}>
+                <IconClose width={18} />
+              </button>
+            </div>
+            <div className="grid gap-3 md:grid-cols-2">
+              <TextField label="Nombre" value={v.name} path={`videos360.${i}.name`} onChange={(name) => patch(i, { name: name ?? "" })} />
+              <NumberField label="Duración (segundos)" value={v.durationSeconds} path={`videos360.${i}.durationSeconds`} onChange={(durationSeconds) => patch(i, { durationSeconds })} />
+            </div>
+            <TextField label="Vídeo (versión 4K)" value={v.src} path={`videos360.${i}.src`} placeholder="/media/360/castillo-patio-4k.mp4" onChange={(src) => patch(i, { src: src ?? "" })} />
+            <TextField
+              label="Vídeo (versión para móvil)"
+              optional
+              value={v.srcMobile}
+              path={`videos360.${i}.srcMobile`}
+              placeholder="/media/360/castillo-patio-movil.mp4"
+              hint="La versión ligera que reciben los móviles y las conexiones con ahorro de datos."
+              onChange={(srcMobile) => patch(i, { srcMobile })}
+            />
+            <TextField label="Imagen de portada" optional value={v.poster} path={`videos360.${i}.poster`} placeholder="/media/360/castillo-patio.jpg" onChange={(poster) => patch(i, { poster })} />
+            <TextField
+              label="Descripción"
+              multiline
+              rows={4}
+              value={v.description}
+              path={`videos360.${i}.description`}
+              hint="Qué se ve, en palabras: la leen quienes no pueden ver el vídeo."
+              onChange={(description) => patch(i, { description: description ?? "" })}
+            />
+            <div className="grid gap-3 md:grid-cols-2">
+              <TextField label="Crédito" optional value={v.credit} path={`videos360.${i}.credit`} placeholder="Grabación: …" onChange={(credit) => patch(i, { credit })} />
+              <NumberField
+                label="Dirección inicial (grados)"
+                value={v.startYaw ?? 0}
+                path={`videos360.${i}.startYaw`}
+                hint="Hacia dónde mira al abrirse: 0 es el centro del vídeo; 90, a la derecha."
+                onChange={(startYaw) => patch(i, { startYaw: startYaw || undefined })}
+              />
+            </div>
+          </li>
+        ))}
+      </ol>
+      <button
+        type="button"
+        onClick={() => onChange([...videos, { src: "", name: "", description: "", durationSeconds: 60 }])}
+        className={`${btnSecondary} self-start`}
+      >
+        Añadir un vídeo 360°
+      </button>
+    </div>
+  );
+}
+
 export function StopForm({ data, set, catalog }: FormProps<"stop">) {
   const site = catalog.sites.find((s) => s.id === data.siteId);
   const hasPoint = data.coordinates !== undefined;
@@ -330,6 +395,10 @@ export function StopForm({ data, set, catalog }: FormProps<"stop">) {
 
       <Section title="Modelos 3D" description="Cada modelo lleva un sello de certeza: lo excavado, lo restituido, la hipótesis o la huella de la prospección.">
         <ModelsEditor models={data.models ?? []} onChange={(models) => set({ models })} />
+      </Section>
+
+      <Section title="Vídeos 360°" description="Grabaciones en 360° de la parada. Se preparan con el guion de vídeo 360 y se enlazan por su dirección; no se guardan en las descargas sin conexión.">
+        <Videos360Editor videos={data.videos360 ?? []} onChange={(videos360) => set({ videos360 })} />
       </Section>
     </>
   );

@@ -102,3 +102,7 @@ Apply `web/supabase/migrations/20261105120000_stops.sql` after the content admin
 | Admin state and actions | `web/src/state/admin.ts` |
 | Admin screens | `web/src/app/admin/**`, `web/src/components/admin/**` |
 | Database | `web/supabase/migrations/20261015120000_content_admin.sql` |
+
+## Vídeos 360°
+
+En la ficha de una parada, la sección «Vídeos 360°» enlaza cada vídeo por su dirección (versión 4K, versión para móvil y portada), con su nombre, su duración, su descripción (obligatoria) y su crédito. Los vídeos no se suben desde aquí, porque son demasiado grandes. Cómo prepararlos y alojarlos: docs/VIDEO360.md.

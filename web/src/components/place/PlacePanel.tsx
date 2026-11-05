@@ -37,6 +37,7 @@ import { SiteImage } from "@/components/shared/SiteImage";
 import { Gallery, Paragraphs } from "@/components/shared/Gallery";
 import { AudioPlayer } from "@/components/tour/AudioPlayer";
 import { StopModels } from "@/components/tour/StopModels";
+import { StopVideos360 } from "@/components/tour/StopVideos360";
 
 export interface PlacePanelProps {
   siteId: string;
@@ -337,6 +338,7 @@ export function PlacePanel({ siteId, onClose, variant }: PlacePanelProps) {
                         </article>
                       ))}
                       {stop.models && <StopModels models={stop.models} />}
+                      {stop.videos360 && <StopVideos360 videos={stop.videos360} />}
                       <Gallery images={stop.gallery} label={`Imágenes de ${stop.name}`} />
                     </div>
                   </details>
@@ -365,6 +367,7 @@ export function PlacePanel({ siteId, onClose, variant }: PlacePanelProps) {
       )}
 
       {single?.models && <StopModels models={single.models} />}
+      {single?.videos360 && <StopVideos360 videos={single.videos360} />}
       {single && single.gallery.length > 1 && <Gallery images={single.gallery.slice(1)} label={`Imágenes de ${site.name}`} />}
 
       <section aria-labelledby={`${headingId}-claims`} className="flex flex-col gap-3">

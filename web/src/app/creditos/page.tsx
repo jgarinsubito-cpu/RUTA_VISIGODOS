@@ -167,6 +167,19 @@ export default async function CreditosPage() {
         </Section>
       )}
 
+      {credits.videos360.length > 0 && (
+        <Section id="videos360" title="Vídeos 360°">
+          <ul>
+            {credits.videos360.map((v) => (
+              <li key={v.where + v.name}>
+                <strong>{v.name}</strong> ({v.where})
+                {v.credit ? `. ${v.credit}` : <Val>{". [Autoría de la grabación pendiente]"}</Val>}
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
       <Section id="mapas" title="Cartografía">
         <p>
           Mapa base ©{" "}

@@ -25,3 +25,5 @@ Probado en Chromium con la visita de Guarrazar: 13,1 MB; sin red se abre, avanza
 - El navegador puede borrar las descargas si el móvil se queda sin espacio; la app pide almacenamiento persistente, pero no siempre se concede.
 - En iPhone, el uso sin conexión funciona mejor con la app instalada en la pantalla de inicio; Safari limita el espacio de las webs sin instalar. Hay que probarlo en dispositivos reales antes de la presentación.
 - La geolocalización funciona sin datos (es GPS del móvil), pero los mapas no se descargan.
+
+Los vídeos 360° no entran en la descarga: se ven solo con conexión (docs/VIDEO360.md).

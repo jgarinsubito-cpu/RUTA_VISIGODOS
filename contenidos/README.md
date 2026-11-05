@@ -54,6 +54,10 @@ npx tsx scripts/importar-contenidos.ts --origen <carpeta del prototipo con data.
 # 3. Copiar fotos, audios y modelos a web/public
 npx tsx scripts/importar-contenidos.ts --origen <carpeta> --copiar-medios
 
+# 3b. Vídeos 360°: prepararlos y enlazarlos (docs/VIDEO360.md)
+npx tsx scripts/preparar-360.ts --origen <originales> --salida <preparados>
+npx tsx scripts/importar-contenidos.ts --origen <carpeta> --videos360 <preparados> --copiar-medios
+
 # 4. Subir al gestor, en revisión (cuenta de editor o validador)
 NEXT_PUBLIC_SUPABASE_URL=… NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=… GESTOR_EMAIL=… GESTOR_PASSWORD=… \
   npx tsx scripts/importar-contenidos.ts --origen <carpeta> --subir

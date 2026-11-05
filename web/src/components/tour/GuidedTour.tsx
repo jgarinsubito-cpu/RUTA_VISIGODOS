@@ -24,6 +24,7 @@ import { Gallery, Paragraphs } from "@/components/shared/Gallery";
 import { AudioPlayer } from "./AudioPlayer";
 import { OfflinePack, useOnline } from "./OfflinePack";
 import { StopModels } from "./StopModels";
+import { StopVideos360 } from "./StopVideos360";
 import { IllustratedRouteMap } from "./IllustratedRouteMap";
 import { StoryEvidence } from "@/components/shared/Claim";
 import { EvidenceLegend } from "@/components/shared/EvidenceBadge";
@@ -450,6 +451,7 @@ export function GuidedTour({ source }: { source: TourSourceRef }) {
       </section>
 
       {stop.stop?.models && <StopModels models={stop.stop.models} />}
+      {stop.stop?.videos360 && <StopVideos360 videos={stop.stop.videos360} />}
 
       {moreImages.length > 0 && <Gallery images={moreImages} label={`Imágenes de ${stop.name}`} />}
 

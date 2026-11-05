@@ -196,6 +196,26 @@ export interface StopModel {
 }
 
 /**
+ * A 360° video recorded at a stop (equirectangular, 2:1): the visitor looks around by dragging,
+ * with the keys or by moving the phone. Streamed, never part of an offline download (too large).
+ */
+export interface StopVideo360 {
+  /** Web version for screens wider than a phone (3840×1920 H.264, see docs/VIDEO360.md). */
+  src: string;
+  /** Lighter version for phones (2560×1280); absent: `src` is used everywhere. */
+  srcMobile?: string;
+  /** Still frame shown before playing (an image path or URL). */
+  poster?: string;
+  name: string;
+  /** What it shows, in words: required, for visitors who cannot see it. */
+  description: string;
+  durationSeconds: number;
+  /** Where the camera looks first, in degrees from the video's centre (positive: to the right). */
+  startYaw?: number;
+  credit?: string;
+}
+
+/**
  * An illustrated (not to scale) map of a route, with a numbered pin per tour stop. Pins are
  * percentages of the image size.
  */
@@ -246,6 +266,8 @@ export interface Stop {
   gallery: PlaceImage[];
   /** 3D models, each with its certainty seal. */
   models?: StopModel[];
+  /** 360° videos recorded at the stop. */
+  videos360?: StopVideo360[];
   /** Derived from the stories that point to this stop. */
   storyIds: StoryId[];
 }

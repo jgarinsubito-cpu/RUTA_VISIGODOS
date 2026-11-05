@@ -6,6 +6,7 @@
  *   npx tsx scripts/importar-contenidos.ts --origen <carpeta con data.json, img/, audio/, 3d/>
  *     [--config ../contenidos/config-importacion.json] [--salida ../contenidos/salida]
  *     [--copiar-medios]   copia fotos, audios y modelos a web/public
+ *     [--videos360 <carpeta>]  vídeos 360° ya preparados con scripts/preparar-360.ts (con su manifiesto.json)
  *     [--subir]           sube los registros al gestor «en revisión» (necesita variables de entorno)
  *     [--actualizar]      con --subir: también reemplaza registros que ya existen (vuelven a revisión)
  *     [--incluir-borradores]  incluye afirmaciones aún no validadas (solo para previsualizar; nunca con --subir)
@@ -36,6 +37,7 @@ import type {
   Stop,
   StopAudio,
   StopModel,
+  StopVideo360,
   ModelCertainty,
   Story,
   TransportMode,
@@ -151,8 +153,27 @@ interface ConfigParada {
   alias?: string[];
   revisar?: string;
 }
+/** Un vídeo 360° de una parada (docs/VIDEO360.md). */
+interface ConfigVideo360 {
+  original: string;
+  /** Nombre base de los archivos preparados: <archivo>-4k.mp4, <archivo>-movil.mp4, <archivo>.jpg. */
+  archivo: string;
+  nombre: string;
+  /** Qué se ve, en palabras. Sin ella, el vídeo no se importa. */
+  descripcion?: string;
+  credito?: string;
+  /** Dirección inicial de la vista, en grados desde el centro del vídeo. */
+  orientacion?: number;
+  revisar?: string;
+}
 interface Config {
   lugares: Record<string, ConfigLugar>;
+  videos360?: {
+    base: string;
+    credito?: string;
+    paradas: Record<string, ConfigVideo360[]>;
+    sinParada?: { original: string; archivo: string; nota: string }[];
+  };
   recorridos: Record<string, ConfigRecorrido>;
   paradas: Record<string, ConfigParada>;
   portada: {
@@ -335,8 +356,54 @@ const avisos = {
   historiasSinAfirmaciones: [] as string[],
   imagenesSinCredito: new Set<string>(),
   mediosQueFaltan: [] as string[],
+  videos360: [] as string[],
   otros: [] as string[],
 };
+
+/* ---------- Vídeos 360° ---------- */
+
+const videosDir = option("videos360");
+const manifiesto360: Record<string, { durationSeconds: number; aviso?: string }> =
+  videosDir && fs.existsSync(path.join(videosDir, "manifiesto.json")) ? JSON.parse(fs.readFileSync(path.join(videosDir, "manifiesto.json"), "utf8")) : {};
+if (videosDir && !Object.keys(manifiesto360).length) avisos.videos360.push(`No hay manifiesto.json en ${videosDir}: prepara los vídeos con scripts/preparar-360.ts.`);
+const videosUsados = new Set<string>();
+/** Créditos con huecos («[autoría]») no se publican. */
+const sinHuecos = (t?: string) => (t && !/\[[^\]]+\]/.test(t) ? t.trim() : undefined);
+
+function videos360Of(paradaId: string, stopName: string): StopVideo360[] {
+  const cfg = config.videos360;
+  return (cfg?.paradas[paradaId] ?? []).flatMap((v) => {
+    const where = `${paradaId} (${stopName}) · ${v.original}`;
+    if (v.revisar) avisos.revisar.push(`${where}: ${v.revisar}`);
+    const info = manifiesto360[v.archivo];
+    if (!info) {
+      avisos.videos360.push(`${where}: sin preparar (no está en el manifiesto).`);
+      return [];
+    }
+    if (info.aviso) avisos.videos360.push(`${where}: ${info.aviso}`);
+    const description = v.descripcion?.trim() ?? "";
+    if (description.length < 40) {
+      avisos.videos360.push(`${where}: falta la descripción de lo que se ve; no se importa.`);
+      return [];
+    }
+    const credit = sinHuecos(v.credito) ?? sinHuecos(cfg?.credito);
+    if (!credit) avisos.videos360.push(`${where}: falta la autoría de la grabación.`);
+    videosUsados.add(v.archivo);
+    return [
+      {
+        src: `${cfg!.base}${v.archivo}-4k.mp4`,
+        srcMobile: `${cfg!.base}${v.archivo}-movil.mp4`,
+        poster: `${cfg!.base}${v.archivo}.jpg`,
+        name: v.nombre.slice(0, 120),
+        description: description.slice(0, 1200),
+        durationSeconds: info.durationSeconds,
+        ...(v.orientacion ? { startYaw: v.orientacion } : {}),
+        ...(credit ? { credit: credit.slice(0, 200) } : {}),
+      },
+    ];
+  });
+}
+for (const v of config.videos360?.sinParada ?? []) avisos.videos360.push(`${v.original}: ${v.nota}`);
 
 /* ---------- Conversión ---------- */
 /*
@@ -557,6 +624,8 @@ for (const recorrido of recorridos) {
     });
     if (models.length) avisos.revisar.push(`${p.id} (${name}): ${models.length} modelo(s) 3D pendientes de validar por Rojas (sello de certeza y explicación).`);
 
+    const videos360 = videos360Of(p.id, name);
+
     const stop: Stop = {
       id: stopIdOf(p),
       siteId: site.id,
@@ -571,6 +640,7 @@ for (const recorrido of recorridos) {
       ...(audio ? { audio } : {}),
       gallery,
       ...(models.length ? { models } : {}),
+      ...(videos360.length ? { videos360 } : {}),
       storyIds: [],
     };
     stops.push(stop);
@@ -803,6 +873,10 @@ ${lista(avisos.coordenadas)}
 
 ${lista(avisos.revisar)}
 
+## Vídeos 360°
+
+${lista(avisos.videos360)}
+
 ## Medios que faltan en el origen
 
 ${lista(avisos.mediosQueFaltan)}
@@ -831,6 +905,10 @@ if (flag("copiar-medios")) {
     if (p.audio) copy(path.join(origen, "audio", p.audio), path.join(webDir, "public/media/audio", p.audio));
   }
   for (const file of modelosUsados) copy(path.join(origen, "3d", file), path.join(webDir, "public/media/3d", file));
+  if (videosDir && config.videos360?.base.startsWith("/media/")) {
+    const dest = path.join(webDir, "public", config.videos360.base);
+    for (const a of videosUsados) for (const f of [`${a}-4k.mp4`, `${a}-movil.mp4`, `${a}.jpg`]) copy(path.join(videosDir, f), path.join(dest, f));
+  }
   console.log("Medios copiados a web/public/images/ruta y web/public/media.");
 }
 
