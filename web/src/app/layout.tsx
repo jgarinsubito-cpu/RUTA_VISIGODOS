@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Montserrat, Playfair_Display } from "next/font/google";
 import { AppShell } from "@/components/shell/AppShell";
 import { CatalogProvider } from "@/components/shell/CatalogProvider";
+import { ServiceWorker } from "@/components/shell/ServiceWorker";
 import { currentCatalog } from "@/data/content";
 import { loadPublishedCatalog } from "@/data/published";
 import "./globals.css";
@@ -12,6 +13,8 @@ const playfair = Playfair_Display({ variable: "--font-playfair", subsets: ["lati
 export const metadata: Metadata = {
   title: { default: "Ruta Visigoda de Toledo", template: "%s · Ruta Visigoda" },
   description: "Descubre la ruta visigoda de Toledo y Guadamur, planifica un viaje viable y pregunta al asistente con fuentes.",
+  appleWebApp: { capable: true, title: "Ruta Visigoda", statusBarStyle: "default" },
+  icons: { apple: "/icons/apple-touch-icon.png" },
 };
 
 export const viewport: Viewport = {
@@ -33,6 +36,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <CatalogProvider catalog={version === null ? null : currentCatalog()} version={version}>
           <AppShell>{children}</AppShell>
         </CatalogProvider>
+        <ServiceWorker />
       </body>
     </html>
   );

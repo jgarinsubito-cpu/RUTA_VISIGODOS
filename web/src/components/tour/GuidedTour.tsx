@@ -22,6 +22,7 @@ import { useSpeech } from "@/lib/useSpeech";
 import { SiteImage } from "@/components/shared/SiteImage";
 import { Gallery, Paragraphs } from "@/components/shared/Gallery";
 import { AudioPlayer } from "./AudioPlayer";
+import { OfflinePack, useOnline } from "./OfflinePack";
 import { StoryEvidence } from "@/components/shared/Claim";
 import { EvidenceLegend } from "@/components/shared/EvidenceBadge";
 import { DemoBadge, NonVisigothicBadge } from "@/components/shared/DemoBadge";
@@ -91,6 +92,7 @@ export function GuidedTour({ source }: { source: TourSourceRef }) {
   const [locating, setLocating] = useState(false);
   const [howOpen, setHowOpen] = useState(false);
   const { fix, status } = useGeolocation(locating);
+  const online = useOnline();
   const speech = useSpeech();
   const insideRef = useRef<string | null>(null);
 
@@ -115,6 +117,9 @@ export function GuidedTour({ source }: { source: TourSourceRef }) {
   const title = route ? route.name : `Visita guiada · ${place!.name}`;
   const backHref = route ? `/rutas/${route.slug}` : `/lugares/${place!.slug}`;
   const backLabel = route ? route.name : place!.name;
+  const tourHref = route ? `/rutas/${route.slug}/recorrido` : `/lugares/${place!.slug}/visita`;
+  // Pages the tour links to, saved with it: the route or place page and each place's page.
+  const tourPages = [backHref, ...new Set(stops.map((t) => `/lugares/${t.site.slug}`))];
   const isDemo = route ? route.demo : place!.demo;
   // Every stop indoors (a museum): location cannot detect arrivals, so it is not asked for.
   const allManual = stops.every((t) => t.manualOnly);
@@ -253,6 +258,8 @@ export function GuidedTour({ source }: { source: TourSourceRef }) {
           </ul>
         )}
 
+        <OfflinePack tourId={tourId} title={title} href={tourHref} pages={tourPages} stops={stops} />
+
         <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs text-ink-muted">
           <li className="inline-flex items-center gap-1.5">
             <IconHeadphones width={15} />
@@ -340,6 +347,12 @@ export function GuidedTour({ source }: { source: TourSourceRef }) {
           {!stop.site.visigothic && <NonVisigothicBadge />}
         </p>
       </header>
+
+      {!online && (
+        <p role="status" className="rounded-2xl border border-stone px-4 py-2.5 text-sm text-ink-muted">
+          Sin conexión: el recorrido sigue funcionando con lo descargado. El asistente y el mapa vuelven con la conexión.
+        </p>
+      )}
 
       <p aria-live="polite" className="flex min-h-12 items-center gap-2 rounded-2xl bg-surface-muted px-4 text-sm text-ink-muted">
         {reached ? (
