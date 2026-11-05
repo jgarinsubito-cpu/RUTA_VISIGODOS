@@ -193,9 +193,14 @@ export function AppShell({ children }: { children: ReactNode }) {
 
         <div className={`${accountStatus === "unavailable" ? "mt-auto" : ""} px-5 py-4 text-xs leading-relaxed text-ink-muted`}>
           {!collapsed ? (
-            <p className="font-semibold text-warn" title="Contenido pendiente de validación por Urbs Regia">
-              Versión demo
-            </p>
+            <>
+              <p className="font-semibold text-warn" title="Contenido pendiente de validación por Urbs Regia">
+                Versión demo
+              </p>
+              <Link href="/aviso-legal" className="-mx-1 inline-flex min-h-11 items-center px-1 underline-offset-4 hover:text-ink hover:underline">
+                Aviso legal, privacidad y créditos
+              </Link>
+            </>
           ) : (
             <span className="font-semibold text-warn" title="Versión de demostración">
               Demo
