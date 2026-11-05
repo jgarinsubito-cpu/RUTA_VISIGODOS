@@ -79,13 +79,13 @@ export function LegalLinks({ current, className = "" }: { current?: string; clas
 }
 
 export function LegalPage({
-  href,
   eyebrow,
   title,
   intro,
   children,
   draft = !LEGAL.reviewedByLawyer,
 }: {
+  /** The page's own path (kept for callers; the footer links every legal page). */
   href: string;
   eyebrow: string;
   title: string;
@@ -109,9 +109,6 @@ export function LegalPage({
         {intro && <div className="text-lead leading-relaxed text-ink-muted">{intro}</div>}
       </header>
       {children}
-      <nav aria-label="Información legal" className="border-t border-stone pt-3">
-        <LegalLinks current={href} />
-      </nav>
     </article>
   );
 }

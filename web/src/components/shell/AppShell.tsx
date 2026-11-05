@@ -5,6 +5,7 @@
  * with React ViewTransition.
  */
 import Link from "next/link";
+import { SiteFooter } from "@/components/legal/SiteFooter";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useState, ViewTransition, type ReactNode } from "react";
 import { actions, getAppState, useAppState } from "@/state/store";
@@ -36,6 +37,12 @@ const NAV = [
 
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+}
+
+/** Full-screen pages (assistant, map, guided tours) have no room for the footer; the rail links the legal pages there. */
+function withFooter(pathname: string): boolean {
+  if (pathname === "/asistente" || pathname === "/mapa") return false;
+  return !/\/(recorrido|visita)$/.test(pathname);
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -216,7 +223,11 @@ export function AppShell({ children }: { children: ReactNode }) {
       >
         {/* Route change: the old page fades out, the new one fades in (React ViewTransition). */}
         <ViewTransition key={pathname} enter="page-in" exit="page-out" default="none">
-          <div className="min-h-full">{children}</div>
+          {/* The footer goes inside the page box: outside it, main's height ignores it and the rail stops sticking. */}
+          <div className="min-h-full">
+            {children}
+            {withFooter(pathname) && <SiteFooter />}
+          </div>
         </ViewTransition>
       </main>
 

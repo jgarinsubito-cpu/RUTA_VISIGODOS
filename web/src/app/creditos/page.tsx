@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { FundingMark } from "@/components/legal/SiteFooter";
 import { LegalPage, Section, Val } from "@/components/legal/LegalPage";
 import { currentCatalog } from "@/data/content";
 import { FUNDING, PROJECT_CREDITS } from "@/data/legal";
@@ -57,12 +58,8 @@ export default async function CreditosPage() {
       ))}
 
       <Section id="financiacion" title="Financiación">
-        <p>
-          <Val>{FUNDING.text}</Val>
-        </p>
-        <p className="text-sm">
-          <Val>{FUNDING.note}</Val>
-        </p>
+        <FundingMark />
+        <p className="text-sm">{FUNDING.project}</p>
       </Section>
 
       <Section id="fuentes" title="Fuentes">

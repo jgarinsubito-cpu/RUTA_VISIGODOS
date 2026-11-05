@@ -165,7 +165,8 @@ export const PROJECT_CREDITS: { heading: string; entries: { name: string; role: 
   {
     heading: "Validación científica",
     entries: [
-      { name: "Asociación Urbs Regia", role: "Validación de los contenidos" },
+      { name: "Asociación Urbs Regia", role: "Asesoría científica y validación de los contenidos" },
+      { name: "Pilar Tormo", role: "Presidenta de la Asociación Urbs Regia" },
       { name: "Juan Manuel Rojas Rodríguez-Malo", role: "Director del yacimiento de Guarrazar; validación de los contenidos y de las reconstrucciones 3D" },
     ],
   },
@@ -174,7 +175,6 @@ export const PROJECT_CREDITS: { heading: string; entries: { name: string; role: 
     entries: [
       { name: "Amador Cuartero", role: "Reconstrucciones 3D de la basílica de Guarrazar" },
       { name: "Federico García Alva", role: "Fotografía [confirmar]" },
-      { name: "Pilar Tormo", role: "[confirmar función]" },
       { name: "Inma [apellidos]", role: "[confirmar función]" },
       { name: "arqueotravel", role: "[confirmar función]" },
     ],
@@ -185,9 +185,30 @@ export const PROJECT_CREDITS: { heading: string; entries: { name: string; role: 
   },
 ];
 
-/** Grant publicity. The exact wording and logos come from the grant resolution: do not change them freely. */
+/**
+ * Grant publicity. Rule 5 of the Ministry's 2026 call for innovation in the cultural and creative
+ * industries: every funded activity carries the exact text "Actividad subvencionada por el
+ * Ministerio de Cultura" with the Ministry's current logo, as the Centro de Coordinación de
+ * Industrias Culturales supplies it. Do not reword the text or redraw the logo.
+ */
 export const FUNDING = {
-  text: "Proyecto «Del tesoro al territorio: plataforma inteligente de interpretación del legado visigodo en Toledo», [beneficiario], con el apoyo del Ministerio de Cultura (Ayudas para el fomento de la innovación en las industrias culturales y creativas, convocatoria 2026).",
-  /** The resolution's own required sentence and logo, once checked. */
-  note: "[Texto y logotipo exactos que exige la resolución de concesión]",
+  /** Required wording: exactly this. */
+  text: "Actividad subvencionada por el Ministerio de Cultura",
+  project:
+    "Proyecto «Del tesoro al territorio: plataforma inteligente de interpretación del legado visigodo en Toledo», de SNEO Mestizaje Projects. Ayudas a proyectos profesionales y empresariales para el fomento de la innovación en las industrias culturales y creativas, 2026.",
+  /**
+   * The official logo file in /public (download it from the Ministry's page for these grants and
+   * keep its proportions). null until the file is added: the footer shows a marked placeholder.
+   */
+  logo: null as { src: string; width: number; height: number } | null,
+  logoAlt: "Gobierno de España. Ministerio de Cultura",
+};
+
+/** The scientific validator, presented in the footer. Its own description; keep it approved by the association. */
+export const VALIDATOR = {
+  name: "Asociación Urbs Regia",
+  url: "https://urbsregia.eu",
+  summary:
+    "Asociación cultural sin ánimo de lucro, con sede en Toledo, dedicada a la investigación, la puesta en valor y la difusión del patrimonio visigodo de Toledo y su territorio. Promueve el itinerario cultural «Orígenes de Europa» y edita la revista Urbs Regia.",
+  role: "Es el asesor científico de esta ruta: valida los relatos, las afirmaciones y las reconstrucciones antes de publicarlos.",
 };
