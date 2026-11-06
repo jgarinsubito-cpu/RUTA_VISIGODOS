@@ -22,6 +22,8 @@ import {
   IconMap,
   IconPlus,
   IconRoute,
+  IconSpark,
+  IconPin,
   IconTrip,
   IconUser,
 } from "./icons";
@@ -31,7 +33,9 @@ const NAV = [
   { href: "/asistente", label: "Asistente", icon: IconChat, mobile: true },
   { href: "/mi-viaje", label: "Mi viaje", icon: IconTrip, mobile: true },
   { href: "/mapa", label: "Mapa", icon: IconMap, mobile: true },
+  { href: "/planificar", label: "Planificar", icon: IconSpark, mobile: false },
   { href: "/rutas", label: "Rutas", icon: IconRoute, mobile: false },
+  { href: "/servicios", label: "Servicios", icon: IconPin, mobile: false },
   { href: "/guardados", label: "Guardados", icon: IconHeart, mobile: true },
 ] as const;
 

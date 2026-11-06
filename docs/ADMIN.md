@@ -106,3 +106,7 @@ Apply `web/supabase/migrations/20261105120000_stops.sql` after the content admin
 ## Vídeos 360°
 
 En la ficha de una parada, la sección «Vídeos 360°» enlaza cada vídeo por su dirección (versión 4K, versión para móvil y portada), con su nombre, su duración, su descripción (obligatoria) y su crédito. Los vídeos no se suben desde aquí, porque son demasiado grandes. Cómo prepararlos y alojarlos: docs/VIDEO360.md.
+
+## Servicios
+
+En «Servicios» se dan de alta las empresas de la red: restaurantes, alojamientos, alquiler de coches, visitas guiadas, experiencias, aparcamientos y oficinas de turismo. Solo se publican las empresas adheridas, y cada una lleva la fecha en que se comprobaron sus datos. El patrocinio se rotula, pero no cambia el orden. En la ficha de un lugar, el campo «Orden en el relato» decide qué va antes en el planificador a medida. Más detalles: docs/PLANIFICADOR.md.

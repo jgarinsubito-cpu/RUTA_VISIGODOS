@@ -14,6 +14,7 @@ export type ClaimId = string;
 export type StoryId = string;
 export type RouteId = string;
 export type StopId = string;
+export type ServiceId = string;
 
 /** Evidence status from the brief: Documentado / Interpretación / Hipótesis / Tradición. */
 export type EvidenceLevel = "D" | "I" | "H" | "T";
@@ -149,7 +150,73 @@ export interface Site {
   aliases?: string[];
   /** Follow-up questions the assistant offers while this place is in focus. */
   suggestedPrompts?: string[];
+  /**
+   * Place in the story of the route, for the tailored planner: lower goes first within a town
+   * (e.g. the museum that introduces the period before the sites). Absent: no preference.
+   */
+  narrativeOrder?: number;
   /** Demo fixture: must be visibly identified in the UI. */
+  demo: boolean;
+}
+
+/* ---------- Complementary services (tourist layer) ---------- */
+
+/**
+ * Where to eat, sleep, rent a car… Operational data that changes: always shown with the date it
+ * was last checked with the business, and never mixed with heritage claims. Businesses join the
+ * network (`partner`) before they are published; examples (`demo`) are labelled as such.
+ */
+export type ServiceCategory =
+  | "restaurant"
+  | "cafe"
+  | "lodging"
+  | "car-rental"
+  | "guided-visit"
+  | "experience"
+  | "transport"
+  | "shop"
+  | "parking"
+  | "tourist-office";
+
+export interface ServiceContact {
+  /** The business's own booking page: the app does not take bookings or payments. */
+  bookingUrl?: string;
+  website?: string;
+  /** International format. */
+  phone?: string;
+  email?: string;
+}
+
+export interface Service {
+  id: ServiceId;
+  slug: string;
+  name: string;
+  category: ServiceCategory;
+  locality: Locality;
+  coordinates: Coordinates;
+  address?: string;
+  /** One or two plain sentences: what it offers. */
+  summary: string;
+  hours: OpeningInfo;
+  access: AccessInfo;
+  /** Orientative price level, from € to €€€€. */
+  priceLevel?: 1 | 2 | 3 | 4;
+  /** E.g. "Menú del día 14 € (2026)", "Desde 45 € la noche". */
+  priceNote?: string;
+  contact: ServiceContact;
+  /** Can be booked in advance (through the contact above). */
+  reservable: boolean;
+  /** Places this service belongs to: a guided visit of a site, the restaurant next to it. */
+  siteIds: SiteId[];
+  familyFriendly?: boolean;
+  /** Joined the network (signed the adhesion). Only partners are published, except examples. */
+  partner: boolean;
+  /** Paid visibility: always labelled, and it never changes the order of results. */
+  sponsored?: boolean;
+  /** Date (YYYY-MM-DD) the data was last checked with the business; null: never checked. */
+  checkedOn: string | null;
+  image?: PlaceImage;
+  /** Fictional example for trying the planner: must be labelled, never look like a real business. */
   demo: boolean;
 }
 
@@ -338,6 +405,10 @@ export interface TripContext {
   profile: VisitorProfile;
   transport: TransportMode;
   stepFreeRequired: boolean;
+  /** Number of days of the trip (1 when absent). Every day runs from startTime to endTime. */
+  days?: number;
+  /** Keep a lunch break in each day's schedule (the tailored planner turns it on). */
+  lunchBreak?: boolean;
 }
 
 export type StopStatus = "scheduled" | "provisional";
@@ -372,6 +443,29 @@ export interface TripStop {
   travelMinutesFromPrevious: number;
   status: StopStatus;
   warnings: StopWarning[];
+  /** Day of the trip, from 0 (absent: the first day). */
+  day?: number;
+}
+
+/** Moments of a day a service fills. */
+export type ServiceSlot = "lunch" | "overnight" | "car" | "activity";
+
+/** A service the visitor chose for the trip. */
+export interface TripService {
+  serviceId: ServiceId;
+  /** Day it belongs to; for "overnight", the night after that day. */
+  day: number;
+  slot: ServiceSlot;
+}
+
+/** A pause the planner keeps in a day (lunch), with where it happens when a restaurant is chosen. */
+export interface TripBreak {
+  day: number;
+  kind: "lunch";
+  start: number;
+  end: number;
+  travelMinutesFromPrevious: number;
+  serviceId?: ServiceId;
 }
 
 export interface Trip {
@@ -380,6 +474,10 @@ export interface Trip {
   revision: number;
   context: TripContext;
   stops: TripStop[];
+  /** Pauses kept in the schedule (computed by the planner). */
+  breaks?: TripBreak[];
+  /** Services chosen for the trip. */
+  services?: TripService[];
   sourceRouteId?: RouteId;
   updatedAt: string;
 }
@@ -400,6 +498,10 @@ export interface ItineraryProposal {
   context: TripContext;
   /** Set when the proposal replaces the trip with a curated route. */
   routeId?: RouteId;
+  /** Pauses of the `after` schedule. */
+  breaks?: TripBreak[];
+  /** Services of the trip after the change (absent: unchanged). */
+  services?: TripService[];
 }
 
 /** Title and one-line introduction of a group of places on the home page. */
@@ -454,6 +556,8 @@ export interface Catalog {
   sites: Site[];
   /** Stops inside places; versions published before stops existed have none. */
   stops: Stop[];
+  /** Complementary services; versions published before services existed have none. */
+  services?: Service[];
   claims: ValidatedClaim[];
   stories: Story[];
   routes: Route[];

@@ -31,6 +31,8 @@ export const TripContextSchema = z.object({
   profile: z.enum(["general", "family", "expert"]),
   transport: z.enum(["walk", "car"]),
   stepFreeRequired: z.boolean(),
+  days: z.number().int().min(1).max(4).optional(),
+  lunchBreak: z.boolean().optional(),
 });
 
 const StopWarningSchema = z.discriminatedUnion("code", [
@@ -54,6 +56,22 @@ const TripStopSchema = z.object({
   travelMinutesFromPrevious: z.number(),
   status: z.enum(["scheduled", "provisional"]),
   warnings: z.array(StopWarningSchema),
+  day: z.number().int().min(0).max(3).optional(),
+});
+
+const TripBreakSchema = z.object({
+  day: z.number().int().min(0).max(3),
+  kind: z.literal("lunch"),
+  start: z.number(),
+  end: z.number(),
+  travelMinutesFromPrevious: z.number(),
+  serviceId: z.string().optional(),
+});
+
+const TripServiceSchema = z.object({
+  serviceId: z.string(),
+  day: z.number().int().min(0).max(3),
+  slot: z.enum(["lunch", "overnight", "car", "activity"]),
 });
 
 const TripSchema = z.object({
@@ -61,6 +79,8 @@ const TripSchema = z.object({
   revision: z.number().int().nonnegative(),
   context: TripContextSchema,
   stops: z.array(TripStopSchema),
+  breaks: z.array(TripBreakSchema).max(8).optional(),
+  services: z.array(TripServiceSchema).max(40).optional(),
   sourceRouteId: z.string().optional(),
   updatedAt: z.string(),
 });

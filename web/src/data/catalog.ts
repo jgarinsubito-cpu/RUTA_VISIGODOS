@@ -12,7 +12,7 @@
  * starting point an admin imports into the content store (docs/ADMIN.md). App code reads it only
  * through ./content (a test enforces this).
  */
-import type { Catalog, OpeningInfo, Route, Showcase, Site, SourceRef, Story, ValidatedClaim } from "@/domain/types";
+import type { Catalog, OpeningInfo, Route, Service, Showcase, Site, SourceRef, Story, ValidatedClaim } from "@/domain/types";
 
 export const DEMO_SOURCE = { title: "Ficha de demostración — pendiente de validación (Urbs Regia)" };
 
@@ -59,6 +59,7 @@ const wikipedia = (title: string, page: string): SourceRef => ({
 export const SITES: Site[] = [
   {
     id: "site-san-roman",
+    narrativeOrder: 1,
     slug: "museo-concilios-san-roman",
     name: "Museo de los Concilios y de la Cultura Visigoda",
     locality: "Toledo",
@@ -103,6 +104,7 @@ export const SITES: Site[] = [
   },
   {
     id: "site-vega-baja",
+    narrativeOrder: 2,
     slug: "vega-baja",
     name: "Yacimiento de la Vega Baja",
     locality: "Toledo",
@@ -845,4 +847,143 @@ export const SHOWCASE: Showcase = {
   familyPrompt: "Plan con niños por Toledo",
 };
 
-export const DEMO_CATALOG: Catalog = { sites: SITES, stops: [], claims: CLAIMS, stories: STORIES, routes: ROUTES, showcase: SHOWCASE };
+/**
+ * Fictional example services, to try the planner until the pilot businesses join the network.
+ * Every one is labelled "Ejemplo" in the app and links to example.org: none is a real business.
+ */
+const EXAMPLE_HOURS = { status: "example" as const, note: "Horario de ejemplo" };
+const EXAMPLE_SERVICE = { hours: EXAMPLE_HOURS, access: { status: "unknown" as const }, partner: false, checkedOn: null, demo: true };
+export const SERVICES: Service[] = [
+  {
+    ...EXAMPLE_SERVICE,
+    id: "service-ejemplo-restaurante-san-roman",
+    slug: "ejemplo-restaurante-san-roman",
+    name: "Ejemplo · Restaurante junto a San Román",
+    category: "restaurant",
+    locality: "Toledo",
+    coordinates: { lat: 39.8588, lng: -4.0262, approximate: true },
+    summary: "Ejemplo de restaurante cerca del Museo de los Concilios, con menú del día.",
+    priceLevel: 2,
+    priceNote: "Menú del día (precio de ejemplo)",
+    contact: { website: "https://example.org/restaurante-san-roman" },
+    reservable: true,
+    siteIds: ["site-san-roman"],
+    familyFriendly: true,
+  },
+  {
+    ...EXAMPLE_SERVICE,
+    id: "service-ejemplo-comidas-vega-baja",
+    slug: "ejemplo-comidas-vega-baja",
+    name: "Ejemplo · Casa de comidas en la Vega Baja",
+    category: "restaurant",
+    locality: "Toledo",
+    coordinates: { lat: 39.869, lng: -4.031, approximate: true },
+    summary: "Ejemplo de casa de comidas junto a la Vega Baja, cocina toledana.",
+    priceLevel: 1,
+    contact: { website: "https://example.org/comidas-vega-baja" },
+    reservable: false,
+    siteIds: ["site-vega-baja"],
+  },
+  {
+    ...EXAMPLE_SERVICE,
+    id: "service-ejemplo-meson-guadamur",
+    slug: "ejemplo-meson-guadamur",
+    name: "Ejemplo · Mesón en Guadamur",
+    category: "restaurant",
+    locality: "Guadamur",
+    coordinates: { lat: 39.811, lng: -4.145, approximate: true },
+    summary: "Ejemplo de mesón en el centro de Guadamur, a unos minutos del castillo.",
+    priceLevel: 2,
+    contact: { website: "https://example.org/meson-guadamur" },
+    reservable: true,
+    siteIds: ["site-castillo-guadamur"],
+    familyFriendly: true,
+  },
+  {
+    ...EXAMPLE_SERVICE,
+    id: "service-ejemplo-hotel-casco",
+    slug: "ejemplo-hotel-casco",
+    name: "Ejemplo · Hotel en el casco histórico",
+    category: "lodging",
+    locality: "Toledo",
+    coordinates: { lat: 39.859, lng: -4.023, approximate: true },
+    summary: "Ejemplo de hotel en el casco histórico de Toledo, a pie de los museos.",
+    priceLevel: 3,
+    priceNote: "Precio por noche de ejemplo",
+    contact: { bookingUrl: "https://example.org/hotel-casco/reservas" },
+    reservable: true,
+    siteIds: [],
+  },
+  {
+    ...EXAMPLE_SERVICE,
+    id: "service-ejemplo-casa-rural-guadamur",
+    slug: "ejemplo-casa-rural-guadamur",
+    name: "Ejemplo · Casa rural en Guadamur",
+    category: "lodging",
+    locality: "Guadamur",
+    coordinates: { lat: 39.812, lng: -4.148, approximate: true },
+    summary: "Ejemplo de casa rural en Guadamur, para dormir cerca de Guarrazar.",
+    priceLevel: 2,
+    contact: { bookingUrl: "https://example.org/casa-rural-guadamur/reservas" },
+    reservable: true,
+    siteIds: [],
+    familyFriendly: true,
+  },
+  {
+    ...EXAMPLE_SERVICE,
+    id: "service-ejemplo-alquiler-coches",
+    slug: "ejemplo-alquiler-coches",
+    name: "Ejemplo · Alquiler de coches en la estación",
+    category: "car-rental",
+    locality: "Toledo",
+    coordinates: { lat: 39.865, lng: -4.013, approximate: true },
+    summary: "Ejemplo de alquiler de coches junto a la estación de tren de Toledo.",
+    contact: { bookingUrl: "https://example.org/alquiler-coches/reservas" },
+    reservable: true,
+    siteIds: [],
+  },
+  {
+    ...EXAMPLE_SERVICE,
+    id: "service-ejemplo-visita-guarrazar",
+    slug: "ejemplo-visita-guarrazar",
+    name: "Ejemplo · Visita guiada al yacimiento de Guarrazar",
+    category: "guided-visit",
+    locality: "Guadamur",
+    coordinates: { lat: 39.7995, lng: -4.1575, approximate: true },
+    summary: "Ejemplo de visita guiada al yacimiento con guía habilitado en Castilla-La Mancha.",
+    priceNote: "Precio por persona de ejemplo",
+    contact: { bookingUrl: "https://example.org/visita-guarrazar/reservas" },
+    reservable: true,
+    siteIds: ["site-guarrazar"],
+    familyFriendly: true,
+  },
+  {
+    ...EXAMPLE_SERVICE,
+    id: "service-ejemplo-taller-orfebreria",
+    slug: "ejemplo-taller-orfebreria",
+    name: "Ejemplo · Taller de orfebrería",
+    category: "experience",
+    locality: "Guadamur",
+    coordinates: { lat: 39.81, lng: -4.146, approximate: true },
+    summary: "Ejemplo de taller para familias sobre técnicas de orfebrería, inspirado en las coronas votivas.",
+    contact: { website: "https://example.org/taller-orfebreria" },
+    reservable: true,
+    siteIds: ["site-guarrazar", "site-castillo-guadamur"],
+    familyFriendly: true,
+  },
+  {
+    ...EXAMPLE_SERVICE,
+    id: "service-ejemplo-aparcamiento-bisagra",
+    slug: "ejemplo-aparcamiento-bisagra",
+    name: "Ejemplo · Aparcamiento junto a la Puerta de Bisagra",
+    category: "parking",
+    locality: "Toledo",
+    coordinates: { lat: 39.8635, lng: -4.0255, approximate: true },
+    summary: "Ejemplo de aparcamiento a la entrada del casco histórico.",
+    contact: { website: "https://example.org/aparcamiento-bisagra" },
+    reservable: false,
+    siteIds: [],
+  },
+];
+
+export const DEMO_CATALOG: Catalog = { sites: SITES, stops: [], services: SERVICES, claims: CLAIMS, stories: STORIES, routes: ROUTES, showcase: SHOWCASE };

@@ -81,6 +81,8 @@ export function liveData<K extends RecordKind>(catalog: Catalog | null, kind: K,
         const stop = (catalog.stops ?? []).find((s) => s.id === id);
         return stop && stopData(stop);
       }
+      case "service":
+        return (catalog.services ?? []).find((x) => x.id === id);
       case "claim": {
         const claim = catalog.claims.find((c) => c.id === id);
         return claim && claimData(claim);
@@ -117,6 +119,7 @@ export function recordsFromCatalog(catalog: Catalog): Pick<AnyRecord, "kind" | "
   return [
     ...catalog.sites.map((s, i) => ({ kind: "site" as const, id: s.id, data: siteData(s), position: i })),
     ...(catalog.stops ?? []).map((s, i) => ({ kind: "stop" as const, id: s.id, data: stopData(s), position: i })),
+    ...(catalog.services ?? []).map((s, i) => ({ kind: "service" as const, id: s.id, data: s, position: i })),
     ...catalog.claims.map((c, i) => ({ kind: "claim" as const, id: c.id, data: claimData(c), position: i })),
     ...catalog.stories.map((s, i) => ({ kind: "story" as const, id: s.id, data: s, position: i })),
     ...catalog.routes.map((r, i) => ({ kind: "route" as const, id: r.id, data: r, position: i })),
@@ -196,7 +199,8 @@ export function buildCatalog(records: readonly AnyRecord[], previous: Catalog | 
     .map((data) => ({ ...data, storyIds: stories.filter((s) => s.stopId === data.id).map((s) => s.id) }))
     .sort((a, b) => (a.siteId === b.siteId ? a.order - b.order : 0));
   const showcase = pick("showcase")[0] ?? previous?.showcase ?? NO_SHOWCASE;
-  return { sites, stops, claims, stories, routes: pick("route"), showcase };
+  const services = pick("service");
+  return { sites, stops, ...(services.length ? { services } : {}), claims, stories, routes: pick("route"), showcase };
 }
 
 /** Status changes that make the records agree with a published catalog (after publishing or restoring). */
@@ -234,7 +238,7 @@ export function statusesAfterRestore(records: readonly AnyRecord[], restored: Ca
 
 /* ---------- Identifiers ---------- */
 
-const PREFIX: Record<Exclude<RecordKind, "showcase">, string> = { site: "site", stop: "stop", claim: "claim", story: "story", route: "route" };
+const PREFIX: Record<Exclude<RecordKind, "showcase">, string> = { site: "site", stop: "stop", service: "service", claim: "claim", story: "story", route: "route" };
 
 /** "Museo de Santa Cruz" -> "museo-de-santa-cruz" (at most `words` words). */
 export function slugify(text: string, words = 8): string {

@@ -19,6 +19,7 @@ import { ErrorsProvider, IssueList, ResultMessage, StatusBadge, btnDanger, btnPr
 import { ClaimForm } from "./forms/ClaimForm";
 import { RouteForm } from "./forms/RouteForm";
 import { StopForm } from "./forms/StopForm";
+import { ServiceForm } from "./forms/ServiceForm";
 import { ShowcaseForm } from "./forms/ShowcaseForm";
 import { SiteForm } from "./forms/SiteForm";
 import { StoryForm } from "./forms/StoryForm";
@@ -48,6 +49,24 @@ function emptyData(kind: RecordKind, catalog: Catalog, siteId: string | undefine
       };
     case "stop":
       return { id: "", siteId: siteId ?? "", order: 1, name: "", gallery: [] };
+    case "service":
+      return {
+        id: "",
+        slug: "",
+        name: "",
+        category: "restaurant",
+        locality: catalog.showcase.localities[0] ?? "",
+        coordinates: { lat: Number.NaN, lng: Number.NaN, approximate: true },
+        summary: "",
+        hours: { status: "unknown" },
+        access: { status: "unknown" },
+        contact: {},
+        reservable: false,
+        siteIds: siteId ? [siteId] : [],
+        partner: false,
+        checkedOn: null,
+        demo: false,
+      };
     case "claim":
       return { id: "", siteId: siteId ?? "", text: "", evidence: "D", source: { title: "" }, keywords: [] };
     case "story":
@@ -63,6 +82,7 @@ function emptyData(kind: RecordKind, catalog: Catalog, siteId: string | undefine
 function provisionalId(kind: RecordKind, data: Data, taken: ReadonlySet<string>): string {
   switch (kind) {
     case "site":
+    case "service":
     case "route": {
       const slug = (data as { slug: string }).slug;
       return slug ? newRecordId(kind, slug, taken) : "";
@@ -290,6 +310,7 @@ function EditorBody({
           <ErrorsProvider errors={errorMap}>
             {kind === "site" && <SiteForm {...(formProps as FormProps<"site">)} />}
             {kind === "stop" && <StopForm {...(formProps as FormProps<"stop">)} />}
+            {kind === "service" && <ServiceForm {...(formProps as FormProps<"service">)} />}
             {kind === "claim" && (
               <ClaimForm
                 {...(formProps as FormProps<"claim">)}

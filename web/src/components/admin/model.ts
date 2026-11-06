@@ -6,6 +6,7 @@ import type { Catalog } from "@/domain/types";
 export const KIND_INFO: Record<RecordKind, { one: string; many: string; path: string; newLabel: string }> = {
   site: { one: "Lugar", many: "Lugares", path: "/admin/lugares", newLabel: "Nuevo lugar" },
   stop: { one: "Parada", many: "Paradas", path: "/admin/paradas", newLabel: "Nueva parada" },
+  service: { one: "Servicio", many: "Servicios", path: "/admin/servicios", newLabel: "Nuevo servicio" },
   claim: { one: "Ficha", many: "Fichas", path: "/admin/fichas", newLabel: "Nueva ficha" },
   story: { one: "Relato", many: "Relatos", path: "/admin/relatos", newLabel: "Nuevo relato" },
   route: { one: "Ruta", many: "Rutas", path: "/admin/rutas", newLabel: "Nueva ruta" },
@@ -30,6 +31,8 @@ export function recordTitle(record: { kind: RecordKind; data: unknown }): string
       return (record.data as RecordDataByKind["site"]).name || "Lugar sin nombre";
     case "stop":
       return (record.data as RecordDataByKind["stop"]).name || "Parada sin nombre";
+    case "service":
+      return (record.data as RecordDataByKind["service"]).name || "Servicio sin nombre";
     case "claim": {
       const text = (record.data as RecordDataByKind["claim"]).text || "Ficha sin texto";
       return text.length > 90 ? `${text.slice(0, 88)}…` : text;

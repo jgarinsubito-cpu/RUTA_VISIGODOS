@@ -47,6 +47,7 @@ export function validateCatalog(catalog: Catalog, previous: Catalog | null = nul
 
   const { sites, claims, stories, routes, showcase } = catalog;
   const stops = catalog.stops ?? [];
+  const services = catalog.services ?? [];
   const siteById = new Map(sites.map((s) => [s.id, s]));
   const stopById = new Map(stops.map((s) => [s.id, s]));
   const claimById = new Map(claims.map((c) => [c.id, c]));
@@ -54,6 +55,7 @@ export function validateCatalog(catalog: Catalog, previous: Catalog | null = nul
   for (const [kind, list] of [
     ["site", sites],
     ["stop", stops],
+    ["service", services],
     ["claim", claims],
     ["story", stories],
     ["route", routes],
@@ -126,6 +128,23 @@ export function validateCatalog(catalog: Catalog, previous: Catalog | null = nul
       error("stop", stop.id, "La transcripción de la locución está incompleta: hace falta el texto entero.");
     }
   }
+  /* Services: operational data, dated, published only for businesses that joined the network */
+  const localityNames = new Set(showcase.localities);
+  for (const x of services) {
+    if (!localityNames.has(x.locality)) error("service", x.id, `La localidad «${x.locality}» no está entre las de la portada.`);
+    for (const id of x.siteIds) if (!siteById.has(id)) error("service", x.id, `Está vinculado a un lugar que no existe («${id}»).`);
+    if (!Number.isFinite(x.coordinates.lat) || !Number.isFinite(x.coordinates.lng)) error("service", x.id, "Faltan las coordenadas.");
+    if (!x.demo && !x.partner) error("service", x.id, "Solo se publican empresas adheridas a la red (o ejemplos rotulados como tales).");
+    if (x.demo && x.sponsored) error("service", x.id, "Un ejemplo no puede ir como patrocinado.");
+    const { bookingUrl, website, phone, email } = x.contact;
+    if (!bookingUrl && !website && !phone && !email) error("service", x.id, "Necesita al menos un contacto: página de reserva, web, teléfono o correo.");
+    if (x.reservable && !bookingUrl && !phone && !email) warn("service", x.id, "Admite reserva, pero no indica cómo: añade la página de reserva, el teléfono o el correo.");
+    if (!x.demo) {
+      if (!x.checkedOn) warn("service", x.id, "No consta cuándo se comprobaron sus datos con la empresa.");
+      else if (Date.now() - Date.parse(`${x.checkedOn}T12:00:00Z`) > 90 * 86_400_000) warn("service", x.id, `Datos comprobados hace más de 90 días (${x.checkedOn}): la web avisará de que pueden haber cambiado.`);
+    }
+  }
+
   const stopsBySite = new Map<string, typeof stops>();
   for (const stop of stops) stopsBySite.set(stop.siteId, [...(stopsBySite.get(stop.siteId) ?? []), stop]);
   for (const [siteId, list] of stopsBySite) {

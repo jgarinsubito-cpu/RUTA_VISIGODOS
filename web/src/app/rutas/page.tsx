@@ -22,6 +22,13 @@ export default async function RoutesPage() {
           mostramos el resultado antes de cambiar nada en tu viaje.
         </p>
         <DemoBadge className="self-start" />
+        <Link
+          href="/planificar"
+          className="mt-1 flex flex-col gap-1 self-start rounded-2xl border border-stone bg-surface p-4 hover:border-ink/40 sm:max-w-xl"
+        >
+          <span className="font-semibold text-ink">¿Lo prefieres a medida?</span>
+          <span className="text-sm text-ink-muted">Elige temas, días y ritmo, y te proponemos un recorrido; luego añades dónde comer, dormir y alquilar un coche.</span>
+        </Link>
       </header>
       <ul className="grid gap-4 sm:grid-cols-2">
         {routes().map((r) => (

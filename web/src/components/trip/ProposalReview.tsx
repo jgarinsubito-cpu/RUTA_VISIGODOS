@@ -4,14 +4,52 @@
  * Bottom sheet on mobile, centered dialog from md. Focus trapped; Escape cancels; focus returns.
  */
 import { useId, useRef } from "react";
-import type { ItineraryProposal, SiteId, StopWarning, TripContext } from "@/domain/types";
-import { getSite } from "@/data/content";
+import type { ItineraryProposal, SiteId, StopWarning, TripBreak, TripContext, TripService, TripStop } from "@/domain/types";
+import { getService, getSite } from "@/data/content";
 import { describeSharedWarning, groupWarnings, warningKey } from "@/domain/warnings";
 import { TRANSPORT_LABEL } from "@/lib/labels";
 import { actions, useAppState } from "@/state/store";
 import { useFocusTrap } from "@/lib/useFocusTrap";
 import { IconClose, IconInfo } from "@/components/shell/icons";
-import { TripTimeline, type StopMark, type WarningMark } from "./TripTimeline";
+import { TripTimeline, type StopMark, type TripTimelineProps, type WarningMark } from "./TripTimeline";
+
+const SLOT_LABEL: Record<TripService["slot"], string> = { lunch: "comida", overnight: "alojamiento", car: "coche", activity: "actividad" };
+
+/** Services chosen or removed by the proposal, in words. */
+function serviceChanges(before: readonly TripService[], after: readonly TripService[] | undefined, multi: boolean): string[] {
+  if (!after) return [];
+  const key = (s: TripService) => `${s.day}|${s.slot}|${s.serviceId}`;
+  const was = new Set(before.map(key));
+  const now = new Set(after.map(key));
+  const text = (s: TripService) => {
+    const name = getService(s.serviceId)?.name ?? s.serviceId;
+    const when = multi ? (s.slot === "overnight" ? `, noche del día ${s.day + 1}` : `, día ${s.day + 1}`) : "";
+    return `${name} (${SLOT_LABEL[s.slot]}${when})`;
+  };
+  return [
+    ...after.filter((s) => !was.has(key(s))).map((s) => `Se elige: ${text(s)}`),
+    ...before.filter((s) => !now.has(key(s))).map((s) => `Se quita: ${text(s)}`),
+  ];
+}
+
+/** The timeline split by day when the trip has more than one. */
+function DayTimelines({ stops, breaks = [], days, ...rest }: Omit<TripTimelineProps, "stops" | "breaks"> & { stops: TripStop[]; breaks?: readonly TripBreak[]; days: number }) {
+  if (days <= 1) return <TripTimeline stops={stops} breaks={breaks} {...rest} />;
+  return (
+    <div className="flex flex-col gap-3">
+      {Array.from({ length: days }, (_, d) => {
+        const dayStops = stops.filter((s) => (s.day ?? 0) === d);
+        if (dayStops.length === 0) return null;
+        return (
+          <div key={d} className="flex flex-col gap-1">
+            <p className="text-xs font-semibold text-ink">Día {d + 1}</p>
+            <TripTimeline {...rest} stops={dayStops} breaks={breaks.filter((b) => b.day === d)} startNumber={stops.indexOf(dayStops[0]) + 1} />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 function siteNames(ids: SiteId[]) {
   return ids.map((id) => getSite(id)?.name ?? id).join(", ");
@@ -72,6 +110,8 @@ function contextChanges(before: TripContext, after: TripContext): string[] {
   }
   if (before.profile !== after.profile) out.push(`Perfil: ${PROFILE_LABEL[after.profile] ?? after.profile}`);
   if (before.area !== after.area) out.push(`Zona: ${after.area}`);
+  if ((before.days ?? 1) !== (after.days ?? 1)) out.push(`Días: ${after.days ?? 1}`);
+  if (Boolean(before.lunchBreak) !== Boolean(after.lunchBreak)) out.push(after.lunchBreak ? "Con hora para comer" : "Sin hora para comer");
   return out;
 }
 
@@ -87,6 +127,8 @@ function accept() {
 export function ProposalReview() {
   const proposal = useAppState((s) => s.pendingProposal);
   const tripContext = useAppState((s) => s.trip.context);
+  const tripServices = useAppState((s) => s.trip.services);
+  const tripBreaks = useAppState((s) => s.trip.breaks);
   const savedSiteIds = useAppState((s) => s.savedSiteIds);
   const ref = useRef<HTMLDivElement>(null);
   const titleId = useId();
@@ -107,6 +149,9 @@ export function ProposalReview() {
   const beforeGroups = groupWarnings(proposal.before);
   const afterGroups = groupWarnings(proposal.after);
   const notes = [...proposal.warnings, ...afterGroups.shared.map(describeSharedWarning)];
+  const daysBefore = tripContext.days ?? 1;
+  const daysAfter = nextContext.days ?? 1;
+  const servicesChanged = serviceChanges(tripServices ?? [], proposal.services, daysAfter > 1);
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center md:items-center md:p-6">
@@ -156,7 +201,7 @@ export function ProposalReview() {
             </div>
           ) : (
             <div className="flex flex-col gap-5">
-              {(proposal.added.length > 0 || proposal.removed.length > 0 || settingChanges.length > 0) && (
+              {(proposal.added.length > 0 || proposal.removed.length > 0 || settingChanges.length > 0 || servicesChanged.length > 0) && (
                 <ul className="flex flex-col gap-1 text-sm">
                   {settingChanges.length > 0 && (
                     <li>
@@ -173,7 +218,13 @@ export function ProposalReview() {
                       <span className="font-semibold">Se quita:</span> {siteNames(proposal.removed)}
                     </li>
                   )}
-                  {unchangedStops && proposal.before.length > 0 && (
+                  {servicesChanged.map((line) => (
+                    <li key={line}>
+                      <span className="font-semibold">{line.slice(0, line.indexOf(":") + 1)}</span>
+                      {line.slice(line.indexOf(":") + 1)}
+                    </li>
+                  ))}
+                  {unchangedStops && proposal.before.length > 0 && servicesChanged.length === 0 && (
                     <li>
                       <span className="font-semibold">Paradas:</span> sin cambios de orden ni de hora. Cambian solo los avisos
                       marcados como <span className="font-semibold text-warn">Nuevo</span>.
@@ -190,8 +241,10 @@ export function ProposalReview() {
                   {proposal.before.length === 0 ? (
                     <p className="rounded-xl border border-dashed border-stone p-4 text-sm text-ink-muted">Tu viaje está vacío.</p>
                   ) : (
-                    <TripTimeline
+                    <DayTimelines
+                      days={daysBefore}
                       stops={proposal.before}
+                      breaks={tripBreaks}
                       transport={tripContext.transport}
                       marks={marks.before}
                       warningMark={wMarks.before}
@@ -210,8 +263,10 @@ export function ProposalReview() {
                       El viaje quedará vacío.
                     </p>
                   ) : (
-                    <TripTimeline
+                    <DayTimelines
+                      days={daysAfter}
                       stops={proposal.after}
+                      breaks={proposal.breaks ?? tripBreaks}
                       transport={nextContext.transport}
                       marks={marks.after}
                       warningMark={wMarks.after}

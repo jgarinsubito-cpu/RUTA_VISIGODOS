@@ -37,7 +37,7 @@ function dayChip(iso: string, today: string, tomorrow: string): { top: string; b
 }
 
 const chip =
-  "flex min-h-14 min-w-16 shrink-0 cursor-pointer snap-start flex-col items-center justify-center rounded-xl border border-stone bg-surface px-3 text-center text-ink transition-colors hover:border-ink/40 has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ink";
+  "relative flex min-h-14 min-w-16 shrink-0 cursor-pointer snap-start flex-col items-center justify-center rounded-xl border border-stone bg-surface px-3 text-center text-ink transition-colors hover:border-ink/40 has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ink";
 
 export function DayPicker({
   value,

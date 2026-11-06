@@ -18,6 +18,7 @@ export function contextSummary(ctx: TripContext): string {
   return [
     ctx.area,
     ctx.date ? formatShortDate(ctx.date) : "Sin fecha",
+    (ctx.days ?? 1) > 1 ? `${ctx.days} días` : null,
     `${ctx.startTime}–${ctx.endTime}`,
     TRANSPORT_LABEL[ctx.transport],
     ctx.stepFreeRequired ? "Sin escalones" : null,
@@ -80,7 +81,7 @@ export function TripContextForm({ tripContext, storedContext, hasStops, pending 
     >
       <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 rounded-2xl px-4 py-2.5">
         <span className="min-w-0">
-          <span className="block text-xs font-semibold uppercase tracking-wider text-ink-muted">Tu día</span>
+          <span className="block text-xs font-semibold uppercase tracking-wider text-ink-muted">{(tripContext.days ?? 1) > 1 ? "Tu viaje" : "Tu día"}</span>
           <span className="block text-sm font-medium text-ink">{contextSummary(tripContext)}</span>
         </span>
         <span className="shrink-0 rounded-full border border-stone px-3 py-1 text-sm font-semibold text-primary">
@@ -113,7 +114,27 @@ export function TripContextForm({ tripContext, storedContext, hasStops, pending 
         )}
 
         <DayPicker value={draft.date} onChange={(date) => patch({ date })} focusId={DATE_ID} />
-        <p className="-mt-2 text-xs text-ink-muted">Con fecha comprobamos los horarios de cada parada.</p>
+        <p className="-mt-2 text-xs text-ink-muted">Con fecha comprobamos los horarios de cada parada. Si el viaje dura varios días, es la fecha del primero.</p>
+
+        <fieldset className="flex flex-col gap-1">
+          <legend className={`${label} mb-1`}>Días</legend>
+          <div className="flex flex-wrap gap-2">
+            {[1, 2, 3, 4].map((n) => (
+              <label
+                key={n}
+                className="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-full border border-stone px-4 text-sm text-ink hover:border-ink/40 has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:font-semibold has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ink"
+              >
+                <input type="radio" name={`${id}-days`} value={n} checked={(draft.days ?? 1) === n} onChange={() => patch({ days: n })} className="sr-only" />
+                {n === 1 ? "1 día" : `${n} días`}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <label className="inline-flex min-h-11 cursor-pointer items-center gap-2 text-sm text-ink">
+          <input type="checkbox" checked={Boolean(draft.lunchBreak)} onChange={(e) => patch({ lunchBreak: e.target.checked || undefined })} className="h-5 w-5 accent-primary" />
+          Reservar una hora para comer (entre las 13:00 y las 15:00)
+        </label>
 
         <div className="grid grid-cols-2 gap-3 sm:max-w-md">
           <div className="flex flex-col gap-1">

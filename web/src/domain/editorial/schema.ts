@@ -6,7 +6,7 @@
  * Errors are reported in Spanish (zod's "es" locale): editors read them in the admin.
  */
 import { z } from "zod";
-import type { Catalog, Route, Showcase, Site, Stop, Story, ValidatedClaim } from "@/domain/types";
+import type { Catalog, Route, Service, Showcase, Site, Stop, Story, ValidatedClaim } from "@/domain/types";
 
 const LOCALE = z.locales.es().localeError;
 
@@ -112,6 +112,7 @@ const siteShape = {
   sources: z.array(SourceRefSchema).max(10).optional(),
   aliases: z.array(text(80)).max(20).optional(),
   suggestedPrompts: z.array(text(140)).max(6).optional(),
+  narrativeOrder: z.number().int().min(1).max(99).optional(),
   demo: z.boolean(),
 };
 
@@ -222,6 +223,54 @@ const stopShape = {
 export const StopDataSchema = z.object(stopShape);
 export const StopSchema = z.object({ ...stopShape, storyIds: z.array(id).max(50) });
 
+const phone = z
+  .string()
+  .trim()
+  .regex(/^\+?[0-9 ]{6,20}$/, "Teléfono con prefijo, por ejemplo +34 925 00 00 00");
+
+export const SERVICE_CATEGORIES = [
+  "restaurant",
+  "cafe",
+  "lodging",
+  "car-rental",
+  "guided-visit",
+  "experience",
+  "transport",
+  "shop",
+  "parking",
+  "tourist-office",
+] as const;
+
+/** A complementary service (where to eat, sleep, rent a car…), kept by staff in the content admin. */
+export const ServiceSchema = z.object({
+  id,
+  slug: id,
+  name: text(120),
+  category: z.enum(SERVICE_CATEGORIES),
+  locality: text(80),
+  coordinates: CoordinatesSchema,
+  address: text(200).optional(),
+  summary: text(400),
+  hours: OpeningInfoSchema,
+  access: z.object({ status: z.enum(["verified", "unknown"]), stepFree: z.boolean().optional(), note: text(400).optional() }),
+  priceLevel: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]).optional(),
+  priceNote: text(120).optional(),
+  contact: z.object({
+    bookingUrl: httpsUrl.optional(),
+    website: httpsUrl.optional(),
+    phone: phone.optional(),
+    email: z.string().trim().email("Correo no válido").optional(),
+  }),
+  reservable: z.boolean(),
+  siteIds: z.array(id).max(20),
+  familyFriendly: z.boolean().optional(),
+  partner: z.boolean(),
+  sponsored: z.boolean().optional(),
+  checkedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Fecha en formato AAAA-MM-DD").nullable(),
+  image: PlaceImageSchema.optional(),
+  demo: z.boolean(),
+});
+
 const groupCopy = z.object({ title: text(80), intro: text(300) });
 
 export const ShowcaseSchema = z.object({
@@ -247,6 +296,8 @@ export const CatalogSchema = z.object({
   sites: z.array(SiteSchema).max(500),
   // Versions published before stops existed have none.
   stops: z.array(StopSchema).max(2000).default([]),
+  // Versions published before services existed have none.
+  services: z.array(ServiceSchema).max(2000).optional(),
   claims: z.array(ClaimSchema).max(5000),
   stories: z.array(StorySchema).max(2000),
   routes: z.array(RouteSchema).max(100),
@@ -261,17 +312,19 @@ export type StopData = Omit<Stop, "storyIds">;
 export interface RecordDataByKind {
   site: SiteData;
   stop: StopData;
+  service: Service;
   claim: ClaimData;
   story: Story;
   route: Route;
   showcase: Showcase;
 }
 export type RecordKind = keyof RecordDataByKind;
-export const RECORD_KINDS = ["site", "stop", "claim", "story", "route", "showcase"] as const satisfies readonly RecordKind[];
+export const RECORD_KINDS = ["site", "stop", "service", "claim", "story", "route", "showcase"] as const satisfies readonly RecordKind[];
 
 const DATA_SCHEMAS: Record<RecordKind, z.ZodType> = {
   site: SiteDataSchema,
   stop: StopDataSchema,
+  service: ServiceSchema,
   claim: ClaimDataSchema,
   story: StorySchema,
   route: RouteSchema,

@@ -5,12 +5,12 @@
  * Trip-wide warnings (groupWarnings) are shown once by SharedWarnings and hidden from each stop.
  */
 import type { ReactNode } from "react";
-import type { SiteId, StopWarning, StopWarningCode, TransportMode, TripStop } from "@/domain/types";
-import { getSite } from "@/data/content";
+import type { SiteId, StopWarning, StopWarningCode, TransportMode, TripBreak, TripStop } from "@/domain/types";
+import { getService, getSite } from "@/data/content";
 import { formatClock } from "@/domain/time";
 import { describeSharedWarning, describeWarning, warningKey } from "@/domain/warnings";
 import { travelLegText } from "@/lib/labels";
-import { IconInfo } from "@/components/shell/icons";
+import { IconClock, IconInfo } from "@/components/shell/icons";
 
 export type StopMark = "added" | "removed" | "changed";
 /** How a warning differs from the other side of a before/after comparison. */
@@ -37,6 +37,37 @@ export interface TripTimelineProps {
   compact?: boolean;
   "aria-label"?: string;
   className?: string;
+  /** Lunch breaks of these stops' day, shown between the stops at their time. */
+  breaks?: readonly TripBreak[];
+  /** Number of the first stop (stops of later days continue the count). */
+  startNumber?: number;
+}
+
+/** A lunch break in the timeline: when, and where if a restaurant was chosen. */
+function BreakItem({ item, transport }: { item: TripBreak; transport?: TransportMode }) {
+  const place = item.serviceId ? getService(item.serviceId) : undefined;
+  return (
+    <li className="flex flex-col">
+      {item.travelMinutesFromPrevious > 0 && (
+        <p className="ml-4 flex items-center gap-2 border-l-2 border-dotted border-stone py-1.5 pl-6 text-xs text-ink-muted">
+          <span className="sr-only">Trayecto: </span>
+          {travelLegText(item.travelMinutesFromPrevious, transport)}
+        </p>
+      )}
+      <div className="flex items-center gap-3 rounded-xl border border-dashed border-stone bg-surface-muted px-3.5 py-2.5 text-sm">
+        <span aria-hidden="true" className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-stone bg-surface text-ink-muted">
+          <IconClock width={14} height={14} />
+        </span>
+        <p className="min-w-0 text-ink">
+          <span className="tabular-nums text-xs font-semibold text-ink-muted">
+            {formatClock(item.start)}–{formatClock(item.end)}
+          </span>{" "}
+          <span className="font-medium">Comida</span>
+          {place ? <span className="text-ink-muted"> · {place.name}</span> : <span className="text-ink-muted"> · elige dónde abajo, en «Servicios»</span>}
+        </p>
+      </div>
+    </li>
+  );
 }
 
 export function TripTimeline({
@@ -51,7 +82,13 @@ export function TripTimeline({
   compact = false,
   "aria-label": ariaLabel = "Paradas del viaje",
   className = "",
+  breaks = [],
+  startNumber = 1,
 }: TripTimelineProps) {
+  // Each break goes before the first stop that starts after it; the rest go at the end.
+  const breakBefore = (i: number) => breaks.filter((b) => b.end <= stops[i].arrival && (i === 0 || b.start >= stops[i - 1].departure));
+  const placed = new Set(stops.flatMap((_, i) => breakBefore(i)));
+  const trailing = breaks.filter((b) => !placed.has(b));
   return (
     <ol aria-label={ariaLabel} className={`flex flex-col ${className}`}>
       {stops.map((stop, i) => {
@@ -61,7 +98,9 @@ export function TripTimeline({
         const selected = selectedSiteId === stop.siteId;
         const provisional = stop.status === "provisional";
         const warnings = hiddenCodes ? stop.warnings.filter((w) => !hiddenCodes.has(w.code)) : stop.warnings;
-        return (
+        const number = startNumber + i;
+        return [
+          ...breakBefore(i).map((b) => <BreakItem key={`break-${b.day}-${b.start}`} item={b} transport={transport} />),
           <li key={`${stop.siteId}-${i}`} className="flex flex-col">
             {i > 0 && stop.travelMinutesFromPrevious > 0 && (
               <p className="ml-4 flex items-center gap-2 border-l-2 border-dotted border-stone py-1.5 pl-6 text-xs text-ink-muted">
@@ -85,11 +124,11 @@ export function TripTimeline({
                 aria-hidden="true"
                 className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-primary text-caption font-semibold text-on-primary"
               >
-                {i + 1}
+                {number}
               </span>
               <div className="min-w-0 flex-1">
                 <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold text-ink-muted">
-                  <span className="sr-only">Parada {i + 1}, </span>
+                  <span className="sr-only">Parada {number}, </span>
                   {stop.visitStart !== undefined && stop.visitStart > stop.arrival && (
                     <span className="tabular-nums font-normal">Llegada {formatClock(stop.arrival)} ·</span>
                   )}
@@ -154,9 +193,12 @@ export function TripTimeline({
                 {renderActions && <div className="-mb-1 -ml-3 mt-1 flex flex-wrap items-center">{renderActions(stop, i)}</div>}
               </div>
             </div>
-          </li>
-        );
+          </li>,
+        ];
       })}
+      {trailing.map((b) => (
+        <BreakItem key={`break-${b.day}-${b.start}`} item={b} transport={transport} />
+      ))}
     </ol>
   );
 }

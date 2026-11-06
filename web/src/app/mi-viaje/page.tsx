@@ -18,6 +18,8 @@ import { StopActions } from "@/components/tripview/StopActions";
 import { TripStatus, TripTotals, TripWarnings } from "@/components/tripview/TripSummary";
 import { ViewToggle, type ViewMode } from "@/components/tripview/ViewToggle";
 import { DESKTOP_QUERY, useMediaQuery } from "@/lib/useMediaQuery";
+import { TripServices } from "@/components/services/TripServices";
+import { addDays, tripDays } from "@/domain/planner";
 
 const secondaryBtn =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-stone bg-surface px-4 text-sm font-semibold text-ink hover:bg-surface-muted";
@@ -35,10 +37,13 @@ function EmptyTrip() {
       </p>
       <div className="flex flex-col gap-2 sm:flex-row">
         <Link
-          href="/rutas"
+          href="/planificar"
           className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-on-primary hover:bg-primary-hover"
         >
           <IconRoute width={18} height={18} />
+          Organizar un recorrido a medida
+        </Link>
+        <Link href="/rutas" className={secondaryBtn}>
           Ver rutas propuestas
         </Link>
         <Link href="/asistente" className={secondaryBtn}>
@@ -71,13 +76,22 @@ export default function MiViajePage() {
   const approximate = stopIds.some((id) => getSite(id)?.coordinates.approximate);
   const formKey = `${JSON.stringify(trip.context)}|${JSON.stringify(storedContext)}`;
   const warningGroups = groupWarnings(trip.stops);
+  const days = tripDays(trip.context);
+  const dayNumbers = Array.from({ length: days }, (_, d) => d);
+  const stopsOf = (d: number) => trip.stops.filter((s) => (s.day ?? 0) === d);
   const needsDate = warningGroups.shared.some((w) => w.code === "no-date");
 
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-5 md:px-8 md:py-8">
       <header className="flex flex-col gap-2">
         <h1 id={headingId} className="font-display text-3xl leading-tight text-ink md:text-4xl">
-          {trip.context.date ? `Tu visita del ${formatShortDate(trip.context.date)}` : "Tu visita a la ruta visigoda"}
+          {trip.context.date
+            ? (trip.context.days ?? 1) > 1
+              ? `Tu viaje del ${formatShortDate(trip.context.date)} al ${formatShortDate(addDays(trip.context.date, (trip.context.days ?? 1) - 1))}`
+              : `Tu visita del ${formatShortDate(trip.context.date)}`
+            : (trip.context.days ?? 1) > 1
+              ? `Tu viaje de ${trip.context.days} días por la ruta visigoda`
+              : "Tu visita a la ruta visigoda"}
         </h1>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
           {hasStops && <TripStatus trip={trip} />}
@@ -118,17 +132,37 @@ export default function MiViajePage() {
                     ) : undefined
                   }
                 />
-                <TripTimeline
-                  hiddenCodes={warningGroups.hiddenCodes}
-                  stops={trip.stops}
-                  transport={trip.context.transport}
-                  selectedSiteId={selectedSiteId}
-                  onSelect={(id) => actions.selectSite(selectedSiteId === id ? null : id)}
-                  renderActions={(stop, i) => (
-                    <StopActions stop={stop} index={i} count={trip.stops.length} disabled={pending} />
-                  )}
-                  aria-label="Paradas del viaje en orden"
-                />
+                {dayNumbers.map((d) => {
+                  const dayStops = stopsOf(d);
+                  const offset = trip.stops.indexOf(dayStops[0]);
+                  return (
+                    <section key={d} aria-label={days > 1 ? `Día ${d + 1}` : undefined} className="flex flex-col gap-2">
+                      {days > 1 && (
+                        <h3 className="flex items-baseline gap-2 font-display text-xl text-ink">
+                          Día {d + 1}
+                          {trip.context.date && <span className="text-sm font-normal text-ink-muted">{formatShortDate(addDays(trip.context.date, d))}</span>}
+                        </h3>
+                      )}
+                      {dayStops.length === 0 ? (
+                        <p className="rounded-xl border border-dashed border-stone p-3 text-sm text-ink-muted">Día libre: pasa aquí una parada con su selector de día.</p>
+                      ) : (
+                        <TripTimeline
+                          hiddenCodes={warningGroups.hiddenCodes}
+                          stops={dayStops}
+                          breaks={trip.breaks?.filter((b) => b.day === d)}
+                          startNumber={offset + 1}
+                          transport={trip.context.transport}
+                          selectedSiteId={selectedSiteId}
+                          onSelect={(id) => actions.selectSite(selectedSiteId === id ? null : id)}
+                          renderActions={(stop, i) => (
+                            <StopActions stop={stop} index={offset + i} count={trip.stops.length} disabled={pending} days={days} />
+                          )}
+                          aria-label={days > 1 ? `Paradas del día ${d + 1} en orden` : "Paradas del viaje en orden"}
+                        />
+                      )}
+                    </section>
+                  );
+                })}
                 <TripWarnings trip={trip} />
               </section>
             )}
@@ -154,6 +188,7 @@ export default function MiViajePage() {
               </section>
             )}
           </div>
+          <TripServices trip={trip} />
         </>
       )}
 
@@ -168,6 +203,10 @@ export default function MiViajePage() {
               Deshacer último cambio
             </button>
           )}
+          <Link href="/planificar" className={secondaryBtn}>
+            <IconRoute width={18} height={18} />
+            Organizar a medida
+          </Link>
           <Link href="/asistente" className={secondaryBtn}>
             <IconChat width={18} height={18} />
             Preguntar al asistente sobre mi viaje

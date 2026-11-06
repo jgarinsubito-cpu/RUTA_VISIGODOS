@@ -1,5 +1,5 @@
 /** Shared Spanish labels and small formatters for UI text. */
-import type { AccessNeed, SiteKind, TransportMode, TravelGroup, TravelPace } from "@/domain/types";
+import type { AccessNeed, ServiceCategory, SiteKind, TransportMode, TravelGroup, TravelPace } from "@/domain/types";
 
 export const KIND_LABEL: Record<SiteKind, string> = {
   museum: "Museo",
@@ -57,4 +57,37 @@ export function formatDuration(minutes: number): string {
 export function travelLegText(minutes: number, transport?: TransportMode): string {
   const how = transport === "car" ? "en coche" : transport === "walk" ? "a pie" : "de trayecto";
   return `${formatDuration(minutes)} ${how}`;
+}
+
+/** Complementary service categories, as visitors read them. */
+export const SERVICE_CATEGORY_LABEL: Record<ServiceCategory, string> = {
+  restaurant: "Restaurante",
+  cafe: "Cafetería",
+  lodging: "Alojamiento",
+  "car-rental": "Alquiler de coches",
+  "guided-visit": "Visita guiada",
+  experience: "Experiencia",
+  transport: "Transporte",
+  shop: "Tienda y productos locales",
+  parking: "Aparcamiento",
+  "tourist-office": "Oficina de turismo",
+};
+
+/** Plural headings for lists of services. */
+export const SERVICE_CATEGORY_PLURAL: Record<ServiceCategory, string> = {
+  restaurant: "Dónde comer",
+  cafe: "Cafeterías",
+  lodging: "Dónde dormir",
+  "car-rental": "Alquiler de coches",
+  "guided-visit": "Visitas guiadas",
+  experience: "Experiencias",
+  transport: "Transporte",
+  shop: "Tiendas y productos locales",
+  parking: "Aparcamientos",
+  "tourist-office": "Oficinas de turismo",
+};
+
+/** "€€" for a price level. */
+export function priceLabel(level: 1 | 2 | 3 | 4): string {
+  return "€".repeat(level);
 }

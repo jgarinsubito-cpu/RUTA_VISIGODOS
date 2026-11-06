@@ -40,7 +40,7 @@ function windowsText(windows: TimeWindow[] | undefined): string {
   return (windows ?? []).map((w) => `${w.open}-${w.close}`).join(", ");
 }
 
-function HoursEditor({ hours, onChange }: { hours: OpeningInfo; onChange: (h: OpeningInfo) => void }) {
+export function HoursEditor({ hours, onChange }: { hours: OpeningInfo; onChange: (h: OpeningInfo) => void }) {
   const [days, setDays] = useState(() => DAY_NAMES.map((_, i) => windowsText(hours.weekly?.[(i + 1) as Weekday])));
   const setDay = (index: number, text: string) => {
     setDays((d) => d.map((v, i) => (i === index ? text : v)));
@@ -323,6 +323,13 @@ export function SiteForm({ data, set, catalog, records, isNew, locked, recordId 
           checked={data.coordinates.approximate}
           onChange={(approximate) => set({ coordinates: { ...data.coordinates, approximate } })}
           hint="Déjala marcada hasta comprobarla sobre el terreno."
+        />
+        <NumberField
+          label="Orden en el relato (opcional)"
+          value={data.narrativeOrder ?? 0}
+          path="narrativeOrder"
+          hint="Para el planificador a medida: dentro de una localidad, los lugares con número más bajo van antes (por ejemplo, 1 para el museo que presenta la época). 0: sin preferencia."
+          onChange={(n) => set({ narrativeOrder: n && n > 0 ? n : undefined })}
         />
       </Section>
 

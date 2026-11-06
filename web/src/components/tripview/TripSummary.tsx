@@ -11,10 +11,13 @@ export function tripTotals(trip: Trip) {
   const stops = trip.stops;
   // Waiting for a site to open is not visit time.
   const visit = stops.reduce((sum, s) => sum + (s.departure - (s.visitStart ?? s.arrival)), 0);
-  const travel = stops.reduce((sum, s, i) => sum + (i > 0 ? s.travelMinutesFromPrevious : 0), 0);
-  const start = stops[0]?.arrival;
-  const end = stops[stops.length - 1]?.departure;
-  return { visit, travel, start, end };
+  const travel =
+    stops.reduce((sum, s, i) => sum + (i > 0 ? s.travelMinutesFromPrevious : 0), 0) + (trip.breaks ?? []).reduce((sum, b) => sum + b.travelMinutesFromPrevious, 0);
+  const days = Math.max(1, trip.context.days ?? 1);
+  // One day: from the first arrival to the last departure. Several days: no single time span.
+  const start = days === 1 ? stops[0]?.arrival : undefined;
+  const end = days === 1 ? stops[stops.length - 1]?.departure : undefined;
+  return { visit, travel, start, end, days };
 }
 
 export function isProvisional(trip: Trip): boolean {
@@ -56,13 +59,13 @@ export function TripStatus({ trip }: { trip: Trip }) {
 }
 
 export function TripTotals({ trip }: { trip: Trip }) {
-  const { visit, travel, start, end } = tripTotals(trip);
+  const { visit, travel, start, end, days } = tripTotals(trip);
   const overEnd = end !== undefined && end > parseClock(trip.context.endTime);
   return (
     <div className="flex flex-col gap-1">
       <p className="text-body text-ink">
         <span className="font-semibold tabular-nums">
-          {start !== undefined && end !== undefined ? `${formatClock(start)}–${formatClock(end)}` : "—"}
+          {days > 1 ? `${days} días` : start !== undefined && end !== undefined ? `${formatClock(start)}–${formatClock(end)}` : "—"}
         </span>
         <span className="text-ink-muted">
           {" · "}

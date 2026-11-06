@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { AnyRecord, RecordStatus } from "@/domain/editorial/records";
 import type { RecordDataByKind, RecordKind } from "@/domain/editorial/schema";
-import { KIND_LABEL, TRANSPORT_LABEL } from "@/lib/labels";
+import { KIND_LABEL, SERVICE_CATEGORY_LABEL, TRANSPORT_LABEL } from "@/lib/labels";
 import { EVIDENCE_LABEL } from "@/components/shared/EvidenceBadge";
 import { IconChevronDown, IconPlus } from "@/components/shell/icons";
 import { adminActions, useAdmin, type ActionResult } from "@/state/admin";
@@ -30,6 +30,10 @@ function detail(record: AnyRecord, siteName: (id: string) => string): string {
     case "stop": {
       const d = record.data as RecordDataByKind["stop"];
       return [`${siteName(d.siteId)} · parada ${d.order}`, d.audio ? "con audio" : "sin audio", `${d.gallery.length} ${d.gallery.length === 1 ? "imagen" : "imágenes"}`].join(" · ");
+    }
+    case "service": {
+      const d = record.data as RecordDataByKind["service"];
+      return [SERVICE_CATEGORY_LABEL[d.category], d.locality, d.demo ? "Ejemplo" : d.partner ? "Adherida" : "Sin adhesión", d.checkedOn ? `comprobado ${d.checkedOn}` : "sin comprobar"].join(" · ");
     }
     case "claim": {
       const d = record.data as RecordDataByKind["claim"];
