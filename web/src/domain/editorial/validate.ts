@@ -56,6 +56,7 @@ export function validateCatalog(catalog: Catalog, previous: Catalog | null = nul
     ["site", sites],
     ["stop", stops],
     ["service", services],
+    ["piece", catalog.pieces ?? []],
     ["claim", claims],
     ["story", stories],
     ["route", routes],
@@ -143,6 +144,22 @@ export function validateCatalog(catalog: Catalog, previous: Catalog | null = nul
       if (!x.checkedOn) warn("service", x.id, "No consta cuándo se comprobaron sus datos con la empresa.");
       else if (Date.now() - Date.parse(`${x.checkedOn}T12:00:00Z`) > 90 * 86_400_000) warn("service", x.id, `Datos comprobados hace más de 90 días (${x.checkedOn}): la web avisará de que pueden haber cambiado.`);
     }
+  }
+
+  /* Museum pieces: linked to real places and claims; photos only with the museum's permission */
+
+  for (const x of catalog.pieces ?? []) {
+    if (x.museum.siteId && !siteById.has(x.museum.siteId)) error("piece", x.id, `El museo apunta a un lugar que no existe («${x.museum.siteId}»).`);
+    if (x.originSiteId && !siteById.has(x.originSiteId)) error("piece", x.id, `El lugar de origen no existe («${x.originSiteId}»).`);
+    if (x.originStopId) {
+      const stop = stops.find((st) => st.id === x.originStopId);
+      if (!stop) error("piece", x.id, `La parada de origen no existe («${x.originStopId}»).`);
+      else if (x.originSiteId && stop.siteId !== x.originSiteId) error("piece", x.id, "La parada de origen no pertenece al lugar de origen.");
+    }
+    for (const id of x.claimIds) if (!claimById.has(id)) error("piece", x.id, `Cita una afirmación que no existe («${id}»).`);
+    if (x.claimIds.length === 0) warn("piece", x.id, "No tiene afirmaciones: el asistente no podrá hablar de ella.");
+    const pending = x.images.filter((im) => im.permission !== "granted").length;
+    if (pending) warn("piece", x.id, `${pending === 1 ? "Una foto" : `${pending} fotos`} sin permiso del museo: no se muestran hasta que conste.`);
   }
 
   const stopsBySite = new Map<string, typeof stops>();

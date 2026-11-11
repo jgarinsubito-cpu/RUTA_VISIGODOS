@@ -15,6 +15,7 @@ export type StoryId = string;
 export type RouteId = string;
 export type StopId = string;
 export type ServiceId = string;
+export type PieceId = string;
 
 /** Evidence status from the brief: Documentado / Interpretación / Hipótesis / Tradición. */
 export type EvidenceLevel = "D" | "I" | "H" | "T";
@@ -156,6 +157,56 @@ export interface Site {
    */
   narrativeOrder?: number;
   /** Demo fixture: must be visibly identified in the UI. */
+  demo: boolean;
+}
+
+/* ---------- Museum pieces ---------- */
+
+/**
+ * A photo of a museum piece. Taking it in the gallery does not give the right to publish it: the
+ * museum (and the piece's owner) must allow it, so it is shown only when `permission` is granted.
+ */
+export interface PieceImage {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  /** "Foto: …" with the photographer and, once granted, the museum's permission line. */
+  credit: string;
+  permission: "granted" | "pending";
+}
+
+/**
+ * A piece shown in a museum, linked to the place of the route where it was found: the bridge the
+ * definición funcional asks for ("esta pieza viene de…"). What the label says is transcribed as
+ * it is; what can be claimed about it goes in claims, with their evidence level and source.
+ */
+export interface Piece {
+  id: PieceId;
+  slug: string;
+  name: string;
+  /** Where it is shown now. */
+  museum: { name: string; siteId?: SiteId; room?: string };
+  /** Place of the route where it was found, when it is one. */
+  originSiteId?: SiteId;
+  /** The stop of that place it relates to. */
+  originStopId?: StopId;
+  /** Provenance as the label gives it ("Vega Baja (Toledo)", "Procedencia desconocida"). */
+  provenance: string;
+  material: string;
+  /** Dating as the label gives it. */
+  date: string;
+  /** Inventory numbers. */
+  inventory?: string;
+  /** Owner of the piece, as the label gives it. */
+  owner?: string;
+  /** What it is and what it shows, in plain words. */
+  description: string;
+  /** The museum label, transcribed literally. */
+  labelText?: string;
+  images: PieceImage[];
+  /** Claims about the piece (published ones are shown with their level and source). */
+  claimIds: ClaimId[];
   demo: boolean;
 }
 
@@ -558,6 +609,8 @@ export interface Catalog {
   stops: Stop[];
   /** Complementary services; versions published before services existed have none. */
   services?: Service[];
+  /** Museum pieces linked to the places they come from. */
+  pieces?: Piece[];
   claims: ValidatedClaim[];
   stories: Story[];
   routes: Route[];

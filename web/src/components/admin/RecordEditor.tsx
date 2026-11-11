@@ -20,6 +20,7 @@ import { ClaimForm } from "./forms/ClaimForm";
 import { RouteForm } from "./forms/RouteForm";
 import { StopForm } from "./forms/StopForm";
 import { ServiceForm } from "./forms/ServiceForm";
+import { PieceForm } from "./forms/PieceForm";
 import { ShowcaseForm } from "./forms/ShowcaseForm";
 import { SiteForm } from "./forms/SiteForm";
 import { StoryForm } from "./forms/StoryForm";
@@ -49,6 +50,21 @@ function emptyData(kind: RecordKind, catalog: Catalog, siteId: string | undefine
       };
     case "stop":
       return { id: "", siteId: siteId ?? "", order: 1, name: "", gallery: [] };
+    case "piece":
+      return {
+        id: "",
+        slug: "",
+        name: "",
+        museum: { name: "" },
+        ...(siteId ? { originSiteId: siteId } : {}),
+        provenance: "",
+        material: "",
+        date: "",
+        description: "",
+        images: [],
+        claimIds: [],
+        demo: false,
+      };
     case "service":
       return {
         id: "",
@@ -82,6 +98,7 @@ function emptyData(kind: RecordKind, catalog: Catalog, siteId: string | undefine
 function provisionalId(kind: RecordKind, data: Data, taken: ReadonlySet<string>): string {
   switch (kind) {
     case "site":
+    case "piece":
     case "service":
     case "route": {
       const slug = (data as { slug: string }).slug;
@@ -311,6 +328,7 @@ function EditorBody({
             {kind === "site" && <SiteForm {...(formProps as FormProps<"site">)} />}
             {kind === "stop" && <StopForm {...(formProps as FormProps<"stop">)} />}
             {kind === "service" && <ServiceForm {...(formProps as FormProps<"service">)} />}
+            {kind === "piece" && <PieceForm {...(formProps as FormProps<"piece">)} />}
             {kind === "claim" && (
               <ClaimForm
                 {...(formProps as FormProps<"claim">)}

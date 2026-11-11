@@ -6,7 +6,7 @@
  * Errors are reported in Spanish (zod's "es" locale): editors read them in the admin.
  */
 import { z } from "zod";
-import type { Catalog, Route, Service, Showcase, Site, Stop, Story, ValidatedClaim } from "@/domain/types";
+import type { Catalog, Piece, Route, Service, Showcase, Site, Stop, Story, ValidatedClaim } from "@/domain/types";
 
 const LOCALE = z.locales.es().localeError;
 
@@ -228,6 +228,37 @@ const phone = z
   .trim()
   .regex(/^\+?[0-9 ]{6,20}$/, "Teléfono con prefijo, por ejemplo +34 925 00 00 00");
 
+/** A museum piece, kept in the content admin and published with the catalog. */
+export const PieceSchema = z.object({
+  id,
+  slug: id,
+  name: text(160),
+  museum: z.object({ name: text(160), siteId: id.optional(), room: text(120).optional() }),
+  originSiteId: id.optional(),
+  originStopId: id.optional(),
+  provenance: text(200),
+  material: text(80),
+  date: text(80),
+  inventory: text(200).optional(),
+  owner: text(160).optional(),
+  description: text(800),
+  labelText: text(1500).optional(),
+  images: z
+    .array(
+      z.object({
+        src: z.union([imageSrc, mediaSrc]),
+        width: z.number().int().positive(),
+        height: z.number().int().positive(),
+        alt: text(300),
+        credit: text(200),
+        permission: z.enum(["granted", "pending"]),
+      }),
+    )
+    .max(8),
+  claimIds: z.array(id).max(20),
+  demo: z.boolean(),
+});
+
 export const SERVICE_CATEGORIES = [
   "restaurant",
   "cafe",
@@ -298,6 +329,7 @@ export const CatalogSchema = z.object({
   stops: z.array(StopSchema).max(2000).default([]),
   // Versions published before services existed have none.
   services: z.array(ServiceSchema).max(2000).optional(),
+  pieces: z.array(PieceSchema).max(2000).optional(),
   claims: z.array(ClaimSchema).max(5000),
   stories: z.array(StorySchema).max(2000),
   routes: z.array(RouteSchema).max(100),
@@ -313,18 +345,20 @@ export interface RecordDataByKind {
   site: SiteData;
   stop: StopData;
   service: Service;
+  piece: Piece;
   claim: ClaimData;
   story: Story;
   route: Route;
   showcase: Showcase;
 }
 export type RecordKind = keyof RecordDataByKind;
-export const RECORD_KINDS = ["site", "stop", "service", "claim", "story", "route", "showcase"] as const satisfies readonly RecordKind[];
+export const RECORD_KINDS = ["site", "stop", "piece", "service", "claim", "story", "route", "showcase"] as const satisfies readonly RecordKind[];
 
 const DATA_SCHEMAS: Record<RecordKind, z.ZodType> = {
   site: SiteDataSchema,
   stop: StopDataSchema,
   service: ServiceSchema,
+  piece: PieceSchema,
   claim: ClaimDataSchema,
   story: StorySchema,
   route: RouteSchema,

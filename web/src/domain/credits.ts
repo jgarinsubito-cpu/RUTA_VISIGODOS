@@ -22,6 +22,8 @@ export interface Credits {
   /** 360° videos: where, what, and the recording credit (absent: not recorded yet). */
   videos360: { where: string; name: string; credit?: string }[];
   maps: { where: string; credit: string }[];
+  /** Photos of museum pieces shown on the web (with the museum's permission). */
+  pieceImages: { where: string; name: string; credit: string }[];
   /** Unique source titles of the published claims, alphabetical, with how many claims cite each. */
   sources: { title: string; url?: string; claims: number }[];
   /** Narrations with no credit line: to fix before publishing. */
@@ -76,6 +78,9 @@ export function collectCredits(catalog: Catalog): Credits {
     }
   }
 
+  const pieceImages = (catalog.pieces ?? []).flatMap((p) =>
+    p.images.filter((im) => im.permission === "granted").map((im) => ({ where: p.museum.name, name: p.name, credit: im.credit })),
+  );
   const maps = catalog.routes.flatMap((r) => (r.illustratedMap ? [{ where: r.name, credit: r.illustratedMap.credit }] : []));
 
   const sourceCount = new Map<string, { title: string; url?: string; claims: number }>();
@@ -94,6 +99,7 @@ export function collectCredits(catalog: Catalog): Credits {
     models,
     videos360,
     maps,
+    pieceImages,
     sources: [...sourceCount.values()].sort((a, b) => collator.compare(a.title, b.title)),
     missingAudioCredits: audio.filter((a) => !a.credit).length,
   };

@@ -1,0 +1,193 @@
+{
+  "_nota": "Piezas de museo vinculadas a los lugares de la ruta. Las importa scripts/importar-contenidos.ts. Las afirmaciones van en borrador hasta que las valide Urbs Regia / J. M. Rojas. Las fotos solo se muestran en la app con «permiso»: «concedido». Fotos provisionales tomadas en sala (noviembre de 2026); sustituir por las de alta calidad con el mismo nombre de archivo.",
+  "museos": {
+    "museo-santa-cruz": {
+      "nombre": "Museo de Santa Cruz",
+      "localidad": "Toledo",
+      "tipo": "museum",
+      "visigodo": true,
+      "tono": "umber",
+      "temas": [
+        "capital",
+        "museos",
+        "arte"
+      ],
+      "lema": "Donde se guarda lo que salió de la tierra de Toledo",
+      "categoria": "Museo",
+      "direccion": "Calle Miguel de Cervantes, 3, 45002 Toledo",
+      "resumen": "Museo provincial de Toledo, del que depende el Museo de los Concilios. Expone piezas de época visigoda halladas en la Vega Baja y en la provincia, como trientes de oro y relieves decorativos.",
+      "coordenadas": {
+        "lat": 39.8591,
+        "lng": -4.0211,
+        "approximate": true
+      },
+      "alias": [
+        "museo de santa cruz",
+        "hospital de santa cruz"
+      ],
+      "revisar": "Museo general, no visigodo: se incluye por sus piezas visigodas. Coordenada estimada: fijar la entrada en campo. Horario sin verificar."
+    }
+  },
+  "piezas": [
+    {
+      "id": "piece-trientes-ervigio-egica-witiza",
+      "nombre": "Trientes de los reyes Ervigio, Égica y Witiza",
+      "museo": "museo-santa-cruz",
+      "origen": {
+        "lugar": "vega-baja",
+        "parada": "vegabaja-4"
+      },
+      "procedencia": "Vega Baja (Toledo)",
+      "material": "Oro",
+      "fecha": "Segunda mitad del siglo VII d. C.",
+      "inventario": "CE663, CE664, CE665, CE667, CE668 y CE669",
+      "titular": "Ministerio de Cultura",
+      "descripcion": "Seis monedas de oro de los reyes visigodos de finales del siglo VII, con una representación esquemática del monarca.",
+      "cartela": "Trientes de los reyes Ervigio, Egica y Witiza con representación esquemática del monarca / Trientes of kings Ervigio, Egica and Witiza with schematic representation of the monarch\nOro / Gold\nSegunda mitad del siglo VII d. C.\nVega Baja (Toledo)\nCE663, CE664, CE665, CE667, CE668 y CE669. Ministerio de Cultura",
+      "imagenes": [
+        {
+          "archivo": "trientes-vega-baja.jpg",
+          "alt": "Seis monedas de oro pequeñas sobre una peana blanca: tres arriba y tres abajo; dos de ellas, más oscuras y una con el borde roto.",
+          "credito": "Foto: [autoría] · Museo de Santa Cruz",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-trientes-01",
+          "texto": "En el Museo de Santa Cruz se exponen seis trientes de oro de los reyes Ervigio, Égica y Witiza, de la segunda mitad del siglo VII, hallados en la Vega Baja.",
+          "nivel": "D",
+          "claves": [
+            "triente*",
+            "moneda*",
+            "oro",
+            "ervigio",
+            "egica",
+            "witiza",
+            "santa cruz"
+          ]
+        },
+        {
+          "id": "claim-pieza-trientes-02",
+          "texto": "En los trientes de Ervigio, Égica y Witiza expuestos en Santa Cruz aparece una representación esquemática del monarca.",
+          "nivel": "D",
+          "claves": [
+            "triente*",
+            "moneda*",
+            "rey",
+            "monarca",
+            "retrato"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-placa-el-carpio-de-tajo",
+      "nombre": "Placa decorativa de El Carpio de Tajo",
+      "museo": "museo-santa-cruz",
+      "procedencia": "Finca «El Mono» (El Carpio de Tajo)",
+      "material": "Caliza",
+      "fecha": "Siglo VII d. C.",
+      "inventario": "CE1995/13/2",
+      "titular": "Ministerio de Cultura",
+      "descripcion": "Placa de piedra labrada con dos grandes círculos que encierran cruces, rodeados de cenefas trenzadas. Procede de El Carpio de Tajo, en el oeste de la provincia.",
+      "cartela": "Placa decorativa / Decorative plate\nCaliza / Limestone\nSiglo VII d.C.\nFinca \"El Mono\" (El Carpio de Tajo)\nCE1995/13/2. Ministerio de Cultura",
+      "imagenes": [
+        {
+          "archivo": "placa-el-carpio-de-tajo.jpg",
+          "alt": "Placa rectangular de piedra clara, rota en la esquina derecha, con dos círculos de borde trenzado y una cruz dentro de cada uno.",
+          "credito": "Foto: [autoría] · Museo de Santa Cruz",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-placa-carpio-01",
+          "texto": "El Museo de Santa Cruz expone una placa decorativa de caliza del siglo VII procedente de la finca «El Mono», en El Carpio de Tajo.",
+          "nivel": "D",
+          "claves": [
+            "placa",
+            "carpio",
+            "carpio de tajo",
+            "el mono",
+            "caliza",
+            "decoracion"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-sarcofago-orantes",
+      "nombre": "Fragmento de sarcófago con orantes e imposición de manos",
+      "museo": "museo-santa-cruz",
+      "procedencia": "Procedencia desconocida",
+      "material": "Caliza",
+      "fecha": "Siglos IV-V d. C.",
+      "inventario": "CE21621",
+      "titular": "Ministerio de Cultura",
+      "descripcion": "Fragmento de un sarcófago de época tardorromana, anterior al reino visigodo de Toledo. Se ven dos figuras con los brazos alzados, en actitud de orar, y una mano que se posa sobre la cabeza de una de ellas.",
+      "cartela": "Fragmento de sarcófago con representación de orantes y de imposición de manos / Fragment of sarcophagus with representation of praying and laying on of hands\nCaliza / Limestone\nSiglos IV-V d.C.\nProcedencia desconocida / Unknown provenance\nCE21621. Ministerio de Cultura",
+      "imagenes": [
+        {
+          "archivo": "sarcofago-orantes.jpg",
+          "alt": "Fragmento de piedra con dos figuras en relieve de pie y con las manos alzadas; una mano se apoya sobre la cabeza de la figura de la izquierda.",
+          "credito": "Foto: [autoría] · Museo de Santa Cruz",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-sarcofago-01",
+          "texto": "El Museo de Santa Cruz expone un fragmento de sarcófago de caliza de los siglos IV-V, de procedencia desconocida, con orantes y una escena de imposición de manos.",
+          "nivel": "D",
+          "claves": [
+            "sarcofago",
+            "orante*",
+            "imposicion de manos",
+            "tardorromano",
+            "cristian*"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-hebilla-fibula-trilaminar",
+      "nombre": "Hebilla de cinturón y fíbula trilaminar",
+      "museo": "museo-santa-cruz",
+      "procedencia": "Pendiente de confirmar (la cartela no se lee en la foto)",
+      "material": "Bronce",
+      "fecha": "Pendiente de confirmar",
+      "titular": "Junta de Comunidades de Castilla-La Mancha",
+      "descripcion": "Una hebilla de cinturón y una fíbula, el broche que sujetaba la ropa, de bronce. Son enseres personales recuperados de una sepultura.",
+      "cartela": "Hebilla de cinturón y fíbula trilaminar, enseres personales recuperados de un contexto funerario / [traducción al inglés]\nBronce / Bronze\n[datación: ilegible en la foto]\n[procedencia: ilegible en la foto]\n[inventario: ilegible en la foto]. Junta de Comunidades de Castilla-La Mancha",
+      "revisar": "La cartela no se lee: confirmar datación, procedencia e inventario con el museo antes de publicar.",
+      "imagenes": [
+        {
+          "archivo": "hebilla-y-fibula.jpg",
+          "alt": "Piezas de bronce oscurecido: arriba, una hebilla con su placa rectangular calada; abajo, una fíbula alargada con el arco curvado y un extremo semicircular.",
+          "credito": "Foto: [autoría] · Museo de Santa Cruz",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-hebilla-01",
+          "texto": "El Museo de Santa Cruz expone una hebilla de cinturón y una fíbula trilaminar de bronce, enseres personales recuperados de un contexto funerario.",
+          "nivel": "D",
+          "claves": [
+            "hebilla",
+            "fibula",
+            "cinturon",
+            "bronce",
+            "ajuar",
+            "funerari*",
+            "sepultura"
+          ]
+        }
+      ]
+    }
+  ],
+  "fuente": {
+    "titulo": "Museo de Santa Cruz (Toledo), cartelas de sala (fotografiadas en noviembre de 2026)"
+  }
+}

@@ -21,6 +21,7 @@ const SECTIONS = [
   { href: KIND_INFO.claim.path, label: KIND_INFO.claim.many },
   { href: KIND_INFO.story.path, label: KIND_INFO.story.many },
   { href: KIND_INFO.route.path, label: KIND_INFO.route.many },
+  { href: KIND_INFO.piece.path, label: KIND_INFO.piece.many },
   { href: KIND_INFO.service.path, label: KIND_INFO.service.many },
   { href: KIND_INFO.showcase.path, label: KIND_INFO.showcase.many },
   { href: "/admin/probar", label: "Probar el asistente" },

@@ -9,7 +9,7 @@
  * Only published claims are exposed (PLAN.md, assistant step 2): drafts, review and superseded
  * records never reach visitors or the assistant.
  */
-import type { Catalog, Route, RouteId, Service, ServiceId, Showcase, Site, SiteId, Stop, StopId, Story, StoryId, TripArea, ValidatedClaim } from "@/domain/types";
+import type { Catalog, Piece, PieceId, Route, RouteId, Service, ServiceId, Showcase, Site, SiteId, Stop, StopId, Story, StoryId, TripArea, ValidatedClaim } from "@/domain/types";
 import type { TourStop } from "@/domain/tour";
 import { tourStopsOf } from "@/domain/tour";
 import { DEMO_CATALOG } from "./catalog";
@@ -156,6 +156,26 @@ export function storiesForSite(siteId: SiteId): Story[] {
 /** Published claims a story is based on, in the story's order; withdrawn ones are left out. */
 export function claimsForStory(story: Story): ValidatedClaim[] {
   return story.claimIds.map((id) => current.claimById.get(id)).filter((c): c is ValidatedClaim => c !== undefined);
+}
+
+const pieceIndex = perCatalog((catalog) => {
+  const list = catalog.pieces ?? [];
+  return { list, byId: new Map(list.map((x) => [x.id, x])) };
+});
+/** Museum pieces of the current catalog. */
+export function pieces(): readonly Piece[] {
+  return pieceIndex().list;
+}
+export function getPiece(id: PieceId): Piece | undefined {
+  return pieceIndex().byId.get(id);
+}
+/** Pieces found at a place (its stops included). */
+export function piecesFromSite(siteId: SiteId): readonly Piece[] {
+  return pieceIndex().list.filter((p) => p.originSiteId === siteId);
+}
+/** Pieces shown in a museum of the route. */
+export function piecesInMuseum(siteId: SiteId): readonly Piece[] {
+  return pieceIndex().list.filter((p) => p.museum.siteId === siteId);
 }
 
 const serviceIndex = perCatalog((catalog) => {

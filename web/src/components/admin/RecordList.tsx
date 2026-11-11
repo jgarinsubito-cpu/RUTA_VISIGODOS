@@ -31,6 +31,11 @@ function detail(record: AnyRecord, siteName: (id: string) => string): string {
       const d = record.data as RecordDataByKind["stop"];
       return [`${siteName(d.siteId)} · parada ${d.order}`, d.audio ? "con audio" : "sin audio", `${d.gallery.length} ${d.gallery.length === 1 ? "imagen" : "imágenes"}`].join(" · ");
     }
+    case "piece": {
+      const d = record.data as RecordDataByKind["piece"];
+      const pending = d.images.filter((im) => im.permission !== "granted").length;
+      return [d.museum.name, d.provenance, d.date, pending ? `${pending} foto(s) sin permiso` : `${d.images.length} foto(s)`].filter(Boolean).join(" · ");
+    }
     case "service": {
       const d = record.data as RecordDataByKind["service"];
       return [SERVICE_CATEGORY_LABEL[d.category], d.locality, d.demo ? "Ejemplo" : d.partner ? "Adherida" : "Sin adhesión", d.checkedOn ? `comprobado ${d.checkedOn}` : "sin comprobar"].join(" · ");

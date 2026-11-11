@@ -24,6 +24,13 @@ hoy = datetime.date.today().isoformat()
 
 af = json.load(open("afirmaciones.json"))
 por_id = {a["id"]: a for a in af}
+# Las afirmaciones de las piezas viven en piezas.json: se validan igual y se guardan allí.
+piezas = json.load(open("piezas.json")) if __import__("os").path.exists("piezas.json") else None
+de_piezas = {}
+for p in (piezas or {}).get("piezas", []):
+    for a in p["afirmaciones"]:
+        de_piezas[a["id"]] = (p, a)
+        por_id[a["id"]] = a
 ws = load_workbook(tabla, data_only=True)["Afirmaciones"]
 head = [c.value for c in ws[1]]
 col = {h: i for i, h in enumerate(head)}
@@ -72,6 +79,11 @@ for row in ws.iter_rows(min_row=2, values_only=True):
     cambios[decision] += 1
 
 ids_retirados = {a["id"] for a in retiradas}
+if piezas:
+    for p in piezas["piezas"]:
+        p["afirmaciones"] = [a for a in p["afirmaciones"] if a["id"] not in ids_retirados]
+    json.dump(piezas, open("piezas.json", "w"), ensure_ascii=False, indent=2)
+af = [a for a in af if a["id"] not in de_piezas]
 json.dump([a for a in af if a["id"] not in ids_retirados], open("afirmaciones.json", "w"), ensure_ascii=False, indent=2)
 if retiradas:
     previas = json.load(open("afirmaciones.retiradas.json")) if __import__("os").path.exists("afirmaciones.retiradas.json") else []

@@ -180,6 +180,19 @@ export default async function CreditosPage() {
         </Section>
       )}
 
+      {credits.pieceImages.length > 0 && (
+        <Section id="piezas" title="Fotografías de piezas de museo">
+          <p>Se publican con permiso de cada museo y, en su caso, del titular de la pieza.</p>
+          <ul>
+            {credits.pieceImages.map((p) => (
+              <li key={p.name + p.credit}>
+                <strong>{p.name}</strong> ({p.where}). <Val>{p.credit}</Val>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
       <Section id="mapas" title="Cartografía">
         <p>
           Mapa base ©{" "}

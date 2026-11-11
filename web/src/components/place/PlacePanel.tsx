@@ -8,7 +8,8 @@
 import Link from "next/link";
 import { useId, ViewTransition, type ReactNode } from "react";
 import type { Site } from "@/domain/types";
-import { claimsForSite, getSite, storiesForSite, storiesForStop, visitStopsForSite } from "@/data/content";
+import { claimsForSite, getSite, piecesFromSite, piecesInMuseum, storiesForSite, storiesForStop, visitStopsForSite } from "@/data/content";
+import { PiecesSection } from "@/components/shared/PieceCard";
 import { proposeAdd } from "@/domain/planner";
 import { formatClock } from "@/domain/time";
 import { actions, getAppState, useAppState } from "@/state/store";
@@ -369,6 +370,16 @@ export function PlacePanel({ siteId, onClose, variant }: PlacePanelProps) {
       {single?.models && <StopModels models={single.models} />}
       {single?.videos360 && <StopVideos360 videos={single.videos360} />}
       {single && single.gallery.length > 1 && <Gallery images={single.gallery.slice(1)} label={`Imágenes de ${site.name}`} />}
+
+      <PiecesSection
+        headingId={`${headingId}-pieces-found`}
+        title="Lo que se halló aquí"
+        intro="Piezas de este lugar que hoy se exponen en museos."
+        items={piecesFromSite(site.id)}
+        from="origin"
+        level={isPage ? 2 : 3}
+      />
+      <PiecesSection headingId={`${headingId}-pieces-museum`} title="Piezas de la ruta en este museo" items={piecesInMuseum(site.id)} from="museum" level={isPage ? 2 : 3} />
 
       <section aria-labelledby={`${headingId}-claims`} className="flex flex-col gap-3">
         <H2 id={`${headingId}-claims`} className={sectionTitle}>

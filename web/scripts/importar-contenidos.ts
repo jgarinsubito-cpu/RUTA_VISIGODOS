@@ -6,6 +6,7 @@
  *   npx tsx scripts/importar-contenidos.ts --origen <carpeta con data.json, img/, audio/, 3d/>
  *     [--config ../contenidos/config-importacion.json] [--salida ../contenidos/salida]
  *     [--copiar-medios]   copia fotos, audios y modelos a web/public
+ *     (piezas de museo: contenidos/piezas.json, junto a la configuración; sus fotos en contenidos/piezas/)
  *     [--videos360 <carpeta>]  vídeos 360° ya preparados con scripts/preparar-360.ts (con su manifiesto.json)
  *     [--subir]           sube los registros al gestor «en revisión» (necesita variables de entorno)
  *     [--actualizar]      con --subir: también reemplaza registros que ya existen (vuelven a revisión)
@@ -34,6 +35,7 @@ import type {
   Showcase,
   Site,
   SiteKind,
+  Piece,
   Stop,
   StopAudio,
   StopModel,
@@ -347,6 +349,32 @@ if (flag("incluir-borradores") && flag("subir")) {
 const afirmaciones = flag("incluir-borradores") ? todasLasAfirmaciones : todasLasAfirmaciones.filter((a) => a.estado === "validada");
 const afirmacionesSinValidar = todasLasAfirmaciones.length - afirmaciones.length;
 
+/* ---------- Piezas de museo (contenidos/piezas.json) ---------- */
+
+interface PiezasEntrada {
+  museos: Record<string, ConfigLugar & { coordenadas: Site["coordinates"]; revisar?: string }>;
+  piezas: {
+    id: string;
+    nombre: string;
+    museo: string;
+    sala?: string;
+    origen?: { lugar: string; parada?: string };
+    procedencia: string;
+    material: string;
+    fecha: string;
+    inventario?: string;
+    titular?: string;
+    descripcion: string;
+    cartela?: string;
+    revisar?: string;
+    imagenes: { archivo: string; alt: string; credito: string; permiso: "concedido" | "pendiente" }[];
+    afirmaciones: { id: string; texto: string; nivel: EvidenceLevel; atribucion?: string; claves: string[]; estado?: string }[];
+  }[];
+  fuente: { titulo: string; pagina?: string; url?: string };
+}
+const piezasPath = path.join(configDir, "piezas.json");
+const piezasEntrada: PiezasEntrada | null = fs.existsSync(piezasPath) ? JSON.parse(fs.readFileSync(piezasPath, "utf8")) : null;
+
 /* ---------- Informe ---------- */
 
 const avisos = {
@@ -357,6 +385,7 @@ const avisos = {
   imagenesSinCredito: new Set<string>(),
   mediosQueFaltan: [] as string[],
   videos360: [] as string[],
+  piezas: [] as string[],
   otros: [] as string[],
 };
 
@@ -529,6 +558,27 @@ for (const recorrido of recorridos) {
     ...(lugar.alias?.length ? { aliases: lugar.alias } : {}),
     info: lugar.info,
   });
+}
+
+// 1b. Museos donde están las piezas (piezas.json).
+for (const [key, museo] of Object.entries(piezasEntrada?.museos ?? {})) {
+  newSite(key, {
+    name: museo.nombre,
+    locality: museo.localidad,
+    kind: museo.tipo,
+    visigothic: museo.visigodo,
+    tagline: museo.lema,
+    summary: museo.resumen,
+    coordinates: museo.coordenadas,
+    visitMinutes: 60,
+    themes: museo.temas,
+    imageTone: museo.tono,
+    category: museo.categoria,
+    ...(museo.direccion ? { address: museo.direccion } : {}),
+    ...(museo.alias?.length ? { aliases: museo.alias } : {}),
+    info: museo.info,
+  });
+  if (museo.revisar) avisos.revisar.push(`${museo.nombre}: ${museo.revisar}`);
 }
 
 // 2. Paradas de todos los recorridos.
@@ -733,6 +783,77 @@ for (const a of afirmaciones) {
   if (!fuente.stops.some((p) => p.id === a.parada)) avisos.otros.push(`La afirmación ${a.id} apunta a una parada que no existe («${a.parada}»).`);
 }
 
+// Piezas: sus afirmaciones (solo validadas, salvo --incluir-borradores) y sus fotos.
+const pieces: Piece[] = [];
+const fotosDePiezas: string[] = [];
+/** Width and height of a JPEG or PNG, read from its header (synchronous, no dependencies). */
+function imageSize(file: string): { width: number; height: number } {
+  const b = fs.readFileSync(file);
+  if (b.readUInt32BE(0) === 0x89504e47) return { width: b.readUInt32BE(16), height: b.readUInt32BE(20) };
+  for (let i = 2; i < b.length - 9; ) {
+    if (b[i] !== 0xff) break;
+    const marker = b[i + 1];
+    const len = b.readUInt16BE(i + 2);
+    if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) return { width: b.readUInt16BE(i + 7), height: b.readUInt16BE(i + 5) };
+    i += 2 + len;
+  }
+  throw new Error(`No se puede leer el tamaño de ${file}`);
+}
+for (const pz of piezasEntrada?.piezas ?? []) {
+  const museo = siteByKey.get(pz.museo);
+  const origenSite = pz.origen ? siteByKey.get(pz.origen.lugar) : undefined;
+  if (pz.origen && !origenSite) avisos.piezas.push(`${pz.nombre}: el lugar de origen «${pz.origen.lugar}» no existe.`);
+  const originStopId = pz.origen?.parada ? `stop-${pz.origen.parada}` : undefined;
+  if (originStopId && !stops.some((st) => st.id === originStopId)) avisos.piezas.push(`${pz.nombre}: la parada «${pz.origen!.parada}» no existe.`);
+  if (pz.revisar) avisos.revisar.push(`${pz.nombre}: ${pz.revisar}`);
+  const claimSite = origenSite ?? museo;
+  const propias = pz.afirmaciones.filter((a) => flag("incluir-borradores") || a.estado === "validada");
+  if (propias.length < pz.afirmaciones.length) avisos.piezas.push(`${pz.nombre}: ${pz.afirmaciones.length - propias.length} afirmación(es) sin validar; no se importan.`);
+  for (const a of claimSite ? propias : []) {
+    claims.push({
+      id: a.id,
+      siteId: claimSite!.id,
+      text: a.texto,
+      evidence: a.nivel,
+      ...(a.atribucion ? { attribution: a.atribucion } : {}),
+      source: { title: piezasEntrada!.fuente.titulo, ...(piezasEntrada!.fuente.pagina ? { page: piezasEntrada!.fuente.pagina } : {}), ...(piezasEntrada!.fuente.url ? { url: piezasEntrada!.fuente.url } : {}) },
+      status: "published",
+      version: 1,
+      keywords: a.claves,
+    });
+  }
+  const images: Piece["images"] = [];
+  for (const im of pz.imagenes) {
+    const file = path.join(configDir, "piezas", im.archivo);
+    if (!fs.existsSync(file)) {
+      avisos.mediosQueFaltan.push(`contenidos/piezas/${im.archivo}`);
+      continue;
+    }
+    const meta = imageSize(file);
+    fotosDePiezas.push(im.archivo);
+    images.push({ src: `/media/piezas/${im.archivo}`, width: meta.width, height: meta.height, alt: im.alt, credit: im.credito, permission: im.permiso === "concedido" ? "granted" : "pending" });
+    if (im.permiso !== "concedido") avisos.piezas.push(`${pz.nombre}: la foto ${im.archivo} no tiene permiso del museo; no se mostrará.`);
+  }
+  pieces.push({
+    id: pz.id,
+    slug: idFrom(pz.nombre),
+    name: pz.nombre,
+    museum: { name: museo?.name ?? pz.museo, ...(museo ? { siteId: museo.id } : {}), ...(pz.sala ? { room: pz.sala } : {}) },
+    ...(origenSite ? { originSiteId: origenSite.id } : {}),
+    ...(originStopId && origenSite ? { originStopId } : {}),
+    provenance: pz.procedencia,
+    material: pz.material,
+    date: pz.fecha,
+    ...(pz.inventario ? { inventory: pz.inventario } : {}),
+    ...(pz.titular ? { owner: pz.titular } : {}),
+    description: pz.descripcion,
+    ...(pz.cartela ? { labelText: pz.cartela } : {}),
+    images,
+    claimIds: propias.map((a) => a.id),
+    demo: false,
+  });
+}
+
 // Listas derivadas, como hace el gestor al publicar.
 for (const site of sites) {
   site.claimIds = claims.filter((c) => c.siteId === site.id).map((c) => c.id);
@@ -774,7 +895,7 @@ const showcase: Showcase = {
 };
 avisos.otros.push("Los textos de portada y del asistente (preguntas de inicio, ejemplos, vocabulario) son provisionales: revísalos en «Portada y asistente».");
 
-const catalog: Catalog = { sites, stops, claims, stories, routes, showcase };
+const catalog: Catalog = { sites, stops, ...(pieces.length ? { pieces } : {}), claims, stories, routes, showcase };
 
 /* ---------- Comprobaciones con las reglas del gestor ---------- */
 
@@ -877,6 +998,10 @@ ${lista(avisos.revisar)}
 
 ${lista(avisos.videos360)}
 
+## Piezas de museo
+
+${lista(avisos.piezas)}
+
 ## Medios que faltan en el origen
 
 ${lista(avisos.mediosQueFaltan)}
@@ -909,6 +1034,7 @@ if (flag("copiar-medios")) {
     const dest = path.join(webDir, "public", config.videos360.base);
     for (const a of videosUsados) for (const f of [`${a}-4k.mp4`, `${a}-movil.mp4`, `${a}.jpg`]) copy(path.join(videosDir, f), path.join(dest, f));
   }
+  for (const file of fotosDePiezas) copy(path.join(configDir, "piezas", file), path.join(webDir, "public/media/piezas", file));
   console.log("Medios copiados a web/public/images/ruta y web/public/media.");
 }
 

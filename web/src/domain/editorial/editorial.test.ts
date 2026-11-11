@@ -57,6 +57,30 @@ describe("validateCatalog", () => {
     expect(parseCatalog({ ...c, stops: [{ ...c.stops[0], videos360: [{ ...video, src: "ftp://x/v.mp4" }] }] }).ok).toBe(false);
   });
 
+  it("checks museum pieces: real places and claims, and photos only with permission", () => {
+    const c = clone(DEMO);
+    const piece = {
+      id: "piece-prueba",
+      slug: "pieza-prueba",
+      name: "Trientes de prueba",
+      museum: { name: "Museo de prueba", siteId: c.sites[0].id },
+      originSiteId: c.sites[1].id,
+      provenance: "Vega Baja (Toledo)",
+      material: "Oro",
+      date: "Siglo VII",
+      description: "Monedas de oro.",
+      images: [{ src: "/media/piezas/x.jpg", width: 10, height: 10, alt: "Monedas", credit: "Foto: prueba", permission: "pending" as const }],
+      claimIds: [c.claims[0].id],
+      demo: false,
+    };
+    c.pieces = [piece];
+    expect(errorsFor(c, "piece-prueba")).toEqual([]);
+    expect(validateCatalog(c).some((i) => i.id === "piece-prueba" && i.severity === "warning" && i.message.includes("permiso"))).toBe(true);
+    c.pieces = [{ ...piece, originSiteId: "site-no-existe", claimIds: ["claim-no-existe"] }];
+    expect(errorsFor(c, "piece-prueba").join()).toContain("no existe");
+    expect(parseCatalog({ ...c, pieces: [{ ...piece, images: [{ ...piece.images[0], permission: "maybe" }] }] }).ok).toBe(false);
+  });
+
   it("rejects broken links, unknown towns and unattributed interpretations", () => {
     const c = clone(DEMO);
     c.sites[0].locality = "Recópolis";
