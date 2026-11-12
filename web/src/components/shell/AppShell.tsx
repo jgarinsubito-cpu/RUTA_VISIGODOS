@@ -48,7 +48,7 @@ function isActive(pathname: string, href: string) {
 /** Full-screen pages (assistant, map, guided tours) have no room for the footer; the rail links the legal pages there. */
 function withFooter(pathname: string): boolean {
   if (pathname === "/asistente" || pathname === "/mapa") return false;
-  return !/\/(recorrido|visita)$/.test(pathname);
+  return !/\/(recorrido|visita|coche)$/.test(pathname);
 }
 
 export function AppShell({ children }: { children: ReactNode }) {

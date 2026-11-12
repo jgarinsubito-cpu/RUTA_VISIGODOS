@@ -44,6 +44,23 @@ describe("validateCatalog", () => {
     expect(errorsFor(DEMO)).toEqual([]);
   });
 
+  it("checks car-mode stretches: a stop of the tour, a full transcript, one per stop", () => {
+    const c = clone(DEMO);
+    const route = c.routes[0];
+    const audio = { src: "/media/audio/tramo.mp3", durationSeconds: 90, label: "Tramo en audio", transcript: "De camino al siguiente lugar, el paisaje cuenta cómo era este territorio hace trece siglos." };
+    route.legs = [{ toStopId: route.stopIds[1], audio }];
+    expect(errorsFor(c, route.id)).toEqual([]);
+    route.legs = [
+      { toStopId: "site-que-no-existe", audio },
+      { toStopId: route.stopIds[1], audio: { ...audio, transcript: "Corto." } },
+      { toStopId: route.stopIds[1], audio },
+    ];
+    const errors = errorsFor(c, route.id).join(" | ");
+    expect(errors).toContain("no está en el recorrido");
+    expect(errors).toContain("transcripción completa");
+    expect(errors).toContain("dos tramos");
+  });
+
   it("asks every 360° video for a description, and warns without a credit or a phone version", () => {
     const c = clone(DEMO);
     const video = { src: "/media/360/patio-4k.mp4", name: "El patio", description: "Patio.", durationSeconds: 90 };

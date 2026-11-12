@@ -209,6 +209,19 @@ export function validateCatalog(catalog: Catalog, previous: Catalog | null = nul
       }
     }
     for (const stopId of duplicates(route.tourStopIds ?? [])) error("route", route.id, `El recorrido guiado repite la parada «${stopId}».`);
+    if (route.legs?.length) {
+      // A stretch leads to a stop of the route's tour (a place without stops counts as one).
+      const tour = new Set([
+        ...(route.tourStopIds ?? stops.filter((s) => route.stopIds.includes(s.siteId)).map((s) => s.id)),
+        ...route.stopIds.filter((siteId) => !stops.some((s) => s.siteId === siteId)),
+      ]);
+      for (const leg of route.legs) {
+        if (!tour.has(leg.toStopId)) error("route", route.id, `Tiene un tramo en audio hacia una parada que no está en el recorrido («${leg.toStopId}»).`);
+        if (leg.audio.transcript.trim().length < 40) error("route", route.id, `El tramo en audio hacia «${leg.toStopId}» necesita su transcripción completa.`);
+        if (!leg.audio.credit?.trim()) warn("route", route.id, `El tramo en audio hacia «${leg.toStopId}» no tiene crédito de voz y guion.`);
+      }
+      for (const stopId of duplicates(route.legs.map((l) => l.toStopId))) error("route", route.id, `Hay dos tramos en audio hacia la misma parada («${stopId}»).`);
+    }
     if (route.illustratedMap) {
       // Pins point to stops the route's tour goes through.
       const tourStops = new Set(route.tourStopIds ?? stops.filter((s) => route.stopIds.includes(s.siteId)).map((s) => s.id));

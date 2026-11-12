@@ -5,11 +5,65 @@ import { adminActions } from "@/state/admin";
 import { IllustratedRouteMap } from "@/components/tour/IllustratedRouteMap";
 import { slugify } from "@/domain/editorial/records";
 import { estimateRoute } from "@/domain/planner";
-import type { IllustratedMap, Route, TransportMode } from "@/domain/types";
+import type { IllustratedMap, Route, RouteLeg, TransportMode } from "@/domain/types";
+import { AudioEditor } from "./StopForm";
 import { TRANSPORT_LABEL, formatDuration } from "@/lib/labels";
 import { IconChevronDown, IconClose } from "@/components/shell/icons";
 import { CheckField, Field, LinesField, NumberField, Section, SelectField, TextField, btnSecondary, inputClass } from "../ui";
 import type { FormProps } from "./shared";
+
+/**
+ * Car mode: one optional audio per stretch, heard on the way to each stop of the tour. Written to be
+ * heard while driving, with nothing to look at (docs/MODO-COCHE.md).
+ */
+function LegsEditor({ data, set, catalog }: Pick<FormProps<"route">, "data" | "set" | "catalog">) {
+  const allStops = catalog.stops ?? [];
+  const stopById = new Map(allStops.map((s) => [s.id, s]));
+  const siteById = new Map(catalog.sites.map((s) => [s.id, s]));
+  const tour: { id: string; name: string }[] = data.tourStopIds?.length
+    ? data.tourStopIds.flatMap((id) => {
+        const st = stopById.get(id);
+        return st ? [{ id, name: st.name }] : [];
+      })
+    : data.stopIds.flatMap((siteId) => {
+        const own = allStops.filter((s) => s.siteId === siteId).sort((a, b) => a.order - b.order);
+        const site = siteById.get(siteId);
+        return own.length ? own.map((s) => ({ id: s.id, name: s.name })) : site ? [{ id: site.id, name: site.name }] : [];
+      });
+  const legs = data.legs ?? [];
+  const setLeg = (toStopId: string, audio: RouteLeg["audio"] | undefined) => {
+    const rest = legs.filter((l) => l.toStopId !== toStopId);
+    const next = audio ? [...rest, { toStopId, audio }] : rest;
+    // Keep them in tour order, so the record reads like the route.
+    const order = new Map(tour.map((t, i) => [t.id, i]));
+    next.sort((a, b) => (order.get(a.toStopId) ?? 0) - (order.get(b.toStopId) ?? 0));
+    set({ legs: next.length ? next : undefined });
+  };
+  if (tour.length === 0) return <p className="text-sm text-ink-muted">Añade primero las paradas de la ruta.</p>;
+  return (
+    <ol className="flex flex-col gap-3">
+      {tour.map((t, i) => {
+        const index = legs.findIndex((l) => l.toStopId === t.id);
+        const leg = index === -1 ? undefined : legs[index];
+        return (
+          <li key={t.id}>
+            <details open={Boolean(leg)} className="rounded-xl border border-stone">
+              <summary className="flex min-h-11 cursor-pointer items-center justify-between gap-3 px-3 text-sm font-semibold text-ink">
+                <span>
+                  {i === 0 ? "Antes de empezar" : "De camino"} a {i + 1}. {t.name}
+                </span>
+                <span className="text-xs font-normal text-ink-muted">{leg ? "Con audio" : "Sin audio"}</span>
+              </summary>
+              <div className="px-3 pb-3">
+                <AudioEditor audio={leg?.audio} path={`legs.${index === -1 ? legs.length : index}.audio`} defaultLabel="Tramo en audio" onChange={(audio) => setLeg(t.id, audio)} />
+              </div>
+            </details>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
 
 function TourStopsEditor({ data, set, catalog }: Pick<FormProps<"route">, "data" | "set" | "catalog">) {
   const [adding, setAdding] = useState("");
@@ -316,6 +370,13 @@ export function RouteForm({ data, set, catalog, isNew, locked }: FormProps<"rout
 
       <Section title="Recorrido guiado" description="Las paradas que cuenta el recorrido guiado de la ruta, en orden.">
         <TourStopsEditor data={data} set={set} catalog={catalog} />
+      </Section>
+
+      <Section
+        title="Modo coche: tramos en audio"
+        description="Audios para escuchar de camino a cada parada, en el modo coche. Escríbelos para oír sin mirar: nada de «mira a tu izquierda». El relato de cada parada suena al llegar."
+      >
+        <LegsEditor data={data} set={set} catalog={catalog} />
       </Section>
 
       <Section title="Mapa ilustrado" description="Un mapa dibujado del recorrido, sin escala, con sus paradas numeradas.">

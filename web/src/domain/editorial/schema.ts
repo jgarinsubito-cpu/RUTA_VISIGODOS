@@ -180,6 +180,14 @@ export const IllustratedMapSchema = z.object({
   pins: z.array(z.object({ stopId: id, x: percent, y: percent })).max(60),
 });
 
+export const StopAudioSchema = z.object({
+  src: mediaSrc,
+  durationSeconds: z.number().int().min(1).max(7200),
+  label: text(60),
+  transcript: text(12000),
+  credit: text(200).optional(),
+});
+
 export const RouteSchema = z.object({
   id,
   slug: id,
@@ -192,15 +200,8 @@ export const RouteSchema = z.object({
   limitations: z.array(text(200)).max(10),
   tourStopIds: z.array(id).max(60).optional(),
   illustratedMap: IllustratedMapSchema.optional(),
+  legs: z.array(z.object({ toStopId: id, audio: StopAudioSchema })).max(60).optional(),
   demo: z.boolean(),
-});
-
-export const StopAudioSchema = z.object({
-  src: mediaSrc,
-  durationSeconds: z.number().int().min(1).max(7200),
-  label: text(60),
-  transcript: text(12000),
-  credit: text(200).optional(),
 });
 
 const stopShape = {

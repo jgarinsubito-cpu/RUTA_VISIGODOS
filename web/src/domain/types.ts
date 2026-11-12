@@ -290,7 +290,20 @@ export interface Route {
   tourStopIds?: StopId[];
   /** Illustrated map of the route, with its tour stops pinned. */
   illustratedMap?: IllustratedMap;
+  /**
+   * Audio to hear on the way, in the car mode: one piece per stretch, played after leaving the
+   * previous stop and before reaching `toStopId` (docs/MODO-COCHE.md). Written to be heard while
+   * driving: nothing to look at.
+   */
+  legs?: RouteLeg[];
   demo: boolean;
+}
+
+/** A stretch of a route heard on the way to one of its tour stops. */
+export interface RouteLeg {
+  /** Tour stop this stretch leads to (a stop id, or a place id for a place without stops). */
+  toStopId: string;
+  audio: StopAudio;
 }
 
 /**

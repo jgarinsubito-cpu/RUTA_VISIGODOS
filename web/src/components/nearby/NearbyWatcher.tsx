@@ -14,7 +14,7 @@ import { useGeolocation } from "@/lib/useGeolocation";
 import { actions, getAppState, useAppState } from "@/state/store";
 
 export function isTourScreen(pathname: string): boolean {
-  return /\/(recorrido|visita)$/.test(pathname);
+  return /\/(recorrido|visita|coche)$/.test(pathname);
 }
 
 export function NearbyWatcher() {

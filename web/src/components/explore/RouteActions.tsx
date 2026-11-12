@@ -7,7 +7,7 @@ import Link from "next/link";
 import { getRoute } from "@/data/content";
 import { proposeFromRoute } from "@/domain/planner";
 import { actions, getAppState, useAppState } from "@/state/store";
-import { IconChat, IconHeadphones, IconTrip } from "@/components/shell/icons";
+import { IconChat, IconHeadphones, IconRoute, IconTrip } from "@/components/shell/icons";
 import { assistantHref } from "./AskComposer";
 
 export function RouteActions({ routeId }: { routeId: string }) {
@@ -54,6 +54,15 @@ export function RouteActions({ routeId }: { routeId: string }) {
           <IconHeadphones width={18} height={18} />
           Recorrido guiado
         </Link>
+        {route.transport === "car" && (
+          <Link
+            href={`/rutas/${route.slug}/coche`}
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-stone bg-surface px-5 text-sm font-semibold text-ink hover:bg-surface-muted"
+          >
+            <IconRoute width={18} height={18} />
+            Modo coche
+          </Link>
+        )}
       </div>
       <p id={`route-adapt-help-${route.id}`} className="text-xs text-ink-muted">
         {pending

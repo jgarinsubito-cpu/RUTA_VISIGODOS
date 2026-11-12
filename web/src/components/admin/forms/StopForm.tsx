@@ -18,7 +18,18 @@ const fileInput =
 
 const iconButton = "grid h-11 w-11 place-items-center rounded-full text-ink-muted hover:bg-surface-muted disabled:opacity-30";
 
-function AudioEditor({ audio, onChange }: { audio: StopAudio | undefined; onChange: (audio: StopAudio | undefined) => void }) {
+/** Upload and describe one recording. `path` is where its fields sit in the record ("audio", "legs.0.audio"). */
+export function AudioEditor({
+  audio,
+  onChange,
+  path = "audio",
+  defaultLabel = "Locución",
+}: {
+  audio: StopAudio | undefined;
+  onChange: (audio: StopAudio | undefined) => void;
+  path?: string;
+  defaultLabel?: string;
+}) {
   const [message, setMessage] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const fileId = useId();
@@ -34,7 +45,7 @@ function AudioEditor({ audio, onChange }: { audio: StopAudio | undefined; onChan
       return;
     }
     onChange({
-      label: audio?.label ?? "Locución",
+      label: audio?.label ?? defaultLabel,
       transcript: audio?.transcript ?? "",
       ...(audio?.credit ? { credit: audio.credit } : {}),
       src: result.src,
@@ -70,11 +81,11 @@ function AudioEditor({ audio, onChange }: { audio: StopAudio | undefined; onChan
         <>
           {audio.src && audio.transcript && <AudioPlayer audio={audio} title="vista previa" />}
           <div className="grid gap-4 md:grid-cols-2">
-            <TextField label="Etiqueta del reproductor" value={audio.label} path="audio.label" hint="Por ejemplo «Locución» o «Relato en audio»." onChange={(label) => patch({ label: label ?? "" })} />
+            <TextField label="Etiqueta del reproductor" value={audio.label} path={`${path}.label`} hint="Por ejemplo «Locución» o «Relato en audio»." onChange={(label) => patch({ label: label ?? "" })} />
             <NumberField
               label="Duración (segundos)"
               value={audio.durationSeconds}
-              path="audio.durationSeconds"
+              path={`${path}.durationSeconds`}
               hint="Se rellena al subir el audio."
               onChange={(durationSeconds) => patch({ durationSeconds })}
             />
@@ -84,11 +95,11 @@ function AudioEditor({ audio, onChange }: { audio: StopAudio | undefined; onChan
             multiline
             rows={8}
             value={audio.transcript}
-            path="audio.transcript"
+            path={`${path}.transcript`}
             hint="El texto completo de la grabación: lo leen quienes no pueden oírla. Obligatorio."
             onChange={(transcript) => patch({ transcript: transcript ?? "" })}
           />
-          <TextField label="Créditos" optional value={audio.credit} path="audio.credit" placeholder="Voz: … · Guion: …" onChange={(credit) => patch({ credit })} />
+          <TextField label="Créditos" optional value={audio.credit} path={`${path}.credit`} placeholder="Voz: … · Guion: …" onChange={(credit) => patch({ credit })} />
           <button type="button" onClick={() => onChange(undefined)} className={`${btnSecondary} self-start`}>
             Quitar el audio
           </button>
