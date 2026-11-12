@@ -118,3 +118,14 @@ describe("stored guided tour", () => {
     });
   });
 });
+
+describe("parseStored · proximity alerts", () => {
+  it("keeps the visitor's choices and drops muted places the catalog no longer has", () => {
+    const nearby = { enabled: true, visigothic: true, other: false, muted: ["site-guarrazar", "site-borrado"], notified: { "site-guarrazar": "2026-11-12T10:00:00.000Z" } };
+    expect(parseStored(JSON.stringify({ nearby }))!.nearby).toEqual({ ...nearby, muted: ["site-guarrazar"] });
+  });
+
+  it("ignores a corrupt part instead of turning the alerts on or off by accident", () => {
+    expect(parseStored(JSON.stringify({ nearby: { enabled: "yes" } }))!.nearby).toBeUndefined();
+  });
+});

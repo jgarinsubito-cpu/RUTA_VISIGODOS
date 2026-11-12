@@ -72,3 +72,27 @@ describe("store.acceptProposal and undo", () => {
     expect(getAppState().notice?.text).toBe("Quitado de tu viaje");
   });
 });
+
+describe("store · proximity alerts", () => {
+  it("watches only after the visitor turns them on, and remembers what was announced", () => {
+    expect(getAppState().nearbyLive).toBe(false);
+    actions.setNearby({ enabled: true });
+    expect(getAppState().nearbyLive).toBe(true);
+
+    actions.showNearbyAlert({ siteId: "site-guarrazar", distance: 400, others: 0, coveredIds: ["site-guarrazar"] });
+    let s = getAppState();
+    expect(s.nearbyAlert?.siteId).toBe("site-guarrazar");
+    expect(s.nearby.notified["site-guarrazar"]).toBeTruthy();
+
+    actions.muteNearby("site-guarrazar", "Guarrazar");
+    s = getAppState();
+    expect(s.nearbyAlert).toBeNull();
+    expect(s.nearby.muted).toEqual(["site-guarrazar"]);
+
+    actions.showNearbyAlert({ siteId: "site-san-roman", distance: 40, others: 0, coveredIds: ["site-san-roman"] });
+    actions.setNearby({ enabled: false });
+    s = getAppState();
+    expect(s.nearbyLive).toBe(false);
+    expect(s.nearbyAlert).toBeNull();
+  });
+});

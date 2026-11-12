@@ -66,8 +66,8 @@ export default function AvisoLegalPage() {
             permitido y no recojas ni muevas nada. La app indica qué paradas se ven solo desde el camino.
           </li>
           <li>
-            La ubicación sirve para avisarte al llegar a cada parada. Atiende al tráfico y al terreno, no a la pantalla, mientras caminas o
-            conduces.
+            La ubicación sirve para avisarte al llegar a cada parada y, si lo activas, cuando pasas cerca de un lugar de la ruta. Atiende al
+            tráfico y al terreno, no a la pantalla, mientras caminas o conduces: un aviso puede esperar a que pares.
           </li>
           <li>No intentes alterar el funcionamiento de la app ni del asistente, ni extraer sus contenidos de forma automatizada.</li>
         </ul>

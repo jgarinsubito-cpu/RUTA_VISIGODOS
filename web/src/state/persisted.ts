@@ -9,6 +9,7 @@
 import { z } from "zod";
 import { getSite, validArea } from "@/data/content";
 import { schedule } from "@/domain/planner";
+import { DEFAULT_NEARBY, type NearbySettings } from "@/domain/nearby";
 import { ACCESS_NEEDS, ASSISTANT_MODES, type AssistantMode, type ChatMessage, type TourProgress, type Trip, type TripContext, type VisitorPreferences } from "@/domain/types";
 
 export const STORAGE_KEY = "ruta-visigoda:v2";
@@ -135,6 +136,15 @@ const TourSchema = z
     }),
   );
 
+/** Proximity alerts: the visitor's choices and what was already announced (this device only). */
+export const NearbySchema = z.object({
+  enabled: z.boolean(),
+  visigothic: z.boolean(),
+  other: z.boolean(),
+  muted: z.array(z.string().max(80)).max(200),
+  notified: z.record(z.string().max(80), z.string().max(40)),
+});
+
 export interface Conversation {
   id: string;
   title: string;
@@ -152,6 +162,7 @@ export interface PersistedState {
   tour: TourProgress | null;
   preferences: VisitorPreferences;
   assistantMode: AssistantMode;
+  nearby: NearbySettings;
 }
 
 function field<T>(schema: z.ZodType<T>, value: unknown): T | undefined {
@@ -187,6 +198,8 @@ function readParts(raw: Record<string, unknown>): Partial<PersistedState> {
   if (preferences) out.preferences = preferences;
   const assistantMode = field(z.enum(ASSISTANT_MODES), raw.assistantMode);
   if (assistantMode) out.assistantMode = assistantMode;
+  const nearby = field(NearbySchema, raw.nearby);
+  if (nearby) out.nearby = { ...DEFAULT_NEARBY, ...nearby, muted: nearby.muted.filter((id) => getSite(id)) };
   return out;
 }
 

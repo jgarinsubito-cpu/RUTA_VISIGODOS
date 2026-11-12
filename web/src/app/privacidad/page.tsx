@@ -51,7 +51,7 @@ export default function PrivacidadPage() {
       <Section id="resumen" title="En resumen">
         <ul>
           <li>Sin cuenta, no sabemos quién eres. Tu viaje, tus guardados y tus chats se quedan en este dispositivo.</li>
-          <li>Tu ubicación se usa solo en el dispositivo, para avisarte al llegar a cada parada. Nunca se envía.</li>
+          <li>Tu ubicación se usa solo en el dispositivo, para avisarte al llegar a cada parada y, si activas los avisos de cercanía, cuando pasas cerca de un lugar de la ruta. Nunca se envía.</li>
           <li>Las preguntas al asistente se envían para responderlas y no las guardamos.</li>
           <li>La cuenta es opcional y solo guarda tus preferencias de visita. Las de accesibilidad, solo si das tu permiso expreso.</li>
           <li>No hay publicidad, no vendemos datos y no usamos cookies de seguimiento.</li>
@@ -76,8 +76,10 @@ export default function PrivacidadPage() {
           <li>Tu viaje, los lugares guardados, las conversaciones con el asistente y tus ajustes de lectura.</li>
           <li>El avance de los recorridos guiados y los recorridos que descargas para usar sin conexión.</li>
           <li>
-            Tu ubicación, si das permiso al navegador. La app la compara en el propio dispositivo con las zonas de llegada de cada parada.
-            Puedes hacer los recorridos sin ella, eligiendo cada parada a mano.
+            Tu ubicación, si das permiso al navegador. La app la compara en el propio dispositivo con las zonas de llegada de cada parada
+            y, si activas los avisos de cercanía, con los lugares de la ruta. No guarda por dónde pasas: solo qué lugares te ha avisado ya y
+            cuáles has silenciado, para no repetirse. Puedes hacer los recorridos sin ella, eligiendo cada parada a mano, y desactivar los
+            avisos cuando quieras.
           </li>
         </ul>
         <p>

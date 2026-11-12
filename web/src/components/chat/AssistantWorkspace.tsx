@@ -24,6 +24,7 @@ import { SignupPrompt } from "@/components/account/SignupPrompt";
 import { prefersReducedMotion } from "@/lib/motion";
 import { useAssistant } from "./useAssistant";
 import { consumeAskHandoff } from "./askHandoff";
+import { NearbyControl } from "@/components/nearby/NearbyControl";
 
 function prefillFor(siteId: string | null): string {
   const site = siteId ? getSite(siteId) : undefined;
@@ -182,9 +183,11 @@ export function AssistantWorkspace() {
                 onOpenChange={onSegmentChange}
                 className={`order-3 col-span-2 justify-self-stretch ${threeCol.pill} lg:justify-self-center`}
               />
+              <div className={`order-2 flex items-center gap-2 justify-self-end ${threeCol.trip}`}>
+              <NearbyControl variant="icon" />
               <Link
                 href="/mi-viaje"
-                className={`order-2 inline-flex min-h-11 items-center gap-2 justify-self-end whitespace-nowrap rounded-full border border-stone bg-surface px-4 text-sm font-semibold text-ink hover:bg-surface-muted ${threeCol.trip}`}
+                className="inline-flex min-h-11 items-center gap-2 whitespace-nowrap rounded-full border border-stone bg-surface px-4 text-sm font-semibold text-ink hover:bg-surface-muted"
               >
                 <IconTrip width={18} height={18} />
                 {trip.stops.length > 0 ? (
@@ -195,6 +198,7 @@ export function AssistantWorkspace() {
                   "Crear un viaje"
                 )}
               </Link>
+              </div>
             </div>
             <p className="sr-only" aria-live="polite">
               Preferencias: {contextLine(context)}

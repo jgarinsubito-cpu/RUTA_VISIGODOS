@@ -10,6 +10,8 @@ import { EMPTY_PREFERENCES, type AssistantMode, type ChatMessage, type Itinerary
 import { needsStepFree } from "@/domain/recommend";
 import { applyProposal, emptyTrip } from "@/domain/planner";
 import { formatClock } from "@/domain/time";
+import { DEFAULT_NEARBY, pruneNotified, type NearbyAlert, type NearbySettings } from "@/domain/nearby";
+import type { GeoStatus } from "@/lib/useGeolocation";
 import { showcase, validArea } from "@/data/content";
 import {
   boundConversations,
@@ -43,6 +45,18 @@ export interface AppState {
   preferences: VisitorPreferences;
   /** How strictly the assistant keeps to published sources (this device). */
   assistantMode: AssistantMode;
+  /** Proximity alerts: choices and what was announced (this device). */
+  nearby: NearbySettings;
+  /** The proximity alert on screen, if any (not stored). */
+  nearbyAlert: (NearbyAlert & { id: string }) | null;
+  /**
+   * Whether the position is being watched for proximity alerts in this tab (not stored). Alerts
+   * the visitor turned on in an earlier visit resume only if the browser already allows location,
+   * so opening the app never pops up a permission prompt by itself.
+   */
+  nearbyLive: boolean;
+  /** Location status of the proximity watcher, for its controls (not stored). */
+  nearbyStatus: GeoStatus;
 }
 
 /** A new visitor's trip settings: the whole region of the current catalog, today unset, 10:00–18:00. */
@@ -73,6 +87,10 @@ function initialState(): AppState {
     tour: null,
     preferences: EMPTY_PREFERENCES,
     assistantMode: "strict",
+    nearby: DEFAULT_NEARBY,
+    nearbyAlert: null,
+    nearbyLive: false,
+    nearbyStatus: "off",
   };
 }
 
@@ -101,8 +119,9 @@ export function sameContext(a: TripContext, b: TripContext): boolean {
 function onStorage(e: StorageEvent) {
   if (e.key !== STORAGE_KEY) return;
   const parsed = parseStored(e.newValue);
-  const { pendingProposal, notice, selectedSiteId } = state;
-  state = parsed ? { ...state, ...parsed, pendingProposal, notice, selectedSiteId } : { ...initialState(), pendingProposal, notice, selectedSiteId };
+  const { pendingProposal, notice, selectedSiteId, nearbyAlert, nearbyLive, nearbyStatus } = state;
+  const local = { pendingProposal, notice, selectedSiteId, nearbyAlert, nearbyLive, nearbyStatus };
+  state = parsed ? { ...state, ...parsed, ...local } : { ...initialState(), ...local };
   lastPersisted = persistedPart(state);
   listeners.forEach((l) => l());
 }
@@ -143,8 +162,8 @@ function hydrate() {
 }
 
 function persistedPart(s: AppState): PersistedState {
-  const { context, trip, previousTrip, savedSiteIds, conversations, activeConversationId, tour, preferences, assistantMode } = s;
-  return { context, trip, previousTrip, savedSiteIds, conversations, activeConversationId, tour, preferences, assistantMode };
+  const { context, trip, previousTrip, savedSiteIds, conversations, activeConversationId, tour, preferences, assistantMode, nearby } = s;
+  return { context, trip, previousTrip, savedSiteIds, conversations, activeConversationId, tour, preferences, assistantMode, nearby };
 }
 
 /** Last state written, so selection and toasts (which are not stored) do not rewrite storage. */
@@ -386,6 +405,65 @@ export const actions = {
 
   endTour() {
     setState((s) => ({ ...s, tour: null }));
+  },
+
+  /**
+   * Turn proximity alerts on or off, or change which places they cover. Turning them on is a
+   * visitor gesture, so the watcher may ask the browser for location right away.
+   */
+  setNearby(patch: Partial<Pick<NearbySettings, "enabled" | "visigothic" | "other">>) {
+    setState((s) => {
+      const nearby = { ...s.nearby, ...patch };
+      return {
+        ...s,
+        nearby,
+        nearbyLive: nearby.enabled ? (patch.enabled === true ? true : s.nearbyLive) : false,
+        nearbyAlert: nearby.enabled ? s.nearbyAlert : null,
+      };
+    });
+  },
+
+  /** The browser already allows location: resume alerts turned on in an earlier visit. */
+  resumeNearby() {
+    setState((s) => (s.nearby.enabled && !s.nearbyLive ? { ...s, nearbyLive: true } : s));
+  },
+
+  setNearbyStatus(nearbyStatus: GeoStatus) {
+    setState((s) => (s.nearbyStatus === nearbyStatus ? s : { ...s, nearbyStatus }));
+  },
+
+  /** Show a proximity alert and remember that this place was announced. */
+  showNearbyAlert(alert: NearbyAlert) {
+    const now = new Date();
+    setState((s) => ({
+      ...s,
+      nearbyAlert: { ...alert, id: newId("near") },
+      nearby: {
+        ...s.nearby,
+        notified: {
+          ...pruneNotified(s.nearby.notified, now.getTime()),
+          ...Object.fromEntries([alert.siteId, ...alert.coveredIds].map((id) => [id, now.toISOString()])),
+        },
+      },
+    }));
+  },
+
+  dismissNearbyAlert() {
+    setState((s) => (s.nearbyAlert ? { ...s, nearbyAlert: null } : s));
+  },
+
+  /** Never announce this place again (on this device), until the visitor clears the list. */
+  muteNearby(siteId: SiteId, placeName: string) {
+    setState((s) => ({
+      ...s,
+      nearby: { ...s.nearby, muted: s.nearby.muted.includes(siteId) ? s.nearby.muted : [...s.nearby.muted, siteId] },
+      nearbyAlert: s.nearbyAlert?.siteId === siteId ? null : s.nearbyAlert,
+      notice: { id: newId("n"), text: `No volveremos a avisarte de ${placeName}`, undoable: false },
+    }));
+  },
+
+  unmuteAllNearby() {
+    setState((s) => ({ ...s, nearby: { ...s.nearby, muted: [] } }));
   },
 
   deleteConversation(id: string) {

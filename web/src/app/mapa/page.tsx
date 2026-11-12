@@ -3,7 +3,8 @@
  * Mapa: every catalog site with filters and a synchronized result list.
  * Desktop (lg+): side column (list, or the PlacePanel of the selected site) + map.
  * Mobile: map/list switch; selecting a site opens PlacePanel in a bottom sheet.
- * No geolocation: the visitor explores the map manually.
+ * The map itself does not locate the visitor; the header offers the assistant's proximity alerts
+ * (components/nearby), which use the position only on this device.
  */
 import Link from "next/link";
 import { useState } from "react";
@@ -11,6 +12,7 @@ import type { Site } from "@/domain/types";
 import { sites } from "@/data/content";
 import { actions, useAppState } from "@/state/store";
 import { IconInfo } from "@/components/shell/icons";
+import { NearbyControl } from "@/components/nearby/NearbyControl";
 import { DemoBadge } from "@/components/shared/DemoBadge";
 import { SiteCard } from "@/components/shared/SiteCard";
 import { PlacePanel } from "@/components/place/PlacePanel";
@@ -152,7 +154,10 @@ export default function MapaPage() {
     <header className="flex flex-col gap-3 px-4 pb-3 pt-5 lg:px-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h1 className="font-display text-3xl leading-tight text-ink">Mapa</h1>
-        <DemoBadge />
+        <div className="flex items-center gap-2">
+          <DemoBadge />
+          <NearbyControl variant="pill" />
+        </div>
       </div>
       <FilterChips value={filter} onChange={setFilter} counts={counts} />
       {isDesktop ? (
