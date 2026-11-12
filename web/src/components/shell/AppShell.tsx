@@ -16,6 +16,7 @@ import { CrownArch } from "@/components/shared/CrownArch";
 import { ProposalReview } from "@/components/trip/ProposalReview";
 import { NearbyAlertCard } from "@/components/nearby/NearbyAlertCard";
 import { NearbyWatcher } from "@/components/nearby/NearbyWatcher";
+import { AdvisoryAlert } from "@/components/conditions/AdvisoryAlert";
 import {
   IconChat,
   IconChevronLeft,
@@ -266,6 +267,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <NoticeToast />
       <NearbyWatcher />
       <NearbyAlertCard />
+      <AdvisoryAlert />
       <ProposalReview />
     </div>
   );

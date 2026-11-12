@@ -19,6 +19,7 @@ import { TripStatus, TripTotals, TripWarnings } from "@/components/tripview/Trip
 import { ViewToggle, type ViewMode } from "@/components/tripview/ViewToggle";
 import { DESKTOP_QUERY, useMediaQuery } from "@/lib/useMediaQuery";
 import { TripServices } from "@/components/services/TripServices";
+import { TripAdvisories } from "@/components/conditions/TripAdvisories";
 import { addDays, tripDays } from "@/domain/planner";
 
 const secondaryBtn =
@@ -112,6 +113,8 @@ export default function MiViajePage() {
       ) : (
         <>
           <TripTotals trip={trip} />
+
+          <TripAdvisories trip={trip} />
 
           <div className="flex items-center justify-between gap-2 lg:hidden">
             <h2 className="text-sm font-semibold text-ink">Paradas</h2>

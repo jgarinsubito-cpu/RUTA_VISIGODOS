@@ -203,6 +203,20 @@ export default async function CreditosPage() {
         </p>
       </Section>
 
+      <Section id="datos-externos" title="Tiempo y tráfico">
+        <p>
+          Previsiones meteorológicas: información elaborada por la{" "}
+          <a href="https://www.aemet.es" target="_blank" rel="noopener noreferrer">
+            Agencia Estatal de Meteorología (AEMET)
+          </a>
+          . Incidencias de tráfico: Dirección General de Tráfico, a través del{" "}
+          <a href="https://nap.dgt.es" target="_blank" rel="noopener noreferrer">
+            Punto de Acceso Nacional de Tráfico y Movilidad
+          </a>
+          , con licencia CC BY.
+        </p>
+      </Section>
+
       <Section id="software" title="Software">
         <p>La app está hecha con software libre:</p>
         <ul>

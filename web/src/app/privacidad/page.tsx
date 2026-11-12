@@ -53,6 +53,7 @@ export default function PrivacidadPage() {
           <li>Sin cuenta, no sabemos quién eres. Tu viaje, tus guardados y tus chats se quedan en este dispositivo.</li>
           <li>Tu ubicación se usa solo en el dispositivo, para avisarte al llegar a cada parada y, si activas los avisos de cercanía, cuando pasas cerca de un lugar de la ruta. Nunca se envía.</li>
           <li>Las preguntas al asistente se envían para responderlas y no las guardamos.</li>
+          <li>Si tu viaje tiene fecha, consultamos el tiempo y el tráfico de los pueblos y días de tu viaje, sin tu ubicación ni nada que te identifique.</li>
           <li>La cuenta es opcional y solo guarda tus preferencias de visita. Las de accesibilidad, solo si das tu permiso expreso.</li>
           <li>No hay publicidad, no vendemos datos y no usamos cookies de seguimiento.</li>
         </ul>
@@ -108,6 +109,13 @@ export default function PrivacidadPage() {
             <>Ahora mismo el asistente responde sin un modelo externo: la pregunta no sale de nuestro servidor.</>
           )}{" "}
           No escribas en el chat datos personales que no hagan falta.
+        </p>
+        <p>
+          <strong>Avisos de tiempo y tráfico.</strong> Si tu viaje tiene fecha, la app pide a nuestro servidor la previsión del tiempo y las
+          incidencias de tráfico de los pueblos y días de tu viaje y de la zona de sus paradas. No enviamos tu ubicación ni nada que te
+          identifique, aparte de la dirección IP de cualquier petición. El servidor consulta a la Agencia Estatal de Meteorología (AEMET) y
+          a la Dirección General de Tráfico (DGT) solo con esos pueblos y esa zona, y no guarda la consulta. Base: la prestación del servicio
+          que pides (art. 6.1.b RGPD).
         </p>
         <p>
           <strong>Cuenta (opcional).</strong> Si creas una cuenta, tratamos tu correo, tu nombre, tu contraseña cifrada (o, si entras con
