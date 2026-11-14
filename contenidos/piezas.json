@@ -185,9 +185,643 @@
           ]
         }
       ]
+    },
+    {
+      "id": "piece-concilios-pilastra-san-salvador",
+      "nombre": "Pilastra de la iglesia de San Salvador (reproducción)",
+      "museo": "museo-concilios",
+      "procedencia": "Iglesia de San Salvador (Toledo); el original sigue en la iglesia",
+      "material": "Reproducción",
+      "fecha": "Original de época visigoda",
+      "descripcion": "Reproducción de la pilastra visigoda reutilizada en la iglesia de San Salvador de Toledo, con cuatro escenas de la vida de Cristo en una de sus caras.",
+      "cartela": "Los ejemplares de pilastras de época visigoda que han llegado a nuestros días son escasos, y en ellos se constata una fuerte influencia del mundo bizantino. Constan de basa, fuste y capitel y llevan tres de sus caras decoradas con motivos de tipo simbólico. En la ciudad de Toledo las conservadas se encuentran reutilizadas en las Iglesias de Santa Justa y Rufina, San Andrés y San Salvador. Además existe otra procedente de Talavera de la Reina.\nPilastra de la iglesia de San Salvador (Toledo)\nReproducción\nLa original está reutilizada dentro de la estructura de la iglesia como elemento arquitectónico, y es uno de los escasos restos de escultura figurada conservada en Toledo. En una de sus caras se despliega un repertorio iconográfico inspirado en la vida de Cristo de la que se representan cuatro escenas: la curación del ciego de nacimiento, la resurrección de Lázaro, el diálogo con la samaritana y la curación de la hemorroísa. En cada una, enmarcada por arquitecturas y árboles, figuran dos personajes. Podrían estar relacionados con modelos eborarios de Rávena y de la escuela armenia del siglo VI. En la otra presenta tres columnas bajo arquerías y en los lados menores roleos con racimos y rosetas.",
+      "revisar": "Es una reproducción: no se vincula como pieza hallada en El Salvador. El panel no da datación del original.",
+      "imagenes": [
+        {
+          "archivo": "concilios-pilastra-san-salvador.jpg",
+          "alt": "Pilastra de piedra alta y estrecha, con escenas de figuras en relieve enmarcadas en recuadros superpuestos, junto a una columna y un muro de ladrillo.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-pilastra-san-salvador-01",
+          "texto": "En el Museo de los Concilios se expone una reproducción de la pilastra visigoda de la iglesia de San Salvador de Toledo; la original sigue reutilizada en la estructura de esa iglesia.",
+          "nivel": "D",
+          "claves": [
+            "pilastra",
+            "san salvador",
+            "reproduccion"
+          ]
+        },
+        {
+          "id": "claim-pieza-concilios-pilastra-san-salvador-02",
+          "texto": "Una cara de la pilastra de San Salvador representa cuatro escenas de la vida de Cristo: la curación del ciego de nacimiento, la resurrección de Lázaro, el diálogo con la samaritana y la curación de la hemorroísa.",
+          "nivel": "D",
+          "claves": [
+            "pilastra",
+            "cristo",
+            "lazaro",
+            "samaritana",
+            "ciego",
+            "hemorroisa",
+            "escena*"
+          ]
+        },
+        {
+          "id": "claim-pieza-concilios-pilastra-san-salvador-03",
+          "texto": "Según la cartela del museo, en Toledo se conservan pilastras visigodas reutilizadas en las iglesias de Santa Justa y Rufina, San Andrés y San Salvador, y existe otra procedente de Talavera de la Reina.",
+          "nivel": "D",
+          "claves": [
+            "pilastra*",
+            "santa justa",
+            "san andres",
+            "talavera"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-relieve-san-lucas",
+      "nombre": "Relieve con representación del evangelista San Lucas",
+      "museo": "museo-concilios",
+      "procedencia": "Toledo, Miradero",
+      "material": "Piedra",
+      "fecha": "Siglos VI-VII",
+      "descripcion": "Relieve o placa de cancel con el toro alado, símbolo de San Lucas, con aureola y sosteniendo el libro de su evangelio.",
+      "cartela": "Relieve con representación del evangelista San Lucas\nPiedra / Siglo VI-VII.\nToledo, Miradero.\nRelieve o placa de cancel, de influencia italiana. Sobre fondo rebajado figura el toro alado, símbolo del Evangelista San Lucas, con aureola y sosteniendo el libro de su evangelio.",
+      "imagenes": [
+        {
+          "archivo": "concilios-relieve-san-lucas.jpg",
+          "alt": "Bloque de piedra con un toro alado en relieve sobre fondo rebajado, enmarcado por una moldura.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-relieve-san-lucas-01",
+          "texto": "En el Museo de los Concilios se expone un relieve de los siglos VI-VII hallado en el Miradero de Toledo, con el toro alado, símbolo del evangelista San Lucas.",
+          "nivel": "D",
+          "claves": [
+            "san lucas",
+            "lucas",
+            "evangelista",
+            "toro alado",
+            "miradero",
+            "relieve"
+          ]
+        },
+        {
+          "id": "claim-pieza-concilios-relieve-san-lucas-02",
+          "texto": "El relieve de San Lucas del Museo de los Concilios es una placa de cancel de influencia italiana.",
+          "nivel": "D",
+          "claves": [
+            "cancel",
+            "san lucas",
+            "italian*"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-inscripcion-ritmica",
+      "nombre": "Inscripción rítmica",
+      "museo": "museo-concilios",
+      "procedencia": "«Los Hitos», Arisgotas, Orgaz (Toledo)",
+      "material": "Caliza",
+      "fecha": "Siglo VII",
+      "descripcion": "Inscripción con un poema rítmico en hexámetros que ensalza la vida monástica.",
+      "cartela": "Inscripción rítmica\nCaliza / Siglo VII.\n«Los Hitos». Arisgotas, Orgaz (Toledo).\nInscripción que contiene un poema rítmico en hexámetros que ensalza la vida monástica. Conmemoraría la construcción de una iglesia o de un edificio posiblemente monacal.",
+      "revisar": "Cartela fotografiada con poca luz: confirmar la lectura «Los Hitos». La cartela dice que «conmemoraría» una construcción: no se recoge como dato.",
+      "imagenes": [
+        {
+          "archivo": "concilios-inscripcion-ritmica.jpg",
+          "alt": "Tablero de piedra roto en varios fragmentos, cubierto de líneas de letras latinas grabadas.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-inscripcion-ritmica-01",
+          "texto": "En el Museo de los Concilios se expone una inscripción del siglo VII procedente de «Los Hitos» (Arisgotas, Orgaz) con un poema rítmico en hexámetros que ensalza la vida monástica.",
+          "nivel": "D",
+          "claves": [
+            "inscripcion ritmica",
+            "los hitos",
+            "arisgotas",
+            "orgaz",
+            "poema",
+            "hexametro*",
+            "monast*"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-inscripcion-ti-domini",
+      "nombre": "Inscripción litúrgica «TI DOMINI»",
+      "museo": "museo-concilios",
+      "origen": {
+        "lugar": "vega-baja"
+      },
+      "procedencia": "Toledo, Vega Baja",
+      "material": "Caliza",
+      "fecha": "Siglo VII",
+      "descripcion": "Fragmento de friso con la inscripción TI DOMINI entre cenefas de dobles círculos enlazados con rosetas y botones.",
+      "cartela": "Inscripción litúrgica\nCaliza / Siglo VII.\nToledo. Vega Baja.\nFragmento de Friso con la inscripción: TI DOMINI, entre cenefa de dobles círculos enlazados que contienen roseta y botones que se alternan.",
+      "imagenes": [
+        {
+          "archivo": "concilios-inscripcion-ti-domini.jpg",
+          "alt": "Fragmento de friso de piedra con las letras TI DOMINI entre dos bandas de círculos enlazados con rosetas.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-inscripcion-ti-domini-01",
+          "texto": "En el Museo de los Concilios se expone un fragmento de friso del siglo VII de la Vega Baja con la inscripción TI DOMINI.",
+          "nivel": "D",
+          "claves": [
+            "ti domini",
+            "inscripcion liturgica",
+            "friso",
+            "vega baja"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-inscripcion-qui-credit",
+      "nombre": "Inscripción litúrgica «QUI CREDIT IN EUM NON IUDICABITUR»",
+      "museo": "museo-concilios",
+      "origen": {
+        "lugar": "vega-baja"
+      },
+      "procedencia": "Toledo, Vega Baja",
+      "material": "Caliza",
+      "fecha": "Siglo VII",
+      "descripcion": "Fragmento de friso con una inscripción alusiva al Credo tomada del Evangelio de San Juan, entre cenefas de dobles círculos enlazados.",
+      "cartela": "Inscripción litúrgica\nCaliza / Siglo VII\nToledo, Vega Baja.\nFragmento de friso con inscripción alusiva al Credo, que reproduce el versículo 18 del cap · del Evangelio de San Juan QUI CREDIT IN EUM NON IUDICABITUR. Cenefa de dobles círculos enlazados, la inferior con una cruz incisa. En un lateral se decora con palmas contrapuestas y roleos con volutas.",
+      "revisar": "La cartela omite el número de capítulo («del cap ·»): la cita es Juan 3, 18; confirmar con el museo antes de añadirlo.",
+      "imagenes": [
+        {
+          "archivo": "concilios-inscripcion-qui-credit.jpg",
+          "alt": "Bloque de friso de piedra con una línea de letras latinas entre dos cenefas de círculos enlazados.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-inscripcion-qui-credit-01",
+          "texto": "En el Museo de los Concilios se expone un fragmento de friso del siglo VII de la Vega Baja con la inscripción QUI CREDIT IN EUM NON IUDICABITUR, del Evangelio de San Juan.",
+          "nivel": "D",
+          "claves": [
+            "qui credit",
+            "inscripcion liturgica",
+            "evangelio",
+            "san juan",
+            "friso",
+            "vega baja"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-capitel-escalona",
+      "nombre": "Capitel con ciervo corriendo",
+      "museo": "museo-concilios",
+      "procedencia": "Escalona (Toledo)",
+      "material": "Caliza",
+      "fecha": "Siglos VI-VII",
+      "descripcion": "Medio capitel con tres volutas rematadas en pencas esquematizadas; entre ellas, dos espirales y un ciervo corriendo.",
+      "cartela": "Capitel\nCaliza / Siglos VI-VII.\nEscalona (Toledo).\nMedio capitel decorado con tres volutas rematadas en pencas esquematizadas. En los dos espacios intermedios figuran dos espirales y un ciervo corriendo.",
+      "imagenes": [
+        {
+          "archivo": "concilios-capitel-escalona.jpg",
+          "alt": "Medio capitel de piedra con volutas en las esquinas y un pequeño ciervo grabado en la cara central.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-capitel-escalona-01",
+          "texto": "En el Museo de los Concilios se expone un medio capitel de los siglos VI-VII procedente de Escalona, con volutas, espirales y un ciervo corriendo.",
+          "nivel": "D",
+          "claves": [
+            "capitel",
+            "escalona",
+            "ciervo",
+            "voluta*"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-placa-nicho",
+      "nombre": "Placa nicho",
+      "museo": "museo-concilios",
+      "procedencia": "Toledo, Cigarral del Aserradero",
+      "material": "Caliza",
+      "fecha": "Siglo VII",
+      "descripcion": "Fragmento de placa nicho con decoración a bisel: una venera sobre charnela gallonada y una cenefa inferior de rombos.",
+      "cartela": "Placa nicho\nCaliza / Siglo VII.\nToledo, Cigarral del Aserradero.\nFragmento que conserva parte de la decoración a bisel, de venera sobre charnela gallonada, con cenefa inferior de rombos.",
+      "imagenes": [
+        {
+          "archivo": "concilios-placa-nicho.jpg",
+          "alt": "Fragmento de piedra con una venera en abanico tallada sobre una fila de triángulos, sobre una peana negra.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-placa-nicho-01",
+          "texto": "En el Museo de los Concilios se expone un fragmento de placa nicho del siglo VII del Cigarral del Aserradero (Toledo), con una venera tallada a bisel.",
+          "nivel": "D",
+          "claves": [
+            "placa nicho",
+            "nicho",
+            "venera",
+            "aserradero",
+            "cigarral"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-credo-epigrafico",
+      "nombre": "Fragmentos de credo epigráfico",
+      "museo": "museo-concilios",
+      "origen": {
+        "lugar": "vega-baja"
+      },
+      "procedencia": "Toledo, Vega Baja",
+      "material": "Piedra caliza",
+      "fecha": "Siglo VII",
+      "descripcion": "Dos fragmentos de un mismo tablero con el texto del Credo, expuestos sobre una reconstrucción del texto completo.",
+      "cartela": "Fragmentos de credo epigráfico\nPiedra caliza / Siglo VII.\nToledo, Vega Baja.\nDos fragmentos de un mismo tablero, con el texto del credo o símbolo de los apóstoles, que figuraría completo desde su inicio. Se rodeaba de una orla de encuadre con franjas de escamas y otra central con veneras y palmas.",
+      "imagenes": [
+        {
+          "archivo": "concilios-credo-epigrafico.jpg",
+          "alt": "Dos fragmentos de piedra con letras grabadas, encajados en un panel claro donde está escrito el resto del texto en latín.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-credo-epigrafico-01",
+          "texto": "En el Museo de los Concilios se exponen dos fragmentos de un tablero del siglo VII de la Vega Baja con el texto del Credo o símbolo de los apóstoles.",
+          "nivel": "D",
+          "claves": [
+            "credo",
+            "simbolo de los apostoles",
+            "epigraf*",
+            "vega baja"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-imposta",
+      "nombre": "Imposta con semicírculos imbricados",
+      "museo": "museo-concilios",
+      "origen": {
+        "lugar": "vega-baja"
+      },
+      "procedencia": "Toledo, Vega Baja",
+      "material": "Caliza",
+      "fecha": "Siglo VII",
+      "descripcion": "Imposta decorada con semicírculos imbricados con botón central y trifolios.",
+      "cartela": "Imposta\nCaliza / Siglo VII.\nToledo, Vega Baja.\nDecorada con imbricación de semicírculos con botón central y trifolios.",
+      "revisar": "Falta una foto que muestre la pieza entera (en la foto de la cartela solo se ve el borde).",
+      "imagenes": [],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-imposta-01",
+          "texto": "En el Museo de los Concilios se expone una imposta del siglo VII de la Vega Baja decorada con semicírculos imbricados y trifolios.",
+          "nivel": "D",
+          "claves": [
+            "imposta",
+            "vega baja",
+            "trifolio*"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-friso-acanto",
+      "nombre": "Friso con hojas de acanto",
+      "museo": "museo-concilios",
+      "origen": {
+        "lugar": "vega-baja"
+      },
+      "procedencia": "Toledo, Vega Baja",
+      "material": "Piedra",
+      "fecha": "Siglos VII-VIII",
+      "descripcion": "Friso con un tallo del que arrancan hojas de acanto y dos grandes hojas acorazonadas.",
+      "cartela": "Friso\nPiedra / Siglos VII-VIII.\nToledo, Vega Baja.\nCon decoración a base de un tallo del que arrancan hojas de acanto y dos grandes hojas acorazonadas, una de ellas granulada y otra con ova hendida.",
+      "imagenes": [
+        {
+          "archivo": "concilios-friso-acanto.jpg",
+          "alt": "Bloque de piedra con un tallo vegetal y grandes hojas talladas en relieve en su cara frontal.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-friso-acanto-01",
+          "texto": "En el Museo de los Concilios se expone un friso de los siglos VII-VIII de la Vega Baja decorado con un tallo con hojas de acanto y dos hojas acorazonadas.",
+          "nivel": "D",
+          "claves": [
+            "friso",
+            "acanto",
+            "vega baja"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-friso-octopetalas",
+      "nombre": "Friso con flores octopétalas",
+      "museo": "museo-concilios",
+      "origen": {
+        "lugar": "vega-baja"
+      },
+      "procedencia": "Toledo, Vega Baja",
+      "material": "Sin confirmar",
+      "fecha": "Siglo VII",
+      "descripcion": "Friso decorado con círculos secantes que forman flores de ocho pétalos.",
+      "cartela": "Friso\n[material ilegible en la foto] / Siglo VII\nToledo, Vega Baja\nCon decoración de círculos secantes que componen flores octopétalas.",
+      "revisar": "Cartela fotografiada desenfocada: confirmar el material.",
+      "imagenes": [
+        {
+          "archivo": "concilios-friso-octopetalas.jpg",
+          "alt": "Bloque alargado de piedra blanca con flores de ocho pétalos talladas en su cara frontal, en una vitrina oscura.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-friso-octopetalas-01",
+          "texto": "En el Museo de los Concilios se expone un friso del siglo VII de la Vega Baja decorado con círculos secantes que componen flores octopétalas.",
+          "nivel": "D",
+          "claves": [
+            "friso",
+            "octopetal*",
+            "flor*",
+            "vega baja"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-friso-cruz-patada",
+      "nombre": "Friso con cruz patada",
+      "museo": "museo-concilios",
+      "procedencia": "Procedencia desconocida",
+      "material": "Caliza",
+      "fecha": "Siglo VII",
+      "descripcion": "Friso con una cruz patada de botón central inscrita en un círculo sogueado, entre dos hileras de flores de cuatro pétalos.",
+      "cartela": "Friso\nCaliza / Siglo VII\nProcedencia desconocida\nDesarrolla decoración de cruz patada con botón central, inscrita en círculo sogueado, flanqueada por dos hileras de tetrapétalas.",
+      "imagenes": [
+        {
+          "archivo": "concilios-friso-cruz-patada.jpg",
+          "alt": "Bloque de piedra con una cruz dentro de un círculo y flores de cuatro pétalos talladas a ambos lados, junto a un muro de ladrillo.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-friso-cruz-patada-01",
+          "texto": "En el Museo de los Concilios se expone un friso del siglo VII, de procedencia desconocida, con una cruz patada inscrita en un círculo sogueado.",
+          "nivel": "D",
+          "claves": [
+            "friso",
+            "cruz patada",
+            "cruz",
+            "tetrapetal*"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-arqueta",
+      "nombre": "Arqueta de hueso",
+      "museo": "museo-concilios",
+      "origen": {
+        "lugar": "vega-baja"
+      },
+      "procedencia": "Toledo, Vega Baja",
+      "material": "Material óseo",
+      "fecha": "Siglos VI-VII",
+      "descripcion": "Arqueta de material óseo hallada en la Vega Baja.",
+      "cartela": "Arqueta\nMaterial óseo / Siglo VI-VII.\nToledo, Vega Baja.\n[resto de la cartela no visible en la foto]",
+      "revisar": "Falta fotografiar la descripción de la cartela (solo se ve el encabezado).",
+      "imagenes": [
+        {
+          "archivo": "concilios-arqueta.jpg",
+          "alt": "Placa de hueso tallada con figuras de pie bajo un arco, sobre un soporte en una vitrina oscura.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-arqueta-01",
+          "texto": "En el Museo de los Concilios se expone una arqueta de material óseo de los siglos VI-VII hallada en la Vega Baja.",
+          "nivel": "D",
+          "claves": [
+            "arqueta",
+            "hueso",
+            "oseo",
+            "vega baja"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-llave",
+      "nombre": "Llave de bronce",
+      "museo": "museo-concilios",
+      "origen": {
+        "lugar": "vega-baja"
+      },
+      "procedencia": "Toledo, Vega Baja",
+      "material": "Bronce",
+      "fecha": "Siglo VII",
+      "descripcion": "Llave de bronce del siglo VII hallada en la Vega Baja.",
+      "cartela": "Llave\nBronce / Siglo VII.\nToledo, Vega Baja.\n«Llave» Nº Inventario: DO2010/3/3",
+      "revisar": "La cartela comparte vitrina con pendeloque, colgante en forma de bellota, osculatorio y placa de cinturón liriforme, sin datación ni procedencia propias: no se incluyen hasta confirmarlas.",
+      "imagenes": [
+        {
+          "archivo": "concilios-llave.jpg",
+          "alt": "Llave de bronce con un anillo ovalado y un vástago corto con dientes, sobre fondo claro.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-llave-01",
+          "texto": "En el Museo de los Concilios se expone una llave de bronce del siglo VII hallada en la Vega Baja.",
+          "nivel": "D",
+          "claves": [
+            "llave",
+            "bronce",
+            "vega baja"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-capitel-pencas",
+      "nombre": "Capitel con pencas y volutas",
+      "museo": "museo-concilios",
+      "origen": {
+        "lugar": "vega-baja"
+      },
+      "procedencia": "Toledo, Vega Baja",
+      "material": "Caliza",
+      "fecha": "Siglo VII",
+      "descripcion": "Capitel decorado con pencas y vástagos rematados en volutas.",
+      "cartela": "Capitel\nCaliza / Siglo VII.\nToledo, Vega Baja.\nDecorado con pencas y vástagos rematados en volutas.",
+      "imagenes": [
+        {
+          "archivo": "concilios-capitel-pencas.jpg",
+          "alt": "Capitel de piedra blanca con dos volutas en espiral en la parte alta, sujeto a la pared de una vitrina.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-capitel-pencas-01",
+          "texto": "En el Museo de los Concilios se expone un capitel de caliza del siglo VII de la Vega Baja decorado con pencas y vástagos rematados en volutas.",
+          "nivel": "D",
+          "claves": [
+            "capitel",
+            "voluta*",
+            "vega baja"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-columnilla",
+      "nombre": "Columnilla de mármol",
+      "museo": "museo-concilios",
+      "origen": {
+        "lugar": "vega-baja"
+      },
+      "procedencia": "Toledo, Vega Baja",
+      "material": "Mármol",
+      "fecha": "Siglo VII",
+      "descripcion": "Fuste incompleto de columnilla con collarino y capitel de pencas y vástagos rematados en volutas.",
+      "cartela": "Columnilla\nMármol / Siglo VII.\nToledo, Vega Baja.\nFuste incompleto con collarino y capitel con pencas y vástagos rematados en volutas.\n3/12.",
+      "revisar": "Confirmar que la cartela corresponde a esta columnilla (en la vitrina hay varias).",
+      "imagenes": [
+        {
+          "archivo": "concilios-columnilla.jpg",
+          "alt": "Columnilla de piedra gris con un collarino y un capitel con volutas en la parte alta, sujeta a la pared de una vitrina.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-columnilla-01",
+          "texto": "En el Museo de los Concilios se expone una columnilla de mármol del siglo VII de la Vega Baja, con collarino y capitel con volutas.",
+          "nivel": "D",
+          "claves": [
+            "columnilla",
+            "marmol",
+            "vega baja"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-basa",
+      "nombre": "Basa prismática",
+      "museo": "museo-concilios",
+      "origen": {
+        "lugar": "vega-baja"
+      },
+      "procedencia": "Toledo, Vega Baja",
+      "material": "Caliza",
+      "fecha": "Siglo VII",
+      "descripcion": "Basa prismática con un alto plinto, un toro y una escocia.",
+      "cartela": "Basa\nCaliza / Siglo VII.\nToledo, Vega Baja.\nPrismática, con un alto plinto, un toro y una escocia.",
+      "imagenes": [
+        {
+          "archivo": "concilios-basa.jpg",
+          "alt": "Basa de piedra blanca con un plinto alto de caras planas y molduras octogonales encima.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-basa-01",
+          "texto": "En el Museo de los Concilios se expone una basa prismática de caliza del siglo VII de la Vega Baja.",
+          "nivel": "D",
+          "claves": [
+            "basa",
+            "vega baja"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-fuste",
+      "nombre": "Fuste octogonal",
+      "museo": "museo-concilios",
+      "origen": {
+        "lugar": "vega-baja"
+      },
+      "procedencia": "Toledo, Vega Baja",
+      "material": "Caliza",
+      "fecha": "Siglo VII",
+      "descripcion": "Fuste de columna de forma octogonal.",
+      "cartela": "Fuste\nCaliza / Siglo VII.\nToledo, Vega Baja.\nDe forma octogonal.",
+      "imagenes": [
+        {
+          "archivo": "concilios-fuste.jpg",
+          "alt": "Fuste de piedra de caras planas, sujeto a la pared de una vitrina oscura.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-fuste-01",
+          "texto": "En el Museo de los Concilios se expone un fuste octogonal de caliza del siglo VII de la Vega Baja.",
+          "nivel": "D",
+          "claves": [
+            "fuste",
+            "octogonal",
+            "vega baja"
+          ]
+        }
+      ]
     }
   ],
   "fuente": {
     "titulo": "Museo de Santa Cruz (Toledo), cartelas de sala (fotografiadas en noviembre de 2026)"
+  },
+  "fuentes": {
+    "museo-concilios": {
+      "titulo": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+    }
   }
 }
