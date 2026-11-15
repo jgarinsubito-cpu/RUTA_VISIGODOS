@@ -324,10 +324,7 @@
       "id": "piece-concilios-inscripcion-ti-domini",
       "nombre": "Inscripción litúrgica «TI DOMINI»",
       "museo": "museo-concilios",
-      "origen": {
-        "lugar": "vega-baja"
-      },
-      "procedencia": "Toledo, Vega Baja",
+      "procedencia": "Toledo; la cartela actual indica la Vega Baja y la guía de 1973 la daba con duda («¿Vega Baja?»)",
       "material": "Caliza",
       "fecha": "Siglo VII",
       "descripcion": "Fragmento de friso con la inscripción TI DOMINI entre cenefas de dobles círculos enlazados con rosetas y botones.",
@@ -343,30 +340,40 @@
       "afirmaciones": [
         {
           "id": "claim-pieza-concilios-inscripcion-ti-domini-01",
-          "texto": "En el Museo de los Concilios se expone un fragmento de friso del siglo VII de la Vega Baja con la inscripción TI DOMINI.",
+          "texto": "En el Museo de los Concilios se expone un fragmento de friso del siglo VII de Toledo con la inscripción TI DOMINI.",
           "nivel": "D",
           "claves": [
             "ti domini",
             "inscripcion liturgica",
-            "friso",
-            "vega baja"
+            "friso"
           ]
+        },
+        {
+          "id": "claim-pieza-concilios-inscripcion-ti-domini-02",
+          "texto": "La guía del museo de 1973 cataloga este fragmento de friso como de Toledo, con procedencia dudosa de la Vega Baja («¿Vega Baja?»).",
+          "nivel": "D",
+          "claves": [
+            "inscripcion liturgica",
+            "friso"
+          ],
+          "fuente": {
+            "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
+            "pagina": "60"
+          }
         }
-      ]
+      ],
+      "revisar": "No se vincula a la Vega Baja hasta que el museo confirme la procedencia: Revuelta (1973, n.º 53, p. 60) escribe «¿Vega Baja?»."
     },
     {
       "id": "piece-concilios-inscripcion-qui-credit",
       "nombre": "Inscripción litúrgica «QUI CREDIT IN EUM NON IUDICABITUR»",
       "museo": "museo-concilios",
-      "origen": {
-        "lugar": "vega-baja"
-      },
-      "procedencia": "Toledo, Vega Baja",
+      "procedencia": "Toledo; la cartela actual indica la Vega Baja y la guía de 1973 la daba con duda («¿Vega Baja?»)",
       "material": "Caliza",
       "fecha": "Siglo VII",
       "descripcion": "Fragmento de friso con una inscripción alusiva al Credo tomada del Evangelio de San Juan, entre cenefas de dobles círculos enlazados.",
       "cartela": "Inscripción litúrgica\nCaliza / Siglo VII\nToledo, Vega Baja.\nFragmento de friso con inscripción alusiva al Credo, que reproduce el versículo 18 del cap · del Evangelio de San Juan QUI CREDIT IN EUM NON IUDICABITUR. Cenefa de dobles círculos enlazados, la inferior con una cruz incisa. En un lateral se decora con palmas contrapuestas y roleos con volutas.",
-      "revisar": "La cartela omite el número de capítulo («del cap ·»): la cita es Juan 3, 18; confirmar con el museo antes de añadirlo.",
+      "revisar": "La cartela omite el número de capítulo («del cap ·»): la cita es Juan 3, 18; confirmar con el museo antes de añadirlo. No se vincula a la Vega Baja hasta que el museo confirme la procedencia: Revuelta (1973, n.º 54, p. 60) escribe «¿Vega Baja?».",
       "imagenes": [
         {
           "archivo": "concilios-inscripcion-qui-credit.jpg",
@@ -378,16 +385,28 @@
       "afirmaciones": [
         {
           "id": "claim-pieza-concilios-inscripcion-qui-credit-01",
-          "texto": "En el Museo de los Concilios se expone un fragmento de friso del siglo VII de la Vega Baja con la inscripción QUI CREDIT IN EUM NON IUDICABITUR, del Evangelio de San Juan.",
+          "texto": "En el Museo de los Concilios se expone un fragmento de friso del siglo VII de Toledo con la inscripción QUI CREDIT IN EUM NON IUDICABITUR, del Evangelio de San Juan.",
           "nivel": "D",
           "claves": [
             "qui credit",
             "inscripcion liturgica",
             "evangelio",
             "san juan",
-            "friso",
-            "vega baja"
+            "friso"
           ]
+        },
+        {
+          "id": "claim-pieza-concilios-inscripcion-qui-credit-02",
+          "texto": "La guía del museo de 1973 cataloga este fragmento de friso como de Toledo, con procedencia dudosa de la Vega Baja («¿Vega Baja?»).",
+          "nivel": "D",
+          "claves": [
+            "inscripcion liturgica",
+            "friso"
+          ],
+          "fuente": {
+            "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
+            "pagina": "60"
+          }
         }
       ]
     },
@@ -419,8 +438,22 @@
             "ciervo",
             "voluta*"
           ]
+        },
+        {
+          "id": "claim-pieza-concilios-capitel-escalona-02",
+          "texto": "La guía del museo de 1973 describe este capitel con procedencia «Toledo» y unas medidas de 0,18 m de alto y 0,31 m de ancho.",
+          "nivel": "D",
+          "claves": [
+            "capitel",
+            "ciervo"
+          ],
+          "fuente": {
+            "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
+            "pagina": "56"
+          }
         }
-      ]
+      ],
+      "revisar": "Procedencia en duda: la cartela actual dice «Escalona (Toledo)»; la guía de Revuelta (1973, n.º 32, p. 56) describe la misma pieza (mismas volutas, espirales y ciervo) como de «Toledo». Preguntar al museo. Revuelta sí cita Escalona para otra pieza (n.º 31, fragmento de brocal o sarcófago con figuras, del castillo de Escalona)."
     },
     {
       "id": "piece-concilios-placa-nicho",
@@ -485,6 +518,50 @@
             "epigraf*",
             "vega baja"
           ]
+        },
+        {
+          "id": "claim-pieza-concilios-credo-epigrafico-02",
+          "texto": "Según la guía del museo de 1973, los dos fragmentos del Credo aparecieron en 1956 a unos metros de la basílica de Santa Leocadia, en la Vega Baja.",
+          "nivel": "D",
+          "claves": [
+            "credo",
+            "santa leocadia",
+            "1956",
+            "vega baja"
+          ],
+          "fuente": {
+            "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
+            "pagina": "51-52"
+          }
+        },
+        {
+          "id": "claim-pieza-concilios-credo-epigrafico-03",
+          "texto": "El tablero del Credo debió figurar en la basílica de Santa Leocadia, sede de varios concilios de Toledo.",
+          "nivel": "I",
+          "claves": [
+            "credo",
+            "santa leocadia",
+            "concilio*"
+          ],
+          "fuente": {
+            "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
+            "pagina": "49, 51-52"
+          },
+          "atribucion": "Matilde Revuelta (1973); guía actual de la Junta de Castilla-La Mancha"
+        },
+        {
+          "id": "claim-pieza-concilios-credo-epigrafico-04",
+          "texto": "El texto completo del Credo grabado en el tablero empezaba «CREDO IN DEUM PATREM OMNIPOTENTEM»; los dos fragmentos conservan solo una parte.",
+          "nivel": "D",
+          "claves": [
+            "credo",
+            "credo in deum",
+            "texto"
+          ],
+          "fuente": {
+            "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
+            "pagina": "51"
+          }
         }
       ]
     },
@@ -616,7 +693,7 @@
     },
     {
       "id": "piece-concilios-arqueta",
-      "nombre": "Arqueta de hueso",
+      "nombre": "Arqueta (píxide) de hueso",
       "museo": "museo-concilios",
       "origen": {
         "lugar": "vega-baja"
@@ -624,9 +701,9 @@
       "procedencia": "Toledo, Vega Baja",
       "material": "Material óseo",
       "fecha": "Siglos VI-VII",
-      "descripcion": "Arqueta de material óseo hallada en la Vega Baja.",
+      "descripcion": "Fragmento de una arqueta cilíndrica de hueso tallado, con figuras bajo arco; la guía del museo propone que representa a Jesús y la samaritana en el pozo de Jacob.",
       "cartela": "Arqueta\nMaterial óseo / Siglo VI-VII.\nToledo, Vega Baja.\n[resto de la cartela no visible en la foto]",
-      "revisar": "Falta fotografiar la descripción de la cartela (solo se ve el encabezado).",
+      "revisar": "Falta fotografiar la descripción de la cartela. Confirmar que la píxide de hueso de la Vega Baja que citan Caballero y Gómez (2017) es esta arqueta.",
       "imagenes": [
         {
           "archivo": "concilios-arqueta.jpg",
@@ -646,6 +723,37 @@
             "oseo",
             "vega baja"
           ]
+        },
+        {
+          "id": "claim-pieza-concilios-arqueta-02",
+          "texto": "La arqueta de hueso del Museo de los Concilios es el fragmento de una caja cilíndrica con decoración tallada en la que podría representarse a Jesús y la samaritana en el pozo de Jacob.",
+          "nivel": "I",
+          "claves": [
+            "arqueta",
+            "samaritana",
+            "pozo de jacob",
+            "pixide"
+          ],
+          "fuente": {
+            "titulo": "Museo de los Concilios y la Cultura Visigoda (guía del museo), Junta de Comunidades de Castilla-La Mancha",
+            "url": "https://cultura.castillalamancha.es/sites/default/files/2024-02/MUSEO_DE_LOS_CONCILIOS_Y_LA_CULTURA_VISIGODA.pdf"
+          },
+          "atribucion": "Guía del museo de la Junta de Castilla-La Mancha"
+        },
+        {
+          "id": "claim-pieza-concilios-arqueta-03",
+          "texto": "Entre los hallazgos de la Vega Baja expuestos en el Museo de los Concilios figura una píxide de hueso.",
+          "nivel": "D",
+          "claves": [
+            "pixide",
+            "hueso",
+            "vega baja"
+          ],
+          "fuente": {
+            "titulo": "Alfonso Caballero Klink y Laura María Gómez García, «El Museo de los Concilios y de la Cultura Visigoda», Boletín del Museo Arqueológico Nacional 35 (2017)",
+            "pagina": "982-991",
+            "url": "https://www.man.es/man/dam/jcr:b95591e5-d3c8-4b91-b1d1-81766872751c/man-bol-2017-35-110.pdf"
+          }
         }
       ]
     },
@@ -812,6 +920,239 @@
             "octogonal",
             "vega baja"
           ]
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-coronas-guarrazar",
+      "nombre": "Reproducciones de las coronas de Guarrazar",
+      "museo": "museo-concilios",
+      "procedencia": "Guarrazar, Guadamur (Toledo); los originales se reparten entre tres instituciones",
+      "material": "Reproducciones en oro y pedrería",
+      "fecha": "Originales del siglo VII",
+      "descripcion": "Reproducciones de las coronas votivas del tesoro de Guarrazar recuperadas en 1943, entre ellas la de Recesvinto.",
+      "cartela": "[cartela no legible en las fotos de noviembre de 2026]",
+      "revisar": "Fotografiar la cartela actual: confirmar qué coronas se reproducen hoy (la web de Orígenes de Europa cita las de Recaredo, Suintila y Recesvinto). Las fotos 6318 y 6320 son de la vitrina.",
+      "imagenes": [
+        {
+          "archivo": "concilios-coronas-guarrazar.jpg",
+          "alt": "Coronas votivas doradas con pedrería y cruces colgantes, suspendidas de cadenas en una vitrina oscura.",
+          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "permiso": "pendiente"
+        }
+      ],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-coronas-guarrazar-01",
+          "texto": "En el Museo de los Concilios se exponen reproducciones de las coronas votivas del tesoro de Guarrazar, cuyos originales se reparten hoy entre tres instituciones.",
+          "nivel": "D",
+          "claves": [
+            "coronas",
+            "guarrazar",
+            "reproduccion*",
+            "replica*"
+          ],
+          "fuente": {
+            "titulo": "Museo de los Concilios y la Cultura Visigoda (guía del museo), Junta de Comunidades de Castilla-La Mancha",
+            "url": "https://cultura.castillalamancha.es/sites/default/files/2024-02/MUSEO_DE_LOS_CONCILIOS_Y_LA_CULTURA_VISIGODA.pdf"
+          }
+        },
+        {
+          "id": "claim-pieza-concilios-coronas-guarrazar-02",
+          "texto": "Según la guía de 1973, las reproducciones del museo las hizo en oro y pedrería el orfebre Marmolejo, a partir de las seis coronas recuperadas en 1943 por un canje con Francia, entre ellas la corona de Recesvinto.",
+          "nivel": "D",
+          "claves": [
+            "coronas",
+            "marmolejo",
+            "recesvinto",
+            "1943",
+            "cluny"
+          ],
+          "fuente": {
+            "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
+            "pagina": "47-48"
+          }
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-placa-tamujas",
+      "nombre": "Placa de las Tamujas",
+      "museo": "museo-concilios",
+      "procedencia": "Finca de las Tamujas, Malpica de Tajo (Toledo)",
+      "material": "Mármol",
+      "fecha": "Siglos V-VI (Revuelta, 1973)",
+      "descripcion": "Placa con un relieve a bisel de una figura de pie, uno de los escasos relieves figurados de época visigoda; su tema se discute.",
+      "cartela": "[sin fotografiar]",
+      "revisar": "Fotografiar la pieza y su cartela el 23/11.",
+      "imagenes": [],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-placa-tamujas-01",
+          "texto": "La placa de las Tamujas, hallada en esa finca de Malpica de Tajo, es uno de los pocos relieves figurados de época visigoda y se expone en el Museo de los Concilios.",
+          "nivel": "D",
+          "claves": [
+            "tamujas",
+            "malpica",
+            "placa",
+            "relieve"
+          ],
+          "fuente": {
+            "titulo": "Museo de los Concilios y la Cultura Visigoda (guía del museo), Junta de Comunidades de Castilla-La Mancha",
+            "url": "https://cultura.castillalamancha.es/sites/default/files/2024-02/MUSEO_DE_LOS_CONCILIOS_Y_LA_CULTURA_VISIGODA.pdf"
+          }
+        },
+        {
+          "id": "claim-pieza-concilios-placa-tamujas-02",
+          "texto": "La guía de 1973 la describe como una placa de mármol con una figura de pie y de frente que levanta una flor con la mano derecha, bajo un sol radiante, y la data en los siglos V-VI.",
+          "nivel": "D",
+          "claves": [
+            "tamujas",
+            "figura",
+            "sol"
+          ],
+          "fuente": {
+            "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
+            "pagina": "56"
+          }
+        },
+        {
+          "id": "claim-pieza-concilios-placa-tamujas-03",
+          "texto": "El tema de la placa de las Tamujas se discute: podría ser un eclesiástico bendiciendo o predicando, Cristo en el Templo o su bautismo.",
+          "nivel": "I",
+          "claves": [
+            "tamujas",
+            "iconografia",
+            "bautismo"
+          ],
+          "fuente": {
+            "titulo": "Museo de los Concilios y la Cultura Visigoda (guía del museo), Junta de Comunidades de Castilla-La Mancha",
+            "url": "https://cultura.castillalamancha.es/sites/default/files/2024-02/MUSEO_DE_LOS_CONCILIOS_Y_LA_CULTURA_VISIGODA.pdf"
+          },
+          "atribucion": "Guía del museo de la Junta de Castilla-La Mancha"
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-lapida-imma-frita",
+      "nombre": "Lápida funeraria de Imma Frita",
+      "museo": "museo-concilios",
+      "origen": {
+        "lugar": "vega-baja"
+      },
+      "procedencia": "Vega Baja, en dirección a San Pedro el Verde (Toledo)",
+      "material": "Piedra",
+      "fecha": "Año 579",
+      "descripcion": "Lápida funeraria de nueve líneas en letra visigoda, fechada en la era 617 (año 579).",
+      "cartela": "[sin fotografiar]",
+      "revisar": "Pieza catalogada en 1973 (n.º 56): comprobar el 23/11 que sigue expuesta y fotografiarla.",
+      "imagenes": [],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-lapida-imma-frita-01",
+          "texto": "La lápida funeraria de Imma Frita, hallada en la Vega Baja en dirección a San Pedro el Verde, está fechada en la era 617, es decir, en el año 579.",
+          "nivel": "D",
+          "claves": [
+            "imma frita",
+            "lapida",
+            "579",
+            "san pedro el verde",
+            "vega baja"
+          ],
+          "fuente": {
+            "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
+            "pagina": "60"
+          }
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-lapida-sagenis",
+      "nombre": "Lápida funeraria de Sagenis",
+      "museo": "museo-concilios",
+      "origen": {
+        "lugar": "vega-baja"
+      },
+      "procedencia": "Vega Baja, en dirección a San Pedro el Verde (Toledo)",
+      "material": "Mármol",
+      "fecha": "12 de abril de 562",
+      "descripcion": "Lápida funeraria de cuatro líneas en letra visigoda; Sagenis, «sierva de Dios», murió a los 50 años.",
+      "cartela": "[sin fotografiar]",
+      "revisar": "Pieza catalogada en 1973 (n.º 60): comprobar el 23/11 que sigue expuesta y fotografiarla.",
+      "imagenes": [],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-lapida-sagenis-01",
+          "texto": "La lápida de Sagenis, hallada en la Vega Baja en dirección a San Pedro el Verde, recoge que murió a los 50 años el 12 de abril de 562.",
+          "nivel": "D",
+          "claves": [
+            "sagenis",
+            "lapida",
+            "562",
+            "san pedro el verde",
+            "vega baja"
+          ],
+          "fuente": {
+            "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
+            "pagina": "61"
+          }
+        }
+      ]
+    },
+    {
+      "id": "piece-concilios-capiteles-san-roman",
+      "nombre": "Capiteles visigodos de la nave de San Román",
+      "museo": "museo-concilios",
+      "procedencia": "Reutilizados en la propia iglesia de San Román",
+      "material": "Mármol y piedra",
+      "fecha": "Época visigoda (cinco capiteles)",
+      "descripcion": "Las arcadas de la nave apoyan en doce capiteles reutilizados de edificios anteriores; cinco son visigodos.",
+      "cartela": "[sin cartela: elementos del edificio]",
+      "revisar": "Fotografiar los cinco capiteles visigodos y el cimacio reutilizado como basa (también en el 360° de la nave).",
+      "imagenes": [],
+      "afirmaciones": [
+        {
+          "id": "claim-pieza-concilios-capiteles-san-roman-01",
+          "texto": "De los doce capiteles que sostienen las arcadas de la nave de San Román, cinco son visigodos, seis mozárabes de los siglos IX y X y uno de tradición bizantina.",
+          "nivel": "D",
+          "claves": [
+            "capiteles",
+            "san roman",
+            "nave",
+            "mozarabe*"
+          ],
+          "fuente": {
+            "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
+            "pagina": "26"
+          }
+        },
+        {
+          "id": "claim-pieza-concilios-capiteles-san-roman-02",
+          "texto": "Los capiteles de la nave de San Román tienen tamaños distintos porque se reutilizaron de monumentos anteriores.",
+          "nivel": "D",
+          "claves": [
+            "capiteles",
+            "reutiliza*",
+            "san roman"
+          ],
+          "fuente": {
+            "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
+            "pagina": "23-24"
+          }
+        },
+        {
+          "id": "claim-pieza-concilios-capiteles-san-roman-03",
+          "texto": "La basa de la columna con capitel de tradición bizantina, junto al ábside derecho, es parte de un cimacio visigodo decorado con círculos y estrellas.",
+          "nivel": "D",
+          "claves": [
+            "cimacio",
+            "basa",
+            "san roman"
+          ],
+          "fuente": {
+            "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
+            "pagina": "26"
+          }
         }
       ]
     }

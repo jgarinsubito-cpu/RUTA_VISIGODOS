@@ -40,30 +40,37 @@ Código:
 
 ### Museo de los Concilios
 
-18 piezas de las fotos de Inma Guiu (SNEO), tomadas en sala en noviembre de 2026. Crédito: «Foto: Inma Guiu (SNEO) · Museo de los Concilios». Todas con el permiso de foto pendiente y las afirmaciones en borrador.
+23 piezas: 18 de las fotos de Inma Guiu (SNEO), tomadas en sala en noviembre de 2026, y 5 de la bibliografía del museo. Crédito: «Foto: Inma Guiu (SNEO) · Museo de los Concilios». Todas con el permiso de foto pendiente y las afirmaciones en borrador.
 
 | Pieza | Origen | Pendiente |
 | --- | --- | --- |
 | Pilastra de San Salvador (reproducción) | Sin vincular: es reproducción; el original sigue en El Salvador | Validar |
 | Relieve de San Lucas | Miradero, Toledo (no es lugar de la ruta) | Validar |
 | Inscripción rítmica | «Los Hitos», Arisgotas, Orgaz (no es lugar de la ruta) | Confirmar lectura de la cartela; validar |
-| Inscripción «TI DOMINI» | Vega Baja | Validar |
-| Inscripción «QUI CREDIT IN EUM…» | Vega Baja | Capítulo omitido en la cartela; validar |
-| Capitel con ciervo | Escalona (no es lugar de la ruta) | Validar |
+| Inscripción «TI DOMINI» | Sin vincular: Toledo; la cartela dice Vega Baja, Revuelta (1973) «¿Vega Baja?» | Confirmar procedencia; validar |
+| Inscripción «QUI CREDIT IN EUM…» | Sin vincular: igual que la anterior | Confirmar procedencia y capítulo; validar |
+| Capitel con ciervo | Escalona según la cartela; «Toledo» en Revuelta (1973) | **Procedencia en duda**; validar |
 | Placa nicho | Cigarral del Aserradero, Toledo | Validar |
 | Fragmentos de credo epigráfico | Vega Baja | Validar |
 | Imposta | Vega Baja | **Sin foto de la pieza**; validar |
 | Friso con hojas de acanto | Vega Baja | Validar |
 | Friso con flores octopétalas | Vega Baja | **Material ilegible**; validar |
 | Friso con cruz patada | Procedencia desconocida | Validar |
-| Arqueta de hueso | Vega Baja | **Falta la descripción de la cartela**; validar |
+| Arqueta (píxide) de hueso | Vega Baja | Falta la descripción de la cartela; interpretación (samaritana) de la guía de la Junta; validar |
 | Llave de bronce (DO2010/3/3) | Vega Baja | Validar |
 | Capitel con pencas y volutas | Vega Baja | Validar |
 | Columnilla de mármol | Vega Baja | Confirmar que la cartela es de esta pieza; validar |
 | Basa prismática | Vega Baja | Validar |
 | Fuste octogonal | Vega Baja | Validar |
+| Reproducciones de las coronas de Guarrazar | Sin vincular: son reproducciones | Cartela actual; validar |
+| Placa de las Tamujas | Malpica de Tajo (no es lugar de la ruta) | **Sin foto**; validar |
+| Lápida de Imma Frita (579) | Vega Baja | **Sin foto**; comprobar que sigue expuesta; validar |
+| Lápida de Sagenis (562) | Vega Baja | **Sin foto**; comprobar que sigue expuesta; validar |
+| Capiteles visigodos de la nave de San Román | Elementos del edificio | **Sin foto**; validar |
 
-No se han incluido, por falta de cartela legible o por no ser de época visigoda: las piezas romanas de Carranque (inscripción de Teodosio, atalaje de carro, aplique de mobiliario, plato), el cuenco de Pantoja, los ladrillos de los siglos IV-V, las placas con crismón y aves y con decoración geométrica, la cruz, los trientes, las réplicas de las coronas de Guarrazar, la pila, el colgante, el pendeloque, el osculatorio, la placa de cinturón liriforme, la otra columnilla y la basa de molduras escalonadas.
+**Fuentes bibliográficas.** Además de las cartelas, las afirmaciones citan su propia fuente (campo `fuente` de la afirmación): la guía de Matilde Revuelta (Ministerio de Educación y Ciencia, 1973), la guía actual de la Junta de Castilla-La Mancha y el artículo de Caballero Klink y Gómez García en el Boletín del MAN 35 (2017). Las atribuciones de esas fuentes van con nivel I.
+
+No se han incluido, por falta de cartela legible o por no ser de época visigoda: las piezas romanas de Carranque (inscripción de Teodosio, atalaje de carro, aplique de mobiliario, plato), el cuenco de Pantoja, los ladrillos de los siglos IV-V, las placas con crismón y aves y con decoración geométrica, la cruz, los trientes, la pila, el colgante, el pendeloque, el osculatorio, la placa de cinturón liriforme, la otra columnilla y la basa de molduras escalonadas.
 
 ### Fotos
 

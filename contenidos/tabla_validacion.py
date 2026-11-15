@@ -17,7 +17,7 @@ if os.path.exists("piezas.json"):
         stops[p["id"]] = {"route": "piezas:" + p["museo"], "name": p["nombre"]}
         for a in p["afirmaciones"]:
             af.append({"id": a["id"], "parada": p["id"], "texto": a["texto"], "nivel": a["nivel"], "atribucion": a.get("atribucion", ""),
-                       "fuente": pz.get("fuentes", {}).get(p["museo"], pz["fuente"]), "origen": "Cartela de sala", "revisar": p.get("revisar", ""), "estado": a.get("estado", "borrador")})
+                       "fuente": a.get("fuente") or pz.get("fuentes", {}).get(p["museo"], pz["fuente"]), "origen": "Bibliografía" if a.get("fuente") else "Cartela de sala", "revisar": p.get("revisar", ""), "estado": a.get("estado", "borrador")})
 RUTAS = {"urbana": "Toledo y Guadamur", "guarrazar": "Yacimiento de Guarrazar", "vegabaja": "Vega Baja", "concilios": "Museo de los Concilios", "territorio": "Ruta 1 · Territorio de Guarrazar", "piezas:museo-santa-cruz": "Piezas del Museo de Santa Cruz", "piezas:museo-concilios": "Piezas del Museo de los Concilios"}
 NIV = {"D": "D · Documentado", "I": "I · Interpretación", "H": "H · Hipótesis", "T": "T · Tradición"}
 

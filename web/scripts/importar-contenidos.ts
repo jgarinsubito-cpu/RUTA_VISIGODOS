@@ -368,9 +368,9 @@ interface PiezasEntrada {
     cartela?: string;
     revisar?: string;
     imagenes: { archivo: string; alt: string; credito: string; permiso: "concedido" | "pendiente" }[];
-    afirmaciones: { id: string; texto: string; nivel: EvidenceLevel; atribucion?: string; claves: string[]; estado?: string }[];
+    afirmaciones: { id: string; texto: string; nivel: EvidenceLevel; atribucion?: string; claves: string[]; estado?: string; fuente?: { titulo: string; pagina?: string; url?: string } }[];
   }[];
-  /** Fuente de las afirmaciones: la de su museo en «fuentes» o, si no hay, la general. */
+  /** Fuente de las afirmaciones: la suya («fuente» de la afirmación), la de su museo en «fuentes» o, si no hay, la general. */
   fuente: { titulo: string; pagina?: string; url?: string };
   fuentes?: Record<string, { titulo: string; pagina?: string; url?: string }>;
 }
@@ -813,13 +813,14 @@ for (const pz of piezasEntrada?.piezas ?? []) {
   const propias = pz.afirmaciones.filter((a) => flag("incluir-borradores") || a.estado === "validada");
   if (propias.length < pz.afirmaciones.length) avisos.piezas.push(`${pz.nombre}: ${pz.afirmaciones.length - propias.length} afirmación(es) sin validar; no se importan.`);
   for (const a of claimSite ? propias : []) {
+    const fuente = a.fuente ?? fuentePieza;
     claims.push({
       id: a.id,
       siteId: claimSite!.id,
       text: a.texto,
       evidence: a.nivel,
       ...(a.atribucion ? { attribution: a.atribucion } : {}),
-      source: { title: fuentePieza.titulo, ...(fuentePieza.pagina ? { page: fuentePieza.pagina } : {}), ...(fuentePieza.url ? { url: fuentePieza.url } : {}) },
+      source: { title: fuente.titulo, ...(fuente.pagina ? { page: fuente.pagina } : {}), ...(fuente.url ? { url: fuente.url } : {}) },
       status: "published",
       version: 1,
       keywords: a.claves,
