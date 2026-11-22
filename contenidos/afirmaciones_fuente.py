@@ -39,6 +39,8 @@ S = {
     "CART": "Cartelas y paneles del Museo de los Concilios (textos de S. Cortés Hernández)",
     "ENTC": "Entrevistas a J. M. Rojas en el Museo de los Concilios (2026)",
     "SOFIA": "Ponencia inaugural del Seminario SOFIA (Urbs Regia)",
+    "MBCS": "Morín, Barroso, Carrobles y Sánchez (2015), «Los palacios visigodos de la corte de Toledo», en Morín, Ribera y Sánchez (eds.), Jornadas sobre Pla de Nadal y los palacios y espacios de representación en época visigoda. Preactas",
+    "LQMT": "López Quiroga y Martínez Tejera (2006), «El destino de los templos paganos en Hispania durante la Antigüedad tardía», Archivo Español de Arqueología 79",
 }
 
 def strip(t):
@@ -196,6 +198,8 @@ a(p, "D", "El santuario estaba en ruina en 1121, se restauró con un convento ag
 a(p, "T", "La leyenda «A buen juez, mejor testigo», recogida por Zorrilla, explica el brazo desclavado del Cristo de la Vega.", "TV", "", origen="FM-02 §3.1 [T]",
   revisar="En FM-02 procede de una transcripción de documental (PISTA). Dar una fuente publicada.", claves=["leyenda", "zorrilla", "buen juez", "brazo"])
 
+a(p, "I", "Junto al Cristo de la Vega pudo haber un panteón o mausoleo para sepulturas privilegiadas, un edificio con contrafuertes exteriores como el panteón-palacio de Los Hitos.", "MBCS", "17", atrib="Morín, Barroso, Carrobles y Sánchez (2015)", origen="Material de Urbs Regia (P. Tormo, 22/11/2026).",
+  revisar="Relacionar con el edificio de contrafuertes excavado por Palol y con la hipótesis del martyrium (validación n.º 5).", claves=["mausoleo", "panteon", "contrafuertes", "los hitos", "sepulturas"])
 # ---------------------------------------------------------------- Vega Baja · 2 Gran avenida
 p = "vegabaja-2"
 a(p, "I", "El suburbio se organizó según un plan jerarquizado y regular, con su máximo desarrollo entre la segunda mitad del siglo VI y mediados del VII.", "OLMO", "", atrib="Olmo Enciso (2009)", origen="FM-02 §4", claves=["urbanismo", "plan", "calles", "siglo vi"])
@@ -233,6 +237,8 @@ a(p, "D", "En la calle San Pedro el Verde, 25, se documentó en 2001 y 2003 un g
 a(p, "I", "Sus excavadores propusieron que el edificio de San Pedro el Verde fuera la iglesia pretoriense; otros autores consideran la identificación «algo forzada» o la aceptan «con muchas reservas».", "GD", "", atrib="Rojas y Gómez (2009); Olmo Enciso (2009); Gurt y Diarte (2012)", origen="FM-02 §3.2 ⚖", claves=["iglesia pretoriense", "identificacion", "debate"])
 a(p, "D", "En la Fábrica de Armas se halló en 1923 una villa romana del siglo IV con mosaicos.", "VP", "", origen="FM-02 §1", claves=["villa", "fabrica de armas", "mosaicos", "1923"])
 
+a(p, "I", "Otros autores proponen situar el palacio y la iglesia de los Santos Apóstoles dentro de la muralla, donde después estuvo el alcázar islámico y medieval, por la escultura recuperada en la puerta-puente de Alcántara y por criterios topográficos.", "MBCS", "17", atrib="Morín, Barroso, Carrobles y Sánchez (2015)", origen="Material de Urbs Regia (P. Tormo, 22/11/2026).",
+  revisar="Contradice la propuesta de Rojas de un pretorio en la Vega Baja (entrevista F19): presentar ambas como hipótesis. Decisión de criterio para Urbs Regia.", claves=["palacio", "pretorio", "alcazar", "intramuros", "puerta de alcantara", "donde estaba el palacio"])
 # ---------------------------------------------------------------- Vega Baja · 5 Mirador
 p = "vegabaja-5"
 a(p, "D", "La Vega Baja es la llanura aluvial al norte y noroeste del peñón de Toledo, de más de 50 ha.", "TV", "", origen="FM-02 §1", revisar="Validación n.º 2: Rojas da más de 70 o 100 ha. Buscar cifra publicada.", claves=["vega baja", "llanura", "hectareas"])
@@ -277,6 +283,10 @@ a(p, "D", "El folleto del museo data el credo epigráfico en el siglo VII; se pu
 a(p, "D", "La cartela del museo identifica el texto como el «símbolo de los apóstoles»; otras publicaciones hablan del credo de Nicea en versión hispana.", "CART", "", origen="Documento del nodo; FM-03 §4.2",
   revisar="Validación n.º 1, urgente: consultar Jorge Aragoneses (1957) o al museo. Bloquea esta parada.", claves=["credo", "nicea", "simbolo de los apostoles", "debate"])
 
+a(p, "D", "El canon XVI del III Concilio de Toledo (589) ordena que los obispos, junto con los jueces, destruyan los ídolos y que los señores prohíban la idolatría a sus siervos.", "LQMT", "128", origen="Material de Urbs Regia (P. Tormo, 22/11/2026).", claves=["idolos", "idolatria", "paganismo", "canon", "iii concilio"])
+a(p, "D", "El XII Concilio de Toledo (681) dedica su canon XI a los adoradores de ídolos.", "LQMT", "128", origen="Material de Urbs Regia (P. Tormo, 22/11/2026).", claves=["idolos", "paganismo", "xii concilio", "681", "canon"])
+a(p, "D", "El canon II del XVI Concilio de Toledo (693) condena también a quienes veneran las piedras, encienden antorchas y adoran las fuentes y los árboles.", "LQMT", "128", origen="Material de Urbs Regia (P. Tormo, 22/11/2026).",
+  revisar="Puede enlazarse con el culto al manantial de Guarrazar (edificio del manantial / delubrum), pero el artículo no lo hace: decisión de criterio para Urbs Regia.", claves=["fuentes", "arboles", "piedras", "paganismo", "xvi concilio", "693", "culto"])
 # ---------------------------------------------------------------- Concilios · 4
 p = "concilios-4"
 a(p, "D", "En la villa de El Saucedo (Talavera la Nueva), una sala se transformó en iglesia con baptisterio en el siglo VI.", "CKG", "987", origen="FM-03 §4.1", claves=["el saucedo", "villa", "baptisterio"])

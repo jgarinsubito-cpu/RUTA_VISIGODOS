@@ -1687,6 +1687,27 @@
     "estado": "borrador"
   },
   {
+    "id": "claim-vegabaja-1-11",
+    "parada": "vegabaja-1",
+    "texto": "Junto al Cristo de la Vega pudo haber un panteón o mausoleo para sepulturas privilegiadas, un edificio con contrafuertes exteriores como el panteón-palacio de Los Hitos.",
+    "nivel": "I",
+    "atribucion": "Morín, Barroso, Carrobles y Sánchez (2015)",
+    "fuente": {
+      "titulo": "Morín, Barroso, Carrobles y Sánchez (2015), «Los palacios visigodos de la corte de Toledo», en Morín, Ribera y Sánchez (eds.), Jornadas sobre Pla de Nadal y los palacios y espacios de representación en época visigoda. Preactas",
+      "pagina": "17"
+    },
+    "palabrasClave": [
+      "contrafuertes",
+      "los hitos",
+      "mausoleo",
+      "panteon",
+      "sepulturas"
+    ],
+    "origen": "Material de Urbs Regia (P. Tormo, 22/11/2026).",
+    "revisar": "Relacionar con el edificio de contrafuertes excavado por Palol y con la hipótesis del martyrium (validación n.º 5).",
+    "estado": "borrador"
+  },
+  {
     "id": "claim-vegabaja-2-01",
     "parada": "vegabaja-2",
     "texto": "El suburbio se organizó según un plan jerarquizado y regular, con su máximo desarrollo entre la segunda mitad del siglo VI y mediados del VII.",
@@ -2068,6 +2089,28 @@
     ],
     "origen": "FM-02 §1",
     "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-vegabaja-4-09",
+    "parada": "vegabaja-4",
+    "texto": "Otros autores proponen situar el palacio y la iglesia de los Santos Apóstoles dentro de la muralla, donde después estuvo el alcázar islámico y medieval, por la escultura recuperada en la puerta-puente de Alcántara y por criterios topográficos.",
+    "nivel": "I",
+    "atribucion": "Morín, Barroso, Carrobles y Sánchez (2015)",
+    "fuente": {
+      "titulo": "Morín, Barroso, Carrobles y Sánchez (2015), «Los palacios visigodos de la corte de Toledo», en Morín, Ribera y Sánchez (eds.), Jornadas sobre Pla de Nadal y los palacios y espacios de representación en época visigoda. Preactas",
+      "pagina": "17"
+    },
+    "palabrasClave": [
+      "alcazar",
+      "donde estaba el palacio",
+      "intramuros",
+      "palacio",
+      "pretorio",
+      "puerta de alcantara"
+    ],
+    "origen": "Material de Urbs Regia (P. Tormo, 22/11/2026).",
+    "revisar": "Contradice la propuesta de Rojas de un pretorio en la Vega Baja (entrevista F19): presentar ambas como hipótesis. Decisión de criterio para Urbs Regia.",
     "estado": "borrador"
   },
   {
@@ -2499,6 +2542,68 @@
     ],
     "origen": "Documento del nodo; FM-03 §4.2",
     "revisar": "Validación n.º 1, urgente: consultar Jorge Aragoneses (1957) o al museo. Bloquea esta parada.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-3-05",
+    "parada": "concilios-3",
+    "texto": "El canon XVI del III Concilio de Toledo (589) ordena que los obispos, junto con los jueces, destruyan los ídolos y que los señores prohíban la idolatría a sus siervos.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "López Quiroga y Martínez Tejera (2006), «El destino de los templos paganos en Hispania durante la Antigüedad tardía», Archivo Español de Arqueología 79",
+      "pagina": "128"
+    },
+    "palabrasClave": [
+      "canon",
+      "idolatria",
+      "idolos",
+      "iii concilio",
+      "paganismo"
+    ],
+    "origen": "Material de Urbs Regia (P. Tormo, 22/11/2026).",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-3-06",
+    "parada": "concilios-3",
+    "texto": "El XII Concilio de Toledo (681) dedica su canon XI a los adoradores de ídolos.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "López Quiroga y Martínez Tejera (2006), «El destino de los templos paganos en Hispania durante la Antigüedad tardía», Archivo Español de Arqueología 79",
+      "pagina": "128"
+    },
+    "palabrasClave": [
+      "681",
+      "canon",
+      "idolos",
+      "paganismo",
+      "xii concilio"
+    ],
+    "origen": "Material de Urbs Regia (P. Tormo, 22/11/2026).",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-concilios-3-07",
+    "parada": "concilios-3",
+    "texto": "El canon II del XVI Concilio de Toledo (693) condena también a quienes veneran las piedras, encienden antorchas y adoran las fuentes y los árboles.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "López Quiroga y Martínez Tejera (2006), «El destino de los templos paganos en Hispania durante la Antigüedad tardía», Archivo Español de Arqueología 79",
+      "pagina": "128"
+    },
+    "palabrasClave": [
+      "693",
+      "arboles",
+      "culto",
+      "fuentes",
+      "paganismo",
+      "piedras",
+      "xvi concilio"
+    ],
+    "origen": "Material de Urbs Regia (P. Tormo, 22/11/2026).",
+    "revisar": "Puede enlazarse con el culto al manantial de Guarrazar (edificio del manantial / delubrum), pero el artículo no lo hace: decisión de criterio para Urbs Regia.",
     "estado": "borrador"
   },
   {
