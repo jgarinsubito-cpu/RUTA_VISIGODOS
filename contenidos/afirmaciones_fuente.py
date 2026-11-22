@@ -41,6 +41,15 @@ S = {
     "SOFIA": "Ponencia inaugural del Seminario SOFIA (Urbs Regia)",
     "MBCS": "Morín, Barroso, Carrobles y Sánchez (2015), «Los palacios visigodos de la corte de Toledo», en Morín, Ribera y Sánchez (eds.), Jornadas sobre Pla de Nadal y los palacios y espacios de representación en época visigoda. Preactas",
     "LQMT": "López Quiroga y Martínez Tejera (2006), «El destino de los templos paganos en Hispania durante la Antigüedad tardía», Archivo Español de Arqueología 79",
+    "ZAM": "Zamorano Herrera, «Caracteres del arte visigodo en Toledo», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+    "SCH": "Schlunk, «La pilastra de San Salvador de Toledo», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+    "BCM19": "Barroso, Carrobles y Morín (2019), «Vrbs, praetorivm, svbvrbia. Centros de poder en la civitas regia toledana y su territorio en época visigoda», Antigüedad y Cristianismo 35-36",
+    "JCCMH": "Catálogo de Patrimonio Cultural de Castilla-La Mancha, «Cuevas de Hércules de Toledo» (JCCM)",
+    "PMON": "Pérez Montoya, «Las columnas de cerámica vidriada de la torre de Santo Tomé», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+    "TCLM": "Turismo de Castilla-La Mancha, ficha «Iglesia de Santo Tomé»",
+    "NIC": "Nicolau Castro (2022), Luz a los conventos toledanos, Real Academia de Bellas Artes y Ciencias Históricas de Toledo y La Tribuna de Toledo",
+    "DLF": "De la Fuente Escribano (2019), «La restauración del castillo de Guadamur en el siglo XIX como expresión del romanticismo en España», Espacio, Tiempo y Forma, Serie VII, 7",
+    "SALY": "Blog «Las muñecas de Salyperla», de la autora de la colección (2024)",
 }
 
 def strip(t):
@@ -366,6 +375,59 @@ a(p, "D", "En Portusa, a unos 7,5 km al noroeste de Guadamur, había un importan
 a(p, "H", "El topónimo Portusa podría ser de origen romano.", "JOR7", "", origen="Ficha de la parada", claves=["portusa", "toponimo", "romano"])
 a(p, "I", "La ruta de Portusa por Guadamur hacia Consabura (Consuegra) y Laminium (Alhambra) fue una vía romana.", "ROJ", "", atrib="J. M. Rojas", origen="Ficha de la parada", claves=["via romana", "consabura", "laminium"])
 a(p, "D", "Desde el siglo XIX han desaparecido más del 80 % de las huertas y viñas de Guadamur, y el olivar quizá haya triplicado su extensión.", "JOR7", "", origen="Ficha de la parada", claves=["olivar", "vinas", "cultivos", "paisaje"])
+
+# ---------------------------------------------------------------- Toledo intramuros y Guadamur (FM-04, borrador)
+p = "santa-justa"
+a(p, "D", "En una pared de la iglesia de Santa Justa está empotrada una pilastra visigoda a la que le falta la parte superior.", "ZAM", "102", origen="FM-04 (borrador v0.1)", claves=["pilastra", "santa justa", "empotrada"])
+a(p, "D", "En el muro exterior de la iglesia hay pilastras visigodas con palmetas en la columnilla central y con un tallo ondulado, de los siglos VI-VII.", "ZAM", "27, 30", origen="FM-04 (borrador v0.1)",
+  revisar="El relato dice que la pilastra era de un cancel y se usó como guardacantón, y cita una lápida cúfica de los siglos X-XI: falta fuente.", claves=["pilastra", "palmetas", "tallo", "siglo vii"])
+a(p, "D", "La escultura visigoda de Toledo se talla en dos planos; en la piedra, las aristas llegan a convertirse en bisel.", "ZAM", "11", origen="FM-04 (borrador v0.1)", claves=["bisel", "talla", "tecnica", "escultura"])
+p = "cuevas-hercules"
+a(p, "D", "Las Cuevas de Hércules son una cisterna romana, construida casi con seguridad en la segunda mitad del siglo I, bajo los números 2 y 3 del callejón de San Ginés.", "JCCMH", "", origen="FM-04 (borrador v0.1)", claves=["cisterna", "romana", "siglo i", "san gines"])
+a(p, "D", "Encima estuvo la iglesia de San Ginés, citada desde 1148 y derribada en 1841.", "JCCMH", "", origen="FM-04 (borrador v0.1)", claves=["san gines", "iglesia", "1148", "1841"])
+a(p, "D", "En el muro de entrada que queda de la iglesia de San Ginés siguen empotrados varios relieves visigodos.", "JCCMH", "", origen="FM-04 (borrador v0.1)", claves=["relieves", "muro", "san gines", "piezas visigodas"])
+a(p, "I", "En el solar se construyó muy probablemente una iglesia visigoda.", "JCCMH", "", atrib="Catálogo de Patrimonio Cultural de Castilla-La Mancha", origen="FM-04 (borrador v0.1)", claves=["iglesia visigoda", "solar"])
+a(p, "I", "Las piezas aveneradas del callejón de San Ginés, símbolo de poder en el arte de la época, pertenecerían casi con seguridad al grupo episcopal de la ciudad.", "BCM19", "407", atrib="Barroso, Carrobles y Morín (2019)", origen="FM-04 (borrador v0.1)",
+  revisar="Decisión de criterio para Urbs Regia. La leyenda de don Rodrigo del relato necesita una fuente publicada para ir como tradición.", claves=["veneras", "grupo episcopal", "catedral", "poder"])
+p = "el-salvador"
+a(p, "D", "Hacia 1949, al restaurar la nave lateral de El Salvador, apareció parte de una pequeña mezquita construida con piezas romanas y visigodas; la pilastra estaba reutilizada en ella.", "SCH", "235, 238", origen="FM-04 (borrador v0.1)",
+  revisar="El relato describe sillares romanos, dentellones de una cornisa de Toletum, el alminar y la consagración como iglesia: falta fuente (Tulaytula 12, 2005; Aguado Villalba, Toletum 8, 2010).", claves=["mezquita", "1949", "restauracion", "reutilizada"])
+a(p, "D", "El frente de la pilastra tiene cuatro escenas, de arriba abajo: la curación del ciego, la resurrección de Lázaro, Cristo y la samaritana junto al pozo y la curación de la hemorroísa.", "SCH", "238-241", origen="FM-04 (borrador v0.1)", claves=["pilastra", "escenas", "lazaro", "samaritana", "ciego", "hemorroisa"])
+a(p, "D", "La cara opuesta de la pilastra lleva tres columnas muy alargadas con basas y capiteles, y los lados estrechos, tallos de vid con círculos, rosetas y cuadrifolias.", "SCH", "237", origen="FM-04 (borrador v0.1)", claves=["pilastra", "columnas", "vid", "rosetas"])
+a(p, "D", "Las cabezas de Cristo, de Lázaro y de las figuras de la escena de la samaritana se eliminaron a golpes de cincel.", "SCH", "240", origen="FM-04 (borrador v0.1)",
+  revisar="El relato dice que se picaron al reutilizar la pilastra en la mezquita: Schlunk no lo fecha.", claves=["rostros", "cabezas", "picado", "cincel"])
+a(p, "I", "El picado de las cabezas se parece al de la mayoría de las esculturas cristianas del sur arabizado de la Península.", "SCH", "239", atrib="Schlunk", origen="FM-04 (borrador v0.1)", claves=["rostros", "picado", "al andalus"])
+a(p, "I", "La pilastra de El Salvador sería posterior a las pilastras del aljibe de Mérida, de la segunda mitad del siglo VI.", "SCH", "238", atrib="Schlunk", origen="FM-04 (borrador v0.1)", claves=["datacion", "merida", "siglo vi", "cronologia"])
+a(p, "I", "Las escenas siguen modelos occidentales, como los marfiles con ciclos cortos de cuatro escenas y el ciclo de San Apolinar el Nuevo de Rávena.", "SCH", "244-249", atrib="Schlunk", origen="FM-04 (borrador v0.1)", claves=["modelos", "marfiles", "ravena"])
+p = "san-bartolome"
+a(p, "D", "En la torre de San Bartolomé hay empotrado un rosetón visigodo unido a otros adornos.", "ZAM", "91", origen="FM-04 (borrador v0.1)",
+  revisar="El relato describe un friso continuo de placas, una saetera y una flor de diez pétalos: falta el catálogo pieza a pieza (Regia Sedes Toletana, 2007). Quitar la relación con el taller de Guarrazar y atribuir o quitar el simbolismo de las rosetas.", claves=["roseton", "torre", "rosetas"])
+a(p, "D", "En el ábside de San Bartolomé está empotrado un rosetón visigodo de ocho pétalos, del siglo VI o de principios del VII.", "ZAM", "91", origen="FM-04 (borrador v0.1)", claves=["roseton", "ocho petalos", "abside", "siglo vi"])
+a(p, "D", "En los muros de la iglesia hay otras piedras de talla visigoda, una con un frisito en ángulo y otra con una voluta.", "ZAM", "89, 93", origen="FM-04 (borrador v0.1)", claves=["friso", "voluta", "muro"])
+p = "santo-tome"
+a(p, "D", "La torre de Santo Tomé se sitúa hacia 1300.", "PMON", "37-38", origen="FM-04 (borrador v0.1)", revisar="El relato dice «de principios del siglo XIV»: decir «hacia 1300».", claves=["torre", "mudejar", "1300", "fecha"])
+a(p, "D", "La reforma de la torre por Gonzalo Ruiz de Toledo, señor de Orgaz, se fecha a finales del siglo XIII o principios del XIV.", "PMON", "27", origen="FM-04 (borrador v0.1)", claves=["gonzalo ruiz de toledo", "senor de orgaz", "reforma"])
+a(p, "D", "Las columnillas de la torre alternan vidriados verdes y melados.", "PMON", "34", origen="FM-04 (borrador v0.1)", claves=["columnillas", "ceramica", "vidriado"])
+a(p, "D", "El Greco pintó El entierro del señor de Orgaz entre 1586 y 1588.", "TCLM", "", origen="FM-04 (borrador v0.1)", claves=["el greco", "entierro", "conde de orgaz", "cuadro"])
+a(p, "D", "En la torre y en el muro de ladrillo de Santo Tomé hay piezas visigodas empotradas: una hornacina, un fragmento de pilastrilla o friso y una celosía.", "ZAM", "76, 83, 94", origen="FM-04 (borrador v0.1)",
+  revisar="El relato llama renacentista a la hornacina con concha de la torre; Zamorano y Turismo de CLM la dan como visigoda. Comprobar in situ.", claves=["hornacina", "piezas visigodas", "celosia", "friso"])
+p = "covarrubias"
+a(p, "D", "La iglesia del monasterio de San Clemente fue rehecha por completo por Alonso de Covarrubias en el siglo XVI.", "NIC", "25", origen="FM-04 (borrador v0.1)",
+  revisar="Falta fuente de la atribución de la portada a Covarrubias y de su fecha (el relato dice hacia 1530).", claves=["covarrubias", "san clemente", "renacimiento"])
+p = "castillo-guadamur"
+a(p, "D", "El fundador del castillo de Guadamur fue Pedro López de Ayala, llamado el Mozo.", "DLF", "233", origen="FM-04 (borrador v0.1)", revisar="El relato lo llama «primer conde de Fuensalida»: confirmar que es la misma persona.", claves=["fundador", "lopez de ayala", "fuensalida"])
+a(p, "I", "La construcción empezó probablemente hacia 1468, y la primera fase (palacio, torre del homenaje, foso y barrera) iría de 1466 a 1472.", "DLF", "233", atrib="De la Fuente Escribano (2019)", origen="FM-04 (borrador v0.1)",
+  revisar="El relato dice que en 1470 ya estaba terminado; la entrevista F12 dice 1417. Usar esta cronología.", claves=["construccion", "1468", "fecha", "siglo xv"])
+a(p, "D", "La torre del homenaje mide unos 10 × 15 m de base y 30 m de alto, y la rematan seis garitas.", "DLF", "234-235", origen="FM-04 (borrador v0.1)", claves=["torre del homenaje", "garitas", "medidas"])
+a(p, "D", "Los espolones triangulares del castillo son raros: en España solo se conocen aquí y en Cuzcurrita del Río Tirón.", "DLF", "234, n. 11", origen="FM-04 (borrador v0.1)", claves=["espolones", "defensa"])
+a(p, "D", "Carlos Morenés y Tord, conde del Asalto, compró el castillo en 1887 y lo restauró entre 1887 y 1900.", "DLF", "231, 248", origen="FM-04 (borrador v0.1)", claves=["restauracion", "conde del asalto", "1887", "1900"])
+a(p, "D", "La gran escalera neogótica la construyó el restaurador; no consta que hubiera una anterior.", "DLF", "251", origen="FM-04 (borrador v0.1)",
+  revisar="El relato dice que la escalera primitiva sigue enfrente: quitarlo. Falta fuente del verso de la Salve del friso.", claves=["escalera", "neogotica", "zaguan"])
+p = "casa-munecas"
+a(p, "D", "El museo reúne muñecas españolas de los años sesenta, setenta y ochenta.", "SALY", "", origen="FM-04 (borrador v0.1)", revisar="Confirmar con la autora: empezó en 2004, más de mil muñecas, apertura en otoño de 2022.", claves=["munecas", "coleccion", "anos sesenta"])
+a(p, "D", "Su autora montó el museo en tres meses.", "SALY", "", origen="FM-04 (borrador v0.1)", claves=["museo", "salyperla"])
+a(p, "D", "Una de las muñecas es la Loli de Richard Regalado en el papel de Juana I de Castilla.", "SALY", "", origen="FM-04 (borrador v0.1)", claves=["loli", "juana i", "richard regalado"])
+a(p, "T", "Según se cuenta en Guadamur, Juana, siendo princesa y casada con Felipe el Hermoso, visitó el castillo y fue agasajada.", "SALY", "", origen="FM-04 (borrador v0.1)", claves=["juana", "felipe el hermoso", "castillo", "leyenda"])
 
 # ---------------------------------------------------------------- Palabras clave adicionales
 # Formas en que los visitantes preguntan (banco de evaluación del asistente, 05/11/2026).

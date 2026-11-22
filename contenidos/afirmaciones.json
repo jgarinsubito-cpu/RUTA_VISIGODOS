@@ -3347,5 +3347,630 @@
     "origen": "Ficha de la parada",
     "revisar": "",
     "estado": "borrador"
+  },
+  {
+    "id": "claim-santa-justa-01",
+    "parada": "santa-justa",
+    "texto": "En una pared de la iglesia de Santa Justa está empotrada una pilastra visigoda a la que le falta la parte superior.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Zamorano Herrera, «Caracteres del arte visigodo en Toledo», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "102"
+    },
+    "palabrasClave": [
+      "empotrada",
+      "pilastra",
+      "santa justa"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-santa-justa-02",
+    "parada": "santa-justa",
+    "texto": "En el muro exterior de la iglesia hay pilastras visigodas con palmetas en la columnilla central y con un tallo ondulado, de los siglos VI-VII.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Zamorano Herrera, «Caracteres del arte visigodo en Toledo», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "27, 30"
+    },
+    "palabrasClave": [
+      "palmetas",
+      "pilastra",
+      "siglo vii",
+      "tallo"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "El relato dice que la pilastra era de un cancel y se usó como guardacantón, y cita una lápida cúfica de los siglos X-XI: falta fuente.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-santa-justa-03",
+    "parada": "santa-justa",
+    "texto": "La escultura visigoda de Toledo se talla en dos planos; en la piedra, las aristas llegan a convertirse en bisel.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Zamorano Herrera, «Caracteres del arte visigodo en Toledo», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "11"
+    },
+    "palabrasClave": [
+      "bisel",
+      "escultura",
+      "talla",
+      "tecnica"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-cuevas-hercules-01",
+    "parada": "cuevas-hercules",
+    "texto": "Las Cuevas de Hércules son una cisterna romana, construida casi con seguridad en la segunda mitad del siglo I, bajo los números 2 y 3 del callejón de San Ginés.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Catálogo de Patrimonio Cultural de Castilla-La Mancha, «Cuevas de Hércules de Toledo» (JCCM)"
+    },
+    "palabrasClave": [
+      "cisterna",
+      "romana",
+      "san gines",
+      "siglo i"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-cuevas-hercules-02",
+    "parada": "cuevas-hercules",
+    "texto": "Encima estuvo la iglesia de San Ginés, citada desde 1148 y derribada en 1841.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Catálogo de Patrimonio Cultural de Castilla-La Mancha, «Cuevas de Hércules de Toledo» (JCCM)"
+    },
+    "palabrasClave": [
+      "1148",
+      "1841",
+      "iglesia",
+      "san gines"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-cuevas-hercules-03",
+    "parada": "cuevas-hercules",
+    "texto": "En el muro de entrada que queda de la iglesia de San Ginés siguen empotrados varios relieves visigodos.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Catálogo de Patrimonio Cultural de Castilla-La Mancha, «Cuevas de Hércules de Toledo» (JCCM)"
+    },
+    "palabrasClave": [
+      "muro",
+      "piezas visigodas",
+      "relieves",
+      "san gines"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-cuevas-hercules-04",
+    "parada": "cuevas-hercules",
+    "texto": "En el solar se construyó muy probablemente una iglesia visigoda.",
+    "nivel": "I",
+    "atribucion": "Catálogo de Patrimonio Cultural de Castilla-La Mancha",
+    "fuente": {
+      "titulo": "Catálogo de Patrimonio Cultural de Castilla-La Mancha, «Cuevas de Hércules de Toledo» (JCCM)"
+    },
+    "palabrasClave": [
+      "iglesia visigoda",
+      "solar"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-cuevas-hercules-05",
+    "parada": "cuevas-hercules",
+    "texto": "Las piezas aveneradas del callejón de San Ginés, símbolo de poder en el arte de la época, pertenecerían casi con seguridad al grupo episcopal de la ciudad.",
+    "nivel": "I",
+    "atribucion": "Barroso, Carrobles y Morín (2019)",
+    "fuente": {
+      "titulo": "Barroso, Carrobles y Morín (2019), «Vrbs, praetorivm, svbvrbia. Centros de poder en la civitas regia toledana y su territorio en época visigoda», Antigüedad y Cristianismo 35-36",
+      "pagina": "407"
+    },
+    "palabrasClave": [
+      "catedral",
+      "grupo episcopal",
+      "poder",
+      "veneras"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "Decisión de criterio para Urbs Regia. La leyenda de don Rodrigo del relato necesita una fuente publicada para ir como tradición.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-el-salvador-01",
+    "parada": "el-salvador",
+    "texto": "Hacia 1949, al restaurar la nave lateral de El Salvador, apareció parte de una pequeña mezquita construida con piezas romanas y visigodas; la pilastra estaba reutilizada en ella.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Schlunk, «La pilastra de San Salvador de Toledo», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "235, 238"
+    },
+    "palabrasClave": [
+      "1949",
+      "mezquita",
+      "restauracion",
+      "reutilizada"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "El relato describe sillares romanos, dentellones de una cornisa de Toletum, el alminar y la consagración como iglesia: falta fuente (Tulaytula 12, 2005; Aguado Villalba, Toletum 8, 2010).",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-el-salvador-02",
+    "parada": "el-salvador",
+    "texto": "El frente de la pilastra tiene cuatro escenas, de arriba abajo: la curación del ciego, la resurrección de Lázaro, Cristo y la samaritana junto al pozo y la curación de la hemorroísa.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Schlunk, «La pilastra de San Salvador de Toledo», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "238-241"
+    },
+    "palabrasClave": [
+      "ciego",
+      "escenas",
+      "hemorroisa",
+      "lazaro",
+      "pilastra",
+      "samaritana"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-el-salvador-03",
+    "parada": "el-salvador",
+    "texto": "La cara opuesta de la pilastra lleva tres columnas muy alargadas con basas y capiteles, y los lados estrechos, tallos de vid con círculos, rosetas y cuadrifolias.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Schlunk, «La pilastra de San Salvador de Toledo», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "237"
+    },
+    "palabrasClave": [
+      "columnas",
+      "pilastra",
+      "rosetas",
+      "vid"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-el-salvador-04",
+    "parada": "el-salvador",
+    "texto": "Las cabezas de Cristo, de Lázaro y de las figuras de la escena de la samaritana se eliminaron a golpes de cincel.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Schlunk, «La pilastra de San Salvador de Toledo», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "240"
+    },
+    "palabrasClave": [
+      "cabezas",
+      "cincel",
+      "picado",
+      "rostros"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "El relato dice que se picaron al reutilizar la pilastra en la mezquita: Schlunk no lo fecha.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-el-salvador-05",
+    "parada": "el-salvador",
+    "texto": "El picado de las cabezas se parece al de la mayoría de las esculturas cristianas del sur arabizado de la Península.",
+    "nivel": "I",
+    "atribucion": "Schlunk",
+    "fuente": {
+      "titulo": "Schlunk, «La pilastra de San Salvador de Toledo», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "239"
+    },
+    "palabrasClave": [
+      "al andalus",
+      "picado",
+      "rostros"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-el-salvador-06",
+    "parada": "el-salvador",
+    "texto": "La pilastra de El Salvador sería posterior a las pilastras del aljibe de Mérida, de la segunda mitad del siglo VI.",
+    "nivel": "I",
+    "atribucion": "Schlunk",
+    "fuente": {
+      "titulo": "Schlunk, «La pilastra de San Salvador de Toledo», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "238"
+    },
+    "palabrasClave": [
+      "cronologia",
+      "datacion",
+      "merida",
+      "siglo vi"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-el-salvador-07",
+    "parada": "el-salvador",
+    "texto": "Las escenas siguen modelos occidentales, como los marfiles con ciclos cortos de cuatro escenas y el ciclo de San Apolinar el Nuevo de Rávena.",
+    "nivel": "I",
+    "atribucion": "Schlunk",
+    "fuente": {
+      "titulo": "Schlunk, «La pilastra de San Salvador de Toledo», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "244-249"
+    },
+    "palabrasClave": [
+      "marfiles",
+      "modelos",
+      "ravena"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-san-bartolome-01",
+    "parada": "san-bartolome",
+    "texto": "En la torre de San Bartolomé hay empotrado un rosetón visigodo unido a otros adornos.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Zamorano Herrera, «Caracteres del arte visigodo en Toledo», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "91"
+    },
+    "palabrasClave": [
+      "rosetas",
+      "roseton",
+      "torre"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "El relato describe un friso continuo de placas, una saetera y una flor de diez pétalos: falta el catálogo pieza a pieza (Regia Sedes Toletana, 2007). Quitar la relación con el taller de Guarrazar y atribuir o quitar el simbolismo de las rosetas.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-san-bartolome-02",
+    "parada": "san-bartolome",
+    "texto": "En el ábside de San Bartolomé está empotrado un rosetón visigodo de ocho pétalos, del siglo VI o de principios del VII.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Zamorano Herrera, «Caracteres del arte visigodo en Toledo», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "91"
+    },
+    "palabrasClave": [
+      "abside",
+      "ocho petalos",
+      "roseton",
+      "siglo vi"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-san-bartolome-03",
+    "parada": "san-bartolome",
+    "texto": "En los muros de la iglesia hay otras piedras de talla visigoda, una con un frisito en ángulo y otra con una voluta.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Zamorano Herrera, «Caracteres del arte visigodo en Toledo», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "89, 93"
+    },
+    "palabrasClave": [
+      "friso",
+      "muro",
+      "voluta"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-santo-tome-01",
+    "parada": "santo-tome",
+    "texto": "La torre de Santo Tomé se sitúa hacia 1300.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Pérez Montoya, «Las columnas de cerámica vidriada de la torre de Santo Tomé», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "37-38"
+    },
+    "palabrasClave": [
+      "1300",
+      "fecha",
+      "mudejar",
+      "torre"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "El relato dice «de principios del siglo XIV»: decir «hacia 1300».",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-santo-tome-02",
+    "parada": "santo-tome",
+    "texto": "La reforma de la torre por Gonzalo Ruiz de Toledo, señor de Orgaz, se fecha a finales del siglo XIII o principios del XIV.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Pérez Montoya, «Las columnas de cerámica vidriada de la torre de Santo Tomé», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "27"
+    },
+    "palabrasClave": [
+      "gonzalo ruiz de toledo",
+      "reforma",
+      "senor de orgaz"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-santo-tome-03",
+    "parada": "santo-tome",
+    "texto": "Las columnillas de la torre alternan vidriados verdes y melados.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Pérez Montoya, «Las columnas de cerámica vidriada de la torre de Santo Tomé», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "34"
+    },
+    "palabrasClave": [
+      "ceramica",
+      "columnillas",
+      "vidriado"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-santo-tome-04",
+    "parada": "santo-tome",
+    "texto": "El Greco pintó El entierro del señor de Orgaz entre 1586 y 1588.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Turismo de Castilla-La Mancha, ficha «Iglesia de Santo Tomé»"
+    },
+    "palabrasClave": [
+      "conde de orgaz",
+      "cuadro",
+      "el greco",
+      "entierro"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-santo-tome-05",
+    "parada": "santo-tome",
+    "texto": "En la torre y en el muro de ladrillo de Santo Tomé hay piezas visigodas empotradas: una hornacina, un fragmento de pilastrilla o friso y una celosía.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Zamorano Herrera, «Caracteres del arte visigodo en Toledo», Real Academia de Bellas Artes y Ciencias Históricas de Toledo",
+      "pagina": "76, 83, 94"
+    },
+    "palabrasClave": [
+      "celosia",
+      "friso",
+      "hornacina",
+      "piezas visigodas"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "El relato llama renacentista a la hornacina con concha de la torre; Zamorano y Turismo de CLM la dan como visigoda. Comprobar in situ.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-covarrubias-01",
+    "parada": "covarrubias",
+    "texto": "La iglesia del monasterio de San Clemente fue rehecha por completo por Alonso de Covarrubias en el siglo XVI.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Nicolau Castro (2022), Luz a los conventos toledanos, Real Academia de Bellas Artes y Ciencias Históricas de Toledo y La Tribuna de Toledo",
+      "pagina": "25"
+    },
+    "palabrasClave": [
+      "covarrubias",
+      "renacimiento",
+      "san clemente"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "Falta fuente de la atribución de la portada a Covarrubias y de su fecha (el relato dice hacia 1530).",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-castillo-guadamur-01",
+    "parada": "castillo-guadamur",
+    "texto": "El fundador del castillo de Guadamur fue Pedro López de Ayala, llamado el Mozo.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "De la Fuente Escribano (2019), «La restauración del castillo de Guadamur en el siglo XIX como expresión del romanticismo en España», Espacio, Tiempo y Forma, Serie VII, 7",
+      "pagina": "233"
+    },
+    "palabrasClave": [
+      "fuensalida",
+      "fundador",
+      "lopez de ayala"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "El relato lo llama «primer conde de Fuensalida»: confirmar que es la misma persona.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-castillo-guadamur-02",
+    "parada": "castillo-guadamur",
+    "texto": "La construcción empezó probablemente hacia 1468, y la primera fase (palacio, torre del homenaje, foso y barrera) iría de 1466 a 1472.",
+    "nivel": "I",
+    "atribucion": "De la Fuente Escribano (2019)",
+    "fuente": {
+      "titulo": "De la Fuente Escribano (2019), «La restauración del castillo de Guadamur en el siglo XIX como expresión del romanticismo en España», Espacio, Tiempo y Forma, Serie VII, 7",
+      "pagina": "233"
+    },
+    "palabrasClave": [
+      "1468",
+      "construccion",
+      "fecha",
+      "siglo xv"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "El relato dice que en 1470 ya estaba terminado; la entrevista F12 dice 1417. Usar esta cronología.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-castillo-guadamur-03",
+    "parada": "castillo-guadamur",
+    "texto": "La torre del homenaje mide unos 10 × 15 m de base y 30 m de alto, y la rematan seis garitas.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "De la Fuente Escribano (2019), «La restauración del castillo de Guadamur en el siglo XIX como expresión del romanticismo en España», Espacio, Tiempo y Forma, Serie VII, 7",
+      "pagina": "234-235"
+    },
+    "palabrasClave": [
+      "garitas",
+      "medidas",
+      "torre del homenaje"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-castillo-guadamur-04",
+    "parada": "castillo-guadamur",
+    "texto": "Los espolones triangulares del castillo son raros: en España solo se conocen aquí y en Cuzcurrita del Río Tirón.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "De la Fuente Escribano (2019), «La restauración del castillo de Guadamur en el siglo XIX como expresión del romanticismo en España», Espacio, Tiempo y Forma, Serie VII, 7",
+      "pagina": "234, n. 11"
+    },
+    "palabrasClave": [
+      "defensa",
+      "espolones"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-castillo-guadamur-05",
+    "parada": "castillo-guadamur",
+    "texto": "Carlos Morenés y Tord, conde del Asalto, compró el castillo en 1887 y lo restauró entre 1887 y 1900.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "De la Fuente Escribano (2019), «La restauración del castillo de Guadamur en el siglo XIX como expresión del romanticismo en España», Espacio, Tiempo y Forma, Serie VII, 7",
+      "pagina": "231, 248"
+    },
+    "palabrasClave": [
+      "1887",
+      "1900",
+      "conde del asalto",
+      "restauracion"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-castillo-guadamur-06",
+    "parada": "castillo-guadamur",
+    "texto": "La gran escalera neogótica la construyó el restaurador; no consta que hubiera una anterior.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "De la Fuente Escribano (2019), «La restauración del castillo de Guadamur en el siglo XIX como expresión del romanticismo en España», Espacio, Tiempo y Forma, Serie VII, 7",
+      "pagina": "251"
+    },
+    "palabrasClave": [
+      "escalera",
+      "neogotica",
+      "zaguan"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "El relato dice que la escalera primitiva sigue enfrente: quitarlo. Falta fuente del verso de la Salve del friso.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-casa-munecas-01",
+    "parada": "casa-munecas",
+    "texto": "El museo reúne muñecas españolas de los años sesenta, setenta y ochenta.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Blog «Las muñecas de Salyperla», de la autora de la colección (2024)"
+    },
+    "palabrasClave": [
+      "anos sesenta",
+      "coleccion",
+      "munecas"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "Confirmar con la autora: empezó en 2004, más de mil muñecas, apertura en otoño de 2022.",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-casa-munecas-02",
+    "parada": "casa-munecas",
+    "texto": "Su autora montó el museo en tres meses.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Blog «Las muñecas de Salyperla», de la autora de la colección (2024)"
+    },
+    "palabrasClave": [
+      "salyperla"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-casa-munecas-03",
+    "parada": "casa-munecas",
+    "texto": "Una de las muñecas es la Loli de Richard Regalado en el papel de Juana I de Castilla.",
+    "nivel": "D",
+    "fuente": {
+      "titulo": "Blog «Las muñecas de Salyperla», de la autora de la colección (2024)"
+    },
+    "palabrasClave": [
+      "juana i",
+      "loli",
+      "richard regalado"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
+  },
+  {
+    "id": "claim-casa-munecas-04",
+    "parada": "casa-munecas",
+    "texto": "Según se cuenta en Guadamur, Juana, siendo princesa y casada con Felipe el Hermoso, visitó el castillo y fue agasajada.",
+    "nivel": "T",
+    "fuente": {
+      "titulo": "Blog «Las muñecas de Salyperla», de la autora de la colección (2024)"
+    },
+    "palabrasClave": [
+      "castillo",
+      "felipe el hermoso",
+      "juana",
+      "leyenda"
+    ],
+    "origen": "FM-04 (borrador v0.1)",
+    "revisar": "",
+    "estado": "borrador"
   }
 ]
