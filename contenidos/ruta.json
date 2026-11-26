@@ -330,7 +330,8 @@
    "audio": "g1.mp3",
    "audiolabel": "Locución",
    "photos": [
-    "PAISAJE3D"
+    "PAISAJE3D",
+    "DSC01459"
    ],
    "hero": "PAISAJE3D",
    "coordnote": "Ubicación pendiente de toma en campo",
@@ -359,10 +360,14 @@
    "guion": "Estás en la puerta de una iglesia que ya no existe. O casi.\nMira al suelo. Esas zanjas abiertas en la roca son los cimientos de los muros. Y esas piedras blancas que asoman son las basas, las piezas sobre las que se apoyaban las columnas. Si te fijas, no son iguales: unas tienen ocho lados, otras son redondas. Los constructores las trajeron de edificios romanos más antiguos. Reciclaje del siglo VII.\nAhora imagina. Tres naves, casi quince metros de ancho. Columnas de mármol en dos filas. Un suelo de losas grises que brillaba con la luz de las ventanas. Al fondo, el altar, separado por una barandilla de mármol tallado. Y sobre el altar, colgando de cadenas de oro, las coronas.\nPorque esas coronas no se hicieron para ponerlas en la cabeza de nadie. Se colgaban. Eran ofrendas. Un rey, un abad, un noble devoto encargaban una corona, grababan en ella su nombre, y la regalaban al santuario. En una de ellas se lee: «Suintila rey la ofrece». En otra, «Recesvinto rey la ofrece». Una cruz lleva el nombre de su donante, Sonnica, y el de Santa María de Sorbaces.\n¿Cuánto medía esta iglesia? Los arqueólogos han hecho cuentas. Conocen el ancho y la distancia entre columnas, y calculan unos treinta metros de largo y más de catorce de altura en la nave central. Es una hipótesis: la cabecera, donde estaba el altar, sigue bajo tierra.\nY ¿por qué queda tan poco? Cuando el reino visigodo cayó, la iglesia se abandonó. La gente construyó casas dentro. Después se llevaron las piedras, una a una, durante siglos. Hasta hubo un horno dentro de la nave, quizá para hacer cal con el mármol.\nAhora levanta el móvil. Vas a ver la basílica como pudo ser.",
    "audio": "g2.mp3",
    "audiolabel": "Locución",
-   "photos": [],
+   "photos": [
+    "DSC01448",
+    "DSC01451"
+   ],
    "lat": 39.815707,
    "lon": -4.119209,
-   "coordnote": "39.815707, -4.119209 (toma de campo)"
+   "coordnote": "39.815707, -4.119209 (toma de campo)",
+   "hero": "DSC01448"
   },
   {
    "id": "guarrazar-3",
@@ -562,7 +567,8 @@
    "audiolabel": "Locución",
    "photos": [
     "VB02",
-    "VB07"
+    "VB07",
+    "DSC01504"
    ],
    "hero": "VB02",
    "coordnote": "Ubicación pendiente de toma en campo"
@@ -582,7 +588,10 @@
    "audiolabel": "Locución",
    "photos": [
     "VB03",
-    "VB04"
+    "VB04",
+    "DSC01507",
+    "DSC01509",
+    "DSC01513"
    ],
    "hero": "VB03",
    "lat": 39.867655,
@@ -870,7 +879,9 @@
    "guion": "Esa torre es la de Cervatos. Está en una finca privada, así que la miramos desde aquí.\nAhora fíjate en el camino. Por esta zona pasaba la ruta más corta entre Toledo y Mérida, dos de las grandes ciudades de Hispania. Guarrazar queda a poco más de un kilómetro al norte.\nTres fortalezas en pocos kilómetros: Cervatos, Guadamur y Polán. No vigilaban campos, sino caminos. Quien controlaba los caminos controlaba el comercio, los viajeros y las noticias. Y un santuario junto a una gran ruta estaba al alcance de muchos peregrinos.",
    "audio": "r6.mp3",
    "audiolabel": "Locución",
-   "photos": [],
+   "photos": [
+    "DSC01484"
+   ],
    "lat": 39.802321,
    "lon": -4.110331,
    "coordnote": "Google Maps; finca privada, se ve desde el camino",
@@ -878,7 +889,8 @@
    "px": [
     41.69,
     61.85
-   ]
+   ],
+   "hero": "DSC01484"
   },
   {
    "id": "territorio-7",
@@ -916,7 +928,11 @@
    "guion": "Este es el castillo de Polán, la tercera fortaleza del recorrido.\nDesde aquí salía un camino hacia el sur, hacia Noez, Cuerva y los Montes de Toledo. Venía del norte, de un lugar llamado Portusa, donde se cruzaba el Tajo en barca.\nCervatos, Polán, Guadamur. Si unes los tres en un mapa, verás que no están puestos al azar: cada uno mira a un camino. Vamos ahora a Guadamur, donde todos esos caminos se cruzan.",
    "audio": "r8.mp3",
    "audiolabel": "Locución",
-   "photos": [],
+   "photos": [
+    "DSC01494",
+    "DSC01487",
+    "DSC01499"
+   ],
    "lat": 39.790435,
    "lon": -4.16854,
    "coordnote": "Google Maps; por verificar en campo",
@@ -924,7 +940,8 @@
    "px": [
     20.63,
     66.95
-   ]
+   ],
+   "hero": "DSC01494"
   },
   {
    "id": "territorio-9",
@@ -4309,6 +4326,193 @@
     [
      "p",
      "Vista aérea de la reconstrucción hipotética del santuario integrada en el paisaje actual. A la izquierda, el edificio del manantial y la capilla funeraria de Crispín; a la derecha, la basílica y el hospital de peregrinos. El posible palacio-monasterio se representa solo con su huella en el terreno."
+    ]
+   ]
+  },
+  "DSC01494": {
+   "title": "Castillo de Polán desde la plaza, con la torre del homenaje y los restos del muro",
+   "table": [
+    [
+     "Elemento principal",
+     "Castillo de Polán desde la plaza, con la torre del homenaje y los restos del muro"
+    ],
+    [
+     "Autor",
+     "Federico García Alva (sesión de noviembre de 2026)"
+    ],
+    [
+     "Original",
+     "Drive del piloto, fotos/nuevas noviembre/DSC01494.JPG"
+    ]
+   ]
+  },
+  "DSC01487": {
+   "title": "Torre del homenaje del castillo de Polán",
+   "table": [
+    [
+     "Elemento principal",
+     "Torre del homenaje del castillo de Polán"
+    ],
+    [
+     "Autor",
+     "Federico García Alva (sesión de noviembre de 2026)"
+    ],
+    [
+     "Original",
+     "Drive del piloto, fotos/nuevas noviembre/DSC01487.JPG"
+    ]
+   ]
+  },
+  "DSC01499": {
+   "title": "Castillo de Polán a contraluz, con la torre del homenaje y un torreón",
+   "table": [
+    [
+     "Elemento principal",
+     "Castillo de Polán a contraluz, con la torre del homenaje y un torreón"
+    ],
+    [
+     "Autor",
+     "Federico García Alva (sesión de noviembre de 2026)"
+    ],
+    [
+     "Original",
+     "Drive del piloto, fotos/nuevas noviembre/DSC01499.JPG"
+    ]
+   ]
+  },
+  "DSC01484": {
+   "title": "La Torre de Cervatos entre árboles, al fondo de un camino de tierra y un campo arado",
+   "table": [
+    [
+     "Elemento principal",
+     "La Torre de Cervatos entre árboles, al fondo de un camino de tierra y un campo arado"
+    ],
+    [
+     "Autor",
+     "Federico García Alva (sesión de noviembre de 2026)"
+    ],
+    [
+     "Original",
+     "Drive del piloto, fotos/nuevas noviembre/DSC01484.JPG"
+    ]
+   ]
+  },
+  "DSC01504": {
+   "title": "Restos de la gran calle en la Vega Baja, con el peñón de Toledo al fondo",
+   "table": [
+    [
+     "Elemento principal",
+     "Restos de la gran calle en la Vega Baja, con el peñón de Toledo al fondo"
+    ],
+    [
+     "Autor",
+     "Federico García Alva (sesión de noviembre de 2026)"
+    ],
+    [
+     "Original",
+     "Drive del piloto, fotos/nuevas noviembre/DSC01504.JPG"
+    ]
+   ]
+  },
+  "DSC01507": {
+   "title": "Muros de piedra de una casa excavada en la Vega Baja",
+   "table": [
+    [
+     "Elemento principal",
+     "Muros de piedra de una casa excavada en la Vega Baja"
+    ],
+    [
+     "Autor",
+     "Federico García Alva (sesión de noviembre de 2026)"
+    ],
+    [
+     "Original",
+     "Drive del piloto, fotos/nuevas noviembre/DSC01507.JPG"
+    ]
+   ]
+  },
+  "DSC01509": {
+   "title": "Muros de una vivienda excavada en la Vega Baja",
+   "table": [
+    [
+     "Elemento principal",
+     "Muros de una vivienda excavada en la Vega Baja"
+    ],
+    [
+     "Autor",
+     "Federico García Alva (sesión de noviembre de 2026)"
+    ],
+    [
+     "Original",
+     "Drive del piloto, fotos/nuevas noviembre/DSC01509.JPG"
+    ]
+   ]
+  },
+  "DSC01513": {
+   "title": "Restos de muros de un edificio excavado en la Vega Baja",
+   "table": [
+    [
+     "Elemento principal",
+     "Restos de muros de un edificio excavado en la Vega Baja"
+    ],
+    [
+     "Autor",
+     "Federico García Alva (sesión de noviembre de 2026)"
+    ],
+    [
+     "Original",
+     "Drive del piloto, fotos/nuevas noviembre/DSC01513.JPG"
+    ]
+   ]
+  },
+  "DSC01459": {
+   "title": "Vista general del yacimiento de Guarrazar entre olivos",
+   "table": [
+    [
+     "Elemento principal",
+     "Vista general del yacimiento de Guarrazar entre olivos"
+    ],
+    [
+     "Autor",
+     "Federico García Alva (sesión de noviembre de 2026)"
+    ],
+    [
+     "Original",
+     "Drive del piloto, fotos/nuevas noviembre/DSC01459.JPG"
+    ]
+   ]
+  },
+  "DSC01448": {
+   "title": "Zanjas de cimentación y basas de mármol de la basílica de Guarrazar",
+   "table": [
+    [
+     "Elemento principal",
+     "Zanjas de cimentación y basas de mármol de la basílica de Guarrazar"
+    ],
+    [
+     "Autor",
+     "Federico García Alva (sesión de noviembre de 2026)"
+    ],
+    [
+     "Original",
+     "Drive del piloto, fotos/nuevas noviembre/DSC01448.JPG"
+    ]
+   ]
+  },
+  "DSC01451": {
+   "title": "Basa de mármol de una columna de la basílica de Guarrazar",
+   "table": [
+    [
+     "Elemento principal",
+     "Basa de mármol de una columna de la basílica de Guarrazar"
+    ],
+    [
+     "Autor",
+     "Federico García Alva (sesión de noviembre de 2026)"
+    ],
+    [
+     "Original",
+     "Drive del piloto, fotos/nuevas noviembre/DSC01451.JPG"
     ]
    ]
   }

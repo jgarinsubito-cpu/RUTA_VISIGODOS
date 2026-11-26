@@ -1,6 +1,6 @@
 # Informe de importación
 
-Generado el 2026-11-26 13:06 UTC con los textos de `contenidos/ruta.json` y los medios de `/home/claude/tour`.
+Generado el 2026-11-26 14:25 UTC con los textos de `contenidos/ruta.json` y los medios de `/home/claude/tour`.
 
 ## Resultado
 
@@ -88,6 +88,17 @@ Faltan autor, licencia o URL de origen en `creditos-imagenes.csv`. Plantilla con
 - DSC00952
 - DSC00955
 - DSC00956
+- DSC01448
+- DSC01451
+- DSC01459
+- DSC01484
+- DSC01487
+- DSC01494
+- DSC01499
+- DSC01504
+- DSC01507
+- DSC01509
+- DSC01513
 - FC02
 - FC03
 - LAS_PIEZAS_DE_LAS_VITRINAS

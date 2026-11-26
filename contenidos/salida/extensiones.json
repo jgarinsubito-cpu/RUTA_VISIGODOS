@@ -346,6 +346,12 @@
         "src": "/images/ruta/PAISAJE3D.jpg",
         "alt": "Reconstrucción hipotética del santuario en el paisaje",
         "conCreditos": false
+      },
+      {
+        "archivo": "DSC01459",
+        "src": "/images/ruta/DSC01459.jpg",
+        "alt": "Vista general del yacimiento de Guarrazar entre olivos",
+        "conCreditos": false
       }
     ],
     "figura": null,
@@ -355,7 +361,20 @@
     "stopId": "stop-guarrazar-2",
     "siteId": "site-yacimiento-guarrazar",
     "paradaOrigen": "guarrazar-2",
-    "galeriaCompleta": [],
+    "galeriaCompleta": [
+      {
+        "archivo": "DSC01448",
+        "src": "/images/ruta/DSC01448.jpg",
+        "alt": "Zanjas de cimentación y basas de mármol de la basílica de Guarrazar",
+        "conCreditos": false
+      },
+      {
+        "archivo": "DSC01451",
+        "src": "/images/ruta/DSC01451.jpg",
+        "alt": "Basa de mármol de una columna de la basílica de Guarrazar",
+        "conCreditos": false
+      }
+    ],
     "figura": null,
     "notaCoordenadas": "39.815707, -4.119209 (toma de campo)"
   },
@@ -422,6 +441,12 @@
         "src": "/images/ruta/VB07.jpg",
         "alt": "Del georradar a la excavación",
         "conCreditos": false
+      },
+      {
+        "archivo": "DSC01504",
+        "src": "/images/ruta/DSC01504.jpg",
+        "alt": "Restos de la gran calle en la Vega Baja, con el peñón de Toledo al fondo",
+        "conCreditos": false
       }
     ],
     "figura": null,
@@ -442,6 +467,24 @@
         "archivo": "VB04",
         "src": "/images/ruta/VB04.jpg",
         "alt": "Cómo se levantaba un muro",
+        "conCreditos": false
+      },
+      {
+        "archivo": "DSC01507",
+        "src": "/images/ruta/DSC01507.jpg",
+        "alt": "Muros de piedra de una casa excavada en la Vega Baja",
+        "conCreditos": false
+      },
+      {
+        "archivo": "DSC01509",
+        "src": "/images/ruta/DSC01509.jpg",
+        "alt": "Muros de una vivienda excavada en la Vega Baja",
+        "conCreditos": false
+      },
+      {
+        "archivo": "DSC01513",
+        "src": "/images/ruta/DSC01513.jpg",
+        "alt": "Restos de muros de un edificio excavado en la Vega Baja",
         "conCreditos": false
       }
     ],
@@ -570,7 +613,14 @@
     "stopId": "stop-territorio-6",
     "siteId": "site-territorio-6",
     "paradaOrigen": "territorio-6",
-    "galeriaCompleta": [],
+    "galeriaCompleta": [
+      {
+        "archivo": "DSC01484",
+        "src": "/images/ruta/DSC01484.jpg",
+        "alt": "La Torre de Cervatos entre árboles, al fondo de un camino de tierra y un campo arado",
+        "conCreditos": false
+      }
+    ],
     "figura": null,
     "notaCoordenadas": "Google Maps; finca privada, se ve desde el camino"
   },
@@ -586,7 +636,26 @@
     "stopId": "stop-territorio-8",
     "siteId": "site-territorio-8",
     "paradaOrigen": "territorio-8",
-    "galeriaCompleta": [],
+    "galeriaCompleta": [
+      {
+        "archivo": "DSC01494",
+        "src": "/images/ruta/DSC01494.jpg",
+        "alt": "Castillo de Polán desde la plaza, con la torre del homenaje y los restos del muro",
+        "conCreditos": false
+      },
+      {
+        "archivo": "DSC01487",
+        "src": "/images/ruta/DSC01487.jpg",
+        "alt": "Torre del homenaje del castillo de Polán",
+        "conCreditos": false
+      },
+      {
+        "archivo": "DSC01499",
+        "src": "/images/ruta/DSC01499.jpg",
+        "alt": "Castillo de Polán a contraluz, con la torre del homenaje y un torreón",
+        "conCreditos": false
+      }
+    ],
     "figura": null,
     "notaCoordenadas": "Google Maps; por verificar en campo"
   },
