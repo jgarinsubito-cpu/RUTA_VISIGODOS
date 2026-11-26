@@ -41,13 +41,21 @@ python3 aplicar_validacion.py Validacion.xlsx --validador "J. M. Rojas"
 
 Después se vuelve a ejecutar el importador. Para ver cómo quedaría todo con los borradores, `--incluir-borradores` (nunca junto con `--subir`).
 
+## Dónde se editan los textos
+
+La web app es la fuente de los contenidos. Los textos de recorridos y paradas (nombres, títulos, relatos, guiones) están en `ruta.json`, junto a la configuración, y se corrigen ahí; el prototipo ya no se edita. Del prototipo solo se toman los medios (`img/`, `audio/`, `3d/`), con `--origen`.
+
+Cuando se corrige un relato que tiene locución, se marca la parada con `"audioPendiente": true`: el importador deja fuera la locución antigua, que ya no coincide, y la lista en el informe. Al regrabarla, se pone el archivo nuevo en `audio/` con el mismo nombre y se quita la marca.
+
+Una vez subidos al gestor (`/admin`), los cambios de contenido se hacen en el gestor, con revisión y validación (docs/ADMIN.md).
+
 ## Cómo se usa
 
 Desde `web/`:
 
 ```bash
 # 1. Comprobar y generar la salida (no toca nada más)
-npx tsx scripts/importar-contenidos.ts --origen <carpeta del prototipo con data.json, img/, audio/, 3d/>
+npx tsx scripts/importar-contenidos.ts --origen <carpeta de medios del prototipo, con img/, audio/, 3d/>
 
 # 2. Leer contenidos/salida/informe.md y corregir lo que haga falta
 
@@ -77,6 +85,3 @@ NEXT_PUBLIC_SUPABASE_URL=… NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=… GESTOR_EMA
 - Horarios y accesibilidad quedan «sin verificar» hasta que producción los compruebe.
 - Las coordenadas son aproximadas salvo las de «toma de campo». Las paradas sin coordenada usan el centro de su recorrido y salen en el informe.
 
-## Relatos corregidos (`relatos.json`)
-
-Sustituyen el nombre, el título o el texto de una parada del prototipo cuando hay que corregirlo (por ejemplo, tras la validación de FM-04). Mientras `audioPendiente` sea `true`, el importador deja fuera la locución antigua, porque ya no coincide con el texto; cuando se regrabe, se pone el nuevo archivo en el prototipo y se quita `audioPendiente`. El informe de importación lista los relatos sustituidos y las locuciones por regrabar.

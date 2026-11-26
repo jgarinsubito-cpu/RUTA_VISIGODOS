@@ -7,7 +7,9 @@ from openpyxl.formatting.rule import FormulaRule
 
 origen = sys.argv[1]; salida = sys.argv[2]
 af = json.load(open("afirmaciones.json"))
-data = json.load(open(f"{origen}/data.json"))
+import os
+_ruta = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ruta.json")
+data = json.load(open(_ruta if os.path.exists(_ruta) else f"{origen}/data.json"))
 stops = {s["id"]: s for s in data["stops"]}
 # Afirmaciones de las piezas de museo (piezas.json): cada pieza cuenta como una «parada» de la tabla.
 import os

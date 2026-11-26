@@ -19,8 +19,9 @@
  *   creditos-imagenes.csv  autor, licencia y URL de cada imagen; sin ellos, la imagen no se publica.
  *   afirmaciones.json      afirmaciones validadas por parada; sin ellas, los relatos no entran como
  *                          historias (el gestor exige que cada historia cite al menos una).
- *   relatos.json           relatos corregidos que sustituyen a los del prototipo; con «audioPendiente»
- *                          la locución antigua se deja fuera hasta que se regrabe.
+ *   ruta.json              textos de recorridos y paradas (la fuente de la web app); con --origen solo
+ *                          se toman los medios del prototipo. Una parada con «audioPendiente» deja fuera
+ *                          su locución antigua hasta que se regrabe.
  */
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
@@ -80,6 +81,8 @@ interface ParadaFuente {
   approx?: boolean;
   coordnote?: string;
   info?: string;
+  /** El relato cambió y la locución está por regrabar. */
+  audioPendiente?: boolean;
   models3d?: Modelo3dFuente[];
   fig3d?: { img: string; cap?: string; src?: string };
 }
@@ -330,39 +333,20 @@ const csvField = (v: string) => (/[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"`
 
 /* ---------- Lectura ---------- */
 
-const fuente = JSON.parse(fs.readFileSync(path.join(origen, "data.json"), "utf8")) as Fuente;
+/* Textos de la ruta: contenidos/ruta.json, que es la fuente de la web app (los textos se corrigen ahí).
+ * El prototipo solo aporta los medios (img/, audio/, 3d/) en --origen. Sin ruta.json se lee el
+ * data.json del prototipo, como antes. */
+const rutaPath = path.join(configDir, "ruta.json");
+const fuentePath = fs.existsSync(rutaPath) ? rutaPath : path.join(origen, "data.json");
+const fuente = JSON.parse(fs.readFileSync(fuentePath, "utf8")) as Fuente;
 const config = JSON.parse(fs.readFileSync(configPath, "utf8")) as Config;
 
-/* Relatos corregidos (contenidos/relatos.json): sustituyen el nombre, el título o el texto de una
- * parada del prototipo. Mientras «audioPendiente» sea true, la locución antigua no se importa,
- * porque ya no coincide con el texto. */
-interface RelatoCorregido {
-  name?: string;
-  title?: string;
-  sub?: string;
-  text: string;
-  audioPendiente?: boolean;
-  motivo?: string;
-}
-const relatosPath = path.join(configDir, "relatos.json");
-const relatosCorregidos: Record<string, RelatoCorregido> = fs.existsSync(relatosPath)
-  ? ((JSON.parse(fs.readFileSync(relatosPath, "utf8")) as { paradas: Record<string, RelatoCorregido> }).paradas ?? {})
-  : {};
-const relatosAplicados: string[] = [];
+/* Paradas con «audioPendiente»: su relato cambió y la locución antigua ya no coincide; no se importa
+ * hasta que se regrabe (se pone el archivo nuevo en audio/ y se quita la marca). */
 const audiosPorRegrabar: string[] = [];
-for (const [id, r] of Object.entries(relatosCorregidos)) {
-  const parada = fuente.stops.find((p) => p.id === id);
-  if (!parada) {
-    console.error(`relatos.json: la parada «${id}» no existe en el prototipo.`);
-    process.exit(1);
-  }
-  if (r.name) parada.name = r.name;
-  if (r.title) parada.title = r.title;
-  if (r.sub) parada.sub = r.sub;
-  parada.text = r.text;
-  relatosAplicados.push(id);
-  if (r.audioPendiente && parada.audio) {
-    audiosPorRegrabar.push(`${id} (${parada.audio})`);
+for (const parada of fuente.stops) {
+  if (parada.audioPendiente && parada.audio) {
+    audiosPorRegrabar.push(`${parada.id} (${parada.audio})`);
     parada.audio = undefined;
   }
 }
@@ -986,7 +970,7 @@ fs.writeFileSync(path.join(salida, "creditos-imagenes.plantilla.csv"), `﻿${pla
 const lista = (items: string[]) => (items.length ? items.map((i) => `- ${i}`).join("\n") : "- Nada.");
 const informe = `# Informe de importación
 
-Generado el ${new Date().toISOString().slice(0, 16).replace("T", " ")} UTC desde \`${origen}\`.
+Generado el ${new Date().toISOString().slice(0, 16).replace("T", " ")} UTC con los textos de \`${path.relative(path.join(webDir, ".."), fuentePath)}\` y los medios de \`${origen}\`.
 
 ## Resultado
 
@@ -1010,15 +994,9 @@ ${lista(errores)}
 
 ${lista(advertencias)}
 
-## Relatos corregidos
+## Locuciones por regrabar
 
-Sustituyen al texto del prototipo (\`relatos.json\`).
-
-${lista(relatosAplicados)}
-
-### Locuciones por regrabar
-
-No se importan hasta que se regraben, porque no coinciden con el relato corregido.
+Su relato se ha corregido en \`ruta.json\` y la locución antigua ya no coincide: no se importan hasta que se regraben.
 
 ${lista(audiosPorRegrabar)}
 
