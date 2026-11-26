@@ -323,6 +323,7 @@
         "claim-pieza-concilios-placa-tamujas-01",
         "claim-pieza-concilios-placa-tamujas-02",
         "claim-pieza-concilios-placa-tamujas-03",
+        "claim-pieza-concilios-placa-tamujas-04",
         "claim-pieza-concilios-capiteles-san-roman-01",
         "claim-pieza-concilios-capiteles-san-roman-02",
         "claim-pieza-concilios-capiteles-san-roman-03"
@@ -1969,10 +1970,10 @@
       "images": [
         {
           "src": "/media/piezas/concilios-relieve-san-lucas.jpg",
-          "width": 1200,
+          "width": 1535,
           "height": 1600,
           "alt": "Bloque de piedra con un toro alado en relieve sobre fondo rebajado, enmarcado por una moldura.",
-          "credit": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
           "permission": "pending"
         }
       ],
@@ -1999,9 +2000,9 @@
         {
           "src": "/media/piezas/concilios-inscripcion-ritmica.jpg",
           "width": 1600,
-          "height": 1200,
+          "height": 1270,
           "alt": "Tablero de piedra roto en varios fragmentos, cubierto de líneas de letras latinas grabadas.",
-          "credit": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
           "permission": "pending"
         }
       ],
@@ -2028,9 +2029,9 @@
         {
           "src": "/media/piezas/concilios-inscripcion-ti-domini.jpg",
           "width": 1600,
-          "height": 1200,
+          "height": 1138,
           "alt": "Fragmento de friso de piedra con las letras TI DOMINI entre dos bandas de círculos enlazados con rosetas.",
-          "credit": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
           "permission": "pending"
         }
       ],
@@ -2059,9 +2060,9 @@
         {
           "src": "/media/piezas/concilios-inscripcion-qui-credit.jpg",
           "width": 1600,
-          "height": 1200,
+          "height": 1067,
           "alt": "Bloque de friso de piedra con una línea de letras latinas entre dos cenefas de círculos enlazados.",
-          "credit": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
           "permission": "pending"
         }
       ],
@@ -2089,9 +2090,9 @@
         {
           "src": "/media/piezas/concilios-capitel-escalona.jpg",
           "width": 1600,
-          "height": 1200,
+          "height": 1308,
           "alt": "Medio capitel de piedra con volutas en las esquinas y un pequeño ciervo grabado en la cara central.",
-          "credit": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
           "permission": "pending"
         }
       ],
@@ -2118,10 +2119,10 @@
       "images": [
         {
           "src": "/media/piezas/concilios-placa-nicho.jpg",
-          "width": 1600,
-          "height": 1200,
+          "width": 1512,
+          "height": 1520,
           "alt": "Fragmento de piedra con una venera en abanico tallada sobre una fila de triángulos, sobre una peana negra.",
-          "credit": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
           "permission": "pending"
         }
       ],
@@ -2147,10 +2148,10 @@
       "images": [
         {
           "src": "/media/piezas/concilios-credo-epigrafico.jpg",
-          "width": 1200,
-          "height": 1600,
+          "width": 1600,
+          "height": 1185,
           "alt": "Dos fragmentos de piedra con letras grabadas, encajados en un panel claro donde está escrito el resto del texto en latín.",
-          "credit": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
           "permission": "pending"
         }
       ],
@@ -2176,7 +2177,16 @@
       "date": "Siglo VII",
       "description": "Imposta decorada con semicírculos imbricados con botón central y trifolios.",
       "labelText": "Imposta\nCaliza / Siglo VII.\nToledo, Vega Baja.\nDecorada con imbricación de semicírculos con botón central y trifolios.",
-      "images": [],
+      "images": [
+        {
+          "src": "/media/piezas/concilios-imposta.jpg",
+          "width": 1600,
+          "height": 1295,
+          "alt": "Bloque de piedra decorado con una fila de semicírculos imbricados con botón central, sobre una peana oscura.",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
+          "permission": "pending"
+        }
+      ],
       "claimIds": [
         "claim-pieza-concilios-imposta-01"
       ],
@@ -2199,10 +2209,10 @@
       "images": [
         {
           "src": "/media/piezas/concilios-friso-acanto.jpg",
-          "width": 1200,
-          "height": 1600,
+          "width": 1440,
+          "height": 1520,
           "alt": "Bloque de piedra con un tallo vegetal y grandes hojas talladas en relieve en su cara frontal.",
-          "credit": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
           "permission": "pending"
         }
       ],
@@ -2221,17 +2231,17 @@
       },
       "originSiteId": "site-vega-baja",
       "provenance": "Toledo, Vega Baja",
-      "material": "Sin confirmar",
+      "material": "Caliza",
       "date": "Siglo VII",
       "description": "Friso decorado con círculos secantes que forman flores de ocho pétalos.",
-      "labelText": "Friso\n[material ilegible en la foto] / Siglo VII\nToledo, Vega Baja\nCon decoración de círculos secantes que componen flores octopétalas.",
+      "labelText": "Friso\nCaliza / Siglo VII.\nToledo, Vega Baja.\nCon decoración de círculos secantes que componen flores octopetálas.",
       "images": [
         {
           "src": "/media/piezas/concilios-friso-octopetalas.jpg",
-          "width": 1200,
-          "height": 1600,
+          "width": 1600,
+          "height": 816,
           "alt": "Bloque alargado de piedra blanca con flores de ocho pétalos talladas en su cara frontal, en una vitrina oscura.",
-          "credit": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
           "permission": "pending"
         }
       ],
@@ -2257,9 +2267,9 @@
         {
           "src": "/media/piezas/concilios-friso-cruz-patada.jpg",
           "width": 1600,
-          "height": 1200,
+          "height": 830,
           "alt": "Bloque de piedra con una cruz dentro de un círculo y flores de cuatro pétalos talladas a ambos lados, junto a un muro de ladrillo.",
-          "credit": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
           "permission": "pending"
         }
       ],
@@ -2281,14 +2291,14 @@
       "material": "Material óseo",
       "date": "Siglos VI-VII",
       "description": "Fragmento de una arqueta cilíndrica de hueso tallado, con figuras bajo arco; la guía del museo propone que representa a Jesús y la samaritana en el pozo de Jacob.",
-      "labelText": "Arqueta\nMaterial óseo / Siglo VI-VII.\nToledo, Vega Baja.\n[resto de la cartela no visible en la foto]",
+      "labelText": "Arqueta\nMaterial óseo / Siglo VI-VII.\nToledo, Vega Baja.\nPosible escena del Nuevo Testamento, con el encuentro de Jesús con la Samaritana en el pozo.",
       "images": [
         {
           "src": "/media/piezas/concilios-arqueta.jpg",
-          "width": 1200,
-          "height": 1600,
-          "alt": "Placa de hueso tallada con figuras de pie bajo un arco, sobre un soporte en una vitrina oscura.",
-          "credit": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "width": 912,
+          "height": 896,
+          "alt": "Placa de hueso tallada: a la izquierda una figura de pie, en el centro un pozo bajo un arco y a la derecha otra figura.",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
           "permission": "pending"
         }
       ],
@@ -2318,10 +2328,10 @@
       "images": [
         {
           "src": "/media/piezas/concilios-llave.jpg",
-          "width": 1200,
-          "height": 1600,
-          "alt": "Llave de bronce con un anillo ovalado y un vástago corto con dientes, sobre fondo claro.",
-          "credit": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "width": 456,
+          "height": 768,
+          "alt": "Llave de bronce con anillo ovalado y vástago corto, sobre fondo blanco.",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
           "permission": "pending"
         }
       ],
@@ -2347,10 +2357,10 @@
       "images": [
         {
           "src": "/media/piezas/concilios-capitel-pencas.jpg",
-          "width": 1300,
-          "height": 1600,
+          "width": 1008,
+          "height": 1472,
           "alt": "Capitel de piedra blanca con dos volutas en espiral en la parte alta, sujeto a la pared de una vitrina.",
-          "credit": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
           "permission": "pending"
         }
       ],
@@ -2376,10 +2386,10 @@
       "images": [
         {
           "src": "/media/piezas/concilios-columnilla.jpg",
-          "width": 1200,
+          "width": 960,
           "height": 1600,
           "alt": "Columnilla de piedra gris con un collarino y un capitel con volutas en la parte alta, sujeta a la pared de una vitrina.",
-          "credit": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
           "permission": "pending"
         }
       ],
@@ -2434,10 +2444,10 @@
       "images": [
         {
           "src": "/media/piezas/concilios-fuste.jpg",
-          "width": 779,
+          "width": 816,
           "height": 1600,
           "alt": "Fuste de piedra de caras planas, sujeto a la pared de una vitrina oscura.",
-          "credit": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
           "permission": "pending"
         }
       ],
@@ -2462,10 +2472,10 @@
       "images": [
         {
           "src": "/media/piezas/concilios-coronas-guarrazar.jpg",
-          "width": 1200,
-          "height": 1600,
-          "alt": "Coronas votivas doradas con pedrería y cruces colgantes, suspendidas de cadenas en una vitrina oscura.",
-          "credit": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
+          "width": 1600,
+          "height": 1067,
+          "alt": "Varias coronas votivas doradas con cruces colgantes, suspendidas de cadenas en una sala oscura.",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
           "permission": "pending"
         }
       ],
@@ -2486,14 +2496,24 @@
       },
       "provenance": "Finca de las Tamujas, Malpica de Tajo (Toledo)",
       "material": "Mármol",
-      "date": "Siglos V-VI (Revuelta, 1973)",
+      "date": "Siglo VII (cartela del museo); siglos V-VI según la guía de 1973",
       "description": "Placa con un relieve a bisel de una figura de pie, uno de los escasos relieves figurados de época visigoda; su tema se discute.",
-      "labelText": "[sin fotografiar]",
-      "images": [],
+      "labelText": "Placa\nMármol / Siglo VII.\nFinca las Tamujas, Malpica de Tajo (Toledo).\nCon representación de una figura humana bajo una venera. Se ha identificado como una divinidad pagana, un santo predicador o Cristo en el momento de su bautismo. Con la mano derecha muestra una trifolia o paloma.",
+      "images": [
+        {
+          "src": "/media/piezas/concilios-placa-tamujas.jpg",
+          "width": 1152,
+          "height": 1600,
+          "alt": "Placa de mármol con una figura humana de pie bajo una venera, enmarcada por una orla de flores de cuatro pétalos.",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
+          "permission": "pending"
+        }
+      ],
       "claimIds": [
         "claim-pieza-concilios-placa-tamujas-01",
         "claim-pieza-concilios-placa-tamujas-02",
-        "claim-pieza-concilios-placa-tamujas-03"
+        "claim-pieza-concilios-placa-tamujas-03",
+        "claim-pieza-concilios-placa-tamujas-04"
       ],
       "demo": false
     },
@@ -2510,8 +2530,17 @@
       "material": "Piedra",
       "date": "Año 579",
       "description": "Lápida funeraria de nueve líneas en letra visigoda, fechada en la era 617 (año 579).",
-      "labelText": "[sin fotografiar]",
-      "images": [],
+      "labelText": "Lápida funeraria de Inma Frita\nPiedra caliza / Año 549 d.C.\nProcedencia desconocida.\nFragmento de lápida funeraria. La inscripción está compuesta de nueve líneas dedicadas a INMA FRITA, mujer que murió a los 35 años.",
+      "images": [
+        {
+          "src": "/media/piezas/concilios-lapida-imma-frita.jpg",
+          "width": 1440,
+          "height": 1600,
+          "alt": "Lápida rectangular de piedra con nueve líneas de inscripción en letras mayúsculas.",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
+          "permission": "pending"
+        }
+      ],
       "claimIds": [
         "claim-pieza-concilios-lapida-imma-frita-01"
       ],
@@ -2530,8 +2559,17 @@
       "material": "Mármol",
       "date": "12 de abril de 562",
       "description": "Lápida funeraria de cuatro líneas en letra visigoda; Sagenis, «sierva de Dios», murió a los 50 años.",
-      "labelText": "[sin fotografiar]",
-      "images": [],
+      "labelText": "Lápida funeraria de Sagenis\nMármol / Año 562 d.C.\nProcedencia desconocida.\nInscripción funeraria de Sagenis fallecido a los 50 años, en 4 líneas con caracteres mayúsculos.",
+      "images": [
+        {
+          "src": "/media/piezas/concilios-lapida-sagenis.jpg",
+          "width": 1600,
+          "height": 1160,
+          "alt": "Fragmento de lápida de mármol con cuatro líneas de inscripción y una pequeña cruz debajo.",
+          "credit": "Foto: Federico García Alva · Museo de los Concilios",
+          "permission": "pending"
+        }
+      ],
       "claimIds": [
         "claim-pieza-concilios-lapida-sagenis-01"
       ],
@@ -6593,7 +6631,7 @@
       "text": "En el Museo de los Concilios se expone una reproducción de la pilastra visigoda de la iglesia de San Salvador de Toledo; la original sigue reutilizada en la estructura de esa iglesia.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -6609,7 +6647,7 @@
       "text": "Una cara de la pilastra de San Salvador representa cuatro escenas de la vida de Cristo: la curación del ciego de nacimiento, la resurrección de Lázaro, el diálogo con la samaritana y la curación de la hemorroísa.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -6629,7 +6667,7 @@
       "text": "Según la cartela del museo, en Toledo se conservan pilastras visigodas reutilizadas en las iglesias de Santa Justa y Rufina, San Andrés y San Salvador, y existe otra procedente de Talavera de la Reina.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -6646,7 +6684,7 @@
       "text": "En el Museo de los Concilios se expone un relieve de los siglos VI-VII hallado en el Miradero de Toledo, con el toro alado, símbolo del evangelista San Lucas.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -6665,7 +6703,7 @@
       "text": "El relieve de San Lucas del Museo de los Concilios es una placa de cancel de influencia italiana.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -6681,7 +6719,7 @@
       "text": "En el Museo de los Concilios se expone una inscripción del siglo VII procedente de «Los Hitos» (Arisgotas, Orgaz) con un poema rítmico en hexámetros que ensalza la vida monástica.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -6701,7 +6739,7 @@
       "text": "En el Museo de los Concilios se expone un fragmento de friso del siglo VII de Toledo con la inscripción TI DOMINI.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -6748,7 +6786,7 @@
       "text": "En el Museo de los Concilios se expone un fragmento de friso del siglo VII de Toledo con la inscripción QUI CREDIT IN EUM NON IUDICABITUR, del Evangelio de San Juan.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -6797,7 +6835,7 @@
       "text": "En el Museo de los Concilios se expone un medio capitel de los siglos VI-VII procedente de Escalona, con volutas, espirales y un ciervo corriendo.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -6846,7 +6884,7 @@
       "text": "En el Museo de los Concilios se expone un fragmento de placa nicho del siglo VII del Cigarral del Aserradero (Toledo), con una venera tallada a bisel.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -6864,7 +6902,7 @@
       "text": "En el Museo de los Concilios se exponen dos fragmentos de un tablero del siglo VII de la Vega Baja con el texto del Credo o símbolo de los apóstoles.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -6934,7 +6972,7 @@
       "text": "En el Museo de los Concilios se expone una imposta del siglo VII de la Vega Baja decorada con semicírculos imbricados y trifolios.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -6950,7 +6988,7 @@
       "text": "En el Museo de los Concilios se expone un friso de los siglos VII-VIII de la Vega Baja decorado con un tallo con hojas de acanto y dos hojas acorazonadas.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -6966,7 +7004,7 @@
       "text": "En el Museo de los Concilios se expone un friso del siglo VII de la Vega Baja decorado con círculos secantes que componen flores octopétalas.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -6983,7 +7021,7 @@
       "text": "En el Museo de los Concilios se expone un friso del siglo VII, de procedencia desconocida, con una cruz patada inscrita en un círculo sogueado.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -7000,7 +7038,7 @@
       "text": "En el Museo de los Concilios se expone una arqueta de material óseo de los siglos VI-VII hallada en la Vega Baja.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -7088,7 +7126,7 @@
       "text": "En el Museo de los Concilios se expone una llave de bronce del siglo VII hallada en la Vega Baja.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -7104,7 +7142,7 @@
       "text": "En el Museo de los Concilios se expone un capitel de caliza del siglo VII de la Vega Baja decorado con pencas y vástagos rematados en volutas.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -7120,7 +7158,7 @@
       "text": "En el Museo de los Concilios se expone una columnilla de mármol del siglo VII de la Vega Baja, con collarino y capitel con volutas.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -7136,7 +7174,7 @@
       "text": "En el Museo de los Concilios se expone una basa prismática de caliza del siglo VII de la Vega Baja.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -7151,7 +7189,7 @@
       "text": "En el Museo de los Concilios se expone un fuste octogonal de caliza del siglo VII de la Vega Baja.",
       "evidence": "D",
       "source": {
-        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
       },
       "status": "published",
       "version": 1,
@@ -7267,6 +7305,22 @@
         "tamujas",
         "iconografia",
         "bautismo"
+      ]
+    },
+    {
+      "id": "claim-pieza-concilios-placa-tamujas-04",
+      "siteId": "site-museo-concilios",
+      "text": "La cartela del Museo de los Concilios data la placa de las Tamujas en el siglo VII y describe una figura humana bajo una venera que muestra con la mano derecha una trifolia o una paloma.",
+      "evidence": "D",
+      "source": {
+        "title": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
+      },
+      "status": "published",
+      "version": 1,
+      "keywords": [
+        "tamujas",
+        "venera",
+        "siglo vii"
       ]
     },
     {

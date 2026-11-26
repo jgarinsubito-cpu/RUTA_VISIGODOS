@@ -255,8 +255,9 @@
         {
           "archivo": "concilios-relieve-san-lucas.jpg",
           "alt": "Bloque de piedra con un toro alado en relieve sobre fondo rebajado, enmarcado por una moldura.",
-          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
-          "permiso": "pendiente"
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: 6/relieve san lucas/DSC01552.JPG (23/11/2026)"
         }
       ],
       "afirmaciones": [
@@ -299,8 +300,9 @@
         {
           "archivo": "concilios-inscripcion-ritmica.jpg",
           "alt": "Tablero de piedra roto en varios fragmentos, cubierto de líneas de letras latinas grabadas.",
-          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
-          "permiso": "pendiente"
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: 6/inscripccion ritmica/DSC01565.JPG (23/11/2026)"
         }
       ],
       "afirmaciones": [
@@ -333,8 +335,9 @@
         {
           "archivo": "concilios-inscripcion-ti-domini.jpg",
           "alt": "Fragmento de friso de piedra con las letras TI DOMINI entre dos bandas de círculos enlazados con rosetas.",
-          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
-          "permiso": "pendiente"
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: 6/6 inscripccion liturgica 2/DSC01581.JPG (23/11/2026)"
         }
       ],
       "afirmaciones": [
@@ -392,8 +395,9 @@
         {
           "archivo": "concilios-inscripcion-qui-credit.jpg",
           "alt": "Bloque de friso de piedra con una línea de letras latinas entre dos cenefas de círculos enlazados.",
-          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
-          "permiso": "pendiente"
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: 6/inscripccion liturgica/DSC01570.JPG (23/11/2026)"
         }
       ],
       "afirmaciones": [
@@ -452,8 +456,9 @@
         {
           "archivo": "concilios-capitel-escalona.jpg",
           "alt": "Medio capitel de piedra con volutas en las esquinas y un pequeño ciervo grabado en la cara central.",
-          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
-          "permiso": "pendiente"
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: 5/5 capitel/DSC01586.JPG (23/11/2026)"
         }
       ],
       "afirmaciones": [
@@ -509,8 +514,9 @@
         {
           "archivo": "concilios-placa-nicho.jpg",
           "alt": "Fragmento de piedra con una venera en abanico tallada sobre una fila de triángulos, sobre una peana negra.",
-          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
-          "permiso": "pendiente"
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: 5/5 placa nicho/DSC01597.JPG (23/11/2026)"
         }
       ],
       "afirmaciones": [
@@ -544,8 +550,9 @@
         {
           "archivo": "concilios-credo-epigrafico.jpg",
           "alt": "Dos fragmentos de piedra con letras grabadas, encajados en un panel claro donde está escrito el resto del texto en latín.",
-          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
-          "permiso": "pendiente"
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: 6/credo epigrafo/DSC01561.JPG (23/11/2026)"
         }
       ],
       "afirmaciones": [
@@ -618,8 +625,15 @@
       "fecha": "Siglo VII",
       "descripcion": "Imposta decorada con semicírculos imbricados con botón central y trifolios.",
       "cartela": "Imposta\nCaliza / Siglo VII.\nToledo, Vega Baja.\nDecorada con imbricación de semicírculos con botón central y trifolios.",
-      "revisar": "Fotografiada entera el 23/11 (fotos/NUEVO CONCILIOS/6/6 imposta): sustituir la foto provisional.",
-      "imagenes": [],
+      "imagenes": [
+        {
+          "archivo": "concilios-imposta.jpg",
+          "alt": "Bloque de piedra decorado con una fila de semicírculos imbricados con botón central, sobre una peana oscura.",
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: resto museo/rm imposta/DSC01753.JPG (23/11/2026)"
+        }
+      ],
       "afirmaciones": [
         {
           "id": "claim-pieza-concilios-imposta-01",
@@ -649,8 +663,9 @@
         {
           "archivo": "concilios-friso-acanto.jpg",
           "alt": "Bloque de piedra con un tallo vegetal y grandes hojas talladas en relieve en su cara frontal.",
-          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
-          "permiso": "pendiente"
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: resto museo/rm friso/DSC01757.JPG (23/11/2026)"
         }
       ],
       "afirmaciones": [
@@ -674,17 +689,17 @@
         "lugar": "vega-baja"
       },
       "procedencia": "Toledo, Vega Baja",
-      "material": "Sin confirmar",
+      "material": "Caliza",
       "fecha": "Siglo VII",
       "descripcion": "Friso decorado con círculos secantes que forman flores de ocho pétalos.",
-      "cartela": "Friso\n[material ilegible en la foto] / Siglo VII\nToledo, Vega Baja\nCon decoración de círculos secantes que componen flores octopétalas.",
-      "revisar": "Fotografiada de nuevo con su cartela el 23/11: leer el material en esas fotos.",
+      "cartela": "Friso\nCaliza / Siglo VII.\nToledo, Vega Baja.\nCon decoración de círculos secantes que componen flores octopetálas.",
       "imagenes": [
         {
           "archivo": "concilios-friso-octopetalas.jpg",
           "alt": "Bloque alargado de piedra blanca con flores de ocho pétalos talladas en su cara frontal, en una vitrina oscura.",
-          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
-          "permiso": "pendiente"
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: resto museo/rm friso 2/DSC01762.JPG (23/11/2026)"
         }
       ],
       "afirmaciones": [
@@ -714,8 +729,9 @@
         {
           "archivo": "concilios-friso-cruz-patada.jpg",
           "alt": "Bloque de piedra con una cruz dentro de un círculo y flores de cuatro pétalos talladas a ambos lados, junto a un muro de ladrillo.",
-          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
-          "permiso": "pendiente"
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: 3/3 friso/DSC01693.JPG (23/11/2026)"
         }
       ],
       "afirmaciones": [
@@ -743,14 +759,14 @@
       "material": "Material óseo",
       "fecha": "Siglos VI-VII",
       "descripcion": "Fragmento de una arqueta cilíndrica de hueso tallado, con figuras bajo arco; la guía del museo propone que representa a Jesús y la samaritana en el pozo de Jacob.",
-      "cartela": "Arqueta\nMaterial óseo / Siglo VI-VII.\nToledo, Vega Baja.\n[resto de la cartela no visible en la foto]",
-      "revisar": "Transcribir la descripción completa de la cartela a partir de las fotos del 23/11 (carpeta fotos/NUEVO CONCILIOS/23 san roman vega baja/23 arqueta).",
+      "cartela": "Arqueta\nMaterial óseo / Siglo VI-VII.\nToledo, Vega Baja.\nPosible escena del Nuevo Testamento, con el encuentro de Jesús con la Samaritana en el pozo.",
       "imagenes": [
         {
           "archivo": "concilios-arqueta.jpg",
-          "alt": "Placa de hueso tallada con figuras de pie bajo un arco, sobre un soporte en una vitrina oscura.",
-          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
-          "permiso": "pendiente"
+          "alt": "Placa de hueso tallada: a la izquierda una figura de pie, en el centro un pozo bajo un arco y a la derecha otra figura.",
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: 23 san roman vega baja/23 arqueta/DSC01734.JPG (23/11/2026)"
         }
       ],
       "afirmaciones": [
@@ -842,9 +858,10 @@
       "imagenes": [
         {
           "archivo": "concilios-llave.jpg",
-          "alt": "Llave de bronce con un anillo ovalado y un vástago corto con dientes, sobre fondo claro.",
-          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
-          "permiso": "pendiente"
+          "alt": "Llave de bronce con anillo ovalado y vástago corto, sobre fondo blanco.",
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: 23 san roman vega baja/23 varios/DSC01739.JPG (23/11/2026)"
         }
       ],
       "afirmaciones": [
@@ -876,8 +893,9 @@
         {
           "archivo": "concilios-capitel-pencas.jpg",
           "alt": "Capitel de piedra blanca con dos volutas en espiral en la parte alta, sujeto a la pared de una vitrina.",
-          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
-          "permiso": "pendiente"
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: 23 san roman vega baja/23 capitel/DSC01706.JPG (23/11/2026)"
         }
       ],
       "afirmaciones": [
@@ -905,13 +923,14 @@
       "fecha": "Siglo VII",
       "descripcion": "Fuste incompleto de columnilla con collarino y capitel de pencas y vástagos rematados en volutas.",
       "cartela": "Columnilla\nMármol / Siglo VII.\nToledo, Vega Baja.\nFuste incompleto con collarino y capitel con pencas y vástagos rematados en volutas.\n3/12.",
-      "revisar": "Fotografiada de nuevo con su cartela el 23/11: confirmar con esas fotos que la cartela «3/12» es de esta columnilla.",
+      "revisar": "Foto nueva del 23/11 (columnilla 5). Confirmar que la cartela «3/12» es de esta columnilla.",
       "imagenes": [
         {
           "archivo": "concilios-columnilla.jpg",
           "alt": "Columnilla de piedra gris con un collarino y un capitel con volutas en la parte alta, sujeta a la pared de una vitrina.",
-          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
-          "permiso": "pendiente"
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: 23 san roman vega baja/23 columnilla 5/DSC01713.JPG (23/11/2026)"
         }
       ],
       "afirmaciones": [
@@ -975,8 +994,9 @@
         {
           "archivo": "concilios-fuste.jpg",
           "alt": "Fuste de piedra de caras planas, sujeto a la pared de una vitrina oscura.",
-          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
-          "permiso": "pendiente"
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: 23 san roman vega baja/23 fuste/DSC01718.JPG (23/11/2026)"
         }
       ],
       "afirmaciones": [
@@ -1005,9 +1025,10 @@
       "imagenes": [
         {
           "archivo": "concilios-coronas-guarrazar.jpg",
-          "alt": "Coronas votivas doradas con pedrería y cruces colgantes, suspendidas de cadenas en una vitrina oscura.",
-          "credito": "Foto: Inma Guiu (SNEO) · Museo de los Concilios",
-          "permiso": "pendiente"
+          "alt": "Varias coronas votivas doradas con cruces colgantes, suspendidas de cadenas en una sala oscura.",
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: coronas/DSC01530.JPG (23/11/2026)"
         }
       ],
       "afirmaciones": [
@@ -1065,11 +1086,19 @@
       "museo": "museo-concilios",
       "procedencia": "Finca de las Tamujas, Malpica de Tajo (Toledo)",
       "material": "Mármol",
-      "fecha": "Siglos V-VI (Revuelta, 1973)",
+      "fecha": "Siglo VII (cartela del museo); siglos V-VI según la guía de 1973",
       "descripcion": "Placa con un relieve a bisel de una figura de pie, uno de los escasos relieves figurados de época visigoda; su tema se discute.",
-      "cartela": "[sin fotografiar]",
-      "revisar": "Pieza y cartela fotografiadas el 23/11: transcribir la cartela y completar la ficha.",
-      "imagenes": [],
+      "cartela": "Placa\nMármol / Siglo VII.\nFinca las Tamujas, Malpica de Tajo (Toledo).\nCon representación de una figura humana bajo una venera. Se ha identificado como una divinidad pagana, un santo predicador o Cristo en el momento de su bautismo. Con la mano derecha muestra una trifolia o paloma.",
+      "revisar": "La cartela data la placa en el siglo VII y la guía de 1973 en los siglos V-VI: se recogen las dos fechas con su fuente.",
+      "imagenes": [
+        {
+          "archivo": "concilios-placa-tamujas.jpg",
+          "alt": "Placa de mármol con una figura humana de pie bajo una venera, enmarcada por una orla de flores de cuatro pétalos.",
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: 5/5 placa/DSC01601.JPG (23/11/2026)"
+        }
+      ],
       "afirmaciones": [
         {
           "id": "claim-pieza-concilios-placa-tamujas-01",
@@ -1114,6 +1143,16 @@
             "url": "https://cultura.castillalamancha.es/sites/default/files/2024-02/MUSEO_DE_LOS_CONCILIOS_Y_LA_CULTURA_VISIGODA.pdf"
           },
           "atribucion": "Guía del museo de la Junta de Castilla-La Mancha"
+        },
+        {
+          "id": "claim-pieza-concilios-placa-tamujas-04",
+          "texto": "La cartela del Museo de los Concilios data la placa de las Tamujas en el siglo VII y describe una figura humana bajo una venera que muestra con la mano derecha una trifolia o una paloma.",
+          "nivel": "D",
+          "claves": [
+            "tamujas",
+            "venera",
+            "siglo vii"
+          ]
         }
       ]
     },
@@ -1128,9 +1167,17 @@
       "material": "Piedra",
       "fecha": "Año 579",
       "descripcion": "Lápida funeraria de nueve líneas en letra visigoda, fechada en la era 617 (año 579).",
-      "cartela": "[sin fotografiar]",
-      "revisar": "Sigue expuesta: fotografiada el 23/11 (fotos/NUEVO CONCILIOS/resto museo/rm lapida fun inma frita). Transcribir la cartela.",
-      "imagenes": [],
+      "cartela": "Lápida funeraria de Inma Frita\nPiedra caliza / Año 549 d.C.\nProcedencia desconocida.\nFragmento de lápida funeraria. La inscripción está compuesta de nueve líneas dedicadas a INMA FRITA, mujer que murió a los 35 años.",
+      "revisar": "Discrepancia: la cartela actual dice «Año 549 d.C.» y «Procedencia desconocida»; la guía de 1973 (n.º 56, p. 60) la fecha en la era 617 (año 579) y la sitúa en la Vega Baja, camino de San Pedro el Verde. Preguntar al museo antes de validar la afirmación con la fecha.",
+      "imagenes": [
+        {
+          "archivo": "concilios-lapida-imma-frita.jpg",
+          "alt": "Lápida rectangular de piedra con nueve líneas de inscripción en letras mayúsculas.",
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: resto museo/rm lapida fun inma frita/DSC01787.JPG (23/11/2026)"
+        }
+      ],
       "afirmaciones": [
         {
           "id": "claim-pieza-concilios-lapida-imma-frita-01",
@@ -1161,9 +1208,17 @@
       "material": "Mármol",
       "fecha": "12 de abril de 562",
       "descripcion": "Lápida funeraria de cuatro líneas en letra visigoda; Sagenis, «sierva de Dios», murió a los 50 años.",
-      "cartela": "[sin fotografiar]",
-      "revisar": "Sigue expuesta: fotografiada el 23/11 (fotos/NUEVO CONCILIOS/resto museo/rm lapida funeraria sagenis). Transcribir la cartela.",
-      "imagenes": [],
+      "cartela": "Lápida funeraria de Sagenis\nMármol / Año 562 d.C.\nProcedencia desconocida.\nInscripción funeraria de Sagenis fallecido a los 50 años, en 4 líneas con caracteres mayúsculos.",
+      "revisar": "La cartela coincide en el año (562) y la edad (50 años), pero dice «Procedencia desconocida» y trata a Sagenis en masculino («fallecido»); la guía de 1973 la sitúa en la Vega Baja y la descripción la llama «sierva de Dios». Preguntar al museo la procedencia y la lectura.",
+      "imagenes": [
+        {
+          "archivo": "concilios-lapida-sagenis.jpg",
+          "alt": "Fragmento de lápida de mármol con cuatro líneas de inscripción y una pequeña cruz debajo.",
+          "credito": "Foto: Federico García Alva · Museo de los Concilios",
+          "permiso": "pendiente",
+          "original": "Drive del piloto, fotos/NUEVO CONCILIOS: resto museo/rm lapida funeraria sagenis/DSC01791.JPG (23/11/2026)"
+        }
+      ],
       "afirmaciones": [
         {
           "id": "claim-pieza-concilios-lapida-sagenis-01",
@@ -1192,7 +1247,7 @@
       "fecha": "Época visigoda (cinco capiteles)",
       "descripcion": "Las arcadas de la nave apoyan en doce capiteles reutilizados de edificios anteriores; cinco son visigodos.",
       "cartela": "[sin cartela: elementos del edificio]",
-      "revisar": "Capiteles y cimacio fotografiados el 23/11: elegir fotos y comprobar cuántos se muestran.",
+      "revisar": "En las fotos del 23/11 no hay una toma clara de los capiteles de la nave: el capitel de «resto museo/rm capitel» es otra pieza (cartela: Iglesia de Santiago el Mayor). Usar el 360° de la nave o hacer una foto nueva.",
       "imagenes": [],
       "afirmaciones": [
         {
@@ -1246,7 +1301,7 @@
   },
   "fuentes": {
     "museo-concilios": {
-      "titulo": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, en noviembre de 2026)"
+      "titulo": "Museo de los Concilios y de la Cultura Visigoda (Toledo), cartelas de sala (fotografiadas por Inma Guiu, SNEO, y por Federico García Alva en noviembre de 2026)"
     }
   }
 }

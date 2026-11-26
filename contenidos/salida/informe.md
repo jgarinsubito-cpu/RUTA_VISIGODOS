@@ -1,6 +1,6 @@
 # Informe de importación
 
-Generado el 2026-11-26 12:15 UTC con los textos de `contenidos/ruta.json` y los medios de `/home/claude/tour`.
+Generado el 2026-11-26 13:06 UTC con los textos de `contenidos/ruta.json` y los medios de `/home/claude/tour`.
 
 ## Resultado
 
@@ -9,10 +9,10 @@ Generado el 2026-11-26 12:15 UTC con los textos de `contenidos/ruta.json` y los 
 | Rutas | 2 |
 | Lugares | 20 |
 | Paradas | 35 (28 con audio) |
-| Afirmaciones | 276 (incluye borradores: solo previsualización) |
+| Afirmaciones | 277 (incluye borradores: solo previsualización) |
 | Historias | 44 |
 | Imágenes publicables (con créditos) | 0 |
-| Registros para el gestor (en revisión) | 405 |
+| Registros para el gestor (en revisión) | 406 |
 
 **Comprobación con las reglas del gestor:** sin errores; se puede importar.
 
@@ -27,7 +27,7 @@ Generado el 2026-11-26 12:15 UTC con los textos de `contenidos/ruta.json` y los 
 - Coordenadas aproximadas: tómalas en campo antes de publicar. (18: santa-justa, cuevas-hercules, el-salvador, santo-tome, san-bartolome, covarrubias, castillo-guadamur, centro-guarrazar, casa-munecas, vegabaja-3, vegabaja-5, territorio-2, territorio-3, territorio-4, territorio-5, territorio-6, territorio-7, territorio-8)
 - Sin locución: se podrá leer el relato, pero no escucharlo grabado. (7: santa-justa, cuevas-hercules, el-salvador, santo-tome, san-bartolome, covarrubias, castillo-guadamur)
 - Sin coordenadas: la llegada no se detectará sola; el visitante avanzará a mano. (6: guarrazar-1, guarrazar-4, guarrazar-5, guarrazar-6, vegabaja-2, vegabaja-4)
-- Una foto sin permiso del museo: no se muestran hasta que conste. (22: piece-trientes-ervigio-egica-witiza, piece-placa-el-carpio-de-tajo, piece-sarcofago-orantes, piece-hebilla-fibula-trilaminar, piece-concilios-pilastra-san-salvador, piece-concilios-relieve-san-lucas, piece-concilios-inscripcion-ritmica, piece-concilios-inscripcion-ti-domini, piece-concilios-inscripcion-qui-credit, piece-concilios-capitel-escalona, piece-concilios-placa-nicho, piece-concilios-credo-epigrafico, piece-concilios-friso-acanto, piece-concilios-friso-octopetalas, piece-concilios-friso-cruz-patada, piece-concilios-arqueta, piece-concilios-llave, piece-concilios-capitel-pencas, piece-concilios-columnilla, piece-concilios-basa, piece-concilios-fuste, piece-concilios-coronas-guarrazar)
+- Una foto sin permiso del museo: no se muestran hasta que conste. (26: piece-trientes-ervigio-egica-witiza, piece-placa-el-carpio-de-tajo, piece-sarcofago-orantes, piece-hebilla-fibula-trilaminar, piece-concilios-pilastra-san-salvador, piece-concilios-relieve-san-lucas, piece-concilios-inscripcion-ritmica, piece-concilios-inscripcion-ti-domini, piece-concilios-inscripcion-qui-credit, piece-concilios-capitel-escalona, piece-concilios-placa-nicho, piece-concilios-credo-epigrafico, piece-concilios-imposta, piece-concilios-friso-acanto, piece-concilios-friso-octopetalas, piece-concilios-friso-cruz-patada, piece-concilios-arqueta, piece-concilios-llave, piece-concilios-capitel-pencas, piece-concilios-columnilla, piece-concilios-basa, piece-concilios-fuste, piece-concilios-coronas-guarrazar, piece-concilios-placa-tamujas, piece-concilios-lapida-imma-frita, piece-concilios-lapida-sagenis)
 
 ## Locuciones por regrabar
 
@@ -142,16 +142,13 @@ Faltan autor, licencia o URL de origen en `creditos-imagenes.csv`. Plantilla con
 - Pilastra de la iglesia de San Salvador (reproducción): Es una reproducción: no se vincula como pieza hallada en El Salvador. El panel no da datación del original.
 - Inscripción rítmica: Fotografiada de nuevo con su cartela el 23/11: confirmar en esas fotos la lectura «Los Hitos». La cartela dice que «conmemoraría» una construcción: no se recoge como dato.
 - Inscripción litúrgica «QUI CREDIT IN EUM NON IUDICABITUR»: La cartela omite el número de capítulo («del cap ·»): la cita es Juan 3, 18; pendiente de respuesta del museo (preguntado el 23/11).
-- Imposta con semicírculos imbricados: Fotografiada entera el 23/11 (fotos/NUEVO CONCILIOS/6/6 imposta): sustituir la foto provisional.
-- Friso con flores octopétalas: Fotografiada de nuevo con su cartela el 23/11: leer el material en esas fotos.
-- Arqueta (píxide) de hueso: Transcribir la descripción completa de la cartela a partir de las fotos del 23/11 (carpeta fotos/NUEVO CONCILIOS/23 san roman vega baja/23 arqueta).
 - Llave de bronce: El museo confirma que todas las piezas de la vitrina (pendeloque, colgante en forma de bellota, osculatorio y placa de cinturón liriforme) proceden de la Vega Baja. Faltan sus dataciones: no se incluyen hasta tenerlas.
-- Columnilla de mármol: Fotografiada de nuevo con su cartela el 23/11: confirmar con esas fotos que la cartela «3/12» es de esta columnilla.
+- Columnilla de mármol: Foto nueva del 23/11 (columnilla 5). Confirmar que la cartela «3/12» es de esta columnilla.
 - Reproducciones de las coronas de Guarrazar: Transcribir la cartela a partir de las fotos del 23/11 (carpeta fotos/NUEVO CONCILIOS/coronas) y confirmar cuántas coronas hay y cuáles.
-- Placa de las Tamujas: Pieza y cartela fotografiadas el 23/11: transcribir la cartela y completar la ficha.
-- Lápida funeraria de Imma Frita: Sigue expuesta: fotografiada el 23/11 (fotos/NUEVO CONCILIOS/resto museo/rm lapida fun inma frita). Transcribir la cartela.
-- Lápida funeraria de Sagenis: Sigue expuesta: fotografiada el 23/11 (fotos/NUEVO CONCILIOS/resto museo/rm lapida funeraria sagenis). Transcribir la cartela.
-- Capiteles visigodos de la nave de San Román: Capiteles y cimacio fotografiados el 23/11: elegir fotos y comprobar cuántos se muestran.
+- Placa de las Tamujas: La cartela data la placa en el siglo VII y la guía de 1973 en los siglos V-VI: se recogen las dos fechas con su fuente.
+- Lápida funeraria de Imma Frita: Discrepancia: la cartela actual dice «Año 549 d.C.» y «Procedencia desconocida»; la guía de 1973 (n.º 56, p. 60) la fecha en la era 617 (año 579) y la sitúa en la Vega Baja, camino de San Pedro el Verde. Preguntar al museo antes de validar la afirmación con la fecha.
+- Lápida funeraria de Sagenis: La cartela coincide en el año (562) y la edad (50 años), pero dice «Procedencia desconocida» y trata a Sagenis en masculino («fallecido»); la guía de 1973 la sitúa en la Vega Baja y la descripción la llama «sierva de Dios». Preguntar al museo la procedencia y la lectura.
+- Capiteles visigodos de la nave de San Román: En las fotos del 23/11 no hay una toma clara de los capiteles de la nave: el capitel de «resto museo/rm capitel» es otra pieza (cartela: Iglesia de Santiago el Mayor). Usar el 360° de la nave o hacer una foto nueva.
 
 ## Vídeos 360°
 
@@ -175,6 +172,7 @@ Faltan autor, licencia o URL de origen en `creditos-imagenes.csv`. Plantilla con
 - Capitel con ciervo corriendo: la foto concilios-capitel-escalona.jpg no tiene permiso del museo; no se mostrará.
 - Placa nicho: la foto concilios-placa-nicho.jpg no tiene permiso del museo; no se mostrará.
 - Fragmentos de credo epigráfico: la foto concilios-credo-epigrafico.jpg no tiene permiso del museo; no se mostrará.
+- Imposta con semicírculos imbricados: la foto concilios-imposta.jpg no tiene permiso del museo; no se mostrará.
 - Friso con hojas de acanto: la foto concilios-friso-acanto.jpg no tiene permiso del museo; no se mostrará.
 - Friso con flores octopétalas: la foto concilios-friso-octopetalas.jpg no tiene permiso del museo; no se mostrará.
 - Friso con cruz patada: la foto concilios-friso-cruz-patada.jpg no tiene permiso del museo; no se mostrará.
@@ -185,6 +183,9 @@ Faltan autor, licencia o URL de origen en `creditos-imagenes.csv`. Plantilla con
 - Basa prismática: la foto concilios-basa.jpg no tiene permiso del museo; no se mostrará.
 - Fuste octogonal: la foto concilios-fuste.jpg no tiene permiso del museo; no se mostrará.
 - Reproducciones de las coronas de Guarrazar: la foto concilios-coronas-guarrazar.jpg no tiene permiso del museo; no se mostrará.
+- Placa de las Tamujas: la foto concilios-placa-tamujas.jpg no tiene permiso del museo; no se mostrará.
+- Lápida funeraria de Imma Frita: la foto concilios-lapida-imma-frita.jpg no tiene permiso del museo; no se mostrará.
+- Lápida funeraria de Sagenis: la foto concilios-lapida-sagenis.jpg no tiene permiso del museo; no se mostrará.
 
 ## Medios que faltan en el origen
 
