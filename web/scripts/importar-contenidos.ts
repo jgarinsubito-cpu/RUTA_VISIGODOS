@@ -19,6 +19,8 @@
  *   creditos-imagenes.csv  autor, licencia y URL de cada imagen; sin ellos, la imagen no se publica.
  *   afirmaciones.json      afirmaciones validadas por parada; sin ellas, los relatos no entran como
  *                          historias (el gestor exige que cada historia cite al menos una).
+ *   relatos.json           relatos corregidos que sustituyen a los del prototipo; con «audioPendiente»
+ *                          la locución antigua se deja fuera hasta que se regrabe.
  */
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
@@ -330,6 +332,40 @@ const csvField = (v: string) => (/[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"`
 
 const fuente = JSON.parse(fs.readFileSync(path.join(origen, "data.json"), "utf8")) as Fuente;
 const config = JSON.parse(fs.readFileSync(configPath, "utf8")) as Config;
+
+/* Relatos corregidos (contenidos/relatos.json): sustituyen el nombre, el título o el texto de una
+ * parada del prototipo. Mientras «audioPendiente» sea true, la locución antigua no se importa,
+ * porque ya no coincide con el texto. */
+interface RelatoCorregido {
+  name?: string;
+  title?: string;
+  sub?: string;
+  text: string;
+  audioPendiente?: boolean;
+  motivo?: string;
+}
+const relatosPath = path.join(configDir, "relatos.json");
+const relatosCorregidos: Record<string, RelatoCorregido> = fs.existsSync(relatosPath)
+  ? ((JSON.parse(fs.readFileSync(relatosPath, "utf8")) as { paradas: Record<string, RelatoCorregido> }).paradas ?? {})
+  : {};
+const relatosAplicados: string[] = [];
+const audiosPorRegrabar: string[] = [];
+for (const [id, r] of Object.entries(relatosCorregidos)) {
+  const parada = fuente.stops.find((p) => p.id === id);
+  if (!parada) {
+    console.error(`relatos.json: la parada «${id}» no existe en el prototipo.`);
+    process.exit(1);
+  }
+  if (r.name) parada.name = r.name;
+  if (r.title) parada.title = r.title;
+  if (r.sub) parada.sub = r.sub;
+  parada.text = r.text;
+  relatosAplicados.push(id);
+  if (r.audioPendiente && parada.audio) {
+    audiosPorRegrabar.push(`${id} (${parada.audio})`);
+    parada.audio = undefined;
+  }
+}
 
 const creditosPath = path.join(configDir, "creditos-imagenes.csv");
 const creditos = new Map<string, Credito>();
@@ -973,6 +1009,18 @@ ${lista(errores)}
 ## Advertencias del gestor
 
 ${lista(advertencias)}
+
+## Relatos corregidos
+
+Sustituyen al texto del prototipo (\`relatos.json\`).
+
+${lista(relatosAplicados)}
+
+### Locuciones por regrabar
+
+No se importan hasta que se regraben, porque no coinciden con el relato corregido.
+
+${lista(audiosPorRegrabar)}
 
 ## Relatos que aún no entran como historias
 

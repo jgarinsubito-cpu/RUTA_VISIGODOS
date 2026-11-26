@@ -76,3 +76,7 @@ NEXT_PUBLIC_SUPABASE_URL=… NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=… GESTOR_EMA
 - `--copiar-medios` copia fotos y audios a `web/public` (unos 60 MB, fuera de git). En producción se suben al almacén del gestor.
 - Horarios y accesibilidad quedan «sin verificar» hasta que producción los compruebe.
 - Las coordenadas son aproximadas salvo las de «toma de campo». Las paradas sin coordenada usan el centro de su recorrido y salen en el informe.
+
+## Relatos corregidos (`relatos.json`)
+
+Sustituyen el nombre, el título o el texto de una parada del prototipo cuando hay que corregirlo (por ejemplo, tras la validación de FM-04). Mientras `audioPendiente` sea `true`, el importador deja fuera la locución antigua, porque ya no coincide con el texto; cuando se regrabe, se pone el nuevo archivo en el prototipo y se quita `audioPendiente`. El informe de importación lista los relatos sustituidos y las locuciones por regrabar.
