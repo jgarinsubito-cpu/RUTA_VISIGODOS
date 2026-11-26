@@ -23,7 +23,6 @@
         "conCreditos": false
       }
     ],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Pilastra 39.858916, -4.023354 · Lápida 39.858943, -4.023346"
   },
@@ -63,7 +62,6 @@
         "conCreditos": false
       }
     ],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "39.858681, -4.024278"
   },
@@ -85,7 +83,6 @@
         "conCreditos": false
       }
     ],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "39.85673, -4.026982"
   },
@@ -107,7 +104,6 @@
         "conCreditos": false
       }
     ],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "39.856931, -4.027827"
   },
@@ -153,7 +149,6 @@
         "conCreditos": false
       }
     ],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "39.855051, -4.025905"
   },
@@ -175,7 +170,6 @@
         "conCreditos": false
       }
     ],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Coordenada aproximada, pendiente de toma en campo"
   },
@@ -239,7 +233,6 @@
         "conCreditos": false
       }
     ],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Entrada 39.810541, -4.14652 · Exterior 39.810733, -4.145816"
   },
@@ -283,56 +276,6 @@
         "src": "/images/ruta/CI05.jpg",
         "alt": "Vitrina 5",
         "conCreditos": false
-      }
-    ],
-    "modelos3d": [
-      {
-        "archivo": "conjunto.json",
-        "src": "/media/3d/conjunto.json",
-        "nombre": "Conjunto del santuario · recreación",
-        "certeza": "Reconstrucción hipotética",
-        "texto": "Basílica, hospital de peregrinos y palacio-monasterio tal como los recrean los paneles del yacimiento. Es una hipótesis de conjunto con proporciones aproximadas. Del palacio solo se conocen la huella de la prospección magnética y una excavación de unos 150 m², así que su alzado es una propuesta. La basílica se sustituirá por el modelo detallado en preparación.",
-        "fuente": "Panel «Palacio-monasterio» y panel de recreación virtual del yacimiento de Guarrazar"
-      },
-      {
-        "archivo": "xenodochium_planta.json",
-        "src": "/media/3d/xenodochium_planta.json",
-        "nombre": "Hospital de peregrinos · planta",
-        "certeza": "Excavado",
-        "texto": "Planta del edificio en L que se interpreta como xenodochium, el hospital de peregrinos del santuario. Tiene dos naves de 15 × 5,5 m y 12,5 × 5 m de interior, una escalera de cuatro peldaños y casi 1,5 m de desnivel entre ambas.",
-        "fuente": "Rojas 2025, fig. 3"
-      },
-      {
-        "archivo": "xenodochium_restitucion.json",
-        "src": "/media/3d/xenodochium_restitucion.json",
-        "nombre": "Hospital de peregrinos · restitución",
-        "certeza": "Hipótesis",
-        "texto": "Según Rojas, las dos naves tenían planta superior, a la que se subía desde una galería. La altura de los muros (unos 6 m hasta el alero), la cubierta y la forma de la galería son propuestas del modelo, pendientes de validar.",
-        "fuente": "Rojas 2025; restitución pendiente de validación"
-      },
-      {
-        "archivo": "delubrum_sector.json",
-        "src": "/media/3d/delubrum_sector.json",
-        "nombre": "Edificio del manantial · sector excavado",
-        "certeza": "Excavado",
-        "texto": "Edificio construido sobre el propio manantial. En la zona excavada hay restos de veinte bañeras: cuatro cavidades y dieciséis huellas, en violeta. Rojas lo identifica con el delubrum, un lugar de abluciones; Martin (2025) propone que el delubrum era en realidad un baptisterio.",
-        "fuente": "Rojas 2025, fig. 6; Martin 2025"
-      },
-      {
-        "archivo": "delubrum_hipotesis.json",
-        "src": "/media/3d/delubrum_hipotesis.json",
-        "nombre": "Edificio del manantial · posible extensión",
-        "certeza": "Hipótesis",
-        "texto": "En ocre, una prolongación ilustrativa del edificio. Si todo él tuviera la misma función, Rojas calcula entre 40 y 44 bañeras. El modelo no las dibuja para no sugerir un número ni una disposición.",
-        "fuente": "Rojas 2025, nota 13"
-      },
-      {
-        "archivo": "area5_huella.json",
-        "src": "/media/3d/area5_huella.json",
-        "nombre": "Área 5 · posible palacio-monasterio",
-        "certeza": "Huella geofísica",
-        "texto": "Huella de un gran edificio de 50 × 35 m con crujías en torno a un patio, detectada por la prospección magnética de Christoph Eger en 2002. Las excavaciones, de apenas 150 m², no han aclarado su arquitectura. El patio en trazo discontinuo es solo indicativo.",
-        "fuente": "Eger 2007; Rojas 2025"
       }
     ],
     "figura": {
@@ -390,7 +333,6 @@
         "conCreditos": false
       }
     ],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "39.812329, -4.146616 (Google Maps, pendiente de validar en campo)"
   },
@@ -406,16 +348,6 @@
         "conCreditos": false
       }
     ],
-    "modelos3d": [
-      {
-        "archivo": "conjunto.json",
-        "src": "/media/3d/conjunto.json",
-        "nombre": "Conjunto del santuario · recreación",
-        "certeza": "Reconstrucción hipotética",
-        "texto": "Basílica, hospital de peregrinos y palacio-monasterio tal como los recrean los paneles del yacimiento. Es una hipótesis de conjunto con proporciones aproximadas. Del palacio solo se conocen la huella de la prospección magnética y una excavación de unos 150 m², así que su alzado es una propuesta. La basílica se sustituirá por el modelo detallado en preparación.",
-        "fuente": "Panel «Palacio-monasterio» y panel de recreación virtual del yacimiento de Guarrazar"
-      }
-    ],
     "figura": null,
     "notaCoordenadas": "Ubicación pendiente de toma en campo"
   },
@@ -424,7 +356,6 @@
     "siteId": "site-yacimiento-guarrazar",
     "paradaOrigen": "guarrazar-2",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "39.815707, -4.119209 (toma de campo)"
   },
@@ -433,24 +364,6 @@
     "siteId": "site-yacimiento-guarrazar",
     "paradaOrigen": "guarrazar-3",
     "galeriaCompleta": [],
-    "modelos3d": [
-      {
-        "archivo": "xenodochium_planta.json",
-        "src": "/media/3d/xenodochium_planta.json",
-        "nombre": "Hospital de peregrinos · planta",
-        "certeza": "Excavado",
-        "texto": "Planta del edificio en L que se interpreta como xenodochium, el hospital de peregrinos del santuario. Tiene dos naves de 15 × 5,5 m y 12,5 × 5 m de interior, una escalera de cuatro peldaños y casi 1,5 m de desnivel entre ambas.",
-        "fuente": "Rojas 2025, fig. 3"
-      },
-      {
-        "archivo": "xenodochium_restitucion.json",
-        "src": "/media/3d/xenodochium_restitucion.json",
-        "nombre": "Hospital de peregrinos · restitución",
-        "certeza": "Hipótesis",
-        "texto": "Según Rojas, las dos naves tenían planta superior, a la que se subía desde una galería. La altura de los muros (unos 6 m hasta el alero), la cubierta y la forma de la galería son propuestas del modelo, pendientes de validar.",
-        "fuente": "Rojas 2025; restitución pendiente de validación"
-      }
-    ],
     "figura": null,
     "notaCoordenadas": "39.815966, -4.118750 (toma de campo)"
   },
@@ -459,24 +372,6 @@
     "siteId": "site-yacimiento-guarrazar",
     "paradaOrigen": "guarrazar-4",
     "galeriaCompleta": [],
-    "modelos3d": [
-      {
-        "archivo": "delubrum_sector.json",
-        "src": "/media/3d/delubrum_sector.json",
-        "nombre": "Edificio del manantial · sector excavado",
-        "certeza": "Excavado",
-        "texto": "Edificio construido sobre el propio manantial. En la zona excavada hay restos de veinte bañeras: cuatro cavidades y dieciséis huellas, en violeta. Rojas lo identifica con el delubrum, un lugar de abluciones; Martin (2025) propone que el delubrum era en realidad un baptisterio.",
-        "fuente": "Rojas 2025, fig. 6; Martin 2025"
-      },
-      {
-        "archivo": "delubrum_hipotesis.json",
-        "src": "/media/3d/delubrum_hipotesis.json",
-        "nombre": "Edificio del manantial · posible extensión",
-        "certeza": "Hipótesis",
-        "texto": "En ocre, una prolongación ilustrativa del edificio. Si todo él tuviera la misma función, Rojas calcula entre 40 y 44 bañeras. El modelo no las dibuja para no sugerir un número ni una disposición.",
-        "fuente": "Rojas 2025, nota 13"
-      }
-    ],
     "figura": null,
     "notaCoordenadas": "Ubicación pendiente de toma en campo"
   },
@@ -485,7 +380,6 @@
     "siteId": "site-yacimiento-guarrazar",
     "paradaOrigen": "guarrazar-5",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Ubicación pendiente de toma en campo"
   },
@@ -494,16 +388,6 @@
     "siteId": "site-yacimiento-guarrazar",
     "paradaOrigen": "guarrazar-6",
     "galeriaCompleta": [],
-    "modelos3d": [
-      {
-        "archivo": "area5_huella.json",
-        "src": "/media/3d/area5_huella.json",
-        "nombre": "Área 5 · posible palacio-monasterio",
-        "certeza": "Huella geofísica",
-        "texto": "Huella de un gran edificio de 50 × 35 m con crujías en torno a un patio, detectada por la prospección magnética de Christoph Eger en 2002. Las excavaciones, de apenas 150 m², no han aclarado su arquitectura. El patio en trazo discontinuo es solo indicativo.",
-        "fuente": "Eger 2007; Rojas 2025"
-      }
-    ],
     "figura": null,
     "notaCoordenadas": "Ubicación pendiente de toma en campo"
   },
@@ -519,7 +403,6 @@
         "conCreditos": false
       }
     ],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "39.860775, -4.034559 (toma de campo)"
   },
@@ -541,7 +424,6 @@
         "conCreditos": false
       }
     ],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Ubicación pendiente de toma en campo"
   },
@@ -563,7 +445,6 @@
         "conCreditos": false
       }
     ],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "39.867655, -4.039736 (toma de campo; provisional)"
   },
@@ -579,7 +460,6 @@
         "conCreditos": false
       }
     ],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Ubicación pendiente de toma en campo"
   },
@@ -595,7 +475,6 @@
         "conCreditos": false
       }
     ],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "39.859679, -4.032601 (toma de campo; provisional)"
   },
@@ -604,7 +483,6 @@
     "siteId": "site-museo-concilios",
     "paradaOrigen": "concilios-1",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Museo de los Concilios, C. San Román s/n (Google Maps)"
   },
@@ -613,7 +491,6 @@
     "siteId": "site-museo-concilios",
     "paradaOrigen": "concilios-2",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Museo de los Concilios, C. San Román s/n (Google Maps)"
   },
@@ -622,7 +499,6 @@
     "siteId": "site-museo-concilios",
     "paradaOrigen": "concilios-3",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Museo de los Concilios, C. San Román s/n (Google Maps)"
   },
@@ -631,7 +507,6 @@
     "siteId": "site-museo-concilios",
     "paradaOrigen": "concilios-4",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Museo de los Concilios, C. San Román s/n (Google Maps)"
   },
@@ -640,7 +515,6 @@
     "siteId": "site-museo-concilios",
     "paradaOrigen": "concilios-5",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Museo de los Concilios, C. San Román s/n (Google Maps)"
   },
@@ -649,7 +523,6 @@
     "siteId": "site-museo-concilios",
     "paradaOrigen": "concilios-6",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Museo de los Concilios, C. San Román s/n (Google Maps)"
   },
@@ -658,7 +531,6 @@
     "siteId": "site-yacimiento-guarrazar",
     "paradaOrigen": "territorio-1",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Toma de campo, en el yacimiento"
   },
@@ -667,7 +539,6 @@
     "siteId": "site-territorio-2",
     "paradaOrigen": "territorio-2",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Aproximada, estimada sobre el mapa del panel"
   },
@@ -676,7 +547,6 @@
     "siteId": "site-territorio-3",
     "paradaOrigen": "territorio-3",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Aproximada, estimada sobre el mapa del panel"
   },
@@ -685,7 +555,6 @@
     "siteId": "site-territorio-4",
     "paradaOrigen": "territorio-4",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Aproximada, estimada sobre el mapa del panel"
   },
@@ -694,7 +563,6 @@
     "siteId": "site-territorio-5",
     "paradaOrigen": "territorio-5",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Google Maps; por verificar en campo"
   },
@@ -703,7 +571,6 @@
     "siteId": "site-territorio-6",
     "paradaOrigen": "territorio-6",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Google Maps; finca privada, se ve desde el camino"
   },
@@ -712,7 +579,6 @@
     "siteId": "site-territorio-7",
     "paradaOrigen": "territorio-7",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Aproximada, estimada sobre el mapa del panel"
   },
@@ -721,7 +587,6 @@
     "siteId": "site-territorio-8",
     "paradaOrigen": "territorio-8",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Google Maps; por verificar en campo"
   },
@@ -730,18 +595,7 @@
     "siteId": "site-castillo-guadamur",
     "paradaOrigen": "territorio-9",
     "galeriaCompleta": [],
-    "modelos3d": [],
     "figura": null,
     "notaCoordenadas": "Toma de campo, entrada del castillo"
-  },
-  {
-    "recorrido": "route-territorio-guarrazar",
-    "mapaIlustrado": {
-      "img": "img/TERRITORIO_MAPA.jpg",
-      "w": 1672,
-      "h": 941,
-      "cap": "Ilustración interpretativa del territorio de Guarrazar, sin escala. Las posiciones de las paradas son orientativas.",
-      "src": "/images/ruta/TERRITORIO_MAPA.jpg"
-    }
   }
 ]

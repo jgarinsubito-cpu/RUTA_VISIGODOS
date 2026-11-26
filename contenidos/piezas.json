@@ -1,5 +1,5 @@
 {
-  "_nota": "Piezas de museo vinculadas a los lugares de la ruta. Las importa scripts/importar-contenidos.ts. Las afirmaciones van en borrador hasta que las valide Urbs Regia / J. M. Rojas. Las fotos solo se muestran en la app con «permiso»: «concedido». Fotos provisionales tomadas en sala (noviembre de 2026); sustituir por las de alta calidad con el mismo nombre de archivo.",
+  "_nota": "Piezas de museo vinculadas a los lugares de la ruta. Las importa scripts/importar-contenidos.ts. Las afirmaciones van en borrador hasta que las valide Urbs Regia / J. M. Rojas. Las fotos solo se muestran en la app con «permiso»: «concedido». Fotos provisionales tomadas en sala (noviembre de 2026); sustituir por las de alta calidad con el mismo nombre de archivo. Sesión fotográfica del 23/11/2026: fotos en el Drive del piloto, carpeta fotos/NUEVO CONCILIOS. El museo identifica las piezas por su nombre y su vitrina; sus números de inventario son internos y no se publican.",
   "museos": {
     "museo-santa-cruz": {
       "nombre": "Museo de Santa Cruz",
@@ -294,7 +294,7 @@
       "fecha": "Siglo VII",
       "descripcion": "Inscripción con un poema rítmico en hexámetros que ensalza la vida monástica.",
       "cartela": "Inscripción rítmica\nCaliza / Siglo VII.\n«Los Hitos». Arisgotas, Orgaz (Toledo).\nInscripción que contiene un poema rítmico en hexámetros que ensalza la vida monástica. Conmemoraría la construcción de una iglesia o de un edificio posiblemente monacal.",
-      "revisar": "Cartela fotografiada con poca luz: confirmar la lectura «Los Hitos». La cartela dice que «conmemoraría» una construcción: no se recoge como dato.",
+      "revisar": "Fotografiada de nuevo con su cartela el 23/11: confirmar en esas fotos la lectura «Los Hitos». La cartela dice que «conmemoraría» una construcción: no se recoge como dato.",
       "imagenes": [
         {
           "archivo": "concilios-inscripcion-ritmica.jpg",
@@ -324,7 +324,7 @@
       "id": "piece-concilios-inscripcion-ti-domini",
       "nombre": "Inscripción litúrgica «TI DOMINI»",
       "museo": "museo-concilios",
-      "procedencia": "Toledo; la cartela actual indica la Vega Baja y la guía de 1973 la daba con duda («¿Vega Baja?»)",
+      "procedencia": "Toledo, Vega Baja",
       "material": "Caliza",
       "fecha": "Siglo VII",
       "descripcion": "Fragmento de friso con la inscripción TI DOMINI entre cenefas de dobles círculos enlazados con rosetas y botones.",
@@ -360,20 +360,34 @@
             "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
             "pagina": "60"
           }
+        },
+        {
+          "id": "claim-pieza-concilios-inscripcion-ti-domini-03",
+          "texto": "El Museo de los Concilios confirma que el fragmento con la inscripción TI DOMINI procede de la Vega Baja, procedencia que la guía de 1973 daba con duda.",
+          "nivel": "D",
+          "claves": [
+            "vega baja",
+            "inscripcion liturgica"
+          ],
+          "fuente": {
+            "titulo": "Museo de los Concilios y de la Cultura Visigoda: respuestas del conservador del Museo de Santa Cruz durante la sesión fotográfica del 23/11/2026, recogidas por Inma Guiu (SNEO) el 25/11/2026"
+          }
         }
       ],
-      "revisar": "No se vincula a la Vega Baja hasta que el museo confirme la procedencia: Revuelta (1973, n.º 53, p. 60) escribe «¿Vega Baja?»."
+      "origen": {
+        "lugar": "vega-baja"
+      }
     },
     {
       "id": "piece-concilios-inscripcion-qui-credit",
       "nombre": "Inscripción litúrgica «QUI CREDIT IN EUM NON IUDICABITUR»",
       "museo": "museo-concilios",
-      "procedencia": "Toledo; la cartela actual indica la Vega Baja y la guía de 1973 la daba con duda («¿Vega Baja?»)",
+      "procedencia": "Toledo, Vega Baja",
       "material": "Caliza",
       "fecha": "Siglo VII",
       "descripcion": "Fragmento de friso con una inscripción alusiva al Credo tomada del Evangelio de San Juan, entre cenefas de dobles círculos enlazados.",
       "cartela": "Inscripción litúrgica\nCaliza / Siglo VII\nToledo, Vega Baja.\nFragmento de friso con inscripción alusiva al Credo, que reproduce el versículo 18 del cap · del Evangelio de San Juan QUI CREDIT IN EUM NON IUDICABITUR. Cenefa de dobles círculos enlazados, la inferior con una cruz incisa. En un lateral se decora con palmas contrapuestas y roleos con volutas.",
-      "revisar": "La cartela omite el número de capítulo («del cap ·»): la cita es Juan 3, 18; confirmar con el museo antes de añadirlo. No se vincula a la Vega Baja hasta que el museo confirme la procedencia: Revuelta (1973, n.º 54, p. 60) escribe «¿Vega Baja?».",
+      "revisar": "La cartela omite el número de capítulo («del cap ·»): la cita es Juan 3, 18; pendiente de respuesta del museo (preguntado el 23/11).",
       "imagenes": [
         {
           "archivo": "concilios-inscripcion-qui-credit.jpg",
@@ -407,8 +421,23 @@
             "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
             "pagina": "60"
           }
+        },
+        {
+          "id": "claim-pieza-concilios-inscripcion-qui-credit-03",
+          "texto": "El Museo de los Concilios confirma que el fragmento con la inscripción QUI CREDIT IN EUM NON IUDICABITUR procede de la Vega Baja, procedencia que la guía de 1973 daba con duda.",
+          "nivel": "D",
+          "claves": [
+            "vega baja",
+            "inscripcion liturgica"
+          ],
+          "fuente": {
+            "titulo": "Museo de los Concilios y de la Cultura Visigoda: respuestas del conservador del Museo de Santa Cruz durante la sesión fotográfica del 23/11/2026, recogidas por Inma Guiu (SNEO) el 25/11/2026"
+          }
         }
-      ]
+      ],
+      "origen": {
+        "lugar": "vega-baja"
+      }
     },
     {
       "id": "piece-concilios-capitel-escalona",
@@ -451,9 +480,21 @@
             "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
             "pagina": "56"
           }
+        },
+        {
+          "id": "claim-pieza-concilios-capitel-escalona-03",
+          "texto": "El Museo de los Concilios confirma que el capitel con ciervo procede de Escalona, como indica la cartela actual, y no de Toledo, como lo catalogaba la guía de 1973.",
+          "nivel": "D",
+          "claves": [
+            "capitel",
+            "escalona",
+            "ciervo"
+          ],
+          "fuente": {
+            "titulo": "Museo de los Concilios y de la Cultura Visigoda: respuestas del conservador del Museo de Santa Cruz durante la sesión fotográfica del 23/11/2026, recogidas por Inma Guiu (SNEO) el 25/11/2026"
+          }
         }
-      ],
-      "revisar": "Procedencia en duda: la cartela actual dice «Escalona (Toledo)»; la guía de Revuelta (1973, n.º 32, p. 56) describe la misma pieza (mismas volutas, espirales y ciervo) como de «Toledo». Preguntar al museo. Revuelta sí cita Escalona para otra pieza (n.º 31, fragmento de brocal o sarcófago con figuras, del castillo de Escalona)."
+      ]
     },
     {
       "id": "piece-concilios-placa-nicho",
@@ -577,7 +618,7 @@
       "fecha": "Siglo VII",
       "descripcion": "Imposta decorada con semicírculos imbricados con botón central y trifolios.",
       "cartela": "Imposta\nCaliza / Siglo VII.\nToledo, Vega Baja.\nDecorada con imbricación de semicírculos con botón central y trifolios.",
-      "revisar": "Falta una foto que muestre la pieza entera (en la foto de la cartela solo se ve el borde).",
+      "revisar": "Fotografiada entera el 23/11 (fotos/NUEVO CONCILIOS/6/6 imposta): sustituir la foto provisional.",
       "imagenes": [],
       "afirmaciones": [
         {
@@ -637,7 +678,7 @@
       "fecha": "Siglo VII",
       "descripcion": "Friso decorado con círculos secantes que forman flores de ocho pétalos.",
       "cartela": "Friso\n[material ilegible en la foto] / Siglo VII\nToledo, Vega Baja\nCon decoración de círculos secantes que componen flores octopétalas.",
-      "revisar": "Cartela fotografiada desenfocada: confirmar el material.",
+      "revisar": "Fotografiada de nuevo con su cartela el 23/11: leer el material en esas fotos.",
       "imagenes": [
         {
           "archivo": "concilios-friso-octopetalas.jpg",
@@ -703,7 +744,7 @@
       "fecha": "Siglos VI-VII",
       "descripcion": "Fragmento de una arqueta cilíndrica de hueso tallado, con figuras bajo arco; la guía del museo propone que representa a Jesús y la samaritana en el pozo de Jacob.",
       "cartela": "Arqueta\nMaterial óseo / Siglo VI-VII.\nToledo, Vega Baja.\n[resto de la cartela no visible en la foto]",
-      "revisar": "Falta fotografiar la descripción de la cartela. Confirmar que la píxide de hueso de la Vega Baja que citan Caballero y Gómez (2017) es esta arqueta.",
+      "revisar": "Transcribir la descripción completa de la cartela a partir de las fotos del 23/11 (carpeta fotos/NUEVO CONCILIOS/23 san roman vega baja/23 arqueta).",
       "imagenes": [
         {
           "archivo": "concilios-arqueta.jpg",
@@ -754,6 +795,34 @@
             "pagina": "982-991",
             "url": "https://www.man.es/man/dam/jcr:b95591e5-d3c8-4b91-b1d1-81766872751c/man-bol-2017-35-110.pdf"
           }
+        },
+        {
+          "id": "claim-pieza-concilios-arqueta-04",
+          "texto": "El Museo de los Concilios confirma que esta arqueta es la píxide de hueso hallada en la Vega Baja.",
+          "nivel": "D",
+          "claves": [
+            "arqueta",
+            "pixide",
+            "hueso",
+            "vega baja"
+          ],
+          "fuente": {
+            "titulo": "Museo de los Concilios y de la Cultura Visigoda: respuestas del conservador del Museo de Santa Cruz durante la sesión fotográfica del 23/11/2026, recogidas por Inma Guiu (SNEO) el 25/11/2026"
+          }
+        },
+        {
+          "id": "claim-pieza-concilios-arqueta-05",
+          "texto": "El Museo de los Concilios mantiene la lectura de la escena de la arqueta como Jesús y la samaritana en el pozo de Jacob.",
+          "nivel": "I",
+          "claves": [
+            "arqueta",
+            "samaritana",
+            "pozo de jacob"
+          ],
+          "fuente": {
+            "titulo": "Museo de los Concilios y de la Cultura Visigoda: respuestas del conservador del Museo de Santa Cruz durante la sesión fotográfica del 23/11/2026, recogidas por Inma Guiu (SNEO) el 25/11/2026"
+          },
+          "atribucion": "Museo de los Concilios (conservador del Museo de Santa Cruz)"
         }
       ]
     },
@@ -769,7 +838,7 @@
       "fecha": "Siglo VII",
       "descripcion": "Llave de bronce del siglo VII hallada en la Vega Baja.",
       "cartela": "Llave\nBronce / Siglo VII.\nToledo, Vega Baja.\n«Llave» Nº Inventario: DO2010/3/3",
-      "revisar": "La cartela comparte vitrina con pendeloque, colgante en forma de bellota, osculatorio y placa de cinturón liriforme, sin datación ni procedencia propias: no se incluyen hasta confirmarlas.",
+      "revisar": "El museo confirma que todas las piezas de la vitrina (pendeloque, colgante en forma de bellota, osculatorio y placa de cinturón liriforme) proceden de la Vega Baja. Faltan sus dataciones: no se incluyen hasta tenerlas.",
       "imagenes": [
         {
           "archivo": "concilios-llave.jpg",
@@ -836,7 +905,7 @@
       "fecha": "Siglo VII",
       "descripcion": "Fuste incompleto de columnilla con collarino y capitel de pencas y vástagos rematados en volutas.",
       "cartela": "Columnilla\nMármol / Siglo VII.\nToledo, Vega Baja.\nFuste incompleto con collarino y capitel con pencas y vástagos rematados en volutas.\n3/12.",
-      "revisar": "Confirmar que la cartela corresponde a esta columnilla (en la vitrina hay varias).",
+      "revisar": "Fotografiada de nuevo con su cartela el 23/11: confirmar con esas fotos que la cartela «3/12» es de esta columnilla.",
       "imagenes": [
         {
           "archivo": "concilios-columnilla.jpg",
@@ -928,11 +997,11 @@
       "nombre": "Reproducciones de las coronas de Guarrazar",
       "museo": "museo-concilios",
       "procedencia": "Guarrazar, Guadamur (Toledo); los originales se reparten entre tres instituciones",
-      "material": "Reproducciones en oro y pedrería",
+      "material": "Reproducciones en oro y pedrería (orfebre Marmolejo)",
       "fecha": "Originales del siglo VII",
       "descripcion": "Reproducciones de las coronas votivas del tesoro de Guarrazar recuperadas en 1943, entre ellas la de Recesvinto.",
       "cartela": "[cartela no legible en las fotos de noviembre de 2026]",
-      "revisar": "Fotografiar la cartela actual: confirmar qué coronas se reproducen hoy (la web de Orígenes de Europa cita las de Recaredo, Suintila y Recesvinto). Las fotos 6318 y 6320 son de la vitrina.",
+      "revisar": "Transcribir la cartela a partir de las fotos del 23/11 (carpeta fotos/NUEVO CONCILIOS/coronas) y confirmar cuántas coronas hay y cuáles.",
       "imagenes": [
         {
           "archivo": "concilios-coronas-guarrazar.jpg",
@@ -972,6 +1041,21 @@
             "titulo": "Matilde Revuelta, Museo de los Concilios de Toledo y de la Cultura Visigoda. Guías de los Museos de España XXXVII, Ministerio de Educación y Ciencia, 1973",
             "pagina": "47-48"
           }
+        },
+        {
+          "id": "claim-pieza-concilios-coronas-guarrazar-03",
+          "texto": "El Museo de los Concilios confirma que las coronas que expone son las reproducciones realizadas por el orfebre Marmolejo a partir de las coronas recuperadas en 1943.",
+          "nivel": "D",
+          "claves": [
+            "coronas",
+            "marmolejo",
+            "1943",
+            "reproduccion*",
+            "replica*"
+          ],
+          "fuente": {
+            "titulo": "Museo de los Concilios y de la Cultura Visigoda: respuestas del conservador del Museo de Santa Cruz durante la sesión fotográfica del 23/11/2026, recogidas por Inma Guiu (SNEO) el 25/11/2026"
+          }
         }
       ]
     },
@@ -984,7 +1068,7 @@
       "fecha": "Siglos V-VI (Revuelta, 1973)",
       "descripcion": "Placa con un relieve a bisel de una figura de pie, uno de los escasos relieves figurados de época visigoda; su tema se discute.",
       "cartela": "[sin fotografiar]",
-      "revisar": "Fotografiar la pieza y su cartela el 23/11.",
+      "revisar": "Pieza y cartela fotografiadas el 23/11: transcribir la cartela y completar la ficha.",
       "imagenes": [],
       "afirmaciones": [
         {
@@ -1045,7 +1129,7 @@
       "fecha": "Año 579",
       "descripcion": "Lápida funeraria de nueve líneas en letra visigoda, fechada en la era 617 (año 579).",
       "cartela": "[sin fotografiar]",
-      "revisar": "Pieza catalogada en 1973 (n.º 56): comprobar el 23/11 que sigue expuesta y fotografiarla.",
+      "revisar": "Sigue expuesta: fotografiada el 23/11 (fotos/NUEVO CONCILIOS/resto museo/rm lapida fun inma frita). Transcribir la cartela.",
       "imagenes": [],
       "afirmaciones": [
         {
@@ -1078,7 +1162,7 @@
       "fecha": "12 de abril de 562",
       "descripcion": "Lápida funeraria de cuatro líneas en letra visigoda; Sagenis, «sierva de Dios», murió a los 50 años.",
       "cartela": "[sin fotografiar]",
-      "revisar": "Pieza catalogada en 1973 (n.º 60): comprobar el 23/11 que sigue expuesta y fotografiarla.",
+      "revisar": "Sigue expuesta: fotografiada el 23/11 (fotos/NUEVO CONCILIOS/resto museo/rm lapida funeraria sagenis). Transcribir la cartela.",
       "imagenes": [],
       "afirmaciones": [
         {
@@ -1108,7 +1192,7 @@
       "fecha": "Época visigoda (cinco capiteles)",
       "descripcion": "Las arcadas de la nave apoyan en doce capiteles reutilizados de edificios anteriores; cinco son visigodos.",
       "cartela": "[sin cartela: elementos del edificio]",
-      "revisar": "Fotografiar los cinco capiteles visigodos y el cimacio reutilizado como basa (también en el 360° de la nave).",
+      "revisar": "Capiteles y cimacio fotografiados el 23/11: elegir fotos y comprobar cuántos se muestran.",
       "imagenes": [],
       "afirmaciones": [
         {
